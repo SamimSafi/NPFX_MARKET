@@ -21,32 +21,29 @@ import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../components/table';
-import { useSnackbar } from 'notistack';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import MyDialog from 'src/components/MyDialog';
-import { IUnitOfMeasure } from 'src/@types/foamCompanyTypes/unitOfMeasure';
-import MeasurementTableToolbar from './GoodsTableToolbar';
-import { ContractTypeTableRow } from '../../ContractType/ContractTypeList';
-import MeasurementDelete from './GoodsDelete';
-import { IGoods } from 'src/@types/foamCompanyTypes/Goods';
-import GoodsTableRow from './GoodsTableRow';
+import LoanTypeDelete from './LoanTypeDelete';
+import { ILoanType } from 'src/@types/foamCompanyTypes/looks/LoanType';
+import LoanTypeTableToolbar from './LoanTypeTableToolbar';
+import LoanTypeTableRow from './LoanTypeTableRow';
 
 // ----------------------------------------------------------------------
 
-export default observer(function GoodsList() {
-  const { GoodsStore } = useStore();
+export default observer(function LoanTypeList() {
+  const { LoanTypeStore } = useStore();
   const { translate } = useLocales();
   const {
-    loadGoods,
-    GoodsList,
-    GoodsRegistry,
+    loadLoanType,
+    LoanTypeList,
+    LoanTypeRegistry,
     totalRecord,
-    Goodsearch,
-    getGoodsFromRegistry,
+    LoanTypeearch,
+    getLoanTypeFromRegistry,
     setOpenCloseDialog,
     openDialog,
-  } = GoodsStore;
+  } = LoanTypeStore;
   const {
     dense,
     page,
@@ -65,9 +62,7 @@ export default observer(function GoodsList() {
 
   const navigate = useNavigate();
 
-  const { enqueueSnackbar } = useSnackbar();
-
-  const [ContractTypeId, setContractTypeId] = useState<number>(0);
+  const [LoanTypeId, setLoanTypeId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'Name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
@@ -78,27 +73,27 @@ export default observer(function GoodsList() {
     setFilterName(filterName);
     setPage(0);
     if (filterName.length > 1) {
-      Goodsearch({
+      LoanTypeearch({
         pageIndex: 0,
         pageSize: rowsPerPage,
-        searchBy: filterName,
+        name: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      Goodsearch({ pageIndex: 0, pageSize: rowsPerPage });
+      LoanTypeearch({ pageIndex: 0, pageSize: rowsPerPage });
     }
   };
 
   const handleOpenConfirm = (id: number) => {
     setOpenCloseDialog();
-    setContractTypeId(id);
+    setLoanTypeId(id);
   };
 
   const handleCloseConfirm = () => {
     setOpenCloseDialog();
   };
   const handleEditRow = (id: number) => {
-    getGoodsFromRegistry(id);
+    getLoanTypeFromRegistry(id);
     navigate(PATH_DASHBOARD.ContractType.edit);
   };
 
@@ -121,21 +116,22 @@ export default observer(function GoodsList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    loadGoods({ pageIndex: newPage, pageSize: rowsPerPage });
+    loadLoanType({ pageIndex: newPage, pageSize: rowsPerPage });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeRowsPerPage(event);
     let pageZize = parseInt(event.target.value);
-    loadGoods({ pageIndex: 0, pageSize: pageZize });
+    loadLoanType({ pageIndex: 0, pageSize: pageZize });
   };
   useEffect(() => {
-    if (GoodsRegistry.size <= 1) {
-      loadGoods({ pageIndex: 0, pageSize: rowsPerPage });
+    if (LoanTypeRegistry.size <= 1) {
+      loadLoanType({ pageIndex: 0, pageSize: rowsPerPage });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dataFiltered = applySortFilter({
-    tableData: GoodsList,
+    tableData: LoanTypeList,
     comparator: getComparator(order, orderBy),
     filterName: '',
   });
@@ -148,18 +144,18 @@ export default observer(function GoodsList() {
     <Page title={translate('Expense.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.GoodsList')}
+          heading={translate('Expense.LoanTypeList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Expense.GoodsList')}` },
+            { name: `${translate('Expense.LoanTypeList')}` },
           ]}
           action={
             <Button
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
               component={RouterLink}
-              to={PATH_DASHBOARD.Goods.new}
+              to={PATH_DASHBOARD.LoanType.new}
             >
               {translate('CRUD.Create')}
             </Button>
@@ -167,7 +163,7 @@ export default observer(function GoodsList() {
         />
 
         <Card>
-          <MeasurementTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          <LoanTypeTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 960, position: 'relative' }}>
@@ -184,7 +180,7 @@ export default observer(function GoodsList() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
-                      <GoodsTableRow
+                      <LoanTypeTableRow
                         key={row.id}
                         row={row}
                         index={index}
@@ -224,7 +220,7 @@ export default observer(function GoodsList() {
               title={translate('CRUD.DeleteTitle')}
               size="md"
             >
-              <MeasurementDelete id={ContractTypeId} />
+              <LoanTypeDelete id={LoanTypeId} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
@@ -245,7 +241,7 @@ function applySortFilter({
   comparator,
   filterName,
 }: {
-  tableData: IGoods[];
+  tableData: ILoanType[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {

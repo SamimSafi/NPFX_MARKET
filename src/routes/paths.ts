@@ -5,7 +5,6 @@ function path(root: string, sublink: string) {
 }
 
 const ROOTS_AUTH = '/auth';
-const ROOT_PMISDASHBOARD = '/pmisdashboard';
 const ROOTS_DASHBOARD = '/dashboard';
 
 // ----------------------------------------------------------------------
@@ -56,6 +55,40 @@ export const PATH_DASHBOARD = {
   calendar: path(ROOTS_DASHBOARD, '/calendar'),
   kanban: path(ROOTS_DASHBOARD, '/kanban'),
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
+
+  /// NPFX MARKET ROUTE START HERE
+  // Employee
+  Branch: {
+    root: path(ROOTS_DASHBOARD, '/Branch'),
+    list: path(ROOTS_DASHBOARD, '/Branch/list'),
+    new: path(ROOTS_DASHBOARD, '/Branch/new'),
+    edit: path(ROOTS_DASHBOARD, '/Branch/edit'),
+    detail: path(ROOTS_DASHBOARD, '/Branch/detail'),
+  },
+  // ExpenseType
+  ExpenseType: {
+    root: path(ROOTS_DASHBOARD, '/ExpenseType'),
+    list: path(ROOTS_DASHBOARD, '/ExpenseType/list'),
+    new: path(ROOTS_DASHBOARD, '/ExpenseType/new'),
+    edit: path(ROOTS_DASHBOARD, '/ExpenseType/edit'),
+    detail: path(ROOTS_DASHBOARD, '/ExpenseType/detail'),
+  },
+  // AssetType
+  AssetType: {
+    root: path(ROOTS_DASHBOARD, '/AssetType'),
+    list: path(ROOTS_DASHBOARD, '/AssetType/list'),
+    new: path(ROOTS_DASHBOARD, '/AssetType/new'),
+    edit: path(ROOTS_DASHBOARD, '/AssetType/edit'),
+    detail: path(ROOTS_DASHBOARD, '/AssetType/detail'),
+  },
+  // LoanType
+  LoanType: {
+    root: path(ROOTS_DASHBOARD, '/LoanType'),
+    list: path(ROOTS_DASHBOARD, '/LoanType/list'),
+    new: path(ROOTS_DASHBOARD, '/LoanType/new'),
+    edit: path(ROOTS_DASHBOARD, '/LoanType/edit'),
+    detail: path(ROOTS_DASHBOARD, '/LoanType/detail'),
+  },
   // Users Path
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
@@ -144,14 +177,7 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/Supplier/edit'),
     detail: path(ROOTS_DASHBOARD, '/Supplier/detail'),
   },
-  // ExpenseType
-  ExpenseType: {
-    root: path(ROOTS_DASHBOARD, '/ExpenseType'),
-    list: path(ROOTS_DASHBOARD, '/ExpenseType/list'),
-    new: path(ROOTS_DASHBOARD, '/ExpenseType/new'),
-    edit: path(ROOTS_DASHBOARD, '/ExpenseType/edit'),
-    detail: path(ROOTS_DASHBOARD, '/ExpenseType/detail'),
-  },
+
   // Expense
   Expense: {
     root: path(ROOTS_DASHBOARD, '/Expense'),

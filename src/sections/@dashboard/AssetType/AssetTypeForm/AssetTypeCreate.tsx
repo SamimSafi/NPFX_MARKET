@@ -9,14 +9,11 @@ import useLocales from 'src/hooks/useLocales';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import BranchNewEditForm from './BranchNewEditForm';
-// sections
-
-// @type
+import AssetTypeNewEditForm from './AssetTypeNewEditForm';
 
 // ----------------------------------------------------------------------
 
-export default function BranchCreate() {
+export default function AssetTypeCreate() {
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -26,25 +23,29 @@ export default function BranchCreate() {
 
   return (
     <Page
-      title={!isEdit ? `${translate('Branch.AddTitle')}` : `${translate('Branch.UpdateTitle')}`}
+      title={
+        !isEdit ? `${translate('AssetType.AddTitle')}` : `${translate('AssetType.UpdateTitle')}`
+      }
     >
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={
-            !isEdit ? `${translate('Branch.CreateBranch')}` : `${translate('Branch.EditBranch')}`
+            !isEdit
+              ? `${translate('AssetType.CreateAssetType')}`
+              : `${translate('AssetType.EditAssetType')}`
           }
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
-              name: `${translate('Branch.BranchList')}`,
-              href: PATH_DASHBOARD.Branch.list,
+              name: `${translate('AssetType.AssetTypeList')}`,
+              href: PATH_DASHBOARD.ContractDetails.list,
             },
             {
-              name: !isEdit ? `${translate('Branch.New')}` : `${translate('Branch.Update')}`,
+              name: !isEdit ? `${translate('AssetType.New')}` : `${translate('AssetType.Update')}`,
             },
           ]}
         />
-        <BranchNewEditForm />
+        <AssetTypeNewEditForm />
       </Container>
     </Page>
   );

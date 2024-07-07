@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { SelectControl } from 'src/@types/common';
 import agentBranch from '../../api/agent';
-import { IBranch, IBranchParams } from 'src/@types/foamCompanyTypes/branch';
+import { IBranch, IBranchParams } from 'src/@types/foamCompanyTypes/looks/branch';
 
 export default class Branchtore {
   openDialog = false;
@@ -95,19 +95,19 @@ export default class Branchtore {
   setDetailCloseDialog = () => (this.openDetailDialog = !this.openDetailDialog);
 
   createBranch = async (Branch: IBranch) => {
-      await agentBranch.Branch.create(Branch);
-      runInAction(() => {
-        this.loadBranch({ pageIndex: 0, pageSize: 5 });
-      });
+    await agentBranch.Branch.create(Branch);
+    runInAction(() => {
+      this.loadBranch({ pageIndex: 0, pageSize: 5 });
+    });
   };
 
   updateBranch = async (Branch: IBranch) => {
-      await agentBranch.Branch.update(Branch);
-      runInAction(() => {
-        this.loadBranch({ pageIndex: 0, pageSize: 5 });
-        this.BranchRegistry.delete(Branch.id!);
-        this.BranchRegistry.set(Branch.id!, Branch);
-      });
+    await agentBranch.Branch.update(Branch);
+    runInAction(() => {
+      this.loadBranch({ pageIndex: 0, pageSize: 5 });
+      this.BranchRegistry.delete(Branch.id!);
+      this.BranchRegistry.set(Branch.id!, Branch);
+    });
   };
 
   // loadBranchTypeDropdown = async () => {

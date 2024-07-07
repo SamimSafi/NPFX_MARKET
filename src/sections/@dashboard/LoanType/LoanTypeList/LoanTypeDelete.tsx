@@ -16,10 +16,10 @@ interface Props {
   id: number;
 }
 
-export default observer(function BranchDelete({ id }: Props) {
+export default observer(function LoanTypeDelete({ id }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
-  const { branchStore } = useStore();
+  const { LoanTypeStore } = useStore();
   const validationSchema = Yup.object().shape({
     remarks: Yup.string()
       .required(`${translate('Validation.Remark')}`)
@@ -35,8 +35,7 @@ export default observer(function BranchDelete({ id }: Props) {
   } = methods;
 
   const onSubmit = (remark: string) => {
-    branchStore
-      .deleteBranch(id, remark)
+    LoanTypeStore.deleteLoanType(id, remark)
       .then(() => {
         enqueueSnackbar('Delete  success!');
       })
@@ -91,7 +90,7 @@ export default observer(function BranchDelete({ id }: Props) {
                 <LoadingButton
                   variant="contained"
                   size="small"
-                  onClick={() => branchStore.setOpenCloseDialog()}
+                  onClick={() => LoanTypeStore.setOpenCloseDialog()}
                   startIcon={<CancelIcon />}
                 >
                   {translate('CRUD.Cancle')}

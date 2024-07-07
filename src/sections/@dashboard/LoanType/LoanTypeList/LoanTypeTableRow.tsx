@@ -7,12 +7,11 @@ import { TableRow, TableCell, MenuItem } from '@mui/material';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
-
-import { IExpenseType } from 'src/@types/foamCompanyTypes/looks/expenseType';
+import { ILoanType } from 'src/@types/foamCompanyTypes/looks/LoanType';
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IExpenseType;
+  row: ILoanType;
   // selected: boolean;
   onEditRow: VoidFunction;
   //onSelectRow: VoidFunction;
@@ -20,7 +19,7 @@ type Props = {
   index: any;
 };
 
-export default function ExpenseTypeTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
+export default function LoanTypeTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
   const { name } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);

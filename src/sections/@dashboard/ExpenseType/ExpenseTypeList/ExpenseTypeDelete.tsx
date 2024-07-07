@@ -30,7 +30,6 @@ export default observer(function ExpenseTypeDelete({ id }: Props) {
   });
 
   const {
-    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;

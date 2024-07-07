@@ -21,15 +21,12 @@ import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../components/table';
-import { useSnackbar } from 'notistack';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import MyDialog from 'src/components/MyDialog';
-import { IUnitOfMeasure } from 'src/@types/foamCompanyTypes/unitOfMeasure';
 import MeasurementTableToolbar from './ExpenseTypeTableToolbar';
-import { ContractTypeTableRow } from '../../ContractType/ContractTypeList';
-import MeasurementDelete from './ExpenseTypeDelete';
-import { IExpenseType } from 'src/@types/foamCompanyTypes/expenseType';
+import ExpenseTypeDelete from './ExpenseTypeDelete';
+import { IExpenseType } from 'src/@types/foamCompanyTypes/looks/expenseType';
 import ExpenseTypeTableRow from './ExpenseTypeTableRow';
 
 // ----------------------------------------------------------------------
@@ -65,9 +62,7 @@ export default observer(function ExpenseTypeList() {
 
   const navigate = useNavigate();
 
-  const { enqueueSnackbar } = useSnackbar();
-
-  const [ContractTypeId, setContractTypeId] = useState<number>(0);
+  const [ExpenseTypeId, setExpenseTypeId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'Name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
@@ -91,7 +86,7 @@ export default observer(function ExpenseTypeList() {
 
   const handleOpenConfirm = (id: number) => {
     setOpenCloseDialog();
-    setContractTypeId(id);
+    setExpenseTypeId(id);
   };
 
   const handleCloseConfirm = () => {
@@ -99,7 +94,7 @@ export default observer(function ExpenseTypeList() {
   };
   const handleEditRow = (id: number) => {
     getExpenseTypeFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.ExpenseType.edit);
   };
 
   // const handleDelete = () => {
@@ -132,6 +127,7 @@ export default observer(function ExpenseTypeList() {
     if (ExpenseTypeRegistry.size <= 1) {
       loadExpenseType({ pageIndex: 0, pageSize: rowsPerPage });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dataFiltered = applySortFilter({
@@ -224,7 +220,7 @@ export default observer(function ExpenseTypeList() {
               title={translate('CRUD.DeleteTitle')}
               size="md"
             >
-              <MeasurementDelete id={ContractTypeId} />
+              <ExpenseTypeDelete id={ExpenseTypeId} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}

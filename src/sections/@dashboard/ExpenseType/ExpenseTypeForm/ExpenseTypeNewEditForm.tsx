@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,8 +18,7 @@ import Iconify from '../../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import React from 'react';
-import { IExpenseType } from '../../../../@types/foamCompanyTypes/expenseType';
+import { IExpenseType } from '../../../../@types/foamCompanyTypes/looks/expenseType';
 // ----------------------------------------------------------------------
 
 export default observer(function ExpenseTypeNewEditForm() {
@@ -36,10 +35,11 @@ export default observer(function ExpenseTypeNewEditForm() {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewContractTypeSchema = Yup.object().shape({
+  const NewExpenseTypeSchema = Yup.object().shape({
     englishName: Yup.string().required(`${translate('Validation.EnglishName')}`),
     dariName: Yup.string().required(`${translate('Validation.PashtoName')}`),
     pashtoName: Yup.string().required(`${translate('Validation.DariName')}`),
+    code: Yup.string().required(`${translate('Validation.Code')}`),
   });
 
   const defaultValues = useMemo<IExpenseType>(
@@ -47,13 +47,14 @@ export default observer(function ExpenseTypeNewEditForm() {
       id: selectedExpenseType?.id,
       englishName: selectedExpenseType?.englishName || '',
       dariName: selectedExpenseType?.dariName || '',
-      pashtoName: selectedExpenseType?.name || '',
+      pashtoName: selectedExpenseType?.pashtoName || '',
+      code: selectedExpenseType?.code || '',
     }),
     [selectedExpenseType]
   );
 
   const methods = useForm<IExpenseType>({
-    resolver: yupResolver(NewContractTypeSchema),
+    resolver: yupResolver(NewExpenseTypeSchema),
     defaultValues,
   });
 
@@ -69,14 +70,14 @@ export default observer(function ExpenseTypeNewEditForm() {
       createExpenseType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.ExpenseType.list);
       });
     } else {
       ///update
       updateExpenseType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.ExpenseType.list);
       });
     }
   };
@@ -110,14 +111,20 @@ export default observer(function ExpenseTypeNewEditForm() {
                 autoFocus
               />
               <RHFTextField
+                name="dariName"
+                label={translate('GeneralFields.DariName')}
+                showAsterisk={true}
+                autoFocus
+              />
+              <RHFTextField
                 name="pashtoName"
                 label={translate('GeneralFields.PashtoName')}
                 showAsterisk={true}
                 autoFocus
               />
               <RHFTextField
-                name="dariName"
-                label={translate('Branch.DariName')}
+                name="code"
+                label={translate('GeneralFields.Code')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -142,7 +149,7 @@ export default observer(function ExpenseTypeNewEditForm() {
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
                   clearSelectedExpenseType();
-                  navigate(PATH_DASHBOARD.ContractType.list);
+                  navigate(PATH_DASHBOARD.ExpenseType.list);
                 }}
               >
                 {translate('CRUD.BackToList')}

@@ -1,7 +1,7 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { SelectControl } from '../../@types/common';
 import agentExpenseType from '../../api/agent';
-import { IExpenseType,IExpenseTypeParams } from '../../@types/foamCompanyTypes/expenseType';
+import { IExpenseType, IExpenseTypeParams } from '../../@types/foamCompanyTypes/looks/expenseType';
 
 export default class ExpenseTypeStore {
   openDialog = false;
@@ -95,19 +95,19 @@ export default class ExpenseTypeStore {
   setDetailCloseDialog = () => (this.openDetailDialog = !this.openDetailDialog);
 
   createExpenseType = async (ExpenseType: IExpenseType) => {
-      await agentExpenseType.ExpenseType.create(ExpenseType);
-      runInAction(() => {
-        this.loadExpenseType({ pageIndex: 0, pageSize: 5 });
-      });
+    await agentExpenseType.ExpenseType.create(ExpenseType);
+    runInAction(() => {
+      this.loadExpenseType({ pageIndex: 0, pageSize: 5 });
+    });
   };
 
   updateExpenseType = async (ExpenseType: IExpenseType) => {
-      await agentExpenseType.ExpenseType.update(ExpenseType);
-      runInAction(() => {
-        this.loadExpenseType({ pageIndex: 0, pageSize: 5 });
-        this.ExpenseTypeRegistry.delete(ExpenseType.id!);
-        this.ExpenseTypeRegistry.set(ExpenseType.id!, ExpenseType);
-      });
+    await agentExpenseType.ExpenseType.update(ExpenseType);
+    runInAction(() => {
+      this.loadExpenseType({ pageIndex: 0, pageSize: 5 });
+      this.ExpenseTypeRegistry.delete(ExpenseType.id!);
+      this.ExpenseTypeRegistry.set(ExpenseType.id!, ExpenseType);
+    });
   };
 
   // loadExpenseTypeTypeDropdown = async () => {

@@ -24,26 +24,26 @@ import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../compon
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import MyDialog from 'src/components/MyDialog';
-import BranchTableToolbar from './BranchTableToolbar';
-import { IBranch } from 'src/@types/foamCompanyTypes/looks/branch';
-import BranchTableRow from './BranchTableRow';
-import BranchDelete from './BranchDelete';
+import AssetTypeTableRow from './AssetTypeTableRow';
+import AssetTypeTableToolbar from './AssetTypeTableToolbar';
+import AssetTypeDelete from './AssetTypeDelete';
+import { IAssetType } from 'src/@types/foamCompanyTypes/looks/AssetType';
 
 // ----------------------------------------------------------------------
 
-export default observer(function BranchList() {
-  const { branchStore } = useStore();
+export default observer(function AssetTypeList() {
+  const { AssetTypeStore } = useStore();
   const { translate } = useLocales();
   const {
-    loadBranch,
-    BranchList,
-    BranchRegistry,
+    loadAssetType,
+    AssetTypeList,
+    AssetTypeRegistry,
     totalRecord,
-    Branchearch,
-    getBranchFromRegistry,
+    AssetTypeearch,
+    getAssetTypeFromRegistry,
     setOpenCloseDialog,
     openDialog,
-  } = branchStore;
+  } = AssetTypeStore;
   const {
     dense,
     page,
@@ -62,41 +62,39 @@ export default observer(function BranchList() {
 
   const navigate = useNavigate();
 
-  const [BranchId, setBranchId] = useState<number>(0);
+  const [AssetTypeId, setAssetTypeId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'englishName', label: `${translate('GeneralFields.EnglishName')}`, align: 'left' },
-    { id: 'pashtoName', label: `${translate('GeneralFields.PashtoName')}`, align: 'left' },
-    { id: 'dariName', label: `${translate('GeneralFields.DariName')}`, align: 'left' },
-    { id: 'code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
+    { id: 'Name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
+    // { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
     setFilterName(filterName);
     setPage(0);
     if (filterName.length > 1) {
-      Branchearch({
+      AssetTypeearch({
         pageIndex: 0,
         pageSize: rowsPerPage,
-        search: filterName,
+        name: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      Branchearch({ pageIndex: 0, pageSize: rowsPerPage });
+      AssetTypeearch({ pageIndex: 0, pageSize: rowsPerPage });
     }
   };
 
   const handleOpenConfirm = (id: number) => {
     setOpenCloseDialog();
-    setBranchId(id);
+    setAssetTypeId(id);
   };
 
   const handleCloseConfirm = () => {
     setOpenCloseDialog();
   };
   const handleEditRow = (id: number) => {
-    getBranchFromRegistry(id);
-    navigate(PATH_DASHBOARD.Branch.edit);
+    getAssetTypeFromRegistry(id);
+    navigate(PATH_DASHBOARD.ContractType.edit);
   };
 
   // const handleDelete = () => {
@@ -118,22 +116,22 @@ export default observer(function BranchList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    loadBranch({ pageIndex: newPage, pageSize: rowsPerPage });
+    loadAssetType({ pageIndex: newPage, pageSize: rowsPerPage });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeRowsPerPage(event);
     let pageZize = parseInt(event.target.value);
-    loadBranch({ pageIndex: 0, pageSize: pageZize });
+    loadAssetType({ pageIndex: 0, pageSize: pageZize });
   };
   useEffect(() => {
-    if (BranchRegistry.size <= 1) {
-      loadBranch({ pageIndex: 0, pageSize: rowsPerPage });
+    if (AssetTypeRegistry.size <= 1) {
+      loadAssetType({ pageIndex: 0, pageSize: rowsPerPage });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dataFiltered = applySortFilter({
-    tableData: BranchList,
+    tableData: AssetTypeList,
     comparator: getComparator(order, orderBy),
     filterName: '',
   });
@@ -143,21 +141,21 @@ export default observer(function BranchList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('Branch.Title')}>
+    <Page title={translate('Expense.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Branch.BranchList')}
+          heading={translate('Expense.AssetTypeList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Branch.BranchList')}` },
+            { name: `${translate('Expense.AssetTypeList')}` },
           ]}
           action={
             <Button
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
               component={RouterLink}
-              to={PATH_DASHBOARD.Branch.new}
+              to={PATH_DASHBOARD.AssetType.new}
             >
               {translate('CRUD.Create')}
             </Button>
@@ -165,7 +163,7 @@ export default observer(function BranchList() {
         />
 
         <Card>
-          <BranchTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          <AssetTypeTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 960, position: 'relative' }}>
@@ -182,7 +180,7 @@ export default observer(function BranchList() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
-                      <BranchTableRow
+                      <AssetTypeTableRow
                         key={row.id}
                         row={row}
                         index={index}
@@ -222,7 +220,7 @@ export default observer(function BranchList() {
               title={translate('CRUD.DeleteTitle')}
               size="md"
             >
-              <BranchDelete id={BranchId} />
+              <AssetTypeDelete id={AssetTypeId} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
@@ -243,7 +241,7 @@ function applySortFilter({
   comparator,
   filterName,
 }: {
-  tableData: IBranch[];
+  tableData: IAssetType[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {

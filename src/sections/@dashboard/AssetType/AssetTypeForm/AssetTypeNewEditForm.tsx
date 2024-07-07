@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,67 +15,60 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import useLocales from 'src/hooks/useLocales';
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import React from 'react';
-import { IGoods } from '../../../../@types/foamCompanyTypes/Goods';
-import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
+import { IAssetType } from 'src/@types/foamCompanyTypes/looks/AssetType';
 // ----------------------------------------------------------------------
 
-export default observer(function GoodsNewEditForm() {
-  const { GoodsStore, commonDropdown } = useStore();
+export default observer(function AssetTypeNewEditForm() {
+  const { AssetTypeStore } = useStore();
   const { translate } = useLocales();
-  const { createGoods, updateGoods, editMode, selectedGoods, clearSelectedGoods } = GoodsStore;
+  const { createAssetType, updateAssetType, editMode, selectedAssetType, clearSelectedAssetType } =
+    AssetTypeStore;
   const navigate = useNavigate();
-  const { loadContractTypeDDL, ContractTypeOption } = commonDropdown;
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewContractTypeSchema = Yup.object().shape({
+  const NewAssetTypeSchema = Yup.object().shape({
     englishName: Yup.string().required(`${translate('Validation.EnglishName')}`),
     dariName: Yup.string().required(`${translate('Validation.PashtoName')}`),
     pashtoName: Yup.string().required(`${translate('Validation.DariName')}`),
+    code: Yup.string().required(`${translate('Validation.Code')}`),
   });
 
-  const defaultValues = useMemo<IGoods>(
+  const defaultValues = useMemo<IAssetType>(
     () => ({
-      id: selectedGoods?.id,
-      englishName: selectedGoods?.englishName || '',
-      dariName: selectedGoods?.dariName || '',
-      pashtoName: selectedGoods?.pashtoName || '',
-      unitofmeasureId: selectedGoods?.unitofmeasureId || undefined,
-      price: selectedGoods?.price || undefined,
-      categoryTypeId: selectedGoods?.categoryTypeId || undefined,
-      isPurchase: selectedGoods?.isPurchase || false,
-      expireDate: selectedGoods?.expireDate || new Date(),
-      description: selectedGoods?.description || '',
+      id: selectedAssetType?.id,
+      englishName: selectedAssetType?.englishName || '',
+      dariName: selectedAssetType?.dariName || '',
+      pashtoName: selectedAssetType?.pashtoName || '',
+      code: selectedAssetType?.code || '',
     }),
-    [selectedGoods]
+    [selectedAssetType]
   );
 
-  const methods = useForm<IGoods>({
-    resolver: yupResolver(NewContractTypeSchema),
+  const methods = useForm<IAssetType>({
+    resolver: yupResolver(NewAssetTypeSchema),
     defaultValues,
   });
 
   const {
     reset,
     handleSubmit,
-    control,
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IGoods) => {
+  const onSubmit = (data: IAssetType) => {
     if (data.id! === undefined) {
       ///create
-      createGoods(data).then(() => {
+      createAssetType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);
       });
     } else {
       ///update
-      updateGoods(data).then(() => {
+      updateAssetType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);
@@ -91,10 +84,6 @@ export default observer(function GoodsNewEditForm() {
       reset(defaultValues);
     }
   }, [reset, editMode, defaultValues]);
-
-  useEffect(() => {
-    loadContractTypeDDL();
-  }, [loadContractTypeDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -123,47 +112,14 @@ export default observer(function GoodsNewEditForm() {
               />
               <RHFTextField
                 name="dariName"
-                label={translate('Branch.DariName')}
+                label={translate('GeneralFields.DariName')}
                 showAsterisk={true}
                 autoFocus
               />
-              <RHFSelect name="unitofmeasureId" label={translate('Goods.Unit')} showAsterisk={true}>
-                <option value="" />
-                {ContractTypeOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect>
 
               <RHFTextField
-                name="price"
-                label={translate('Goods.Price')}
-                showAsterisk={true}
-                autoFocus
-              />
-              <LocalizDatePicker
-                name="expireDate"
-                label={translate('GeneralFields.StartDate')}
-                showAsterisk={true}
-                control={control}
-              />
-
-              <RHFSelect
-                name="categoryTypeId"
-                label={translate('Goods.category')}
-                showAsterisk={true}
-              >
-                <option value="" />
-                {ContractTypeOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect>
-              <RHFTextField
-                name="description"
-                label={translate('GeneralFields.Description')}
+                name="Code"
+                label={translate('GeneralFields.Code')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -187,8 +143,8 @@ export default observer(function GoodsNewEditForm() {
                 color="error"
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
-                  clearSelectedGoods();
-                  navigate(PATH_DASHBOARD.Goods.list);
+                  clearSelectedAssetType();
+                  navigate(PATH_DASHBOARD.AssetType.list);
                 }}
               >
                 {translate('CRUD.BackToList')}

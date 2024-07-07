@@ -45,19 +45,21 @@ import { ICountry } from 'src/@types/country';
 import { UserReport } from 'src/@types/userReport';
 import { Province, ProvinceParams } from 'src/@types/province';
 import { District, DistrictParams } from 'src/@types/district';
-import { IContractType, IContractTypeParams } from 'src/@types/foamCompanyTypes/ContractType';
 import {
   IContractDetails,
   IContractDetailsParams,
 } from 'src/@types/foamCompanyTypes/ContractDetails';
-import { IBranch, IBranchParams } from 'src/@types/foamCompanyTypes/branch';
-import { IUnitOfMeasure, IUnitOfMeasureParams } from 'src/@types/foamCompanyTypes/unitOfMeasure';
-import { IExpenseType, IExpenseTypeParams } from 'src/@types/foamCompanyTypes/expenseType';
+import { IBranch, IBranchParams } from 'src/@types/foamCompanyTypes/looks/branch';
+import { IExpenseType, IExpenseTypeParams } from 'src/@types/foamCompanyTypes/looks/expenseType';
 import { ICustomer, ICustomerParams } from 'src/@types/foamCompanyTypes/customer';
 import { ISupplier, ISupplierParams } from 'src/@types/foamCompanyTypes/Supplier';
 import { IExpense, IExpenseParams } from 'src/@types/foamCompanyTypes/Expense';
 import { IGoods, IGoodsParams } from 'src/@types/foamCompanyTypes/Goods';
 import { productOrder, ProductOrdersParams } from 'src/@types/foamCompanyTypes/productOrder';
+import { IAssetType, IAssetTypeParams } from 'src/@types/foamCompanyTypes/looks/AssetType';
+import { ICurrencyType, ICurrencyTypeParams } from 'src/@types/foamCompanyTypes/looks/CurrencyType';
+import { ILoanType, ILoanTypeParams } from 'src/@types/foamCompanyTypes/looks/LoanType';
+import { IPaymentType, IPaymentTypeParams } from 'src/@types/foamCompanyTypes/looks/PaymentType';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:7073/api/';
@@ -414,21 +416,81 @@ const itsmsDashboard = {
     ),
 };
 
-// ContractType
-const ContractType = {
-  create: (ContractType: IContractType) => requests.post<void>('/ContractType', ContractType),
-  getList: (param: IContractTypeParams) =>
-    axios.post<any>(`/ContractType/GetList`, param, { withCredentials: true }),
-  update: (ContractType: IContractType) =>
-    requests.put<void>(`/ContractType/${ContractType.id}`, ContractType),
-  // detail: (ContractTypeId: any) =>
-  //   requests.get<void>(`/ContractType/GetDetail/${ContractTypeId}`),
-  delete: (id: number, remark: string) =>
-    axios.delete<void>(`/ContractType/${id}`, { data: remark }),
+// NPFX MARKET AGENT START HERE
+// AssetType
+const AssetType = {
+  create: (AssetType: IAssetType) => requests.post<void>('/AssetType', AssetType),
+  getList: (param: IAssetTypeParams) =>
+    axios.post<any>(`/AssetType/GetList`, param, { withCredentials: true }),
+  update: (AssetType: IAssetType) => requests.put<void>(`/AssetType/${AssetType.id}`, AssetType),
+  // detail: (AssetTypeId: any) =>
+  //   requests.get<void>(`/AssetType/GetDetail/${AssetTypeId}`),
+  delete: (id: number, remark: string) => axios.delete<void>(`/AssetType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/ContractType/GetDropDownList', {
+    axios.get<any>('/AssetType/GetDropDownList', {
       withCredentials: true,
     }),
+};
+
+// CurrencyType
+const CurrencyType = {
+  create: (CurrencyType: ICurrencyType) => requests.post<void>('/CurrencyType', CurrencyType),
+  getList: (param: ICurrencyTypeParams) =>
+    axios.post<any>(`/CurrencyType/GetList`, param, { withCredentials: true }),
+  update: (CurrencyType: ICurrencyType) =>
+    requests.put<void>(`/CurrencyType/${CurrencyType.id}`, CurrencyType),
+  // detail: (CurrencyTypeId: any) =>
+  //   requests.get<void>(`/CurrencyType/GetDetail/${CurrencyTypeId}`),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/CurrencyType/${id}`, { data: remark }),
+  DDl: () =>
+    axios.get<any>('/CurrencyType/GetDropDownList', {
+      withCredentials: true,
+    }),
+};
+
+// Loan Type
+const LoanType = {
+  create: (LoanType: ILoanType) => requests.post<void>('/LoanType', LoanType),
+  getList: (param: ILoanTypeParams) =>
+    axios.post<any>(`/LoanType/GetList`, param, { withCredentials: true }),
+  update: (LoanType: ILoanType) => requests.put<void>(`/LoanType/${LoanType.id}`, LoanType),
+  // detail: (LoanTypeId: any) =>
+  //   requests.get<void>(`/LoanType/GetDetail/${LoanTypeId}`),
+  delete: (id: number, remark: string) => axios.delete<void>(`/LoanType/${id}`, { data: remark }),
+  DDl: () =>
+    axios.get<any>('/LoanType/GetDropDownList', {
+      withCredentials: true,
+    }),
+};
+
+// Payment Type
+const PaymentType = {
+  create: (PaymentType: IPaymentType) => requests.post<void>('/PaymentType', PaymentType),
+  getList: (param: IPaymentTypeParams) =>
+    axios.post<any>(`/PaymentType/GetList`, param, { withCredentials: true }),
+  update: (PaymentType: IPaymentType) =>
+    requests.put<void>(`/PaymentType/${PaymentType.id}`, PaymentType),
+  // detail: (PaymentTypeId: any) =>
+  //   requests.get<void>(`/PaymentType/GetDetail/${PaymentTypeId}`),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/PaymentType/${id}`, { data: remark }),
+  DDl: () =>
+    axios.get<any>('/PaymentType/GetDropDownList', {
+      withCredentials: true,
+    }),
+};
+
+//  Expense Type
+const ExpenseType = {
+  create: (expenseType: IExpenseType) => requests.post<void>('/ExpenseType', expenseType),
+  getList: (param: IExpenseTypeParams) =>
+    axios.post<any>(`/ExpenseType/GetList`, param, { withCredentials: true }),
+  update: (expenseType: IExpenseType) =>
+    requests.put<void>(`/ExpenseType/${expenseType.id}`, expenseType),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/ExpenseType/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/ExpenseType/GetDropDownList`, { withCredentials: true }),
 };
 
 // Country Lookup
@@ -541,20 +603,7 @@ const Customer = {
   DDl: (departmentId: any) =>
     axios.get<any>(`/Customer/GetDropDownList/${departmentId}`, { withCredentials: true }),
 };
-// Unite Of measure
-const UniteOfMeasure = {
-  create: (unit: IUnitOfMeasure) => requests.post<void>('/Unitofmeasures', unit),
-  getList: (param: IUnitOfMeasureParams) =>
-    axios.post<any>(`/Unitofmeasures/GetList`, param, { withCredentials: true }),
-  update: (PositionTitle: IUnitOfMeasure) =>
-    requests.put<void>(`/Unitofmeasures/${PositionTitle.id}`, PositionTitle),
-  delete: (id: number, remark: string) =>
-    axios.delete<void>(`/Unitofmeasures/${id}`, { data: remark }),
-  DDl: (departmentId: any) =>
-    axios.get<any>(`/Unitofmeasures/GetDropDownList/${departmentId}`, {
-      withCredentials: true,
-    }),
-};
+
 // Investor
 const Investor = {
   create: (investor: IInvestor) => requests.post<void>('/Investor', investor),
@@ -566,17 +615,7 @@ const Investor = {
   DDl: (departmentId: any) =>
     axios.get<any>(`/Investor/GetDropDownList/${departmentId}`, { withCredentials: true }),
 };
-//  Expense Type
-const ExpenseType = {
-  create: (expenseType: IExpenseType) => requests.post<void>('/ExpenseType', expenseType),
-  getList: (param: IExpenseTypeParams) =>
-    axios.post<any>(`/ExpenseType/GetList`, param, { withCredentials: true }),
-  update: (expenseType: IExpenseType) =>
-    requests.put<void>(`/ExpenseType/${expenseType.id}`, expenseType),
-  delete: (id: number, remark: string) =>
-    axios.delete<void>(`/ExpenseType/${id}`, { data: remark }),
-  DDl: () => axios.get<any>(`/ExpenseType/GetDropDownList`, { withCredentials: true }),
-};
+
 //  Goods
 const Goods = {
   create: (Goods: IGoods) => requests.post<void>('/Goodsss', Goods),
@@ -677,17 +716,20 @@ const agent = {
   GetParentEmp,
   province,
   district,
-  ContractType,
   ContractDetails,
-  Branch,
-  UniteOfMeasure,
-  ExpenseType,
   Investor,
   Customer,
   Supplier,
   Expense,
   Goods,
   ProductOrder,
+  // NPFX MARKET
+  ExpenseType,
+  AssetType,
+  Branch,
+  LoanType,
+  CurrencyType,
+  PaymentType,
 };
 
 export default agent;

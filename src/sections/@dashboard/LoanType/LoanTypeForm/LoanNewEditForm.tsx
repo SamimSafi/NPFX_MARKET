@@ -11,43 +11,44 @@ import { Box, Button, Card, Grid, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
+
 import useLocales from 'src/hooks/useLocales';
 // components
 import Iconify from '../../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { IBranch } from 'src/@types/foamCompanyTypes/looks/branch';
+import { ILoanType } from 'src/@types/foamCompanyTypes/looks/LoanType';
 // ----------------------------------------------------------------------
 
-export default observer(function BranchNewEditForm() {
-  const { branchStore } = useStore();
+export default observer(function LoanTypeNewEditForm() {
+  const { LoanTypeStore } = useStore();
   const { translate } = useLocales();
-  const { createBranch, updateBranch, editMode, selectedBranch, clearSelectedBranch } = branchStore;
+  const { createLoanType, updateLoanType, editMode, selectedLoanType, clearSelectedLoanType } =
+    LoanTypeStore;
   const navigate = useNavigate();
-
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewBranchSchema = Yup.object().shape({
+  const NewLoanTypeSchema = Yup.object().shape({
     englishName: Yup.string().required(`${translate('Validation.EnglishName')}`),
-    dariName: Yup.string().required(`${translate('Validation.DariName')}`),
-    pashtoName: Yup.string().required(`${translate('Validation.PashtoName')}`),
-    address: Yup.string().required(`${translate('Validation.address')}`),
+    dariName: Yup.string().required(`${translate('Validation.PashtoName')}`),
+    pashtoName: Yup.string().required(`${translate('Validation.DariName')}`),
+    code: Yup.string().required(`${translate('Validation.Code')}`),
   });
 
-  const defaultValues = useMemo<IBranch>(
+  const defaultValues = useMemo<ILoanType>(
     () => ({
-      id: selectedBranch?.id,
-      englishName: selectedBranch?.englishName || '',
-      dariName: selectedBranch?.dariName || '',
-      pashtoName: selectedBranch?.pashtoName || '',
-      address: selectedBranch?.address || '',
+      id: selectedLoanType?.id,
+      englishName: selectedLoanType?.englishName || '',
+      dariName: selectedLoanType?.dariName || '',
+      pashtoName: selectedLoanType?.pashtoName || '',
+      code: selectedLoanType?.code || '',
     }),
-    [selectedBranch]
+    [selectedLoanType]
   );
 
-  const methods = useForm<IBranch>({
-    resolver: yupResolver(NewBranchSchema),
+  const methods = useForm<ILoanType>({
+    resolver: yupResolver(NewLoanTypeSchema),
     defaultValues,
   });
 
@@ -57,20 +58,20 @@ export default observer(function BranchNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IBranch) => {
+  const onSubmit = (data: ILoanType) => {
     if (data.id! === undefined) {
       ///create
-      createBranch(data).then(() => {
+      createLoanType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.Branch.list);
+        navigate(PATH_DASHBOARD.ContractType.list);
       });
     } else {
       ///update
-      updateBranch(data).then(() => {
+      updateLoanType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.Branch.list);
+        navigate(PATH_DASHBOARD.ContractType.list);
       });
     }
   };
@@ -98,14 +99,8 @@ export default observer(function BranchNewEditForm() {
               }}
             >
               <RHFTextField
-                name="enlgishName"
-                label={translate('GeneralFields.EnlgishName')}
-                showAsterisk={true}
-                autoFocus
-              />
-              <RHFTextField
-                name="dariName"
-                label={translate('GeneralFields.DariName')}
+                name="englishName"
+                label={translate('GeneralFields.EnglishName')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -116,8 +111,15 @@ export default observer(function BranchNewEditForm() {
                 autoFocus
               />
               <RHFTextField
-                name="address"
-                label={translate('Branch.address')}
+                name="dariName"
+                label={translate('GeneralFields.DariName')}
+                showAsterisk={true}
+                autoFocus
+              />
+
+              <RHFTextField
+                name="Code"
+                label={translate('GeneralFields.Code')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -141,8 +143,8 @@ export default observer(function BranchNewEditForm() {
                 color="error"
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
-                  clearSelectedBranch();
-                  navigate(PATH_DASHBOARD.Branch.list);
+                  clearSelectedLoanType();
+                  navigate(PATH_DASHBOARD.LoanType.list);
                 }}
               >
                 {translate('CRUD.BackToList')}

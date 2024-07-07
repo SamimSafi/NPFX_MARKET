@@ -16,10 +16,10 @@ interface Props {
   id: number;
 }
 
-export default observer(function GoodsDelete({ id }: Props) {
+export default observer(function AssetTypeDelete({ id }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
-  const { GoodsStore } = useStore();
+  const { AssetTypeStore } = useStore();
   const validationSchema = Yup.object().shape({
     remarks: Yup.string()
       .required(`${translate('Validation.Remark')}`)
@@ -30,13 +30,12 @@ export default observer(function GoodsDelete({ id }: Props) {
   });
 
   const {
-    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = (remark: string) => {
-    GoodsStore.deleteGoods(id, remark)
+    AssetTypeStore.deleteAssetType(id, remark)
       .then(() => {
         enqueueSnackbar('Delete  success!');
       })
@@ -91,7 +90,7 @@ export default observer(function GoodsDelete({ id }: Props) {
                 <LoadingButton
                   variant="contained"
                   size="small"
-                  onClick={() => GoodsStore.setOpenCloseDialog()}
+                  onClick={() => AssetTypeStore.setOpenCloseDialog()}
                   startIcon={<CancelIcon />}
                 >
                   {translate('CRUD.Cancle')}

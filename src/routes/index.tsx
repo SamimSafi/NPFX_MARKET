@@ -37,8 +37,12 @@ import ExpenseTypeList from 'src/sections/@dashboard/ExpenseType/ExpenseTypeList
 import ExpenseTypeCreate from 'src/sections/@dashboard/ExpenseType/ExpenseTypeForm/ExpenseTypeCreate';
 import ExpenseList from 'src/sections/@dashboard/Expense/ExpenseList/ExpenseList';
 import ExpenseCreate from 'src/sections/@dashboard/Expense/ExpenseForm/ExpenseCreate';
-import GoodsList from 'src/sections/@dashboard/Goods/GoodsList/GoodsList';
-import GoodsCreate from 'src/sections/@dashboard/Goods/GoodsForm/GoodsCreate';
+import BranchCreate from 'src/sections/@dashboard/Branch/BranchForm/BranchCreate';
+import BranchList from 'src/sections/@dashboard/Branch/BranchList/BranchList';
+import AssetTypeCreate from 'src/sections/@dashboard/AssetType/AssetTypeForm/AssetTypeCreate';
+import AssetTypeList from 'src/sections/@dashboard/AssetType/AssetTypeList/AssetTypeList';
+import LoanTypeCreate from 'src/sections/@dashboard/LoanType/LoanTypeForm/LoanTypeCreate';
+import LoanTypeList from 'src/sections/@dashboard/LoanType/LoanTypeList/LoanTypeList';
 
 // ----------------------------------------------------------------------
 
@@ -115,6 +119,101 @@ export default function Router() {
           ],
         },
 
+        // NPFX MARKET COMPONENT RENDERING FOR ROUTES HERE
+        {
+          path: 'Branch',
+          children: [
+            { element: <Navigate to="/dashboard/Branch/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Branch-GetAll']}>
+                  <BranchList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Branch-Create']}>
+                  <BranchCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Branch-Update']}>
+                  <BranchCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            //{ path: ':id', element: <InvoiceDetails /> },
+            // { path: ':id/edit', element: <InvoiceEdit /> },
+            //{ path: 'new', element: <PermissionCreate /> },
+          ],
+        },
+        // Asset Type Routs
+        {
+          path: 'AssetType',
+          children: [
+            { element: <Navigate to="/dashboard/AssetType/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['AssetType-GetAll']}>
+                  <AssetTypeList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['AssetType-Create']}>
+                  <AssetTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['AssetType-Update']}>
+                  <AssetTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        }, // Asset Type Routs
+        {
+          path: 'LoanType',
+          children: [
+            { element: <Navigate to="/dashboard/LoanType/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['LoanType-GetAll']}>
+                  <LoanTypeList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['LoanType-Create']}>
+                  <LoanTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['LoanType-Update']}>
+                  <LoanTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
         {
           path: 'permission',
           children: [
@@ -439,37 +538,7 @@ export default function Router() {
             },
           ],
         },
-        // Goods Routs
-        {
-          path: 'Goods',
-          children: [
-            { element: <Navigate to="/dashboard/Goods/list" replace />, index: true },
-            {
-              path: 'list',
-              element: (
-                <PermissionBasedGuard hasContent permissions={['Goods-GetAll']}>
-                  <GoodsList />
-                </PermissionBasedGuard>
-              ),
-            },
-            {
-              path: 'new',
-              element: (
-                <PermissionBasedGuard hasContent permissions={['Goods-Create']}>
-                  <GoodsCreate />
-                </PermissionBasedGuard>
-              ),
-            },
-            {
-              path: 'edit',
-              element: (
-                <PermissionBasedGuard hasContent permissions={['Goods-Update']}>
-                  <GoodsCreate />
-                </PermissionBasedGuard>
-              ),
-            },
-          ],
-        },
+
         // Customer Routs
         {
           path: 'Customer',
@@ -707,7 +776,7 @@ export default function Router() {
             { path: 'list', element: <InvoiceList /> },
             { path: ':id', element: <InvoiceDetails /> },
             { path: ':id/edit', element: <InvoiceEdit /> },
-            { path: 'new', element: <InvoiceCreate /> },
+            // { path: 'new', element: <InvoiceCreate /> },
           ],
         },
         {
@@ -815,12 +884,6 @@ const EmployeeCreate = Loadable(
   lazy(() => import('../sections/@dashboard/Employee/EmployeeForm/EmployeeCreate'))
 );
 
-// Attendance
-
-const EmployeeAttendance = Loadable(
-  lazy(() => import('../sections/@dashboard/employeeAttendance/AttendanceReportIndex'))
-);
-
 //HR
 //ContractType
 const ContractTypeList = Loadable(
@@ -847,7 +910,7 @@ const EcommerceCheckout = Loadable(lazy(() => import('../pages/dashboard/Ecommer
 // INVOICE
 const InvoiceList = Loadable(lazy(() => import('../pages/dashboard/InvoiceList')));
 const InvoiceDetails = Loadable(lazy(() => import('../pages/dashboard/InvoiceDetails')));
-const InvoiceCreate = Loadable(lazy(() => import('../pages/dashboard/InvoiceCreate')));
+// const InvoiceCreate = Loadable(lazy(() => import('../pages/dashboard/InvoiceCreate')));
 const InvoiceEdit = Loadable(lazy(() => import('../pages/dashboard/InvoiceEdit')));
 
 // BLOG
@@ -865,9 +928,6 @@ const PermissionDenied = Loadable(lazy(() => import('../pages/dashboard/Permissi
 
 // MAIN
 const LoginPage = Loadable(lazy(() => import('../pages/auth/Login')));
-const About = Loadable(lazy(() => import('../pages/About')));
-const Contact = Loadable(lazy(() => import('../pages/Contact')));
-const Faqs = Loadable(lazy(() => import('../pages/Faqs')));
 const ComingSoon = Loadable(lazy(() => import('../pages/ComingSoon')));
 const Maintenance = Loadable(lazy(() => import('../pages/Maintenance')));
 const Pricing = Loadable(lazy(() => import('../pages/Pricing')));

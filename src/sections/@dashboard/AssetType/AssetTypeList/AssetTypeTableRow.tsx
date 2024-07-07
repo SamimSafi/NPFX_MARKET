@@ -1,22 +1,17 @@
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { TableRow, TableCell, Typography, MenuItem } from '@mui/material';
+import { TableRow, TableCell, MenuItem } from '@mui/material';
 // @types
 
 // components
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
-
-import { IContractType } from 'src/@types/foamCompanyTypes/ContractType';
-import { IBranch } from 'src/@types/foamCompanyTypes/branch';
-import { IUnitOfMeasure } from 'src/@types/foamCompanyTypes/unitOfMeasure';
-import { IGoods } from 'src/@types/foamCompanyTypes/Goods';
+import { IAssetType } from 'src/@types/foamCompanyTypes/looks/AssetType';
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IGoods;
+  row: IAssetType;
   // selected: boolean;
   onEditRow: VoidFunction;
   //onSelectRow: VoidFunction;
@@ -24,10 +19,8 @@ type Props = {
   index: any;
 };
 
-export default function GoodsTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const theme = useTheme();
-
-  const { id, name } = row;
+export default function AssetTypeTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
+  const { name } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 

@@ -3,23 +3,10 @@ import { PATH_DASHBOARD } from '../../../routes/paths';
 // ----------------------------------------------------------------------
 // components
 import SvgIconStyle from '../../../components/SvgIconStyle';
-import Iconify from 'src/components/Iconify';
 // ----------------------------------------------------------------------
 const getIcon = (name: string) => (
   <SvgIconStyle src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
 );
-
-const permissions = (permissionName?: any) => {
-  const getUserDataFromLocalStorage: any = localStorage.getItem('userData');
-  const changeLocalStorgeStringToValue = JSON.parse(getUserDataFromLocalStorage);
-  const is_super_admin = changeLocalStorgeStringToValue?.IsSuperAdmin;
-  const permission = changeLocalStorgeStringToValue?.userpermission.map((data: any) => data.Name);
-  if (!is_super_admin && !permission?.includes(permissionName)) {
-    return false;
-  } else {
-    return true;
-  }
-};
 
 const ICONS = {
   blog: getIcon('ic_blog'),
@@ -73,7 +60,7 @@ const navConfig = [
         path: '#1',
         icon: ICONS.lookUp,
         roles: [
-          'Language-GetList',
+          'Branch-GetList',
           'Year-GetList',
           'ContractType-GetList',
           'PositionTitle-GetList',
@@ -83,67 +70,46 @@ const navConfig = [
           {
             title: 'CommonLookUps',
             path: '#5',
-            roles: ['Province-GetList', 'District-GetList', 'Language-GetList'],
+            roles: ['Branch-GetList', 'District-GetList', 'Language-GetList'],
             children: [
               {
-                title: 'province',
-                path: PATH_DASHBOARD.Province.list,
-                roles: ['Province-GetList'],
+                title: 'Branch',
+                path: PATH_DASHBOARD.Branch.list,
+                roles: ['Branch-GetList'],
               },
-              {
-                title: 'district',
-                path: PATH_DASHBOARD.district.list,
-                roles: ['District-GetList'],
-              },
-
-              { title: 'year', path: PATH_DASHBOARD.Year.list, roles: ['Year-GetList'] },
-              {
-                title: 'language',
-                path: PATH_DASHBOARD.Language.list,
-                roles: ['Language-GetList'],
-              },
+              // {
+              //   title: 'district',
+              //   path: PATH_DASHBOARD.district.list,
+              //   roles: ['District-GetList'],
+              // },
               {
                 title: 'expenseType',
                 path: PATH_DASHBOARD.ExpenseType.list,
                 roles: ['ExpenseType-GetList'],
               },
               {
-                title: 'contractType',
-                path: PATH_DASHBOARD.ContractType.list,
-                roles: ['ExpenseType-GetList'],
+                title: 'assetType',
+                path: PATH_DASHBOARD.AssetType.list,
+                roles: ['AssetType-GetList'],
               },
               {
-                title: 'positionTitle',
-                path: PATH_DASHBOARD.PositionTitle.list,
-                roles: ['PositionTitle-GetList'],
+                title: 'LoanType',
+                path: PATH_DASHBOARD.LoanType.list,
+                roles: ['LoanType-GetList'],
               },
+              // {
+              //   title: 'contractType',
+              //   path: PATH_DASHBOARD.ContractType.list,
+              //   roles: ['ExpenseType-GetList'],
+              // },
+              // {
+              //   title: 'positionTitle',
+              //   path: PATH_DASHBOARD.PositionTitle.list,
+              //   roles: ['PositionTitle-GetList'],
+              // },
             ],
           },
           //HR lookups Table
-          {
-            title: 'HRLookupTables',
-            path: '#5',
-            roles: ['ContractType-GetList', 'PositionTitle-GetList', 'JobPosition-GetList'],
-            children: [
-              {
-                title: 'contractType',
-                path: PATH_DASHBOARD.ContractType.list,
-                roles: ['ContractType-GetList'],
-              },
-
-              {
-                title: 'positionTitle',
-                path: PATH_DASHBOARD.PositionTitle.list,
-                roles: ['PositionTitle-GetList'],
-              },
-
-              {
-                title: 'jobPosition',
-                path: PATH_DASHBOARD.JobPosition.list,
-                roles: ['JobPosition-GetList'],
-              },
-            ],
-          },
         ],
       },
 
