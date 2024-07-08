@@ -43,6 +43,10 @@ import AssetTypeCreate from 'src/sections/@dashboard/AssetType/AssetTypeForm/Ass
 import AssetTypeList from 'src/sections/@dashboard/AssetType/AssetTypeList/AssetTypeList';
 import LoanTypeCreate from 'src/sections/@dashboard/LoanType/LoanTypeForm/LoanTypeCreate';
 import LoanTypeList from 'src/sections/@dashboard/LoanType/LoanTypeList/LoanTypeList';
+import PaymentTypeList from 'src/sections/@dashboard/PaymentType/PaymentList/PaymentTypeList';
+import PaymentTypeCreate from 'src/sections/@dashboard/PaymentType/PaymentTypeForm/PaymentTypeCreate';
+import CurrencyTypeCreate from 'src/sections/@dashboard/CurrencyType/CurrencyTypeForm/CurrencyTypeCreate';
+import CurrencyTypeList from 'src/sections/@dashboard/CurrencyType/CurrencyTypeList/CurrencyTypeList';
 
 // ----------------------------------------------------------------------
 
@@ -209,6 +213,66 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['LoanType-Update']}>
                   <LoanTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'PaymentType',
+          children: [
+            { element: <Navigate to="/dashboard/PaymentType/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['PaymentType-GetAll']}>
+                  <PaymentTypeList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['PaymentType-Create']}>
+                  <PaymentTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['PaymentType-Update']}>
+                  <PaymentTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'CurrencyType',
+          children: [
+            { element: <Navigate to="/dashboard/CurrencyType/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['CurrencyType-GetAll']}>
+                  <CurrencyTypeList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['CurrencyType-Create']}>
+                  <CurrencyTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['CurrencyType-Update']}>
+                  <CurrencyTypeCreate />
                 </PermissionBasedGuard>
               ),
             },

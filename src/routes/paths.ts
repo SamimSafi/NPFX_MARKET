@@ -89,13 +89,21 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/LoanType/edit'),
     detail: path(ROOTS_DASHBOARD, '/LoanType/detail'),
   },
-  // LoanType
+  // PaymentType
   PaymentType: {
     root: path(ROOTS_DASHBOARD, '/PaymentType'),
     list: path(ROOTS_DASHBOARD, '/PaymentType/list'),
     new: path(ROOTS_DASHBOARD, '/PaymentType/new'),
     edit: path(ROOTS_DASHBOARD, '/PaymentType/edit'),
     detail: path(ROOTS_DASHBOARD, '/PaymentType/detail'),
+  },
+  // CurrencyType
+  CurrencyType: {
+    root: path(ROOTS_DASHBOARD, '/CurrencyType'),
+    list: path(ROOTS_DASHBOARD, '/CurrencyType/list'),
+    new: path(ROOTS_DASHBOARD, '/CurrencyType/new'),
+    edit: path(ROOTS_DASHBOARD, '/CurrencyType/edit'),
+    detail: path(ROOTS_DASHBOARD, '/CurrencyType/detail'),
   },
   // Users Path
   user: {

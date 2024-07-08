@@ -62,7 +62,8 @@ import { ILoanType, ILoanTypeParams } from 'src/@types/foamCompanyTypes/looks/Lo
 import { IPaymentType, IPaymentTypeParams } from 'src/@types/foamCompanyTypes/looks/PaymentType';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-axios.defaults.baseURL = 'http://localhost:7073/api/';
+// axios.defaults.baseURL = 'http://localhost:7073/api/';
+axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
 
 axios.interceptors.request.use(
   (config) => {

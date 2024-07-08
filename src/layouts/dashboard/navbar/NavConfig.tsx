@@ -97,6 +97,16 @@ const navConfig = [
                 path: PATH_DASHBOARD.LoanType.list,
                 roles: ['LoanType-GetList'],
               },
+              {
+                title: 'PaymentType',
+                path: PATH_DASHBOARD.PaymentType.list,
+                roles: ['PaymentType-GetList'],
+              },
+              {
+                title: 'CurrencyType',
+                path: PATH_DASHBOARD.CurrencyType.list,
+                roles: ['CurrencyType-GetList'],
+              },
               // {
               //   title: 'contractType',
               //   path: PATH_DASHBOARD.ContractType.list,

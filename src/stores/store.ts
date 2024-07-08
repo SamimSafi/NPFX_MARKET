@@ -35,6 +35,7 @@ import ProductOrderStore from './foamCompanyStores/productOrderStore';
 import AssetTypeStore from './foamCompanyStores/AssetTypeStore';
 import PaymentTypeStore from './foamCompanyStores/PaymentTypeStore';
 import LoanTypeStore from './foamCompanyStores/LoanTypeStore';
+import CurrencyTypeStore from './foamCompanyStores/CurrencyTypeStore';
 
 interface Store {
   LoginStore: LoginStore;
@@ -86,6 +87,7 @@ interface Store {
   ProductOrderStore: ProductOrderStore;
   PaymentTypeStore: PaymentTypeStore;
   LoanTypeStore: LoanTypeStore;
+  CurrencyTypeStore: CurrencyTypeStore;
 }
 //Include All store below
 export const store: Store = {
@@ -128,6 +130,7 @@ export const store: Store = {
   ProductOrderStore: new ProductOrderStore(),
   PaymentTypeStore: new PaymentTypeStore(),
   LoanTypeStore: new LoanTypeStore(),
+  CurrencyTypeStore: new CurrencyTypeStore(),
 };
 
 export const StoreContext = createContext(store);
