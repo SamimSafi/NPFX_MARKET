@@ -9,7 +9,6 @@ import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
 
-import { IContractType } from 'src/@types/foamCompanyTypes/ContractType';
 import { IBranch } from 'src/@types/foamCompanyTypes/looks/branch';
 import { IUnitOfMeasure } from 'src/@types/foamCompanyTypes/unitOfMeasure';
 import { IExpense } from 'src/@types/foamCompanyTypes/Expense';

@@ -544,7 +544,7 @@ export default class commonDroptdown {
   // loadContractTypeDDL
   loadContractTypeDDL = async () => {
     try {
-      const result = await agent.ContractType.DDl();
+      const result = await agent.Customer.DDl(1);
 
       this.setContractTypeDDL(result.data);
     } catch (error) {

@@ -41,7 +41,6 @@ import {
   TableHeadCustom,
   TableSelectedActions,
 } from '../../components/table';
-import { InvoiceTableRow, InvoiceTableToolbar } from 'src/sections/@dashboard/invoice/list';
 import { Invoice } from 'src/@types/invoice';
 // sections
 
@@ -221,7 +220,7 @@ export default function InvoiceList() {
           </Tabs>
 
           <Divider />
-
+          {/* 
           <InvoiceTableToolbar
             filterName={filterName}
             filterService={filterService}
@@ -236,7 +235,7 @@ export default function InvoiceList() {
               setFilterEndDate(newValue);
             }}
             optionsService={SERVICE_OPTIONS}
-          />
+          /> */}
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 800, position: 'relative' }}>
@@ -297,7 +296,7 @@ export default function InvoiceList() {
                   }
                 />
 
-                <TableBody>
+                {/* <TableBody>
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row) => (
@@ -318,7 +317,7 @@ export default function InvoiceList() {
                   />
 
                   <TableNoData isNotFound={isNotFound} />
-                </TableBody>
+                </TableBody> */}
               </Table>
             </TableContainer>
           </Scrollbar>

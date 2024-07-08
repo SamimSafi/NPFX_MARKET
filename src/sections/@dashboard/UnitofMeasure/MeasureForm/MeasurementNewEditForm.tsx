@@ -22,15 +22,8 @@ import { IUnitOfMeasure } from 'src/@types/foamCompanyTypes/unitOfMeasure';
 // ----------------------------------------------------------------------
 
 export default observer(function MeasurementNewEditForm() {
-  const { uniteOfMeasureStore } = useStore();
   const { translate } = useLocales();
-  const {
-    createuniteOfMeasure,
-    updateuniteOfMeasure,
-    editMode,
-    selecteduniteOfMeasure,
-    clearSelecteduniteOfMeasure,
-  } = uniteOfMeasureStore;
+
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -41,15 +34,7 @@ export default observer(function MeasurementNewEditForm() {
     pashtoName: Yup.string().required(`${translate('Validation.PashtoName')}`),
   });
 
-  const defaultValues = useMemo<IUnitOfMeasure>(
-    () => ({
-      id: selecteduniteOfMeasure?.id,
-      englishName: selecteduniteOfMeasure?.englishName || '',
-      dariName: selecteduniteOfMeasure?.dariName || '',
-      pashtoName: selecteduniteOfMeasure?.pashtoName || '',
-    }),
-    [selecteduniteOfMeasure]
-  );
+  const defaultValues = useMemo<IUnitOfMeasure>(() => ({}), []);
 
   const methods = useForm<IUnitOfMeasure>({
     resolver: yupResolver(NewContractTypeSchema),
@@ -63,31 +48,31 @@ export default observer(function MeasurementNewEditForm() {
   } = methods;
 
   const onSubmit = (data: IUnitOfMeasure) => {
-    if (data.id! === undefined) {
-      ///create
-      createuniteOfMeasure(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
-      });
-    } else {
-      ///update
-      updateuniteOfMeasure(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
-      });
-    }
+    // if (data.id! === undefined) {
+    //   ///create
+    //   createuniteOfMeasure(data).then(() => {
+    //     reset();
+    //     enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+    //     navigate(PATH_DASHBOARD.ContractType.list);
+    //   });
+    // } else {
+    //   ///update
+    //   updateuniteOfMeasure(data).then(() => {
+    //     reset();
+    //     enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
+    //     navigate(PATH_DASHBOARD.ContractType.list);
+    //   });
+    // }
   };
 
-  useEffect(() => {
-    if (editMode) {
-      reset(defaultValues);
-    }
-    if (!editMode) {
-      reset(defaultValues);
-    }
-  }, [reset, editMode, defaultValues]);
+  // useEffect(() => {
+  //   if (editMode) {
+  //     reset(defaultValues);
+  //   }
+  //   if (!editMode) {
+  //     reset(defaultValues);
+  //   }
+  // }, [reset, editMode, defaultValues]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -129,10 +114,10 @@ export default observer(function MeasurementNewEditForm() {
                 variant="contained"
                 loading={isSubmitting}
                 startIcon={
-                  !editMode ? <Iconify icon="eva:plus-fill" /> : <Iconify icon="eva:edit-fill" />
+                  !false ? <Iconify icon="eva:plus-fill" /> : <Iconify icon="eva:edit-fill" />
                 }
               >
-                {!editMode ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
+                {!false ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
               </LoadingButton>
               <Button
                 fullWidth
@@ -140,7 +125,7 @@ export default observer(function MeasurementNewEditForm() {
                 color="error"
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
-                  clearSelecteduniteOfMeasure();
+                  // clearSelecteduniteOfMeasure();
                   navigate(PATH_DASHBOARD.ContractType.list);
                 }}
               >

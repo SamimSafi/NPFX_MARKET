@@ -8,8 +8,6 @@ import { TableRow, TableCell, Typography, MenuItem } from '@mui/material';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
-
-import { IContractType } from 'src/@types/foamCompanyTypes/ContractType';
 import { IBranch } from 'src/@types/foamCompanyTypes/looks/branch';
 import { IUnitOfMeasure } from 'src/@types/foamCompanyTypes/unitOfMeasure';
 // ----------------------------------------------------------------------

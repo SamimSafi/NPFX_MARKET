@@ -19,7 +19,6 @@ interface Props {
 export default observer(function MeasurementDelete({ id }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
-  const { uniteOfMeasureStore } = useStore();
   const validationSchema = Yup.object().shape({
     remarks: Yup.string()
       .required(`${translate('Validation.Remark')}`)
@@ -36,16 +35,16 @@ export default observer(function MeasurementDelete({ id }: Props) {
   } = methods;
 
   const onSubmit = (remark: string) => {
-    uniteOfMeasureStore.deleteuniteOfMeasure(id, remark)
-      .then(() => {
-        enqueueSnackbar('Delete  success!');
-      })
-      .catch((error) => {
-        console.log(error);
-        enqueueSnackbar('Failed to delete ', {
-          variant: 'error',
-        });
-      });
+    // uniteOfMeasureStore.deleteuniteOfMeasure(id, remark)
+    //   .then(() => {
+    //     enqueueSnackbar('Delete  success!');
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     enqueueSnackbar('Failed to delete ', {
+    //       variant: 'error',
+    //     });
+    //   });
   };
 
   return (
@@ -91,7 +90,7 @@ export default observer(function MeasurementDelete({ id }: Props) {
                 <LoadingButton
                   variant="contained"
                   size="small"
-                  onClick={() => uniteOfMeasureStore.setOpenCloseDialog()}
+                  // onClick={() => uniteOfMeasureStore.setOpenCloseDialog()}
                   startIcon={<CancelIcon />}
                 >
                   {translate('CRUD.Cancle')}

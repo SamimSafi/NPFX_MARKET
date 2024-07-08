@@ -10,7 +10,6 @@ import { _invoices } from '../../_mock';
 // components
 import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import InvoiceNewEditForm from 'src/sections/@dashboard/invoice/new-edit-form';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +31,7 @@ export default function InvoiceEdit() {
             { name: `INV-${currentInvoice?.invoiceNumber}` || '' },
           ]}
         />
-        <InvoiceNewEditForm isEdit currentInvoice={currentInvoice} />
+        {/* <InvoiceNewEditForm isEdit currentInvoice={currentInvoice} /> */}
       </Container>
     </Page>
   );

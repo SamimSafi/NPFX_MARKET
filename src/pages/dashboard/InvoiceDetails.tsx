@@ -10,7 +10,6 @@ import useSettings from '../../hooks/useSettings';
 // components
 import Page from '../../components/Page';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-import Invoice from '../../sections/@dashboard/invoice/details';
 // ----------------------------------------------------------------------
 
 export default function InvoiceDetails() {
@@ -34,7 +33,7 @@ export default function InvoiceDetails() {
             { name: `INV-${invoice?.invoiceNumber}` || '' },
           ]}
         />
-        <Invoice invoice={invoice} />
+        {/* <Invoice invoice={invoice} /> */}
       </Container>
     </Page>
   );

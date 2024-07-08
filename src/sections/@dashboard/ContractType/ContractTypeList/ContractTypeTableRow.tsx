@@ -8,8 +8,8 @@ import { TableRow, TableCell, Typography, MenuItem } from '@mui/material';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
+import { IContractType } from 'src/@types/foamCompanyTypes/CategoryType';
 
-import { IContractType } from 'src/@types/foamCompanyTypes/ContractType';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -24,7 +24,7 @@ type Props = {
 export default function ContractTypeTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
   const theme = useTheme();
 
-  const { id, name, englishName, pashtoName, dariName } = row;
+  const { id, name } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 

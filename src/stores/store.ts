@@ -26,7 +26,6 @@ import ContractDetailsStore from './ContractDetails/ContractDetailsStore';
 import PositionTitleStore from './PositionTitle/PositionTitleStore';
 import JobPositionStore from './JobPosition/JobPositionStore';
 import branchStore from './foamCompanyStores/branchStore';
-import uniteOfMeasureStore from './foamCompanyStores/uniteOfMeasureStore';
 import ExpenseTypeStore from './foamCompanyStores/ExpenseTypeStore';
 import investorStore from './foamCompanyStores/investorStore';
 import customerStore from './foamCompanyStores/customerStore';
@@ -78,7 +77,6 @@ interface Store {
 
   // Foam Company Stores
   branchStore: branchStore;
-  uniteOfMeasureStore: uniteOfMeasureStore;
   ExpenseTypeStore: ExpenseTypeStore;
   investorStore: investorStore;
   customerStore: customerStore;
@@ -121,7 +119,6 @@ export const store: Store = {
   JobPositionStore: new JobPositionStore(),
   // Foam Company Stores
   branchStore: new branchStore(),
-  uniteOfMeasureStore: new uniteOfMeasureStore(),
   ExpenseTypeStore: new ExpenseTypeStore(),
   investorStore: new investorStore(),
   customerStore: new customerStore(),

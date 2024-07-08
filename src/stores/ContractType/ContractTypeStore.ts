@@ -1,9 +1,6 @@
-
 import { makeAutoObservable, runInAction } from 'mobx';
-import agent from '../../api/agent';
+import { IContractType, IContractTypeParams } from 'src/@types/foamCompanyTypes/CategoryType';
 
-
-import { IContractType, IContractTypeParams } from 'src/@types/foamCompanyTypes/ContractType';
 export default class ContractTypeStore {
   openDialog = false;
 
@@ -29,12 +26,12 @@ export default class ContractTypeStore {
 
   //Pagination
   loadContractType = async (params: IContractTypeParams) => {
-   // this.ContractTypeRegistry.clear();
+    // this.ContractTypeRegistry.clear();
     try {
-      const result = await agent.ContractType.getList(params);
+      // const result = await agent.ContractType.getList(params);
       runInAction(() => {
-        this.totalRecord = result.data.totalRecord;
-        result.data.data.forEach((lst: any) => {
+        this.totalRecord = 2;
+        [].forEach((lst: any) => {
           this.setContractTypeList(lst);
         });
       });
@@ -64,7 +61,7 @@ export default class ContractTypeStore {
 
   deleteContractType = async (id: number, remark?: string) => {
     try {
-      await agent.ContractType.delete(id, remark!);
+      // await agent.ContractType.delete(id, remark!);
       runInAction(() => {
         this.ContractTypeRegistry.delete(id);
         this.totalRecord--;
@@ -79,7 +76,7 @@ export default class ContractTypeStore {
 
   createContractType = async (ContractType: IContractType) => {
     try {
-      await agent.ContractType.create(ContractType);
+      // await agent.ContractType.create(ContractType);
       runInAction(() => {
         this.loadContractType({ pageIndex: 0, pageSize: 5 });
         //After Creating it should clear form data
@@ -92,7 +89,7 @@ export default class ContractTypeStore {
 
   updateContractType = async (ContractType: IContractType) => {
     try {
-      await agent.ContractType.update(ContractType);
+      // await agent.ContractType.update(ContractType);
 
       runInAction(() => {
         this.loadContractType({ pageIndex: 0, pageSize: 5 });

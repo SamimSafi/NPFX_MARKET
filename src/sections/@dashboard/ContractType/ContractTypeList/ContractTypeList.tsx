@@ -27,8 +27,8 @@ import { useStore } from '../../../../stores/store';
 import MyDialog from 'src/components/MyDialog';
 import ContractTypeTableToolbar from './ContractTypeTableToolbar';
 import ContractTypeTableRow from './ContractTypeTableRow';
-import { IContractType } from 'src/@types/foamCompanyTypes/ContractType';
 import ContractTypeDelete from './ContractTypeDelete';
+import { IContractType } from 'src/@types/foamCompanyTypes/CategoryType';
 
 // ----------------------------------------------------------------------
 

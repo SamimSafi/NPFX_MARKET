@@ -18,7 +18,7 @@ import Iconify from '../../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { IContractType } from 'src/@types/foamCompanyTypes/ContractType';
+import { IContractType } from 'src/@types/foamCompanyTypes/CategoryType';
 // ----------------------------------------------------------------------
 
 export default observer(function ContractTypeNewEditForm() {
@@ -44,10 +44,7 @@ export default observer(function ContractTypeNewEditForm() {
   const defaultValues = useMemo<IContractType>(
     () => ({
       id: selectedContractType?.id,
-      englishName: selectedContractType?.englishName || '',
-      pashtoName: selectedContractType?.pashtoName || '',
-      dariName: selectedContractType?.dariName || '',
-      code: selectedContractType?.code || '',
+      name: selectedContractType?.name || '',
     }),
     [selectedContractType]
   );
@@ -67,22 +64,11 @@ export default observer(function ContractTypeNewEditForm() {
   const onSubmit = (data: IContractType) => {
     if (data.id! === undefined) {
       ///create
-      createContractType(data)
-        .then(() => {
-          reset();
-          enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-          navigate(PATH_DASHBOARD.ContractType.list);
-        })
-        .catch((err) => {
-          var json = JSON.parse(err.request.response);
-          if (json.error.EnglishName != null) {
-            setError('afterSubmit', { ...err, message: json.error.EnglishName });
-          } else if (json.error.PashtoName != null) {
-            setError('afterSubmit', { ...err, message: json.error.PashtoName });
-          } else if (json.error.DariName != null) {
-            setError('afterSubmit', { ...err, message: json.error.DariName });
-          }
-        });
+      createContractType(data).then(() => {
+        reset();
+        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+        navigate(PATH_DASHBOARD.ContractType.list);
+      });
     } else {
       ///update
       updateContractType(data).then(() => {
@@ -104,11 +90,6 @@ export default observer(function ContractTypeNewEditForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      {!!errors.afterSubmit && (
-        <Alert sx={{ mb: 2 }} severity="error">
-          {errors.afterSubmit.message}
-        </Alert>
-      )}
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card sx={{ p: 3 }}>
