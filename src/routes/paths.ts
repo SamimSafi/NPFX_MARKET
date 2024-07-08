@@ -89,6 +89,14 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/LoanType/edit'),
     detail: path(ROOTS_DASHBOARD, '/LoanType/detail'),
   },
+  // LoanType
+  PaymentType: {
+    root: path(ROOTS_DASHBOARD, '/PaymentType'),
+    list: path(ROOTS_DASHBOARD, '/PaymentType/list'),
+    new: path(ROOTS_DASHBOARD, '/PaymentType/new'),
+    edit: path(ROOTS_DASHBOARD, '/PaymentType/edit'),
+    detail: path(ROOTS_DASHBOARD, '/PaymentType/detail'),
+  },
   // Users Path
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
