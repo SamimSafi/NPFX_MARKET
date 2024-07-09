@@ -47,6 +47,12 @@ import PaymentTypeList from 'src/sections/@dashboard/PaymentType/PaymentList/Pay
 import PaymentTypeCreate from 'src/sections/@dashboard/PaymentType/PaymentTypeForm/PaymentTypeCreate';
 import CurrencyTypeCreate from 'src/sections/@dashboard/CurrencyType/CurrencyTypeForm/CurrencyTypeCreate';
 import CurrencyTypeList from 'src/sections/@dashboard/CurrencyType/CurrencyTypeList/CurrencyTypeList';
+import TradeTrackingCreate from 'src/sections/@dashboard/TradeTracking/TradeTrackingForm/TradeTrackingCreate';
+import TradeTrackingList from 'src/sections/@dashboard/TradeTracking/TradeTrackingList/TradeTrackingList';
+import PartnersCreate from 'src/sections/@dashboard/Partners/PartnersForm/PartnersCreate';
+import PartnersList from 'src/sections/@dashboard/Partners/PartnersList/PartnersList';
+import MainAssetCreate from 'src/sections/@dashboard/MainAsset/MainAssetForm/MainAssetCreate';
+import MainAssetList from 'src/sections/@dashboard/MainAsset/MainAssetList/MainAssetList';
 
 // ----------------------------------------------------------------------
 
@@ -273,6 +279,96 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['CurrencyType-Update']}>
                   <CurrencyTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'TradeTracking',
+          children: [
+            { element: <Navigate to="/dashboard/TradeTracking/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['TradeTracking-GetAll']}>
+                  <TradeTrackingList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['TradeTracking-Create']}>
+                  <TradeTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['TradeTracking-Update']}>
+                  <TradeTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'Partners',
+          children: [
+            { element: <Navigate to="/dashboard/Partners/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Partners-GetAll']}>
+                  <PartnersList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Partners-Create']}>
+                  <PartnersCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Partners-Update']}>
+                  <PartnersCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'MainAsset',
+          children: [
+            { element: <Navigate to="/dashboard/MainAsset/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['MainAsset-GetAll']}>
+                  <MainAssetList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['MainAsset-Create']}>
+                  <MainAssetCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['MainAsset-Update']}>
+                  <MainAssetCreate />
                 </PermissionBasedGuard>
               ),
             },

@@ -95,7 +95,7 @@ export default function Login() {
             <Image
               visibleByDefault
               disabledEffect
-              src="/assets/illustrations/illustration_login.png"
+              src={require('src/assets/images/npfxlogin.png')}
               alt="login"
               width="100"
               height="100"
@@ -112,12 +112,12 @@ export default function Login() {
               spacing={2}
               sx={{ mb: 4 }}
             >
-              <img src={require('src/assets/images/mark.png')} height="100" />
+              <img src={require('src/assets/images/npfx logo.png')} alt="logo" height="100" />
             </Stack>
 
             <Alert severity="info" sx={{ mb: 3, textAlign: 'center' }}>
               {/* <Typography variant="h6">{translate('login.SignInToMinistry')}</Typography> */}
-              <Typography variant="h6">Sgin In To Foam Company</Typography>
+              <Typography variant="h6">Sgin In To NPFX Market</Typography>
             </Alert>
 
             <LoginForm />

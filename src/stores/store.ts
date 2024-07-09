@@ -36,6 +36,9 @@ import AssetTypeStore from './foamCompanyStores/AssetTypeStore';
 import PaymentTypeStore from './foamCompanyStores/PaymentTypeStore';
 import LoanTypeStore from './foamCompanyStores/LoanTypeStore';
 import CurrencyTypeStore from './foamCompanyStores/CurrencyTypeStore';
+import TradeTrackingStore from './foamCompanyStores/TradeTrackingStore';
+import PartnersStore from './foamCompanyStores/PartnersStore';
+import MainAssetStore from './foamCompanyStores/MainAssetStore';
 
 interface Store {
   LoginStore: LoginStore;
@@ -88,6 +91,9 @@ interface Store {
   PaymentTypeStore: PaymentTypeStore;
   LoanTypeStore: LoanTypeStore;
   CurrencyTypeStore: CurrencyTypeStore;
+  TradeTrackingStore: TradeTrackingStore;
+  PartnersStore: PartnersStore;
+  MainAssetStore: MainAssetStore;
 }
 //Include All store below
 export const store: Store = {
@@ -131,6 +137,9 @@ export const store: Store = {
   PaymentTypeStore: new PaymentTypeStore(),
   LoanTypeStore: new LoanTypeStore(),
   CurrencyTypeStore: new CurrencyTypeStore(),
+  TradeTrackingStore: new TradeTrackingStore(),
+  PartnersStore: new PartnersStore(),
+  MainAssetStore: new MainAssetStore(),
 };
 
 export const StoreContext = createContext(store);

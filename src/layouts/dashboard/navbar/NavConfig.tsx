@@ -61,10 +61,11 @@ const navConfig = [
         icon: ICONS.lookUp,
         roles: [
           'Branch-GetList',
-          'Year-GetList',
-          'ContractType-GetList',
-          'PositionTitle-GetList',
-          'JobPosition-GetList',
+          'ExpenseType-GetList',
+          'assetType-GetList',
+          'LoanType-GetList',
+          'PaymentType-GetList',
+          'CurrencyType-GetList',
         ],
         children: [
           {
@@ -77,11 +78,6 @@ const navConfig = [
                 path: PATH_DASHBOARD.Branch.list,
                 roles: ['Branch-GetList'],
               },
-              // {
-              //   title: 'district',
-              //   path: PATH_DASHBOARD.district.list,
-              //   roles: ['District-GetList'],
-              // },
               {
                 title: 'expenseType',
                 path: PATH_DASHBOARD.ExpenseType.list,
@@ -183,15 +179,15 @@ const navConfig = [
       },
       // Human resource
       {
-        title: 'hr',
+        title: 'NPFX System',
         path: '#1',
-        icon: ICONS.hr,
-        roles: ['Employee-GetList', 'CardDetails-GetPrintableCardList'],
+        icon: ICONS.analytics,
+        roles: ['MainAsset-GetList', 'CardDetails-GetPrintableCardList'],
         children: [
           {
-            title: 'emp',
-            path: PATH_DASHBOARD.Employee.list,
-            roles: ['Employee-GetList'],
+            title: 'AssetManagement',
+            path: PATH_DASHBOARD.MainAsset.list,
+            roles: ['MainAsset-GetList'],
           },
           {
             title: 'cardPrint',

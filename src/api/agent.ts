@@ -60,6 +60,12 @@ import { IAssetType, IAssetTypeParams } from 'src/@types/foamCompanyTypes/looks/
 import { ICurrencyType, ICurrencyTypeParams } from 'src/@types/foamCompanyTypes/looks/CurrencyType';
 import { ILoanType, ILoanTypeParams } from 'src/@types/foamCompanyTypes/looks/LoanType';
 import { IPaymentType, IPaymentTypeParams } from 'src/@types/foamCompanyTypes/looks/PaymentType';
+import {
+  ITradeTracking,
+  ITradeTrackingParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/TradeTracking';
+import { IPartners, IPartnersParams } from 'src/@types/foamCompanyTypes/systemTypes/Partners';
+import { IMainAsset, IMainAssetParams } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 // axios.defaults.baseURL = 'http://localhost:7073/api/';
@@ -494,6 +500,37 @@ const ExpenseType = {
   DDl: () => axios.get<any>(`/ExpenseType/GetDropDownList`, { withCredentials: true }),
 };
 
+//  TradeTracking
+const TradeTracking = {
+  create: (TradeTracking: ITradeTracking) => requests.post<void>('/TradeTracking', TradeTracking),
+  getList: (param: ITradeTrackingParams) =>
+    axios.post<any>(`/TradeTracking/GetList`, param, { withCredentials: true }),
+  update: (TradeTracking: ITradeTracking) =>
+    requests.put<void>(`/TradeTracking/${TradeTracking.id}`, TradeTracking),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/TradeTracking/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/TradeTracking/GetDropDownList`, { withCredentials: true }),
+};
+
+//  Partners
+const Partners = {
+  create: (Partners: IPartners) => requests.post<void>('/Partners', Partners),
+  getList: (param: IPartnersParams) =>
+    axios.post<any>(`/Partners/GetList`, param, { withCredentials: true }),
+  update: (Partners: IPartners) => requests.put<void>(`/Partners/${Partners.id}`, Partners),
+  delete: (id: number, remark: string) => axios.delete<void>(`/Partners/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/Partners/GetDropDownList`, { withCredentials: true }),
+};
+
+//  MainAsset
+const MainAsset = {
+  create: (MainAsset: IMainAsset) => requests.post<void>('/MainAsset', MainAsset),
+  getList: (param: IMainAssetParams) =>
+    axios.post<any>(`/MainAsset/GetList`, param, { withCredentials: true }),
+  update: (MainAsset: IMainAsset) => requests.put<void>(`/MainAsset/${MainAsset.id}`, MainAsset),
+  delete: (id: number, remark: string) => axios.delete<void>(`/MainAsset/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/MainAsset/GetDropDownList`, { withCredentials: true }),
+};
 // Country Lookup
 const Country = {
   getList: (param: ICountry) =>
@@ -731,6 +768,9 @@ const agent = {
   LoanType,
   CurrencyType,
   PaymentType,
+  TradeTracking,
+  Partners,
+  MainAsset,
 };
 
 export default agent;

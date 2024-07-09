@@ -105,6 +105,31 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/CurrencyType/edit'),
     detail: path(ROOTS_DASHBOARD, '/CurrencyType/detail'),
   },
+  // TradeTracking
+  TradeTracking: {
+    root: path(ROOTS_DASHBOARD, '/TradeTracking'),
+    list: path(ROOTS_DASHBOARD, '/TradeTracking/list'),
+    new: path(ROOTS_DASHBOARD, '/TradeTracking/new'),
+    edit: path(ROOTS_DASHBOARD, '/TradeTracking/edit'),
+    detail: path(ROOTS_DASHBOARD, '/TradeTracking/detail'),
+  },
+  // Partners
+  Partners: {
+    root: path(ROOTS_DASHBOARD, '/Partners'),
+    list: path(ROOTS_DASHBOARD, '/Partners/list'),
+    new: path(ROOTS_DASHBOARD, '/Partners/new'),
+    edit: path(ROOTS_DASHBOARD, '/Partners/edit'),
+    detail: path(ROOTS_DASHBOARD, '/Partners/detail'),
+  },
+
+  // Partners
+  MainAsset: {
+    root: path(ROOTS_DASHBOARD, '/MainAsset'),
+    list: path(ROOTS_DASHBOARD, '/MainAsset/list'),
+    new: path(ROOTS_DASHBOARD, '/MainAsset/new'),
+    edit: path(ROOTS_DASHBOARD, '/MainAsset/edit'),
+    detail: path(ROOTS_DASHBOARD, '/MainAsset/detail'),
+  },
   // Users Path
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
