@@ -143,27 +143,9 @@ const navConfig = [
               { title: 'Userlist', path: PATH_DASHBOARD.user.list, roles: ['User-GetList'] },
               { title: 'UserLogList', path: PATH_DASHBOARD.user.Loglist, roles: ['User-UserLog'] },
               {
-                title: 'UserReport',
-                path: PATH_DASHBOARD.user.UserReportIndex,
-                roles: ['User-UserReport'],
-              },
-              {
                 title: 'changePassword',
                 path: PATH_DASHBOARD.user.changePassword,
               },
-            ],
-          },
-          {
-            title: 'Permission',
-            path: '#3',
-            roles: ['Permission-GetList'],
-            children: [
-              {
-                title: 'list',
-                path: PATH_DASHBOARD.Permission.list,
-                roles: ['Permission-GetList'],
-              },
-              // { title: 'create', path: PATH_DASHBOARD.Permission.new },
             ],
           },
           {
@@ -188,53 +170,6 @@ const navConfig = [
             title: 'AssetManagement',
             path: PATH_DASHBOARD.MainAsset.list,
             roles: ['MainAsset-GetList'],
-          },
-          {
-            title: 'cardPrint',
-            path: PATH_DASHBOARD.Employee.print,
-
-            roles: ['CardDetails-GetPrintableCardList'],
-            state: { EmployeeIdForPrint: undefined, from: undefined },
-          },
-          {
-            title: 'EmployeeReport',
-            path: PATH_DASHBOARD.Employee.accountReport,
-
-            // roles: ['CardDetails-GetPrintableCardList'],
-            // state: { EmployeeIdForPrint: undefined, from: undefined },
-          },
-        ],
-      },
-
-      // Employee Attendance
-      {
-        title: 'supplier',
-        path: '#1',
-        icon: ICONS.reception,
-        children: [
-          {
-            title: 'Supplier',
-            path: PATH_DASHBOARD.Supplier.list,
-          },
-          {
-            title: 'Customer',
-            path: PATH_DASHBOARD.Customer.list,
-          },
-          {
-            title: 'Expense',
-            path: PATH_DASHBOARD.Expense.list,
-          },
-        ],
-      },
-      // Employee Attendance
-      {
-        title: 'invoice',
-        path: '#1',
-        icon: ICONS.calendar,
-        children: [
-          {
-            title: 'invoice',
-            path: PATH_DASHBOARD.invoice.list,
           },
         ],
       },
