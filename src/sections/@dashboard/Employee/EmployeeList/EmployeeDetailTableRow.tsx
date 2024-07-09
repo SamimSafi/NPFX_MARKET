@@ -1,5 +1,5 @@
 // @mui
-import { styled, alpha } from '@mui/material/styles';
+import { styled, alpha, useTheme } from '@mui/material/styles';
 import {
   Typography,
   Button,
@@ -18,6 +18,8 @@ import {
   TableBody,
   TableCell,
   TableRow,
+  Badge,
+  MenuItem,
 } from '@mui/material';
 import Iconify from 'src/components/Iconify';
 import Image from 'src/components/Image';
@@ -36,7 +38,29 @@ import { DateConverter } from 'src/sections/common/DateConverter';
 import App from 'src/App';
 import path from 'path';
 import { PATH_AFTER_LOGIN } from 'src/config';
+import {
+  AccountCircle,
+  Cake,
+  Email,
+  LocationOn,
+  PermIdentity,
+  Phone,
+  Event,
+  CheckCircle,
+} from '@mui/icons-material';
+import { BaseOptionChart } from 'src/components/chart';
+import merge from 'lodash/merge';
+import ReactApexChart from 'react-apexcharts';
+import Scrollbar from 'src/components/Scrollbar';
+import { TableHeadCustom, TableMoreMenu } from 'src/components/table';
+import _mock from 'src/_mock';
 
+import { format } from 'date-fns';
+import { sentenceCase } from 'change-case';
+import { fCurrency, fShortenNumber } from 'src/utils/formatNumber';
+import { IconifyIcon } from '@iconify/react';
+import { CheckInIllustration } from 'src/assets';
+import InsertChartIcon from '@mui/icons-material/InsertChart';
 type Props = {
   row: IEmployeeDetails;
   clearEmployee: () => void;
@@ -67,40 +91,207 @@ export default function EmployeeDetailTableRow({ row, clearEmployee }: Props) {
   const navigate = useNavigate();
   const language = window.localStorage.getItem('i18nextLng');
   const [value, setValue] = useState('1');
-  const {
-    attendaceId,
-    attendanceId,
-    bloodGroup,
-    tazkiraNo,
-    dateOfBirth,
-    department,
-    district,
-    emergencyPhoneNumber,
-    employeeHealthState,
-    englishFatherName,
-    englishFirstName,
-    englishGrandFatherName,
-    englishSurName,
-    gender,
-    id,
-    isCurrent,
-    joinDate,
-    leaveDate,
-    leaveRemark,
-    officialEmail,
-    pashtoFatherName,
-    pashtoFirstName,
-    pashtoGrandFatherName,
-    pashtoSurName,
-    permenantAddress,
-    personalEmail,
-    phoneNumber,
-    photoPath,
-    provence,
-    rfidNumber,
-    temporaryAddress,
-  } = row;
+  const theme = useTheme();
+
+  const isLight = theme.palette.mode === 'light';
+  // const {
+  //   attendaceId,
+  //   attendanceId,
+  //   bloodGroup,
+  //   tazkiraNo,
+  //   dateOfBirth,
+  //   department,
+  //   district,
+  //   emergencyPhoneNumber,
+  //   employeeHealthState,
+  //   englishFatherName,
+  //   englishFirstName,
+  //   englishGrandFatherName,
+  //   englishSurName,
+  //   gender,
+  //   id,
+  //   isCurrent,
+  //   joinDate,
+  //   leaveDate,
+  //   leaveRemark,
+  //   officialEmail,
+  //   pashtoFatherName,
+  //   pashtoFirstName,
+  //   pashtoGrandFatherName,
+  //   pashtoSurName,
+  //   permenantAddress,
+  //   personalEmail,
+  //   phoneNumber,
+  //   photoPath,
+  //   provence,
+  //   rfidNumber,
+  //   temporaryAddress,
+  // } = row;
   let Url = baseUrl;
+  const fullName = 'Engineer Mohammad Edris Nikzad';
+  const firstLetter = fullName.charAt(0);
+
+  // table functions
+  const TAX_RATE = 0.07;
+
+  function ccyFormat(num: number) {
+    return `${num.toFixed(2)}`;
+  }
+
+  function priceRow(qty: number, unit: number) {
+    return qty * unit;
+  }
+
+  function createRow(desc: string, qty: number, unit: number) {
+    const price = priceRow(qty, unit);
+    return { desc, qty, unit, price };
+  }
+
+  interface Row {
+    desc: string;
+    qty: number;
+    unit: number;
+    price: number;
+  }
+
+  function subtotal(items: readonly Row[]) {
+    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+  }
+
+  const rows = [
+    createRow('2024', 1000, 2000),
+    createRow('2025', 12000, 5000),
+    createRow('2026', 1244, 3266),
+  ];
+
+  const invoiceSubtotal = subtotal(rows);
+  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+  const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+  // end table functions
+
+  // chart
+  interface ChartData {
+    name: string;
+    type: 'column' | 'area' | 'line'; // Define the possible types for 'type'
+    fill: 'solid' | 'gradient'; // Define the possible types for 'fill'
+    data: number[];
+  }
+
+  const chartData: ChartData[] = [
+    {
+      name: 'Team A',
+      type: 'column',
+      fill: 'solid',
+      data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
+    },
+    {
+      name: 'Team B',
+      type: 'area',
+      fill: 'gradient',
+      data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
+    },
+    {
+      name: 'Team C',
+      type: 'line',
+      fill: 'solid',
+      data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
+    },
+  ];
+
+  const chartLabels: string[] = [
+    '01/01/2003',
+    '02/01/2003',
+    '03/01/2003',
+    '04/01/2003',
+    '05/01/2003',
+    '06/01/2003',
+    '07/01/2003',
+    '08/01/2003',
+    '09/01/2003',
+    '10/01/2003',
+    '11/01/2003',
+  ];
+  // endchart
+  const chartOptions = merge(BaseOptionChart(), {
+    plotOptions: { bar: { columnWidth: '16%' } },
+    fill: { type: chartData.map((i) => i.fill) },
+    labels: chartLabels,
+    xaxis: { type: 'datetime' },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      y: {
+        formatter: (y: number) => {
+          if (typeof y !== 'undefined') {
+            return `${y.toFixed(0)} visits`;
+          }
+          return y;
+        },
+      },
+    },
+  });
+
+  // table Data
+
+  const tableData = [
+    {
+      id: _mock.id(2),
+      name: _mock.name.fullName(2),
+      avatar: _mock.image.avatar(8),
+      type: 'Income',
+      message: 'Receive money from',
+      category: 'Annette Black',
+      date: 1627556358365,
+      status: 'in_progress',
+      amount: 811.45,
+    },
+    {
+      id: _mock.id(3),
+      name: _mock.name.fullName(3),
+      avatar: _mock.image.avatar(9),
+      type: 'Expenses',
+      message: 'Payment for',
+      category: 'Courtney Henry',
+      date: 1627556329038,
+      status: 'completed',
+      amount: 436.03,
+    },
+    {
+      id: _mock.id(4),
+      name: _mock.name.fullName(4),
+      avatar: _mock.image.avatar(12),
+      type: 'Receive',
+      message: 'Payment for',
+      category: 'Theresa Webb',
+      date: 1627556339677,
+      status: 'failed',
+      amount: 82.26,
+    },
+    {
+      id: _mock.id(5),
+      name: null,
+      avatar: null,
+      type: 'Expenses',
+      message: 'Payment for',
+      category: 'Beauty & Health',
+      date: 1627547330510,
+      status: 'completed',
+      amount: 480.73,
+    },
+    {
+      id: _mock.id(6),
+      name: null,
+      avatar: null,
+      type: 'Expenses',
+      message: 'Payment for',
+      category: 'Books',
+      date: 1627556347676,
+      status: 'in_progress',
+      amount: 11.45,
+    },
+  ];
+
+  // end of tabel Data
   return (
     <>
       <Grid item xs={6} md={6}>
@@ -122,12 +313,13 @@ export default function EmployeeDetailTableRow({ row, clearEmployee }: Props) {
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={4}>
+          {/* profile */}
           <Card sx={{ py: 2, px: 2 }}>
             <Card sx={{ textAlign: 'center' }}>
               <Box sx={{ position: 'relative' }}>
                 <Avatar
-                  alt={englishFirstName}
-                  src={Url + photoPath}
+                  alt="{englishFirstName}"
+                  // src={Url + photoPath}
                   sx={{
                     width: 90,
                     height: 90,
@@ -144,241 +336,400 @@ export default function EmployeeDetailTableRow({ row, clearEmployee }: Props) {
               </Box>
 
               <Typography variant="subtitle1" sx={{ mt: 6 }}>
-                {language === 'en'
+                Engineer Mohammad Edris Nikzad
+                {/* {language === 'en'
                   ? englishFirstName + ' ' + englishSurName
-                  : pashtoFirstName + ' ' + pashtoSurName}
+                  : pashtoFirstName + ' ' + pashtoSurName} */}
               </Typography>
 
               <Stack alignItems="center">
                 <Typography variant="body2" sx={{ color: 'text.secondary', my: 2.5 }}>
-                  {bloodGroup}
+                  Full Stack Developer
+                  {/* {bloodGroup} */}
                 </Typography>
               </Stack>
             </Card>
           </Card>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <Card>
-            <Card sx={{ minWidth: 275, borderRadius: '15px 15px 0px 0px' }}>
-              <Typography
-                variant="h5"
-                sx={{ fontSize: 14, textAlign: 'left', mb: 2, mt: 2, ml: 3, color: 'warning.main' }}
-                color="text.secondary"
-                gutterBottom
-              >
-                <Label
-                  variant="ghost"
-                  sx={{ textTransform: 'capitalize', fontSize: 17, p: 2 }}
-                  color="warning"
-                >
-                  {translate('Employee.EmployeeGeneralInfo')}
-                </Label>
+
+          <Card sx={{ borderRadius: '15px', boxShadow: 3, overflow: 'hidden', mt: 2 }}>
+            <Box
+              sx={{
+                backgroundColor: 'primary.main',
+                p: 1,
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
+              <Avatar sx={{ width: 40, height: 40, mr: 1.5 }}>{firstLetter}</Avatar>
+              <Typography variant="h6" sx={{ color: 'dark.main', fontWeight: 'bold' }}>
+                {translate('Employee.EmployeeGeneralInfo')}
               </Typography>
-            </Card>
-            <Box sx={{ mt: 2 }}>
+            </Box>
+            <Box sx={{ p: 2 }}>
               <Stack>
-                <Stack spacing={2} sx={{ p: 3, mt: 1.5 }}>
-                  <Stack direction="row">
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Cake sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
                     <Typography
-                      variant="subtitle1"
-                      sx={{
-                        mb: 0.75,
-                        color: 'text.disabled',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                      }}
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
                     >
-                      {translate('Employee.dateOfBirth')} :{' '}
-                    </Typography>{' '}
-                    &nbsp;
-                    <Typography variant="subtitle1" sx={{ mb: 0.75, fontSize: '16px' }}>
-                      {<DateConverter date={dateOfBirth} />}
+                      {translate('Employee.dateOfBirth')}
                     </Typography>
-                  </Stack>
-                  <Stack direction="row">
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ mb: 0.75, color: 'text.disabled', fontSize: '16px' }}
-                    >
-                      {translate('Employee.personalEmail')}:
-                    </Typography>{' '}
-                    &nbsp;
-                    <Typography variant="subtitle1" sx={{ mb: 0.75, fontSize: '16px' }}>
-                      {personalEmail}
+                    <Typography variant="body2">
+                      date of Birth
+                      {/* <DateConverter date={dateOfBirth} /> */}
                     </Typography>
-                  </Stack>
-                  <Stack direction="row">
+                  </Box>
+                </Stack>
+
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Email sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
                     <Typography
-                      variant="subtitle1"
-                      sx={{ mb: 0.75, color: 'text.disabled', fontSize: '16px' }}
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
                     >
-                      {translate('Employee.officialEmail')}:
-                    </Typography>{' '}
-                    &nbsp;
-                    <Typography variant="subtitle1" sx={{ mb: 0.75, fontSize: '16px' }}>
-                      {officialEmail}
+                      {translate('Employee.personalEmail')}
                     </Typography>
-                  </Stack>
-                  <Stack direction="row">
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ mb: 0.75, color: 'text.disabled', fontSize: '16px' }}
-                    >
-                      {translate('Employee.PhoneNumber')}:
-                    </Typography>{' '}
-                    &nbsp;
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ mb: 0.75, fontSize: '16px' }}
-                      dir={language === 'en' ? 'ltr' : 'ltr'}
-                    >
-                      {' '}
-                      {phoneNumber}
+                    <Typography variant="body2">
+                      ahmad@gmail.com
+                      {/* {personalEmail} */}
                     </Typography>
-                  </Stack>
-                  <Stack direction="row">
+                  </Box>
+                </Stack>
+
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Email sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
                     <Typography
-                      variant="subtitle1"
-                      sx={{ mb: 0.75, color: 'text.disabled', fontSize: '16px' }}
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
                     >
-                      {translate('Employee.cnic')}:
-                    </Typography>{' '}
-                    &nbsp;
-                    <Typography variant="subtitle1" sx={{ mb: 0.75, fontSize: '16px' }}>
-                      {tazkiraNo}
+                      {translate('Employee.officialEmail')}
                     </Typography>
-                  </Stack>
+                    <Typography variant="body2">
+                      mew@mew.com
+                      {/* {officialEmail} */}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Phone sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
+                    >
+                      {translate('Employee.PhoneNumber')}
+                    </Typography>
+                    <Typography variant="body2" dir={language === 'en' ? 'ltr' : 'rtl'}>
+                      0781719750
+                      {/* {phoneNumber} */}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <PermIdentity sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
+                    >
+                      {translate('Employee.cnic')}
+                    </Typography>
+                    <Typography variant="body2">
+                      tazkiraNo
+                      {/* {cnic} */}
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <LocationOn sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
+                    >
+                      Province
+                    </Typography>
+                    <Typography variant="body2">
+                      Kabul
+                      {/* <DateConverter date={dateOfBirth} /> */}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <AccountCircle sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
+                    >
+                      {translate('Employee.gender')}
+                    </Typography>
+                    <Typography variant="body2">
+                      Male
+                      {/* {personalEmail} */}
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Event sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
+                    >
+                      {translate('Employee.joinDate')}
+                    </Typography>
+                    <Typography variant="body2">
+                      2024-05-05
+                      {/* {officialEmail} */}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <LocationOn sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
+                    >
+                      {/* {translate('Employee.PhoneNumber')} */}
+                      Branch
+                    </Typography>
+                    <Typography variant="body2" dir={language === 'en' ? 'ltr' : 'rtl'}>
+                      Shahr-e-Naw
+                      {/* {phoneNumber} */}
+                    </Typography>
+                  </Box>
+                </Stack>
+
+                <Divider sx={{ my: 0.5 }} />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <CheckCircle sx={{ color: 'primary.main', fontSize: 20 }} />
+                  <Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{ fontWeight: 'bold', color: 'text.secondary' }}
+                    >
+                      {/* {translate('Employee.cnic')} */}
+                      IsCurrent Employee
+                    </Typography>
+                    <Typography variant="body2">
+                      True
+                      {/* {cnic} */}
+                    </Typography>
+                  </Box>
                 </Stack>
               </Stack>
             </Box>
           </Card>
         </Grid>
+        {/* end profile */}
+
+        <Grid item xs={12} md={8}>
+          {/* General Information */}
+          <Card
+            sx={{
+              borderRadius: '15px',
+              boxShadow: 3,
+              overflow: 'hidden',
+              marginTop: '10px',
+              padding: '10px',
+            }}
+          >
+            <ReactApexChart type="line" series={chartData} options={chartOptions} height={364} />
+          </Card>
+          {/* End of General Information */}
+
+          {/* Activity Chart    */}
+          <Grid container spacing={2} sx={{ mt: 2 }}>
+            <Grid item md={4} xs={12}>
+              <Card
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  p: 2,
+                  pl: 3,
+                }}
+              >
+                <div>
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    Total Asset
+                  </Typography>
+                  <Typography variant="h4">
+                    25000$
+                    {/* {row !== undefined ? fShortenNumber(row![0].count) : 0} */}
+                  </Typography>
+
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    2021-2024
+                    {/* {row !== undefined ? row![0].day : today} */}
+                  </Typography>
+                </div>
+                <InsertChartIcon sx={{ fontSize: 60, color: 'primary.main' }} />
+              </Card>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <Card
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  p: 2,
+                  pl: 3,
+                }}
+              >
+                <div>
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    Total Benefit
+                  </Typography>
+                  <Typography variant="h4">
+                    35000$
+                    {/* {row !== undefined ? fShortenNumber(row![0].count) : 0} */}
+                  </Typography>
+
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    2021-2024
+                    {/* {row !== undefined ? row![0].day : today} */}
+                  </Typography>
+                </div>
+
+                <InsertChartIcon sx={{ fontSize: 60, color: 'primary.main' }} />
+              </Card>
+            </Grid>
+            <Grid item md={4} xs={12}>
+              <Card
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  p: 2,
+                  pl: 3,
+                }}
+              >
+                <div>
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    Total Defect
+                  </Typography>
+                  <Typography variant="h4">
+                    2500$
+                    {/* {row !== undefined ? fShortenNumber(row![0].count) : 0} */}
+                  </Typography>
+
+                  <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
+                    2021-2024
+                    {/* {row !== undefined ? row![0].day : today} */}
+                  </Typography>
+                </div>
+
+                <InsertChartIcon sx={{ fontSize: 60, color: 'primary.main' }} />
+              </Card>
+            </Grid>
+          </Grid>
+
+          <Grid
+            container
+            spacing={3}
+            sx={{
+              borderRadius: '15px',
+              boxShadow: 3,
+              overflow: 'hidden',
+              marginTop: '10px',
+              padding: '10px',
+            }}
+          >
+            <Grid item md={12} xs={12}>
+              <Scrollbar>
+                <TableContainer sx={{ minWidth: 720 }}>
+                  <Table>
+                    <TableHeadCustom
+                      headLabel={[
+                        { id: 'Date', label: 'Date' },
+                        { id: 'Asset', label: 'Asset' },
+                        { id: 'Benefit', label: 'Benefit' },
+                        { id: 'Defect', label: 'Defect' },
+
+                        { id: 'Result', label: 'Result' },
+                      ]}
+                    />
+
+                    <TableBody>
+                      {/* {tableData.map((row) => ( */}
+                      <TableRow>
+                        <TableCell>2021</TableCell>
+
+                        <TableCell>{fCurrency(10000)}</TableCell>
+
+                        <TableCell>{fCurrency(12000)}</TableCell>
+
+                        <TableCell>{fCurrency(0)}</TableCell>
+                        <TableCell>
+                          <Label variant={isLight ? 'ghost' : 'filled'} color={'success'}>
+                            Excellent
+                          </Label>
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell>2022</TableCell>
+
+                        <TableCell>{fCurrency(5000)}</TableCell>
+
+                        <TableCell>{fCurrency(250)}</TableCell>
+
+                        <TableCell>{fCurrency(0)}</TableCell>
+                        <TableCell>
+                          <Label variant={isLight ? 'ghost' : 'filled'} color={'warning'}>
+                            good
+                          </Label>
+                        </TableCell>
+                      </TableRow>
+
+                      <TableRow>
+                        <TableCell>2023</TableCell>
+
+                        <TableCell>{fCurrency(5000)}</TableCell>
+
+                        <TableCell>{fCurrency(0)}</TableCell>
+
+                        <TableCell>{fCurrency(200)}</TableCell>
+                        <TableCell>
+                          <Label variant={isLight ? 'ghost' : 'filled'} color={'error'}>
+                            bad
+                          </Label>
+                        </TableCell>
+                      </TableRow>
+                      {/* ))} */}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Scrollbar>
+            </Grid>
+          </Grid>
+          {/* end of activity chart */}
+        </Grid>
 
         {/* <Divider sx={{ borderStyle: 'dashed' }} /> */}
         {/* sx={{ mt: 2, mr: 2, ml: 2, mb: 2 }} */}
 
-        <Grid item xs={12} md={12}>
-          <Card sx={{ p: 2 }}>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: '100%' }} size="small" aria-label="a dense table">
-                {/* <caption>A basic table example with a caption</caption> */}
-                <TableBody>
-                  <TableRow sx={{ borderBottom: '1px solid rgba(60,60,60,.9)' }}>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.AttendanceId')}
-                    </TableCell>
-                    <TableCell align="left">{attendanceId}</TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.Department')}
-                    </TableCell>
-                    <TableCell align="left">{department.name}</TableCell>
-                  </TableRow>
-
-                  <TableRow sx={{ borderBottom: '1px solid rgba(60,60,60,.9)' }}>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.Province')}
-                    </TableCell>
-                    <TableCell align="left">{provence.name}</TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.District')}
-                    </TableCell>
-                    <TableCell align="left">{district.name}</TableCell>
-                  </TableRow>
-
-                  <TableRow sx={{ borderBottom: '1px solid rgba(60,60,60,.9)' }}>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.temporaryAddress')}
-                    </TableCell>
-                    <TableCell align="left">{temporaryAddress}</TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.permanentAddress')}
-                    </TableCell>
-                    <TableCell align="left">{permenantAddress}</TableCell>
-                  </TableRow>
-
-                  <TableRow sx={{ borderBottom: '1px solid rgba(60,60,60,.9)' }}>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.Gender')}
-                    </TableCell>
-                    <TableCell align="left">
-                      {gender == true
-                        ? `${translate('Employee.Male')}`
-                        : `${translate('Employee.Female')}`}
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.EmployeeHealthStatus')}
-                    </TableCell>
-                    <TableCell align="left">{employeeHealthState.name}</TableCell>
-                  </TableRow>
-
-                  <TableRow sx={{ borderBottom: '1px solid rgba(60,60,60,.9)' }}>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.JoinDate')}
-                    </TableCell>
-                    <TableCell align="left">{<DateConverter date={joinDate} />}</TableCell>
-                    {leaveDate != null && (
-                      <>
-                        <TableCell
-                          align="left"
-                          sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                        >
-                          {translate('Employee.leaveDate')}
-                        </TableCell>
-                        <TableCell align="left">{<DateConverter date={leaveDate} />}</TableCell>
-                      </>
-                    )}
-                  </TableRow>
-
-                  <TableRow sx={{ borderBottom: '1px solid rgba(60,60,60,.9)' }}>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.emergencyPhoneNumber')}
-                    </TableCell>
-                    <TableCell align="left" dir={language === 'en' ? 'ltr' : 'ltr'}>
-                      {emergencyPhoneNumber}
-                    </TableCell>
-                    <TableCell
-                      align="left"
-                      sx={{ fontWeight: 'bold', color: 'info.main', fontSize: '16px' }}
-                    >
-                      {translate('Employee.rfidNumber')}
-                    </TableCell>
-                    <TableCell align="left">{rfidNumber}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Card>
-        </Grid>
+        <Grid item xs={12} md={12}></Grid>
       </Grid>
     </>
   );
@@ -460,4 +811,37 @@ function RoleCard({
       </Paper>
     </Stack>
   );
+}
+type AvatarIconProps = {
+  icon: IconifyIcon | string;
+};
+
+function AvatarIcon({ icon }: AvatarIconProps) {
+  return (
+    <Avatar
+      sx={{
+        width: 48,
+        height: 48,
+        color: 'text.secondary',
+        bgcolor: 'background.neutral',
+      }}
+    >
+      <Iconify icon={icon} width={24} height={24} />
+    </Avatar>
+  );
+}
+function renderAvatar(category: string, avatar: string | null) {
+  if (category === 'Books') {
+    return <AvatarIcon icon={'eva:book-fill'} />;
+  }
+  if (category === 'Beauty & Health') {
+    return <AvatarIcon icon={'eva:heart-fill'} />;
+  }
+  return avatar ? (
+    <Avatar
+      alt={category}
+      src={avatar}
+      sx={{ width: 48, height: 48, boxShadow: (theme) => theme.customShadows.z8 }}
+    />
+  ) : null;
 }

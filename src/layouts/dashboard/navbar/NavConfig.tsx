@@ -160,6 +160,34 @@ const navConfig = [
         ],
       },
       // Human resource
+       // Human resource
+       {
+        title: 'hr',
+        path: '#1',
+        icon: ICONS.hr,
+        roles: ['Employee-GetList', 'CardDetails-GetPrintableCardList'],
+        children: [
+          {
+            title: 'emp',
+            path: PATH_DASHBOARD.Employee.list,
+            roles: ['Employee-GetList'],
+          },
+          {
+            title: 'cardPrint',
+            path: PATH_DASHBOARD.Employee.print,
+
+            roles: ['CardDetails-GetPrintableCardList'],
+            state: { EmployeeIdForPrint: undefined, from: undefined },
+          },
+          {
+            title: 'EmployeeReport',
+            path: PATH_DASHBOARD.Employee.accountReport,
+
+            // roles: ['CardDetails-GetPrintableCardList'],
+            // state: { EmployeeIdForPrint: undefined, from: undefined },
+          },
+        ],
+      },
       {
         title: 'NPFX System',
         path: '#1',
