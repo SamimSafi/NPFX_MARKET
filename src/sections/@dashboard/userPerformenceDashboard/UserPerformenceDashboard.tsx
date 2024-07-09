@@ -22,6 +22,7 @@ import useLocales from 'src/hooks/useLocales';
 import { useNavigate } from 'react-router';
 import Iconify from 'src/components/Iconify';
 import { PATH_DASHBOARD } from 'src/routes/paths';
+import { barChartData } from 'src/chartsDefaultData/chartData';
 
 export default function UserPerformenceDashboard() {
   const { translate } = useLocales();
@@ -60,67 +61,11 @@ export default function UserPerformenceDashboard() {
         {/* </Stack> */}
       </Grid>
       <Grid item xs={12} md={12}>
-        <Card>
-          <CardHeader
-            title={translate('UserPerformanceDashboard.ArchiveDataEntryTotalSummary')}
-            subheader={new Date().toDateString()}
-          />
-          {
-            <>
-              <Grid container xs={12} md={12}>
-                <Grid item xs={12} md={12} sx={{ padding: 1 }}>
-                  {ArchiveDataEntryByLoggedInUserDashboard == null ? (
-                    <>
-                      <EmptyContent
-                        title={translate('ReceptionDashboard.NoRecordFound')}
-                        sx={{
-                          '& span.MuiBox-root': { height: 160 },
-                        }}
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <SpiderChart
-                        title={translate('UserPerformanceDashboard.TotalArchiveDocumentType')}
-                        title2={translate('UserPerformanceDashboard.TotalArchiveEnteredDocuments')}
-                        chartData={ArchiveDataEntryByLoggedInUserDashboard}
-                        chartColors={[
-                          theme.palette.primary.main,
-                          theme.palette.info.darker,
-                          theme.palette.chart.yellow[0],
-                          theme.palette.chart.blue[0],
-                          theme.palette.chart.red[0],
-                          theme.palette.chart.violet[2],
-                          theme.palette.chart.violet[0],
-                          theme.palette.success.darker,
-                          theme.palette.chart.green[0],
-                        ]}
-                      />
-                    </>
-                  )}
-                </Grid>
-              </Grid>
-            </>
-          }
-        </Card>
-      </Grid>
-      <Grid item xs={6} md={6}>
-        {externalDocumentDashboardByLoggedInUser == null ? (
-          <>
-            <EmptyContent
-              title={translate('ReceptionDashboard.NoRecordFound')}
-              sx={{
-                '& span.MuiBox-root': { height: 160 },
-              }}
-            />
-          </>
-        ) : (
-          <BarChart
-            title={translate('UserPerformanceDashboard.ExternalDocumentsTotalSummary')}
-            subheader={new Date().toDateString()}
-            chartData={externalDocumentDashboardByLoggedInUser}
-          />
-        )}
+        <BarChart
+          title={translate('UserPerformanceDashboard.TestData')}
+          subheader={new Date().toDateString()}
+          chartData={barChartData}
+        />
       </Grid>
       <Grid item xs={6} md={6}>
         {internalDocumentDashboardByLoggedInUser == null ? (

@@ -25,16 +25,15 @@ import NewsCard from 'src/sections/@dashboard/general/app/NewsCard';
 import { blue, green } from '@mui/material/colors';
 import { Color } from 'react-push-notification/dist/notifications/Storage';
 import { ColorSchema } from 'src/theme/palette';
+import BarChart from 'src/customeCharts/BarChart';
+import { barChartData } from 'src/chartsDefaultData/chartData';
 
 // ----------------------------------------------------------------------
 
 export default function GeneralApp() {
   const { translate } = useLocales();
 
-  const {
-    userPerformenceDashboardStore,
-    userDashboardStore,
-  } = useStore();
+  const { userPerformenceDashboardStore, userDashboardStore } = useStore();
   const [showButton, setShowButton] = useState(false);
 
   const { getLoggedInUsersDashboard } = userPerformenceDashboardStore;
@@ -193,7 +192,6 @@ export default function GeneralApp() {
     setShowWelcomeGrid(false);
   };
 
-
   useEffect(() => {
     if (userPerformenceDashboard) {
       getLoggedInUsersDashboard().then((res) => {
@@ -214,8 +212,6 @@ export default function GeneralApp() {
     }
   }, [userDashboard]);
 
-
-
   const renderDashboard = () => {
     if (misDashboard) {
       return (
@@ -224,9 +220,7 @@ export default function GeneralApp() {
           <MisWorkDashboard />
         </>
       );
-    }
-
-    else if (userPerformenceDashboard && isloading) {
+    } else if (userPerformenceDashboard && isloading) {
       return (
         <>
           <Loader />
@@ -250,7 +244,7 @@ export default function GeneralApp() {
           <UserDashboard />
         </>
       );
-    } 
+    }
   };
 
   const positionToColor: ColorSchema[] = [
@@ -280,270 +274,14 @@ export default function GeneralApp() {
           <></>
         )} */}
         {/* -----------------------Welcome Componenet------------------------- */}
-       
-        {showWelcomeGrid && (
-          <>
-            <Grid item xs={12} md={12}>
-              <AppWelcome
-                title={translate('Welcome.Title')}
-                description={translate('Welcome.Text')}
-                img={
-                  <SeoIllustration
-                    sx={{
-                      p: 3,
-                      width: 360,
-                      margin: { xs: 'auto', md: 'inherit' },
-                    }}
-                  />
-                }
-                // action={<Button variant="contained">Go Now</Button>}
-              />
-            </Grid>
-            <Grid item xs={12} md={12} lg={12} mt={1} mb={3}>
-              <Divider sx={{ borderStyle: 'dashed', borderWidth: 1.5 }} />
-            </Grid>
-          </>
-        )}
-        {/* -----------------------Dashboard Componenets------------------------- */}
-        {/* <Box sx={{ gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(3, 1fr)' } }}> */}
-        <Grid container spacing={2}>
-          {!showButton ? (
-            <>
-              <Grid
-                sx={{ cursor: 'pointer' }}
-                item
-                xs={12}
-                md={4}
-                onClick={() => {
-                  misDashboard == false && handleMisDashboard(true);
-                }}
-              >
-                <DashboardWidget
-                  color={positionToColor[0]}
-                  title={translate('Dashboard.MISWorkDashboard')}
-                  icon={'mdi:apps'}
-                />
-              </Grid>
-              <PermissionBasedGuard
-                permissions={[
-                  'ExternalDocumentDashBoardsAndReport-ByLogginUserProcessStatusAndDocumentType',
-                  'InternalDocumentDashBoardsAndReport-ByLogginUserProcessStatusAndDocumentType',
-                  'ArchiveReportAndDashboard-DashBoardByLoggedInUserAndDocumentType',
-                ]}
-              >
-                <Grid
-                  sx={{ cursor: 'pointer' }}
-                  item
-                  xs={12}
-                  md={4}
-                  onClick={() => {
-                    userPerformenceDashboard == false && handleUserPerformenceDashboard(true);
-                  }}
-                >
-                  <DashboardWidget
-                    color={positionToColor[1]}
-                    title={translate('Dashboard.UserPerformanceDashboard')}
-                    icon={'mdi:account-cog'}
-                  />
-                </Grid>
-              </PermissionBasedGuard>
-              <PermissionBasedGuard
-                permissions={['UserReportsAndDashboard-EachAndTotalUserInDepartmentDashBoard']}
-              >
-                <Grid
-                  sx={{ cursor: 'pointer' }}
-                  item
-                  xs={12}
-                  md={4}
-                  onClick={() => {
-                    userDashboard == false && handleUserDashboard(true);
-                  }}
-                >
-                  <DashboardWidget
-                    color="warning"
-                    title={translate('Dashboard.UserSummaryDashboard')}
-                    icon={'mdi:account-details'}
-                  />
-                </Grid>
-              </PermissionBasedGuard>
-              <PermissionBasedGuard
-                permissions={[
-                  'ReceptionReportAndDashboard-ByDayAndVisitor',
-                  'ReceptionReportAndDashboard-ByCurrantDayVisitorInOutAndDepartment',
-                ]}
-              >
-                <Grid
-                  sx={{ cursor: 'pointer' }}
-                  item
-                  xs={12}
-                  md={4}
-                  onClick={() => {
-                    receptionDashboard == false && handleReceptionDashboard(true);
-                  }}
-                >
-                  <DashboardWidget
-                    color={positionToColor[2]}
-                    title={translate('Dashboard.ReceptionDashboard')}
-                    icon={'material-symbols:nest-doorbell-visitor-outline'}
-                  />
-                  {/* {showWelcomeGrid && (
-                  <>
-                    <Grid item xs={12} md={12}>
-                      <AppWelcome
-                        title={translate('Welcome.Title')}
-                        description={translate('Welcome.Text')}
-                        img={
-                          <SeoIllustration
-                            sx={{
-                              p: 3,
-                              width: 360,
-                              margin: { xs: 'auto', md: 'inherit' },
-                            }}
-                          />
-                        }
-                        // action={<Button variant="contained">Go Now</Button>}
-                      />
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={12} mt={1} mb={1}>
-                      <Divider sx={{ borderStyle: 'dashed', borderWidth: 1.5 }} />
-                    </Grid>
-                  </>
-                )} */}
-                </Grid>
-              </PermissionBasedGuard>
-              <PermissionBasedGuard
-                permissions={[
-                  'ArchiveReportAndDashboard-GetReports',
-                  'ArchiveReportAndDashboard-DashBoardByDateUserAndDocumentType',
-                  'ArchiveReportAndDashboard-DashBoardByLoggedInUserAndDocumentType',
-                ]}
-              >
-                <Grid
-                  sx={{ cursor: 'pointer' }}
-                  item
-                  xs={12}
-                  md={4}
-                  onClick={() => {
-                    archiveDashboard == false && handleArchiveDashboard(true);
-                  }}
-                >
-                  <DashboardWidget
-                    color={positionToColor[3]}
-                    title={translate('Dashboard.ArchiveDashboard')}
-                    icon={'mdi:archive'}
-                  />
-                </Grid>
-              </PermissionBasedGuard>
-              <PermissionBasedGuard
-                permissions={[
-                  'InternalDocumentDashBoardsAndReport-GetReports',
-                  'InternalDocumentDashBoardsAndReport-ByLogginUserProcessStatusAndDocumentType',
-                  'InternalDocumentDashBoardsAndReport-ByUserAndProcessStatusDashboard',
-                  'InternalDocumentDashBoardsAndReport-ByUserBeforeBeforeLineDashBoard',
-                  'InternalDocumentDashBoardsAndReport-ByUserBeforeAfterLineDashBoard',
-                ]}
-              >
-                <Grid
-                  sx={{ cursor: 'pointer' }}
-                  item
-                  xs={12}
-                  md={4}
-                  onClick={() => {
-                    internalDashboard == false && handleInternalDocumentDashboard(true);
-                  }}
-                >
-                  <DashboardWidget
-                    color="info"
-                    title={translate('Dashboard.InternalDocumentDashboard')}
-                    icon={'fluent:document-arrow-down-16-filled'}
-                  />
-                </Grid>
-              </PermissionBasedGuard>
 
-              <PermissionBasedGuard
-                permissions={[
-                  'ExternalDocumentDashBoardsAndReport-GetReports',
-                  'ExternalDocumentDashBoardsAndReport-ByLogginUserProcessStatusAndDocumentType',
-                  'ExternalDocumentDashBoardsAndReport-ByUserAndProcessStatusDashboard',
-                  'ExternalDocumentDashBoardsAndReport-ByUserBeforeBeforeLineDashBoard',
-                  'ExternalDocumentDashBoardsAndReport-ByUserBeforeAfterLineDashBoard',
-                ]}
-              >
-                <Grid
-                  sx={{ cursor: 'pointer' }}
-                  item
-                  xs={12}
-                  md={4}
-                  onClick={() => {
-                    externalDashboard == false && handleExternalDocumentDashboard(true);
-                  }}
-                >
-                  <DashboardWidget
-                    color={positionToColor[4]}
-                    title={translate('Dashboard.ExternalDocumentDashboard')}
-                    icon={'fluent:document-arrow-up-16-filled'}
-                  />
-                </Grid>
-              </PermissionBasedGuard>
-
-              <PermissionBasedGuard
-                permissions={[
-                  'ITSMSDashBoardsAndReports-ByRequestCategoriesBeforeAndAfterDeadLine',
-                  'ITSMSDashBoardsAndReports-ByUserBeforeAndAfterDeadLine',
-                  'ITSMSDashBoardsAndReports-ByDayAndVisitor',
-                  'ITSMSDashBoardsAndReports-ByDepartmentPendingRequest',
-                ]}
-              >
-                <Grid
-                  sx={{ cursor: 'pointer' }}
-                  item
-                  xs={12}
-                  md={4}
-                  onClick={() => {
-                    itsmsDashboard == false && handleITSMSDashboard(true);
-                  }}
-                >
-                  <DashboardWidget
-                    color="secondary"
-                    title={translate('Dashboard.ITSMSDashboard')}
-                    icon={'mdi:local-area-network-pending'}
-                  />
-                </Grid>
-              </PermissionBasedGuard>
-
-              <PermissionBasedGuard
-                permissions={[
-                  'Dashboard-EmpHasUserSpiderChart',
-                  'Dashboard-ActiveEmplyeesPieChart',
-                ]}
-              >
-                <Grid
-                  sx={{ cursor: 'pointer' }}
-                  item
-                  xs={12}
-                  md={4}
-                  onClick={() => {
-                    hrDashboard == false && handleHRDashboard(true);
-                  }}
-                >
-                  <DashboardWidget
-                    color="primary"
-                    title={translate('HRDashboard.HRDashboard')}
-                    icon={'clarity:employee-group-solid'}
-                  />
-                </Grid>
-              </PermissionBasedGuard>
-              <Grid item xs={12} md={12} lg={12}>
-                <Divider sx={{ borderStyle: 'dashed', borderWidth: 1.5 }} />
-              </Grid>
-            </>
-          ) : (
-            <></>
-          )}
-
-          {renderDashboard()}
+        <Grid item xs={12} md={12}>
+          <BarChart
+            title={translate('UserPerformanceDashboard.TestData')}
+            subheader={new Date().toDateString()}
+            chartData={barChartData}
+          />
         </Grid>
-        {/* </Box> */}
       </Container>
     </Page>
   );
