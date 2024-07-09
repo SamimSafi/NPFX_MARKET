@@ -171,6 +171,16 @@ const navConfig = [
             path: PATH_DASHBOARD.MainAsset.list,
             roles: ['MainAsset-GetList'],
           },
+          {
+            title: 'TradeTracking',
+            path: PATH_DASHBOARD.TradeTracking.list,
+            roles: ['TradeTracking-GetList'],
+          },
+          {
+            title: 'ExpenseTracking',
+            path: PATH_DASHBOARD.ExpenseTracking.list,
+            roles: ['ExpenseTracking-GetList'],
+          },
         ],
       },
     ],
