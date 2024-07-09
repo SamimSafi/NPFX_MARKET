@@ -53,6 +53,8 @@ import PartnersCreate from 'src/sections/@dashboard/Partners/PartnersForm/Partne
 import PartnersList from 'src/sections/@dashboard/Partners/PartnersList/PartnersList';
 import MainAssetCreate from 'src/sections/@dashboard/MainAsset/MainAssetForm/MainAssetCreate';
 import MainAssetList from 'src/sections/@dashboard/MainAsset/MainAssetList/MainAssetList';
+import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingForm/ExpenseTrackingCreate';
+import ExpenseTrackingList from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingList/ExpenseTrackingList';
 
 // ----------------------------------------------------------------------
 
@@ -369,6 +371,36 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['MainAsset-Update']}>
                   <MainAssetCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'ExpenseTracking',
+          children: [
+            { element: <Navigate to="/dashboard/ExpenseTracking/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['ExpenseTracking-GetAll']}>
+                  <ExpenseTrackingList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['ExpenseTracking-Create']}>
+                  <ExpenseTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['ExpenseTracking-Update']}>
+                  <ExpenseTrackingCreate />
                 </PermissionBasedGuard>
               ),
             },

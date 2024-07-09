@@ -73,7 +73,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }: Props)
       >
         <Stack direction="row" alignItems="center" justifyContent="center">
           {/* <Logo /> */}
-          <img src={require('src/assets/images/logo.png')} width="40%" />
+          <img src={require('src/assets/images/npfx logo.png')} alt="NPFX" width="40%" />
 
           {isDesktop && !isCollapse && (
             <CollapseButton onToggleCollapse={onToggleCollapse} collapseClick={collapseClick} />

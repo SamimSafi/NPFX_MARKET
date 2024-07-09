@@ -68,7 +68,6 @@ const RootStyle = styled(AppBar, {
   },
 }));
 
-
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -89,16 +88,13 @@ export default function DashboardHeader({
   const isDesktop = useResponsive('up', 'lg');
   const [connection, setConnection] = useState<null | HubConnection>(null);
   const {
-
-    LoginStore:{hubConnection,setHubConnection,isLogedIn}
-
+    LoginStore: { hubConnection, setHubConnection, isLogedIn },
   } = useStore();
   const { pathname } = useLocation();
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
+  // eslint-disable-next-line react-hooks/rules-of-hooks
 
-const isDashboard = pathname.includes('/dashboard/app');
-
+  const isDashboard = pathname.includes('/dashboard/app');
 
   const [tabHasFocus, setTabHasFocus] = useState(true);
 
@@ -112,12 +108,11 @@ const isDashboard = pathname.includes('/dashboard/app');
     setTabHasFocus(false);
   };
 
-
-  useEffect(()=>{
-    if(!isLogedIn){
+  useEffect(() => {
+    if (!isLogedIn) {
       navigate(PATH_AUTH.login);
     }
-  },[])
+  }, []);
 
   useEffect(() => {
     if (process.env.NODE_ENV == 'development') {
@@ -137,7 +132,6 @@ const isDashboard = pathname.includes('/dashboard/app');
     console.log(connect);
   }, []);
 
-
   useEffect(() => {
     window.addEventListener('focus', handleFocus);
     window.addEventListener('blur', handleBlur);
@@ -147,7 +141,6 @@ const isDashboard = pathname.includes('/dashboard/app');
       window.removeEventListener('blur', handleBlur);
     };
   }, [tabHasFocus]);
-
 
   return (
     <RootStyle isCollapse={isCollapse} isOffset={isOffset} verticalLayout={verticalLayout}>
@@ -170,7 +163,7 @@ const isDashboard = pathname.includes('/dashboard/app');
 
         <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
           <LanguagePopover />
-          <NotificationsPopover />
+          {/* <NotificationsPopover /> */}
           <ContactsPopover />
           <AccountPopover />
         </Stack>
