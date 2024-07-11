@@ -16,10 +16,10 @@ interface Props {
   id: number;
 }
 
-export default observer(function AssetTrackingDelete({ id }: Props) {
+export default observer(function LoanTrackingDelete({ id }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
-  const { AssetTrackingStore } = useStore();
+  const { LoanTrackingStore } = useStore();
   const validationSchema = Yup.object().shape({
     remarks: Yup.string()
       .required(`${translate('Validation.Remark')}`)
@@ -35,7 +35,7 @@ export default observer(function AssetTrackingDelete({ id }: Props) {
   } = methods;
 
   const onSubmit = (remark: string) => {
-    AssetTrackingStore.deleteAssetTracking(id, remark)
+    LoanTrackingStore.deleteLoanTracking(id, remark)
       .then(() => {
         enqueueSnackbar('Delete  success!');
       })
@@ -90,7 +90,7 @@ export default observer(function AssetTrackingDelete({ id }: Props) {
                 <LoadingButton
                   variant="contained"
                   size="small"
-                  onClick={() => AssetTrackingStore.setOpenCloseDialog()}
+                  onClick={() => LoanTrackingStore.setOpenCloseDialog()}
                   startIcon={<CancelIcon />}
                 >
                   {translate('CRUD.Cancle')}

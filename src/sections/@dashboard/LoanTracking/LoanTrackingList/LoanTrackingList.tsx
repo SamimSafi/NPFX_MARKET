@@ -24,26 +24,26 @@ import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../compon
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import MyDialog from 'src/components/MyDialog';
-import AssetTrackingTableRow from './AssetTrackingTableRow';
-import AssetTrackingTableToolbar from './AssetTrackingTableToolbar';
-import AssetTrackingDelete from './AssetTrackingDelete';
-import { IAssetTracking } from 'src/@types/foamCompanyTypes/systemTypes/AssetTracking';
+import LoanTrackingTableRow from './LoanTrackingTableRow';
+import LoanTrackingTableToolbar from './LoanTrackingTableToolbar';
+import LoanTrackingDelete from './LoanTrackingDelete';
+import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 
 // ----------------------------------------------------------------------
 
-export default observer(function AssetTrackingList() {
-  const { AssetTrackingStore } = useStore();
+export default observer(function LoanTrackingList() {
+  const { LoanTrackingStore } = useStore();
   const { translate } = useLocales();
   const {
-    loadAssetTracking,
-    AssetTrackingList,
-    AssetTrackingRegistry,
+    loadLoanTracking,
+    LoanTrackingList,
+    LoanTrackingRegistry,
     totalRecord,
-    AssetTrackingearch,
-    getAssetTrackingFromRegistry,
+    LoanTrackingearch,
+    getLoanTrackingFromRegistry,
     setOpenCloseDialog,
     openDialog,
-  } = AssetTrackingStore;
+  } = LoanTrackingStore;
   const {
     dense,
     page,
@@ -62,44 +62,43 @@ export default observer(function AssetTrackingList() {
 
   const navigate = useNavigate();
 
-  const [AssetTrackingId, setAssetTrackingId] = useState<number>(0);
+  const [LoanTrackingId, setLoanTrackingId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'Currency', label: `${translate('GeneralFields.Name')}`, align: 'left' },
-    { id: 'Account', label: `${translate('GeneralFields.Account')}`, align: 'left' },
+    { id: 'Currency', label: `${translate('GeneralFields.Currency')}`, align: 'left' },
+    { id: 'Asset', label: `${translate('GeneralFields.Asset')}`, align: 'left' },
     { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
     { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
     { id: 'user', label: `${translate('GeneralFields.user')}`, align: 'left' },
-    { id: 'TradeAmount', label: `${translate('GeneralFields.TradeAmount')}`, align: 'left' },
-    { id: 'ProfitAmount', label: `${translate('GeneralFields.ProfitAmount')}`, align: 'left' },
-    { id: 'LossAmount', label: `${translate('GeneralFields.LossAmount')}`, align: 'left' },
+    { id: 'LoanAmount', label: `${translate('GeneralFields.LoanAmount')}`, align: 'left' },
+    { id: 'LoanType', label: `${translate('GeneralFields.LoanType')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
     setFilterName(filterName);
     setPage(0);
     if (filterName.length > 1) {
-      AssetTrackingearch({
+      LoanTrackingearch({
         pageIndex: 0,
         pageSize: rowsPerPage,
         name: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      AssetTrackingearch({ pageIndex: 0, pageSize: rowsPerPage });
+      LoanTrackingearch({ pageIndex: 0, pageSize: rowsPerPage });
     }
   };
 
   const handleOpenConfirm = (id: number) => {
     setOpenCloseDialog();
-    setAssetTrackingId(id);
+    setLoanTrackingId(id);
   };
 
   const handleCloseConfirm = () => {
     setOpenCloseDialog();
   };
   const handleEditRow = (id: number) => {
-    getAssetTrackingFromRegistry(id);
+    getLoanTrackingFromRegistry(id);
     navigate(PATH_DASHBOARD.ContractType.edit);
   };
 
@@ -122,22 +121,22 @@ export default observer(function AssetTrackingList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    loadAssetTracking({ pageIndex: newPage, pageSize: rowsPerPage });
+    loadLoanTracking({ pageIndex: newPage, pageSize: rowsPerPage });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeRowsPerPage(event);
     let pageZize = parseInt(event.target.value);
-    loadAssetTracking({ pageIndex: 0, pageSize: pageZize });
+    loadLoanTracking({ pageIndex: 0, pageSize: pageZize });
   };
   useEffect(() => {
-    if (AssetTrackingRegistry.size <= 1) {
-      loadAssetTracking({ pageIndex: 0, pageSize: rowsPerPage });
+    if (LoanTrackingRegistry.size <= 1) {
+      loadLoanTracking({ pageIndex: 0, pageSize: rowsPerPage });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dataFiltered = applySortFilter({
-    tableData: AssetTrackingList,
+    tableData: LoanTrackingList,
     comparator: getComparator(order, orderBy),
     filterName: '',
   });
@@ -147,21 +146,21 @@ export default observer(function AssetTrackingList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('AssetTracking.Title')}>
+    <Page title={translate('LoanTracking.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('AssetTracking.AssetTrackingList')}
+          heading={translate('LoanTracking.LoanTrackingList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('AssetTracking.AssetTrackingList')}` },
+            { name: `${translate('LoanTracking.LoanTrackingList')}` },
           ]}
           action={
             <Button
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
               component={RouterLink}
-              to={PATH_DASHBOARD.AssetTracking.new}
+              to={PATH_DASHBOARD.LoanTracking.new}
             >
               {translate('CRUD.Create')}
             </Button>
@@ -169,7 +168,7 @@ export default observer(function AssetTrackingList() {
         />
 
         <Card>
-          <AssetTrackingTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          <LoanTrackingTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 960, position: 'relative' }}>
@@ -186,7 +185,7 @@ export default observer(function AssetTrackingList() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
-                      <AssetTrackingTableRow
+                      <LoanTrackingTableRow
                         key={row.id}
                         row={row}
                         index={index}
@@ -226,7 +225,7 @@ export default observer(function AssetTrackingList() {
               title={translate('CRUD.DeleteTitle')}
               size="md"
             >
-              <AssetTrackingDelete id={AssetTrackingId} />
+              <LoanTrackingDelete id={LoanTrackingId} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
@@ -247,7 +246,7 @@ function applySortFilter({
   comparator,
   filterName,
 }: {
-  tableData: IAssetTracking[];
+  tableData: ILoanTracking[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {

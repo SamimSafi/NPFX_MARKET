@@ -7,11 +7,11 @@ import { TableRow, TableCell, MenuItem } from '@mui/material';
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
-import { IAssetTracking } from 'src/@types/foamCompanyTypes/systemTypes/AssetTracking';
+import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IAssetTracking;
+  row: ILoanTracking;
   // selected: boolean;
   onEditRow: VoidFunction;
   //onSelectRow: VoidFunction;
@@ -19,8 +19,8 @@ type Props = {
   index: any;
 };
 
-export default function AssetTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { currencyName, assetType, date, description, user, amount } = row;
+export default function LoanTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
+  const { currencyName, asset, date, description, user, loanAmount } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -36,11 +36,11 @@ export default function AssetTrackingTableRow({ row, onEditRow, onDeleteRow, ind
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
       <TableCell align="left">{currencyName}</TableCell>
-      <TableCell align="left">{assetType}</TableCell>
+      <TableCell align="left">{asset}</TableCell>
       <TableCell align="left">{date}</TableCell>
       <TableCell align="left">{description}</TableCell>
       <TableCell align="left">{user}</TableCell>
-      <TableCell align="left">{amount}</TableCell>
+      <TableCell align="left">{loanAmount}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

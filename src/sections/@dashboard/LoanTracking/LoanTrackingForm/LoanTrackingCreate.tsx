@@ -9,11 +9,11 @@ import useLocales from 'src/hooks/useLocales';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import AssetTrackingNewEditForm from './AssetTrackingNewEditForm';
+import LoanTrackingNewEditForm from './LoanTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
 
-export default function AssetTrackingCreate() {
+export default function LoanTrackingCreate() {
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -25,31 +25,31 @@ export default function AssetTrackingCreate() {
     <Page
       title={
         !isEdit
-          ? `${translate('AssetTracking.AddTitle')}`
-          : `${translate('AssetTracking.UpdateTitle')}`
+          ? `${translate('LoanTracking.AddTitle')}`
+          : `${translate('LoanTracking.UpdateTitle')}`
       }
     >
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={
             !isEdit
-              ? `${translate('AssetTracking.CreateAssetTracking')}`
-              : `${translate('AssetTracking.EditAssetTracking')}`
+              ? `${translate('LoanTracking.CreateLoanTracking')}`
+              : `${translate('LoanTracking.EditLoanTracking')}`
           }
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
-              name: `${translate('AssetTracking.AssetTrackingList')}`,
+              name: `${translate('LoanTracking.LoanTrackingList')}`,
               href: PATH_DASHBOARD.ContractDetails.list,
             },
             {
               name: !isEdit
-                ? `${translate('AssetTracking.New')}`
-                : `${translate('AssetTracking.Update')}`,
+                ? `${translate('LoanTracking.New')}`
+                : `${translate('LoanTracking.Update')}`,
             },
           ]}
         />
-        <AssetTrackingNewEditForm />
+        <LoanTrackingNewEditForm />
       </Container>
     </Page>
   );

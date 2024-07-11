@@ -1,12 +1,14 @@
-export interface IAssetTracking {
+export interface ILoanTracking {
   id?: number;
   currencyTypeId?: number;
   currencyName?: string;
-  assetTypeId?: number;
-  assetType?: string;
-  expenseTypeId?: number;
-  expenseType?: string;
-  amount?: number;
+  partnerId?: number;
+  partnerName?: string;
+  loanTypeId?: number;
+  loanTypeName?: string;
+  assetId?: number;
+  asset?: string;
+  loanAmount?: number;
   date?: string;
   description?: string;
   userId?: number;
@@ -14,7 +16,7 @@ export interface IAssetTracking {
   afterSubmit?: string;
 }
 
-export interface IAssetTrackingParams {
+export interface ILoanTrackingParams {
   pageIndex: number;
   pageSize: number;
   name?: string;

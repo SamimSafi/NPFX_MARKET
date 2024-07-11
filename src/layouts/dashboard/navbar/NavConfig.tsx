@@ -200,9 +200,9 @@ const navConfig = [
             roles: ['MainAsset-GetList'],
           },
           {
-            title: 'AssetTracking',
-            path: PATH_DASHBOARD.AssetTracking.list,
-            roles: ['AssetTracking-GetList'],
+            title: 'LoanTracking',
+            path: PATH_DASHBOARD.LoanTracking.list,
+            roles: ['LoanTracking-GetList'],
           },
           {
             title: 'TradeTracking',

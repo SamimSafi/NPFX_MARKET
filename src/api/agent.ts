@@ -71,9 +71,9 @@ import {
   IExpenseTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/ExpenseTracking';
 import {
-  IAssetTracking,
-  IAssetTrackingParams,
-} from 'src/@types/foamCompanyTypes/systemTypes/AssetTracking';
+  ILoanTracking,
+  ILoanTrackingParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 // axios.defaults.baseURL = 'http://localhost:7073/api/';
@@ -553,16 +553,16 @@ const ExpenseTracking = {
   DDl: () => axios.get<any>(`/ExpenseTracking/GetDropDownList`, { withCredentials: true }),
 };
 
-//  AssetTracking
-const AssetTracking = {
-  create: (AssetTracking: IAssetTracking) => requests.post<void>('/AssetTracking', AssetTracking),
-  getList: (param: IAssetTrackingParams) =>
-    axios.post<any>(`/AssetTracking/GetList`, param, { withCredentials: true }),
-  update: (AssetTracking: IAssetTracking) =>
-    requests.put<void>(`/AssetTracking/${AssetTracking.id}`, AssetTracking),
+//  LoanTracking
+const LoanTracking = {
+  create: (LoanTracking: ILoanTracking) => requests.post<void>('/LoanTracking', LoanTracking),
+  getList: (param: ILoanTrackingParams) =>
+    axios.post<any>(`/LoanTracking/GetList`, param, { withCredentials: true }),
+  update: (LoanTracking: ILoanTracking) =>
+    requests.put<void>(`/LoanTracking/${LoanTracking.id}`, LoanTracking),
   delete: (id: number, remark: string) =>
-    axios.delete<void>(`/AssetTracking/${id}`, { data: remark }),
-  DDl: () => axios.get<any>(`/AssetTracking/GetDropDownList`, { withCredentials: true }),
+    axios.delete<void>(`/LoanTracking/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/LoanTracking/GetDropDownList`, { withCredentials: true }),
 };
 
 // Country Lookup
@@ -806,7 +806,7 @@ const agent = {
   Partners,
   MainAsset,
   ExpenseTracking,
-  AssetTracking,
+  LoanTracking,
 };
 
 export default agent;

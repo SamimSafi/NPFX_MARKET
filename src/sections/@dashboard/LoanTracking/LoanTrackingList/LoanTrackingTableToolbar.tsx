@@ -10,7 +10,7 @@ type Props = {
   onFilterName: (value: string) => void;
 };
 
-export default function AssetTrackingTableToolbar({ filterName, onFilterName }: Props) {
+export default function LoanTrackingTableToolbar({ filterName, onFilterName }: Props) {
   const { translate } = useLocales();
   return (
     <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} sx={{ py: 2.5, px: 3 }}>
@@ -18,7 +18,7 @@ export default function AssetTrackingTableToolbar({ filterName, onFilterName }: 
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder={translate('AssetTracking.Placeholder')}
+        placeholder={translate('LoanTracking.Placeholder')}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

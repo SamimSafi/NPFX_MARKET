@@ -40,7 +40,7 @@ import TradeTrackingStore from './foamCompanyStores/TradeTrackingStore';
 import PartnersStore from './foamCompanyStores/PartnersStore';
 import MainAssetStore from './foamCompanyStores/MainAssetStore';
 import ExpenseTrackingStore from './foamCompanyStores/ExpenseTrackingStore';
-import AssetTrackingStore from './foamCompanyStores/AssetTrackingStore';
+import LoanTrackingStore from './foamCompanyStores/LoanTrackingStore';
 
 interface Store {
   LoginStore: LoginStore;
@@ -97,7 +97,7 @@ interface Store {
   PartnersStore: PartnersStore;
   MainAssetStore: MainAssetStore;
   ExpenseTrackingStore: ExpenseTrackingStore;
-  AssetTrackingStore: AssetTrackingStore;
+  LoanTrackingStore: LoanTrackingStore;
 }
 //Include All store below
 export const store: Store = {
@@ -145,7 +145,7 @@ export const store: Store = {
   PartnersStore: new PartnersStore(),
   MainAssetStore: new MainAssetStore(),
   ExpenseTrackingStore: new ExpenseTrackingStore(),
-  AssetTrackingStore: new AssetTrackingStore(),
+  LoanTrackingStore: new LoanTrackingStore(),
 };
 
 export const StoreContext = createContext(store);

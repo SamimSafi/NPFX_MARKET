@@ -18,46 +18,48 @@ import Iconify from '../../../../components/Iconify';
 import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { IAssetTracking } from 'src/@types/foamCompanyTypes/systemTypes/AssetTracking';
+import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 // ----------------------------------------------------------------------
 
-export default observer(function AssetTrackingNewEditForm() {
-  const { AssetTrackingStore } = useStore();
+export default observer(function LoanTrackingNewEditForm() {
+  const { LoanTrackingStore } = useStore();
   const { translate } = useLocales();
   const {
-    createAssetTracking,
-    updateAssetTracking,
+    createLoanTracking,
+    updateLoanTracking,
     editMode,
-    selectedAssetTracking,
-    clearSelectedAssetTracking,
-  } = AssetTrackingStore;
+    selectedLoanTracking,
+    clearSelectedLoanTracking,
+  } = LoanTrackingStore;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewAssetTrackingSchema = Yup.object().shape({
-    assetTypeId: Yup.number().required(`${translate('Validation.EnglishName')}`),
+  const NewLoanTrackingSchema = Yup.object().shape({
+    assetId: Yup.number().required(`${translate('Validation.EnglishName')}`),
     currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     userId: Yup.number().required(`${translate('Validation.PashtoName')}`),
+    loanTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
     amount: Yup.number().required(`${translate('Validation.Code')}`),
   });
 
-  const defaultValues = useMemo<IAssetTracking>(
+  const defaultValues = useMemo<ILoanTracking>(
     () => ({
-      id: selectedAssetTracking?.id,
-      assetTypeId: selectedAssetTracking?.assetTypeId,
-      userId: selectedAssetTracking?.userId,
-      currencyTypeId: selectedAssetTracking?.currencyTypeId,
-      description: selectedAssetTracking?.description || '',
-      date: selectedAssetTracking?.date || '',
-      amount: selectedAssetTracking?.amount,
+      id: selectedLoanTracking?.id,
+      assetId: selectedLoanTracking?.assetId,
+      userId: selectedLoanTracking?.userId,
+      currencyTypeId: selectedLoanTracking?.currencyTypeId,
+      loanTypeId: selectedLoanTracking?.loanTypeId,
+      description: selectedLoanTracking?.description || '',
+      date: selectedLoanTracking?.date || '',
+      loanAmount: selectedLoanTracking?.loanAmount,
     }),
-    [selectedAssetTracking]
+    [selectedLoanTracking]
   );
 
-  const methods = useForm<IAssetTracking>({
-    resolver: yupResolver(NewAssetTrackingSchema),
+  const methods = useForm<ILoanTracking>({
+    resolver: yupResolver(NewLoanTrackingSchema),
     defaultValues,
   });
 
@@ -79,17 +81,17 @@ export default observer(function AssetTrackingNewEditForm() {
     control,
   } = methods;
 
-  const onSubmit = (data: IAssetTracking) => {
+  const onSubmit = (data: ILoanTracking) => {
     if (data.id! === undefined) {
       ///create
-      createAssetTracking(data).then(() => {
+      createLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);
       });
     } else {
       ///update
-      updateAssetTracking(data).then(() => {
+      updateLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);
@@ -119,7 +121,7 @@ export default observer(function AssetTrackingNewEditForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="assetTypeId" label={translate('AssetTracking.AssetType')}>
+              <RHFSelect name="assetId" label={translate('LoanTracking.AssetType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
                   <option key={op.value} value={op.title}>
@@ -127,7 +129,7 @@ export default observer(function AssetTrackingNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="currencyTypeId" label={translate('AssetTracking.currencyType')}>
+              <RHFSelect name="currencyTypeId" label={translate('LoanTracking.currencyType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
                   <option key={op.value} value={op.title}>
@@ -135,7 +137,15 @@ export default observer(function AssetTrackingNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="userId" label={translate('AssetTracking.user')}>
+              <RHFSelect name="loanTypeId" label={translate('LoanTracking.loanType')}>
+                <option value="" />
+                {bloodGroup.map((op) => (
+                  <option key={op.value} value={op.title}>
+                    {op.title}
+                  </option>
+                ))}
+              </RHFSelect>
+              <RHFSelect name="userId" label={translate('LoanTracking.user')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
                   <option key={op.value} value={op.title}>
@@ -145,36 +155,22 @@ export default observer(function AssetTrackingNewEditForm() {
               </RHFSelect>
 
               <LocalizDatePicker
-                name="transactionDate"
-                label={translate('AssetTracking.transactionDate')}
+                name="date"
+                label={translate('LoanTracking.date')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
-                name="tradeAmount"
-                label={translate('AssetTracking.tradeAmount')}
-                type={'number'}
-                showAsterisk={true}
-                autoFocus
-              />
-              <RHFTextField
-                name="profitAmount"
-                label={translate('AssetTracking.profitAmount')}
-                type={'number'}
-                showAsterisk={true}
-                autoFocus
-              />
-              <RHFTextField
-                name="lossAmount"
-                label={translate('AssetTracking.lossAmount')}
+                name="loanAmount"
+                label={translate('LoanTracking.loanAmount')}
                 type={'number'}
                 showAsterisk={true}
                 autoFocus
               />
               <RHFTextField
                 name="description"
-                label={translate('AssetTracking.description')}
+                label={translate('LoanTracking.description')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -198,7 +194,7 @@ export default observer(function AssetTrackingNewEditForm() {
                 color="error"
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
-                  clearSelectedAssetTracking();
+                  clearSelectedLoanTracking();
                   navigate(PATH_DASHBOARD.ExpenseTracking.list);
                 }}
               >

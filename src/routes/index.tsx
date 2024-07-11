@@ -55,8 +55,8 @@ import MainAssetCreate from 'src/sections/@dashboard/MainAsset/MainAssetForm/Mai
 import MainAssetList from 'src/sections/@dashboard/MainAsset/MainAssetList/MainAssetList';
 import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingForm/ExpenseTrackingCreate';
 import ExpenseTrackingList from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingList/ExpenseTrackingList';
-import AssetTrackingCreate from 'src/sections/@dashboard/AssetTracking/AssetTrackingForm/AssetTrackingCreate';
-import AssetTrackingList from 'src/sections/@dashboard/AssetTracking/AssetTrackingList/AssetTrackingList';
+import LoanTrackingList from 'src/sections/@dashboard/LoanTracking/LoanTrackingList/LoanTrackingList';
+import LoanTrackingCreate from 'src/sections/@dashboard/LoanTracking/LoanTrackingForm/LoanTrackingCreate';
 
 // ----------------------------------------------------------------------
 
@@ -409,30 +409,30 @@ export default function Router() {
           ],
         },
         {
-          path: 'AssetTracking',
+          path: 'LoanTracking',
           children: [
-            { element: <Navigate to="/dashboard/AssetTracking/list" replace />, index: true },
+            { element: <Navigate to="/dashboard/LoanTracking/list" replace />, index: true },
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['AssetTracking-GetAll']}>
-                  <AssetTrackingList />
+                <PermissionBasedGuard hasContent permissions={['LoanTracking-GetAll']}>
+                  <LoanTrackingList />
                 </PermissionBasedGuard>
               ),
             },
             {
               path: 'new',
               element: (
-                <PermissionBasedGuard hasContent permissions={['AssetTracking-Create']}>
-                  <AssetTrackingCreate />
+                <PermissionBasedGuard hasContent permissions={['LoanTracking-Create']}>
+                  <LoanTrackingCreate />
                 </PermissionBasedGuard>
               ),
             },
             {
               path: 'edit',
               element: (
-                <PermissionBasedGuard hasContent permissions={['AssetTracking-Update']}>
-                  <AssetTrackingCreate />
+                <PermissionBasedGuard hasContent permissions={['LoanTracking-Update']}>
+                  <LoanTrackingCreate />
                 </PermissionBasedGuard>
               ),
             },
