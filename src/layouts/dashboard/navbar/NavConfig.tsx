@@ -66,6 +66,7 @@ const navConfig = [
           'LoanType-GetList',
           'PaymentType-GetList',
           'CurrencyType-GetList',
+          'Partners-GetList',
         ],
         children: [
           {
@@ -102,6 +103,11 @@ const navConfig = [
                 title: 'CurrencyType',
                 path: PATH_DASHBOARD.CurrencyType.list,
                 roles: ['CurrencyType-GetList'],
+              },
+              {
+                title: 'Partners',
+                path: PATH_DASHBOARD.Partners.list,
+                roles: ['Partners-GetList'],
               },
               // {
               //   title: 'contractType',
@@ -213,6 +219,11 @@ const navConfig = [
             title: 'ExpenseTracking',
             path: PATH_DASHBOARD.ExpenseTracking.list,
             roles: ['ExpenseTracking-GetList'],
+          },
+          {
+            title: 'WithdrawalTracking',
+            path: PATH_DASHBOARD.WithdrawalTracking.list,
+            roles: ['WithdrawalTracking-GetList'],
           },
         ],
       },

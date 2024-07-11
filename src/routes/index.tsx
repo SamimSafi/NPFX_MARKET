@@ -57,6 +57,8 @@ import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/Expen
 import ExpenseTrackingList from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingList/ExpenseTrackingList';
 import LoanTrackingList from 'src/sections/@dashboard/LoanTracking/LoanTrackingList/LoanTrackingList';
 import LoanTrackingCreate from 'src/sections/@dashboard/LoanTracking/LoanTrackingForm/LoanTrackingCreate';
+import WithdrawalTrackingList from 'src/sections/@dashboard/WithdrawalTracking/WithdrawalTrackingList/WithdrawalTrackingList';
+import WithdrawalTrackingCreate from 'src/sections/@dashboard/WithdrawalTracking/WithdrawalTrackingForm/WithdrawalTrackingCreate';
 
 // ----------------------------------------------------------------------
 
@@ -433,6 +435,36 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['LoanTracking-Update']}>
                   <LoanTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'WithdrawalTracking',
+          children: [
+            { element: <Navigate to="/dashboard/WithdrawalTracking/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-GetAll']}>
+                  <WithdrawalTrackingList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-Create']}>
+                  <WithdrawalTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-Update']}>
+                  <WithdrawalTrackingCreate />
                 </PermissionBasedGuard>
               ),
             },
