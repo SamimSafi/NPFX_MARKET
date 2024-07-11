@@ -74,6 +74,10 @@ import {
   ILoanTracking,
   ILoanTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
+import {
+  IWithdrawalTracking,
+  IWithdrawalTrackingParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 // axios.defaults.baseURL = 'http://localhost:7073/api/';
@@ -565,6 +569,19 @@ const LoanTracking = {
   DDl: () => axios.get<any>(`/LoanTracking/GetDropDownList`, { withCredentials: true }),
 };
 
+//  LoanTracking
+const WithdrawalTracking = {
+  create: (WithdrawalTracking: IWithdrawalTracking) =>
+    requests.post<void>('/WithdrawalTracking', WithdrawalTracking),
+  getList: (param: IWithdrawalTrackingParams) =>
+    axios.post<any>(`/WithdrawalTracking/GetList`, param, { withCredentials: true }),
+  update: (WithdrawalTracking: IWithdrawalTracking) =>
+    requests.put<void>(`/WithdrawalTracking/${WithdrawalTracking.id}`, WithdrawalTracking),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/WithdrawalTracking/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/WithdrawalTracking/GetDropDownList`, { withCredentials: true }),
+};
+
 // Country Lookup
 const Country = {
   getList: (param: ICountry) =>
@@ -807,6 +824,7 @@ const agent = {
   MainAsset,
   ExpenseTracking,
   LoanTracking,
+  WithdrawalTracking,
 };
 
 export default agent;
