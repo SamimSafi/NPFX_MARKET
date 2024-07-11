@@ -138,6 +138,15 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/ExpenseTracking/edit'),
     detail: path(ROOTS_DASHBOARD, '/ExpenseTracking/detail'),
   },
+
+  // AssetTracking
+  AssetTracking: {
+    root: path(ROOTS_DASHBOARD, '/AssetTracking'),
+    list: path(ROOTS_DASHBOARD, '/AssetTracking/list'),
+    new: path(ROOTS_DASHBOARD, '/AssetTracking/new'),
+    edit: path(ROOTS_DASHBOARD, '/AssetTracking/edit'),
+    detail: path(ROOTS_DASHBOARD, '/AssetTracking/detail'),
+  },
   // Users Path
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),

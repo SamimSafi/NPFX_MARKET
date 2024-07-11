@@ -55,6 +55,8 @@ import MainAssetCreate from 'src/sections/@dashboard/MainAsset/MainAssetForm/Mai
 import MainAssetList from 'src/sections/@dashboard/MainAsset/MainAssetList/MainAssetList';
 import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingForm/ExpenseTrackingCreate';
 import ExpenseTrackingList from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingList/ExpenseTrackingList';
+import AssetTrackingCreate from 'src/sections/@dashboard/AssetTracking/AssetTrackingForm/AssetTrackingCreate';
+import AssetTrackingList from 'src/sections/@dashboard/AssetTracking/AssetTrackingList/AssetTrackingList';
 
 // ----------------------------------------------------------------------
 
@@ -401,6 +403,36 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['ExpenseTracking-Update']}>
                   <ExpenseTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'AssetTracking',
+          children: [
+            { element: <Navigate to="/dashboard/AssetTracking/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['AssetTracking-GetAll']}>
+                  <AssetTrackingList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['AssetTracking-Create']}>
+                  <AssetTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['AssetTracking-Update']}>
+                  <AssetTrackingCreate />
                 </PermissionBasedGuard>
               ),
             },

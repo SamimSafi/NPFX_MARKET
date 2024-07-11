@@ -70,6 +70,10 @@ import {
   IExpenseTracking,
   IExpenseTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/ExpenseTracking';
+import {
+  IAssetTracking,
+  IAssetTrackingParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/AssetTracking';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 // axios.defaults.baseURL = 'http://localhost:7073/api/';
@@ -548,6 +552,19 @@ const ExpenseTracking = {
     axios.delete<void>(`/ExpenseTracking/${id}`, { data: remark }),
   DDl: () => axios.get<any>(`/ExpenseTracking/GetDropDownList`, { withCredentials: true }),
 };
+
+//  AssetTracking
+const AssetTracking = {
+  create: (AssetTracking: IAssetTracking) => requests.post<void>('/AssetTracking', AssetTracking),
+  getList: (param: IAssetTrackingParams) =>
+    axios.post<any>(`/AssetTracking/GetList`, param, { withCredentials: true }),
+  update: (AssetTracking: IAssetTracking) =>
+    requests.put<void>(`/AssetTracking/${AssetTracking.id}`, AssetTracking),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/AssetTracking/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/AssetTracking/GetDropDownList`, { withCredentials: true }),
+};
+
 // Country Lookup
 const Country = {
   getList: (param: ICountry) =>
@@ -789,6 +806,7 @@ const agent = {
   Partners,
   MainAsset,
   ExpenseTracking,
+  AssetTracking,
 };
 
 export default agent;
