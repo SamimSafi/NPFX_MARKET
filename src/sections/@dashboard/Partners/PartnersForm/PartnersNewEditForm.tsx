@@ -32,8 +32,6 @@ export default observer(function PartnersNewEditForm() {
   const NewPartnersSchema = Yup.object().shape({
     name: Yup.string().required(`${translate('Validation.name')}`),
     phone: Yup.string().required(`${translate('Validation.phone')}`),
-    pashtoName: Yup.string().required(`${translate('Validation.DariName')}`),
-    code: Yup.string().required(`${translate('Validation.Code')}`),
   });
 
   const defaultValues = useMemo<IPartners>(
@@ -98,13 +96,13 @@ export default observer(function PartnersNewEditForm() {
             >
               <RHFTextField
                 name="name"
-                label={translate('GeneralFields.name')}
+                label={translate('GeneralFields.Name')}
                 showAsterisk={true}
                 autoFocus
               />
               <RHFTextField
                 name="phone"
-                label={translate('GeneralFields.phone')}
+                label={translate('GeneralFields.Phone')}
                 showAsterisk={true}
                 autoFocus
               />
