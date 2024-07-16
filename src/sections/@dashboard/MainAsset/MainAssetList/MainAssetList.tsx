@@ -66,10 +66,9 @@ export default observer(function MainAssetList() {
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'Currency', label: `${translate('GeneralFields.Name')}`, align: 'left' },
-    { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
-    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
-    { id: 'user', label: `${translate('GeneralFields.user')}`, align: 'left' },
     { id: 'balanceAmount', label: `${translate('GeneralFields.balanceAmount')}`, align: 'left' },
+    { id: 'depositDate', label: `${translate('GeneralFields.Date')}`, align: 'left' },
+    { id: 'owneruser', label: `${translate('GeneralFields.ownerUser')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
@@ -97,7 +96,7 @@ export default observer(function MainAssetList() {
   };
   const handleEditRow = (id: number) => {
     getMainAssetFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.MainAsset.edit);
   };
 
   // const handleDelete = () => {

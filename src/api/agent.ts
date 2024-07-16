@@ -80,8 +80,8 @@ import {
 } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-// axios.defaults.baseURL = 'http://localhost:7073/api/';
-axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
+axios.defaults.baseURL = 'http://localhost:9090/api/';
+// axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
 
 axios.interceptors.request.use(
   (config) => {
@@ -485,17 +485,16 @@ const LoanType = {
 
 // Payment Type
 const PaymentType = {
-  create: (PaymentType: IPaymentType) => requests.post<void>('/PaymentType', PaymentType),
+  create: (PaymentType: IPaymentType) => requests.post<void>('/PayType', PaymentType),
   getList: (param: IPaymentTypeParams) =>
-    axios.post<any>(`/PaymentType/GetList`, param, { withCredentials: true }),
+    axios.post<any>(`/PayType/GetList`, param, { withCredentials: true }),
   update: (PaymentType: IPaymentType) =>
-    requests.put<void>(`/PaymentType/${PaymentType.id}`, PaymentType),
+    requests.put<void>(`/PayType/${PaymentType.id}`, PaymentType),
   // detail: (PaymentTypeId: any) =>
   //   requests.get<void>(`/PaymentType/GetDetail/${PaymentTypeId}`),
-  delete: (id: number, remark: string) =>
-    axios.delete<void>(`/PaymentType/${id}`, { data: remark }),
+  delete: (id: number, remark: string) => axios.delete<void>(`/PayType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/PaymentType/GetDropDownList', {
+    axios.get<any>('/PayType/GetDropDownList', {
       withCredentials: true,
     }),
 };
@@ -569,7 +568,7 @@ const LoanTracking = {
   DDl: () => axios.get<any>(`/LoanTracking/GetDropDownList`, { withCredentials: true }),
 };
 
-//  LoanTracking
+//  WithdrawalTracking
 const WithdrawalTracking = {
   create: (WithdrawalTracking: IWithdrawalTracking) =>
     requests.post<void>('/WithdrawalTracking', WithdrawalTracking),
@@ -634,12 +633,10 @@ const GetParentEmp = {
 // Branch
 const Branch = {
   create: (Branch: IBranch) => requests.post<void>('/Branch', Branch),
-  getList: (param: IBranchParams) =>
-    axios.post<any>(`/Branch/GetList`, param, { withCredentials: true }),
+  getList: (param: IBranchParams) => axios.post<any>(`/Branch/GetList`, param),
   update: (Branch: IBranch) => requests.put<void>(`/Branch/${Branch.id}`, Branch),
   delete: (id: number, remark: string) => axios.delete<void>(`/Branch/${id}`, { data: remark }),
-  DDl: (departmentId: any) =>
-    axios.get<any>(`/Branch/GetDropDownList/${departmentId}`, { withCredentials: true }),
+  DDl: () => axios.get<any>(`/Branch/GetBranchDDL`, { withCredentials: true }),
 };
 // Customer
 const Customer = {

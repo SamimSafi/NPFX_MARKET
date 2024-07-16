@@ -124,7 +124,7 @@ export default observer(function LoanTrackingNewEditForm() {
               <RHFSelect name="assetId" label={translate('LoanTracking.AssetType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -132,7 +132,7 @@ export default observer(function LoanTrackingNewEditForm() {
               <RHFSelect name="currencyTypeId" label={translate('LoanTracking.currencyType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -140,7 +140,7 @@ export default observer(function LoanTrackingNewEditForm() {
               <RHFSelect name="loanTypeId" label={translate('LoanTracking.loanType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -148,7 +148,7 @@ export default observer(function LoanTrackingNewEditForm() {
               <RHFSelect name="userId" label={translate('LoanTracking.user')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}

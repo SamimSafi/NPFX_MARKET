@@ -41,7 +41,7 @@ export default class LoginStore {
     try {
       agent.changeLanguage.ChangeLanguage(language()!);
       const getuser = await agent.Logins.login(data);
-      console.log(getuser.DepartmentId);
+      console.log(getuser.Token);
 
       store.CommonStore.setToken(getuser.Token);
       this.startRefreshTokenTimer(getuser.TokenExpiration!);

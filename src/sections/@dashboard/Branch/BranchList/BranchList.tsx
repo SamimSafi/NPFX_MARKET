@@ -65,9 +65,9 @@ export default observer(function BranchList() {
   const [BranchId, setBranchId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'englishName', label: `${translate('GeneralFields.EnglishName')}`, align: 'left' },
-    { id: 'pashtoName', label: `${translate('GeneralFields.PashtoName')}`, align: 'left' },
-    { id: 'dariName', label: `${translate('GeneralFields.DariName')}`, align: 'left' },
+    { id: 'name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
+    { id: 'parentName', label: `${translate('Branch.ParentName')}`, align: 'left' },
+    { id: 'modifiedOn', label: `${translate('Branch.modifiedOn')}`, align: 'left' },
     { id: 'code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];

@@ -17,13 +17,19 @@ import Iconify from '../../../../components/Iconify';
 import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { IBranch } from 'src/@types/foamCompanyTypes/looks/branch';
+import { IPaymentType } from 'src/@types/foamCompanyTypes/looks/PaymentType';
 // ----------------------------------------------------------------------
 
 export default observer(function BranchNewEditForm() {
-  const { branchStore } = useStore();
+  const { PaymentTypeStore } = useStore();
   const { translate } = useLocales();
-  const { createBranch, updateBranch, editMode, selectedBranch, clearSelectedBranch } = branchStore;
+  const {
+    createPaymentType,
+    updatePaymentType,
+    editMode,
+    selectedPaymentType,
+    clearSelectedPaymentType,
+  } = PaymentTypeStore;
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -32,21 +38,21 @@ export default observer(function BranchNewEditForm() {
     englishName: Yup.string().required(`${translate('Validation.EnglishName')}`),
     dariName: Yup.string().required(`${translate('Validation.DariName')}`),
     pashtoName: Yup.string().required(`${translate('Validation.PashtoName')}`),
-    address: Yup.string().required(`${translate('Validation.address')}`),
+    code: Yup.string().required(`${translate('Validation.Code')}`),
   });
 
-  const defaultValues = useMemo<IBranch>(
+  const defaultValues = useMemo<IPaymentType>(
     () => ({
-      id: selectedBranch?.id,
-      englishName: selectedBranch?.englishName || '',
-      dariName: selectedBranch?.dariName || '',
-      pashtoName: selectedBranch?.pashtoName || '',
-      address: selectedBranch?.address || '',
+      id: selectedPaymentType?.id,
+      englishName: selectedPaymentType?.englishName || '',
+      dariName: selectedPaymentType?.dariName || '',
+      pashtoName: selectedPaymentType?.pashtoName || '',
+      code: selectedPaymentType?.code || '',
     }),
-    [selectedBranch]
+    [selectedPaymentType]
   );
 
-  const methods = useForm<IBranch>({
+  const methods = useForm<IPaymentType>({
     resolver: yupResolver(NewBranchSchema),
     defaultValues,
   });
@@ -57,20 +63,20 @@ export default observer(function BranchNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IBranch) => {
+  const onSubmit = (data: IPaymentType) => {
     if (data.id! === undefined) {
       ///create
-      createBranch(data).then(() => {
+      createPaymentType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.Branch.list);
+        navigate(PATH_DASHBOARD.PaymentType.list);
       });
     } else {
       ///update
-      updateBranch(data).then(() => {
+      updatePaymentType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.Branch.list);
+        navigate(PATH_DASHBOARD.PaymentType.list);
       });
     }
   };
@@ -98,8 +104,8 @@ export default observer(function BranchNewEditForm() {
               }}
             >
               <RHFTextField
-                name="enlgishName"
-                label={translate('GeneralFields.EnlgishName')}
+                name="englishName"
+                label={translate('GeneralFields.EnglishName')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -116,8 +122,8 @@ export default observer(function BranchNewEditForm() {
                 autoFocus
               />
               <RHFTextField
-                name="address"
-                label={translate('Branch.address')}
+                name="code"
+                label={translate('GeneralFields.Code')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -141,8 +147,8 @@ export default observer(function BranchNewEditForm() {
                 color="error"
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
-                  clearSelectedBranch();
-                  navigate(PATH_DASHBOARD.Branch.list);
+                  clearSelectedPaymentType();
+                  navigate(PATH_DASHBOARD.PaymentType.list);
                 }}
               >
                 {translate('CRUD.BackToList')}

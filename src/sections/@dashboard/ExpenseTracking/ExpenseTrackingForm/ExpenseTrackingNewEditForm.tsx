@@ -122,7 +122,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
               <RHFSelect name="assetTypeId" label={translate('ExpenseTracking.AssetType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -130,7 +130,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
               <RHFSelect name="currencyTypeId" label={translate('ExpenseTracking.currencyType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -138,7 +138,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
               <RHFSelect name="userId" label={translate('ExpenseTracking.user')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}

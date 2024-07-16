@@ -125,7 +125,7 @@ export default observer(function WithdrawalTrackingNewEditForm() {
               <RHFSelect name="assetId" label={translate('WithdrawalTracking.AssetType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -133,7 +133,7 @@ export default observer(function WithdrawalTrackingNewEditForm() {
               <RHFSelect name="currencyTypeId" label={translate('WithdrawalTracking.currencyType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -141,7 +141,7 @@ export default observer(function WithdrawalTrackingNewEditForm() {
               <RHFSelect name="userId" label={translate('WithdrawalTracking.user')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}

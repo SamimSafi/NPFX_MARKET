@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function MainAssetTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { currencyName, user, date, balanceAmount } = row;
+  const { currencyType, ownerUserName, depositDate, balanceAmount } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -35,11 +35,10 @@ export default function MainAssetTableRow({ row, onEditRow, onDeleteRow, index }
   return (
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
-      <TableCell align="left">{currencyName}</TableCell>
-      <TableCell align="left">{user}</TableCell>
+      <TableCell align="left">{currencyType}</TableCell>
       <TableCell align="left">{balanceAmount}</TableCell>
-      <TableCell align="left">{date}</TableCell>
-      <TableCell align="left">{user}</TableCell>
+      <TableCell align="left">{depositDate}</TableCell>
+      <TableCell align="left">{ownerUserName}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

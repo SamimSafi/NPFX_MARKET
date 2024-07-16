@@ -45,12 +45,8 @@ import CustomButton from 'src/components/CustomButton';
 export default observer(function ProductOrderNewEditForm() {
   const { translate } = useLocales();
   const { ProductOrderStore, commonDropdown } = useStore();
-  const {
-    loadUserDropdown,
-    loadHighLevelEmployeeDropdown,
-    DepartmentOption,
-    FromHighDepartmentOption,
-  } = commonDropdown;
+  const { loadUserDropdown, loadHighLevelEmployeeDropdown, FromHighDepartmentOption } =
+    commonDropdown;
 
   const { createProductOrder, editMode, clearSelectedProductOrder, selectedProductOrder } =
     ProductOrderStore;
@@ -333,7 +329,7 @@ export default observer(function ProductOrderNewEditForm() {
                                   // display: 'flex',
                                 }}
                               >
-                                <RHFSelect
+                                {/* <RHFSelect
                                   name={`orderDetails[${index}].goodsId`}
                                   label={translate('productOrder.GoodsName')}
                                   // size="small"
@@ -369,7 +365,7 @@ export default observer(function ProductOrderNewEditForm() {
                                       {option.text}
                                     </MenuItem>
                                   ))}
-                                </RHFSelect>
+                                </RHFSelect> */}
 
                                 <RHFTextField
                                   name={`orderDetails[${index}].quantity`}

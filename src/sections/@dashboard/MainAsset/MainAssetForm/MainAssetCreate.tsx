@@ -38,7 +38,7 @@ export default function MainAssetCreate() {
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
               name: `${translate('MainAsset.MainAssetList')}`,
-              href: PATH_DASHBOARD.ContractDetails.list,
+              href: PATH_DASHBOARD.MainAsset.list,
             },
             {
               name: !isEdit ? `${translate('MainAsset.New')}` : `${translate('MainAsset.Update')}`,

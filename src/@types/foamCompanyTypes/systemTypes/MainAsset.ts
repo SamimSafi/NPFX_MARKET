@@ -1,12 +1,12 @@
 export interface IMainAsset {
   id?: number;
   currencyTypeId?: number;
-  date?: string;
-  user?: string;
-  userId?: number;
+  currencyType?: string;
+  branchId?: number;
+  depositDate?: string;
+  ownerUserName?: string;
+  ownerUserId?: number;
   balanceAmount?: number;
-  parentId?: number;
-  currencyName?: string;
   afterSubmit?: string;
 }
 

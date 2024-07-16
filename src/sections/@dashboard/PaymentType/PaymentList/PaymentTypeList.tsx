@@ -65,9 +65,7 @@ export default observer(function PaymentTypeList() {
   const [PaymentTypeId, setPaymentTypeId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'englishName', label: `${translate('GeneralFields.EnglishName')}`, align: 'left' },
-    { id: 'pashtoName', label: `${translate('GeneralFields.PashtoName')}`, align: 'left' },
-    { id: 'dariName', label: `${translate('GeneralFields.DariName')}`, align: 'left' },
+    { id: 'name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
     { id: 'code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];

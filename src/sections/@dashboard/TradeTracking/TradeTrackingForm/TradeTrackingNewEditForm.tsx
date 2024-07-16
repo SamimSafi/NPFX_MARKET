@@ -123,7 +123,7 @@ export default observer(function TradeTrackingNewEditForm() {
               <RHFSelect name="assetTypeId" label={translate('TradeTracking.AssetType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -131,7 +131,7 @@ export default observer(function TradeTrackingNewEditForm() {
               <RHFSelect name="currencyTypeId" label={translate('TradeTracking.currencyType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
@@ -139,7 +139,7 @@ export default observer(function TradeTrackingNewEditForm() {
               <RHFSelect name="userId" label={translate('TradeTracking.user')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
