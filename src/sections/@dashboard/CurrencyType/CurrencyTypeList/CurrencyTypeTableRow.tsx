@@ -21,7 +21,7 @@ type Props = {
 };
 
 export default function CurrencyTypeTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { name } = row;
+  const { name, code } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -37,6 +37,7 @@ export default function CurrencyTypeTableRow({ row, onEditRow, onDeleteRow, inde
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
       <TableCell align="left">{name}</TableCell>
+      <TableCell align="left">{code}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

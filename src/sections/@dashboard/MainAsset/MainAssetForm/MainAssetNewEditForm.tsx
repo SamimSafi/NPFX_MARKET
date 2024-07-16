@@ -23,7 +23,8 @@ import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 // ----------------------------------------------------------------------
 
 export default observer(function MainAssetNewEditForm() {
-  const { MainAssetStore } = useStore();
+  const { MainAssetStore, commonDropdown } = useStore();
+  const { loadBranchDDL, BranchOption, loadUserDropdown, UserOption } = commonDropdown;
   const { translate } = useLocales();
   const { createMainAsset, updateMainAsset, editMode, selectedMainAsset, clearSelectedMainAsset } =
     MainAssetStore;
@@ -31,10 +32,10 @@ export default observer(function MainAssetNewEditForm() {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewMainAssetSchema = Yup.object().shape({
-    currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    userId: Yup.number().required(`${translate('Validation.EnglishName')}`),
-    parentId: Yup.number().required(`${translate('Validation.EnglishName')}`),
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
+    currencyTypeId: Yup.number().required(`${translate('Validation.currencyTypeId')}`),
+    branchId: Yup.number().required(`${translate('Validation.currencyTypeId')}`),
+    ownerUserId: Yup.string().required(`${translate('Validation.ownerUserId')}`),
+    depositDate: Yup.date().required(`${translate('Validation.DariName')}`),
     balanceAmount: Yup.number().required(`${translate('Validation.Code')}`),
   });
 
@@ -42,9 +43,9 @@ export default observer(function MainAssetNewEditForm() {
     () => ({
       id: selectedMainAsset?.id,
       currencyTypeId: selectedMainAsset?.currencyTypeId || undefined,
-      userId: selectedMainAsset?.userId || undefined,
-      parentId: selectedMainAsset?.parentId || undefined,
-      date: selectedMainAsset?.date,
+      ownerUserId: selectedMainAsset?.ownerUserId || undefined,
+      branchId: selectedMainAsset?.branchId || undefined,
+      depositDate: selectedMainAsset?.depositDate,
       balanceAmount: selectedMainAsset?.balanceAmount,
     }),
     [selectedMainAsset]
@@ -56,14 +57,11 @@ export default observer(function MainAssetNewEditForm() {
   });
 
   const bloodGroup = [
-    { title: 'A+', value: 'A+' },
-    { title: 'A-', value: 'A-' },
-    { title: 'B+', value: 'B+' },
-    { title: 'B-', value: 'B-' },
-    { title: 'O+', value: 'O+' },
-    { title: 'O-', value: 'O-' },
-    { title: 'AB+', value: 'AB+' },
-    { title: 'AB-', value: 'AB-' },
+    { title: 'A+', value: 1 },
+    { title: 'A-', value: 2 },
+    { title: 'B+', value: 3 },
+    { title: 'B-', value: 4 },
+    { title: 'O+', value: 5 },
   ];
 
   const {
@@ -71,22 +69,23 @@ export default observer(function MainAssetNewEditForm() {
     handleSubmit,
     formState: { isSubmitting },
     control,
+    watch,
   } = methods;
-
+  const val = watch();
   const onSubmit = (data: IMainAsset) => {
     if (data.id! === undefined) {
       ///create
       createMainAsset(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.MainAsset.list);
       });
     } else {
       ///update
       updateMainAsset(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.MainAsset.list);
       });
     }
   };
@@ -99,6 +98,14 @@ export default observer(function MainAssetNewEditForm() {
       reset(defaultValues);
     }
   }, [reset, editMode, defaultValues]);
+
+  useEffect(() => {
+    loadBranchDDL();
+  }, [loadBranchDDL]);
+
+  useEffect(() => {
+    loadUserDropdown(val.branchId);
+  }, [loadUserDropdown, val.branchId]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -116,31 +123,31 @@ export default observer(function MainAssetNewEditForm() {
               <RHFSelect name="currencyTypeId" label={translate('MainAsset.currencyType')}>
                 <option value="" />
                 {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
+                  <option key={op.value} value={op.value}>
                     {op.title}
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="userId" label={translate('MainAsset.user')}>
+              <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
                 <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
-                    {op.title}
+                {BranchOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="parentId" label={translate('MainAsset.Parent')}>
+              <RHFSelect name="ownerUserId" label={translate('MainAsset.Owneruser')}>
                 <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
-                    {op.title}
+                {UserOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
                   </option>
                 ))}
               </RHFSelect>
 
               <LocalizDatePicker
-                name="date"
-                label={translate('MainAsset.date')}
+                name="depositDate"
+                label={translate('MainAsset.depositDate')}
                 control={control}
                 showAsterisk={true}
               />

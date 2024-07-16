@@ -1,59 +1,33 @@
-import { makeAutoObservable, observable, runInAction } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import {
   SelectControl,
   SelectControl6,
   SelectControl3,
-  SelectControl7,
-  ExternalDocumentLinkItem,
-  RequestCategoryDropdown,
-  ActionRequestDropdown,
   EmpDegreeDropdown,
   EmpPositionDropdown,
   EmployeeDropdown,
   softwares,
-  ITEmployeeDropdown,
 } from 'src/@types/common';
 import {
-  DocumentTypeDropdown,
   roleDropdown,
   LanguageDropdown,
-  OrganizationDropDown,
   DocumentLevelDropdown,
-  DepartmentDropdown,
-  ProcessStatusDropdown,
   UserDropdown,
-  DepartmentLevelDropdown,
   YearsDropdown,
-  ShelfDropdown,
-  CupboardDropdown,
-  BlockDropdown,
-  DepartmentDDLFromTracking,
-  CardTypeDDLDropdown,
-  CardDDLDropdown,
-  VisitingTypeDropdown,
   OrganizationWithLocalizationDropDown,
-  VisitorDropdown,
-  ApplicationDropdown,
   PermissionDropdown,
-  InternalDocumentDepartmentDDLFromTracking,
   ChildUserDropdown,
   OrganizationUserDropdown,
   EmployeeDropDown,
-  RepresentatorDropDown,
   IDDL,
-  IEmployeeHealthStatusDDL,
   IGetActiveEmp,
   IGetParentEmp,
   IHighLevelEmployeeDDL,
-  ArchiveDocTypeDropdown,
 } from 'src/@types/commonDropdownTypes';
 
 import agent from 'src/api/agent';
-import { OrganizationDDLFromTracking } from './../../@types/commonDropdownTypes';
-import { ICountry } from 'src/@types/country';
-
 export default class commonDroptdown {
-  DepartmentOption: SelectControl[] = []; // for Department Type dropdown
+  BranchOption: SelectControl[] = []; // for Department Type dropdown
 
   ChildDepartmentOption: SelectControl[] = []; // For Child Department DropDown
 
@@ -471,12 +445,11 @@ export default class commonDroptdown {
     }
   };
 
-  setEmployeeOptionsByDepartment = (data: EmployeeDropDown[]): SelectControl[] => {
-    return data.map((op) => ({
+  setEmployeeOptionsByDepartment = (data: EmployeeDropDown[]): SelectControl[] =>
+    data.map((op) => ({
       text: op.name + ('(' + op.fatherName + ')'),
       value: op.id,
     }));
-  };
 
   // Province Dropdown
   loadProvinceDropdown = async () => {
@@ -584,6 +557,28 @@ export default class commonDroptdown {
       return optRow;
     });
     this.PositionTitleOption = op;
+  };
+
+  // loadPositionTitleDDL
+  loadBranchDDL = async () => {
+    try {
+      const result = await agent.Branch.DDl();
+
+      this.setBranchDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setBranchDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.BranchOption = op;
   };
 
   // loadJobPositionDDL

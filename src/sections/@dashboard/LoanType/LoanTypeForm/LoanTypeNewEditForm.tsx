@@ -64,14 +64,14 @@ export default observer(function LoanTypeNewEditForm() {
       createLoanType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.LoanType.list);
       });
     } else {
       ///update
       updateLoanType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.LoanType.list);
       });
     }
   };
@@ -118,7 +118,7 @@ export default observer(function LoanTypeNewEditForm() {
               />
 
               <RHFTextField
-                name="Code"
+                name="code"
                 label={translate('GeneralFields.Code')}
                 showAsterisk={true}
                 autoFocus

@@ -18,7 +18,7 @@ type Props = {
 };
 
 export default function BranchTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { name, address } = row;
+  const { name, modifiedOn, parentBranchName, code } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -34,7 +34,9 @@ export default function BranchTableRow({ row, onEditRow, onDeleteRow, index }: P
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
       <TableCell align="left">{name}</TableCell>
-      <TableCell align="left">{address}</TableCell>
+      <TableCell align="left">{parentBranchName}</TableCell>
+      <TableCell align="left">{modifiedOn}</TableCell>
+      <TableCell align="left">{code}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

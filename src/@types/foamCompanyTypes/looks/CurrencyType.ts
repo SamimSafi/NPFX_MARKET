@@ -1,11 +1,9 @@
 import { ICommonFieldType } from './commonFieldsType';
 
-export interface ICurrencyType extends ICommonFieldType {
-  afterSubmit?: string;
-}
+export interface ICurrencyType extends ICommonFieldType {}
 
 export interface ICurrencyTypeParams {
   pageIndex: number;
   pageSize: number;
-  name?: string;
+  searchBy?: string;
 }
