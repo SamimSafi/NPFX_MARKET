@@ -1,39 +1,15 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
-// form
-import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-// @mui
-import { DatePicker, LoadingButton } from '@mui/lab';
 
-import {
-  Box,
-  Button,
-  Card,
-  FormControl,
-  Grid,
-  Alert,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Select,
-  SelectChangeEvent,
-  Typography,
-  Stack,
-  TextField,
-  Autocomplete,
-  Chip,
-  LinearProgress,
-} from '@mui/material';
-// routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
+import { Box, Button, Card, Grid, Alert, Typography, Stack } from '@mui/material';
 // @types
 import { productOrder } from '../../../../@types/foamCompanyTypes/productOrder';
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFTextField, RHFSelect, RHFEditor } from '../../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { useStore } from 'src/stores/store';
 import { observer } from 'mobx-react-lite';
 import useLocales from 'src/hooks/useLocales';
@@ -50,8 +26,6 @@ export default observer(function ProductOrderNewEditForm() {
 
   const { createProductOrder, editMode, clearSelectedProductOrder, selectedProductOrder } =
     ProductOrderStore;
-
-  const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -103,6 +77,7 @@ export default observer(function ProductOrderNewEditForm() {
       // eslint-disable-next-line array-callback-return
       const fieldData = fields.map((data) => data.id);
       const fieldArr = [...fieldData, id];
+      // eslint-disable-next-line eqeqeq
       const removeUndefined: any = fieldArr.filter((data) => data != undefined);
       setValues(removeUndefined);
     }
@@ -130,7 +105,6 @@ export default observer(function ProductOrderNewEditForm() {
     remove(index);
     delete value[index];
   };
-  const val = watch();
 
   const onSubmit = (data: productOrder) => {
     console.log(data);
@@ -230,6 +204,7 @@ export default observer(function ProductOrderNewEditForm() {
     // loadUserHighDepartmentDropdown();
     loadUserDropdown(1);
     loadHighLevelEmployeeDropdown();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -281,13 +256,11 @@ export default observer(function ProductOrderNewEditForm() {
                   }}
                   freeSolo
                   fullWidth
-                  renderOption={(props, option: any) => {
-                    return (
-                      <li {...props} key={option + '-' + uuid()}>
-                        {option}
-                      </li>
-                    );
-                  }}
+                  renderOption={(props, option: any) => (
+                    <li {...props} key={option + '-' + uuid()}>
+                      {option}
+                    </li>
+                  )}
                 />
               </Box>
             </Card>
@@ -308,28 +281,27 @@ export default observer(function ProductOrderNewEditForm() {
                     {translate('CRUD.CCDep')}
                   </Typography>
                   <Stack spacing={3}>
-                    {fields.map((item, index) => {
-                      return (
-                        <Stack key={item.id} spacing={1.5}>
-                          <Stack
-                            direction={{ xs: 'column', md: 'row' }}
-                            spacing={2}
-                            sx={{ width: 1 }}
-                          >
-                            <Grid item xs={12} md={12}>
-                              <Box
-                                sx={{
-                                  display: 'grid',
-                                  columnGap: 2,
-                                  rowGap: 3,
-                                  gridTemplateColumns: {
-                                    xs: 'repeat(1, 1fr)',
-                                    sm: 'repeat(2, 1fr)',
-                                  },
-                                  // display: 'flex',
-                                }}
-                              >
-                                {/* <RHFSelect
+                    {fields.map((item, index) => (
+                      <Stack key={item.id} spacing={1.5}>
+                        <Stack
+                          direction={{ xs: 'column', md: 'row' }}
+                          spacing={2}
+                          sx={{ width: 1 }}
+                        >
+                          <Grid item xs={12} md={12}>
+                            <Box
+                              sx={{
+                                display: 'grid',
+                                columnGap: 2,
+                                rowGap: 3,
+                                gridTemplateColumns: {
+                                  xs: 'repeat(1, 1fr)',
+                                  sm: 'repeat(2, 1fr)',
+                                },
+                                // display: 'flex',
+                              }}
+                            >
+                              {/* <RHFSelect
                                   name={`orderDetails[${index}].goodsId`}
                                   label={translate('productOrder.GoodsName')}
                                   // size="small"
@@ -367,123 +339,122 @@ export default observer(function ProductOrderNewEditForm() {
                                   ))}
                                 </RHFSelect> */}
 
-                                <RHFTextField
-                                  name={`orderDetails[${index}].quantity`}
-                                  label={translate('productOrder.quantity')}
-                                  fullWidth
-                                />
-                                <RHFTextField
-                                  name={`orderDetails[${index}].salePrice`}
-                                  label={translate('productOrder.salePrice')}
-                                  fullWidth
-                                />
-                                <RHFTextField
-                                  name={`orderDetails[${index}].discount`}
-                                  label={translate('productOrder.discount')}
-                                  fullWidth
-                                />
-                                <RHFTextField
-                                  name={`orderDetails[${index}].totalPrice`}
-                                  label={translate('productOrder.totalPrice')}
-                                  fullWidth
-                                />
-                              </Box>{' '}
-                            </Grid>
-                            <Button
-                              size="small"
-                              color="error"
-                              startIcon={<Iconify icon="eva:trash-2-outline" />}
-                              onClick={() => {
-                                handleRemove(index);
-                              }}
-                            />
-                          </Stack>
-                          <Stack
-                            direction={{ xs: 'column', md: 'row' }}
-                            spacing={2}
-                            sx={{ width: 1 }}
-                          >
-                            <Grid item xs={12}>
-                              <Typography variant="h6">
-                                Formula: 10/ 10 = 1 1 * 6 = 6 this two other Text Field 6/ 100 =
-                                0.06 this is two other text field 0.06 * 70 =4.2 this is two other
-                                text field 4.2 / 200= 0.021 this is two other text field
-                              </Typography>
-                            </Grid>
-                            <Grid item xs={2}>
                               <RHFTextField
-                                name={`textField1`}
-                                label={`Value 1`}
-                                // Add any additional props as needed
+                                name={`orderDetails[${index}].quantity`}
+                                label={translate('productOrder.quantity')}
+                                fullWidth
                               />
-                            </Grid>
-                            <Grid item xs={2}>
                               <RHFTextField
-                                name={`textField2`}
-                                label={`Value 2`}
-                                // Add any additional props as needed
+                                name={`orderDetails[${index}].salePrice`}
+                                label={translate('productOrder.salePrice')}
+                                fullWidth
                               />
-                            </Grid>
-                            <Grid item xs={2}>
                               <RHFTextField
-                                name={`textField3`}
-                                label={`Value 3`}
-                                // Add any additional props as needed
+                                name={`orderDetails[${index}].discount`}
+                                label={translate('productOrder.discount')}
+                                fullWidth
                               />
-                            </Grid>
-                            <Grid item xs={2}>
                               <RHFTextField
-                                name={`textField4`}
-                                label={`Value 4`}
-                                // Add any additional props as needed
+                                name={`orderDetails[${index}].totalPrice`}
+                                label={translate('productOrder.totalPrice')}
+                                fullWidth
                               />
-                            </Grid>
-                            <Grid item xs={2}>
-                              <RHFTextField
-                                name={`textField5`}
-                                label={`Value 5`}
-                                // Add any additional props as needed
-                              />
-                            </Grid>
-                            <Grid item xs={2}>
-                              <RHFTextField
-                                name={`textField6`}
-                                label={`Value 6`}
-                                // Add any additional props as needed
-                              />
-                            </Grid>
-                            <Grid item xs={2}>
-                              <RHFTextField
-                                name={`textField7`}
-                                label={`Value 7`}
-                                // Add any additional props as needed
-                              />
-                            </Grid>
-                            <Grid item xs={2}>
-                              <RHFTextField
-                                name={`textField8`}
-                                label={`Value 8`}
-                                // Add any additional props as needed
-                              />
-                            </Grid>
-                            <Grid item xs={2}>
-                              <RHFTextField
-                                name={`textField9`}
-                                label={`Value 9`}
-                                // Add any additional props as needed
-                              />
-                            </Grid>
-                            <Grid item xs={2}>
-                              <RHFTextField
-                                name={`textField10`}
-                                label={`Value 10`}
-                                // Add any additional props as needed
-                              />
-                            </Grid>
-                          </Stack>
+                            </Box>{' '}
+                          </Grid>
+                          <Button
+                            size="small"
+                            color="error"
+                            startIcon={<Iconify icon="eva:trash-2-outline" />}
+                            onClick={() => {
+                              handleRemove(index);
+                            }}
+                          />
                         </Stack>
-                      );
-                    })}
+                        <Stack
+                          direction={{ xs: 'column', md: 'row' }}
+                          spacing={2}
+                          sx={{ width: 1 }}
+                        >
+                          <Grid item xs={12}>
+                            <Typography variant="h6">
+                              Formula: 10/ 10 = 1 1 * 6 = 6 this two other Text Field 6/ 100 = 0.06
+                              this is two other text field 0.06 * 70 =4.2 this is two other text
+                              field 4.2 / 200= 0.021 this is two other text field
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField1`}
+                              label={`Value 1`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField2`}
+                              label={`Value 2`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField3`}
+                              label={`Value 3`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField4`}
+                              label={`Value 4`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField5`}
+                              label={`Value 5`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField6`}
+                              label={`Value 6`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField7`}
+                              label={`Value 7`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField8`}
+                              label={`Value 8`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField9`}
+                              label={`Value 9`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                          <Grid item xs={2}>
+                            <RHFTextField
+                              name={`textField10`}
+                              label={`Value 10`}
+                              // Add any additional props as needed
+                            />
+                          </Grid>
+                        </Stack>
+                      </Stack>
+                    ))}
                   </Stack>
                 </Box>
                 <Stack

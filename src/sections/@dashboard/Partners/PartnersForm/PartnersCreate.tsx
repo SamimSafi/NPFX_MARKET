@@ -36,7 +36,7 @@ export default function PartnersCreate() {
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
               name: `${translate('Partners.PartnersList')}`,
-              href: PATH_DASHBOARD.ContractDetails.list,
+              href: PATH_DASHBOARD.Partners.list,
             },
             {
               name: !isEdit ? `${translate('Partners.New')}` : `${translate('Partners.Update')}`,

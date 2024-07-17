@@ -1,5 +1,3 @@
-import useSettings from 'src/hooks/useSettings';
-
 export function language(setCookie?: boolean) {
   let language = window.localStorage.getItem('i18nextLng');
   if (setCookie) {
@@ -23,7 +21,7 @@ export function language(setCookie?: boolean) {
 }
 export function getCurrentDay() {
   let weekday = [''];
-  if (language() == 'en') {
+  if (language() === 'en') {
     weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   } else {
     weekday = ['یکشنبه', 'دوشنبه', 'سه شنبه', 'چهار شنبه', 'پنج شنبه', 'جمع', 'شنبه'];
@@ -76,5 +74,5 @@ export function getDateFromDateTime(dateTimeString: any) {
 export function stripHtmlTags(html: any, isSubstring?: boolean) {
   const temp = document.createElement('div');
   temp.innerHTML = html;
-  return isSubstring != false ? temp.textContent!.substring(0, 30) : temp.textContent!;
+  return isSubstring !== false ? temp.textContent!.substring(0, 30) : temp.textContent!;
 }

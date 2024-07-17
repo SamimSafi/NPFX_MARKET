@@ -10,6 +10,18 @@ export interface IMainAsset {
   afterSubmit?: string;
 }
 
+export interface IDepositTo {
+  id?: number;
+  parentId?: number;
+  depositDate?: string;
+  toUserName?: string;
+  toUserId?: number;
+  branchId?: number;
+  depositAmmount?: number;
+  description?: string;
+  afterSubmit?: string;
+}
+
 export interface IMainAssetParams {
   pageSize: number;
   pageIndex: number;

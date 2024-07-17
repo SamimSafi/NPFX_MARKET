@@ -16,10 +16,17 @@ type Props = {
   onEditRow: VoidFunction;
   //onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  onDepositToUser: VoidFunction;
   index: any;
 };
 
-export default function MainAssetTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
+export default function MainAssetTableRow({
+  row,
+  onEditRow,
+  onDeleteRow,
+  onDepositToUser,
+  index,
+}: Props) {
   const { currencyType, ownerUserName, depositDate, balanceAmount } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
@@ -66,6 +73,15 @@ export default function MainAssetTableRow({ row, onEditRow, onDeleteRow, index }
               >
                 <Iconify sx={{ color: 'warning.main' }} icon={'eva:edit-fill'} />
                 {translate('CRUD.Update')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onDepositToUser();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'success.main' }} icon={'vaadin:money-deposit'} />
+                {translate('CRUD.DepositToUser')}
               </MenuItem>
             </>
           }

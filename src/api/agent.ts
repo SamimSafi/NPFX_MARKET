@@ -65,7 +65,11 @@ import {
   ITradeTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/TradeTracking';
 import { IPartners, IPartnersParams } from 'src/@types/foamCompanyTypes/systemTypes/Partners';
-import { IMainAsset, IMainAssetParams } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import {
+  IDepositTo,
+  IMainAsset,
+  IMainAssetParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 import {
   IExpenseTracking,
   IExpenseTrackingParams,
@@ -536,6 +540,8 @@ const Partners = {
 //  MainAsset
 const MainAsset = {
   create: (MainAsset: IMainAsset) => requests.post<void>('/MainAsset', MainAsset),
+  deposit: (DepositAsset: IDepositTo) =>
+    requests.post<void>('/MainAsset/DepositToUser', DepositAsset),
   getList: (param: IMainAssetParams) =>
     axios.post<any>(`/MainAsset/GetList`, param, { withCredentials: true }),
   update: (MainAsset: IMainAsset) => requests.put<void>(`/MainAsset/${MainAsset.id}`, MainAsset),
@@ -632,9 +638,9 @@ const GetParentEmp = {
 
 // Branch
 const Branch = {
-  create: (Branch: IBranch) => requests.post<void>('/Branch', Branch),
+  create: (Branch: IBranch) => axios.post<void>('/Branch', Branch),
   getList: (param: IBranchParams) => axios.post<any>(`/Branch/GetList`, param),
-  update: (Branch: IBranch) => requests.put<void>(`/Branch/${Branch.id}`, Branch),
+  update: (Branch: IBranch) => axios.put<void>(`/Branch/${Branch.id}`, Branch),
   delete: (id: number, remark: string) => axios.delete<void>(`/Branch/${id}`, { data: remark }),
   DDl: () => axios.get<any>(`/Branch/GetBranchDDL`, { withCredentials: true }),
 };

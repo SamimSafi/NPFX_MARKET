@@ -28,6 +28,7 @@ import MainAssetTableRow from './MainAssetTableRow';
 import MainAssetTableToolbar from './MainAssetTableToolbar';
 import MainAssetDelete from './MainAssetDelete';
 import { IMainAsset } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import DepositToNewEditForm from '../MainAssetForm/DepositToNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +44,8 @@ export default observer(function MainAssetList() {
     getMainAssetFromRegistry,
     setOpenCloseDialog,
     openDialog,
+    setOpenCloseDialogDeposit,
+    openDialogDeposit,
   } = MainAssetStore;
   const {
     dense,
@@ -91,8 +94,17 @@ export default observer(function MainAssetList() {
     setMainAssetId(id);
   };
 
+  const handleDepositToUserOpenConfirm = (id: number) => {
+    setOpenCloseDialogDeposit();
+    setMainAssetId(id);
+  };
+
   const handleCloseConfirm = () => {
     setOpenCloseDialog();
+  };
+
+  const handleCloseDepositConfirm = () => {
+    setOpenCloseDialogDeposit();
   };
   const handleEditRow = (id: number) => {
     getMainAssetFromRegistry(id);
@@ -120,6 +132,7 @@ export default observer(function MainAssetList() {
     setPage(newPage);
     loadMainAsset({ pageIndex: newPage, pageSize: rowsPerPage });
   };
+
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeRowsPerPage(event);
     let pageZize = parseInt(event.target.value);
@@ -187,6 +200,7 @@ export default observer(function MainAssetList() {
                         row={row}
                         index={index}
                         onDeleteRow={() => handleOpenConfirm(row.id!)}
+                        onDepositToUser={() => handleDepositToUserOpenConfirm(row.id!)}
                         onEditRow={() => handleEditRow(row.id!)}
                       />
                     ))}
@@ -223,6 +237,20 @@ export default observer(function MainAssetList() {
               size="md"
             >
               <MainAssetDelete id={MainAssetId} />
+            </MyDialog>
+            <FormControlLabel
+              control={<Switch checked={dense} onChange={onChangeDense} />}
+              label={translate('Pagination.Dense')}
+              sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
+            />
+
+            <MyDialog
+              open={openDialogDeposit}
+              onClose={handleCloseDepositConfirm}
+              title={translate('CRUD.DepositToUser')}
+              size="md"
+            >
+              <DepositToNewEditForm asssetID={MainAssetId} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
