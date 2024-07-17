@@ -42,6 +42,7 @@ export default observer(function BranchNewEditForm() {
       englishName: selectedBranch?.englishName || '',
       dariName: selectedBranch?.dariName || '',
       pashtoName: selectedBranch?.pashtoName || '',
+      code: selectedBranch?.code || '',
       address: selectedBranch?.address || '',
       parentId: selectedBranch?.parentId || undefined,
     }),
@@ -121,6 +122,12 @@ export default observer(function BranchNewEditForm() {
               <RHFTextField
                 name="pashtoName"
                 label={translate('GeneralFields.PashtoName')}
+                showAsterisk={true}
+                autoFocus
+              />
+              <RHFTextField
+                name="code"
+                label={translate('GeneralFields.Code')}
                 showAsterisk={true}
                 autoFocus
               />

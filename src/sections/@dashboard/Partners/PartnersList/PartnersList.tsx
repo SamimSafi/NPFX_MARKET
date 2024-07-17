@@ -94,7 +94,7 @@ export default observer(function PartnersList() {
   };
   const handleEditRow = (id: number) => {
     getPartnersFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.Partners.edit);
   };
 
   // const handleDelete = () => {

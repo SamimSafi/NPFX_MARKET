@@ -1,7 +1,10 @@
 export interface IPartners {
   id?: number;
-  name: string;
+  nameInEnglish: string;
+  nameInPashto: string;
+  name?: string;
   phone: string;
+  email?: string;
   afterSubmit?: string;
 }
 

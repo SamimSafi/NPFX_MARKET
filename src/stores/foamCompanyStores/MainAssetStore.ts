@@ -1,9 +1,15 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { SelectControl } from '../../@types/common';
 import agentMainAsset from '../../api/agent';
-import { IMainAsset, IMainAssetParams } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import {
+  IDepositTo,
+  IMainAsset,
+  IMainAssetParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 export default class MainAssetStore {
   openDialog = false;
+
+  openDialogDeposit = false;
 
   MainAssetRegistry = new Map<number, IMainAsset>();
 
@@ -12,6 +18,8 @@ export default class MainAssetStore {
   editMode = false; //When click on edit button
 
   selectedMainAsset: IMainAsset | undefined;
+
+  selectedDepositTo: IDepositTo | undefined;
 
   totalRecord: number = 0;
 
@@ -79,10 +87,19 @@ export default class MainAssetStore {
 
   setOpenCloseDialog = () => (this.openDialog = !this.openDialog);
 
+  setOpenCloseDialogDeposit = () => (this.openDialogDeposit = !this.openDialogDeposit);
+
   setDetailCloseDialog = () => (this.openDetailDialog = !this.openDetailDialog);
 
   createMainAsset = async (MainAsset: IMainAsset) => {
     await agentMainAsset.MainAsset.create(MainAsset);
+    runInAction(() => {
+      this.loadMainAsset({ pageIndex: 0, pageSize: 5 });
+    });
+  };
+
+  deposit = async (DepositAsset: IDepositTo) => {
+    await agentMainAsset.MainAsset.deposit(DepositAsset);
     runInAction(() => {
       this.loadMainAsset({ pageIndex: 0, pageSize: 5 });
     });
