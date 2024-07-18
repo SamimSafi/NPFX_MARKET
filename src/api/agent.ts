@@ -512,7 +512,7 @@ const ExpenseType = {
     requests.put<void>(`/ExpenseType/${expenseType.id}`, expenseType),
   delete: (id: number, remark: string) =>
     axios.delete<void>(`/ExpenseType/${id}`, { data: remark }),
-  DDl: () => axios.get<any>(`/ExpenseType/GetDropDownList`, { withCredentials: true }),
+  DDl: () => axios.get<any>(`/ExpenseType/GetExpenseTypeDDL`, { withCredentials: true }),
 };
 
 //  TradeTracking

@@ -1,16 +1,16 @@
 export interface IExpenseTracking {
   id?: number;
-  currencyTypeId?: number;
-  currencyName?: string;
-  assetTypeId?: number;
-  assetType?: string;
+  mainAssetId?: number;
   expenseTypeId?: number;
-  expenseType?: string;
+  branchId?: number;
+  userId?: string;
+  branch?: string;
+  userName?: string;
+  currencyType?: string;
   amount?: number;
-  date?: string;
   description?: string;
-  userId?: number;
-  user?: string;
+  date?: string;
+  expenseType?: string;
   afterSubmit?: string;
 }
 

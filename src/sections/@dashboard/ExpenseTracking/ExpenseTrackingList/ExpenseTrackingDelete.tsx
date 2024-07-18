@@ -16,10 +16,10 @@ interface Props {
   id: number;
 }
 
-export default observer(function ExpenseTrackingDelete({ id }: Props) {
+export default observer(function ExpenseDelete({ id }: Props) {
   const { enqueueSnackbar } = useSnackbar();
   const { translate } = useLocales();
-  const { ExpenseTrackingStore } = useStore();
+  const { ExpenseStore } = useStore();
   const validationSchema = Yup.object().shape({
     remarks: Yup.string()
       .required(`${translate('Validation.Remark')}`)
@@ -30,12 +30,13 @@ export default observer(function ExpenseTrackingDelete({ id }: Props) {
   });
 
   const {
+    reset,
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
 
   const onSubmit = (remark: string) => {
-    ExpenseTrackingStore.deleteExpenseTracking(id, remark)
+    ExpenseStore.deleteExpense(id, remark)
       .then(() => {
         enqueueSnackbar('Delete  success!');
       })
@@ -90,7 +91,7 @@ export default observer(function ExpenseTrackingDelete({ id }: Props) {
                 <LoadingButton
                   variant="contained"
                   size="small"
-                  onClick={() => ExpenseTrackingStore.setOpenCloseDialog()}
+                  onClick={() => ExpenseStore.setOpenCloseDialog()}
                   startIcon={<CancelIcon />}
                 >
                   {translate('CRUD.Cancle')}
