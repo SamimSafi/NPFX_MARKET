@@ -2,19 +2,13 @@ import { makeAutoObservable } from 'mobx';
 import {
   SelectControl,
   SelectControl6,
-  SelectControl3,
-  EmpDegreeDropdown,
   EmpPositionDropdown,
   EmployeeDropdown,
-  softwares,
 } from 'src/@types/common';
 import {
   roleDropdown,
   LanguageDropdown,
-  DocumentLevelDropdown,
   UserDropdown,
-  YearsDropdown,
-  OrganizationWithLocalizationDropDown,
   PermissionDropdown,
   ChildUserDropdown,
   OrganizationUserDropdown,
@@ -22,46 +16,33 @@ import {
   IDDL,
   IGetActiveEmp,
   IGetParentEmp,
-  IHighLevelEmployeeDDL,
 } from 'src/@types/commonDropdownTypes';
 
 import agent from 'src/api/agent';
 export default class commonDroptdown {
   BranchOption: SelectControl[] = []; // for Department Type dropdown
 
-  ChildDepartmentOption: SelectControl[] = []; // For Child Department DropDown
+  LoanTypeOption: SelectControl[] = []; // for Department Type dropdown
 
-  MainRegionOption: SelectControl[] = []; // For Child Department DropDown
+  PayTypeOption: SelectControl[] = []; // for Department Type dropdown
+
+  PartnersOption: SelectControl[] = []; // for Department Type dropdown
+
+  AssetTypeOption: SelectControl[] = []; // for Department Type dropdown
+
+  CurrencyTypeOption: SelectControl[] = []; // for Department Type dropdown
 
   ExpenseTypeOption: SelectControl[] = []; // For Child Department DropDown
 
-  SubRegionOption: SelectControl[] = []; // For Child Department DropDown
+  ContractTypeOption: SelectControl[] = [];
+
+  ChildDepartmentOption: SelectControl[] = []; // For Child Department DropDown
 
   ProvinceOption: SelectControl[] = []; // For Child Province DropDown
-
-  ProvinceOptionByRegion: SelectControl[] = []; // For Child Province DropDown
 
   DistrictOption: SelectControl[] = []; // For Child Province DropDown
 
   LanguageOption: SelectControl[] = []; // for Language Type dropdown
-
-  ShelfOption: SelectControl[] = []; // for Language Type dropdown
-
-  VisitorOption: SelectControl[] = []; // for Visitor Type dropdown
-
-  RepresentatorOption: SelectControl[] = []; // for Representator Type dropdown
-
-  CupboardOption: SelectControl[] = []; // for Language Type dropdown
-
-  BlockOption: SelectControl[] = []; // for Language Type dropdown
-
-  ArchiveDocTypeOption: SelectControl[] = []; // for ArchiveDocType dropdown
-
-  ArchiveProjectOption: SelectControl[] = []; // for Archive Project dropdown
-
-  YearOption: SelectControl[] = []; // for Language Type dropdown
-
-  deparmentLevelOption: SelectControl[] = []; // for Department Level Dropdown
 
   UserOption: SelectControl6[] = []; // for Create User dropdown
 
@@ -71,99 +52,22 @@ export default class commonDroptdown {
 
   RolesOption: SelectControl[] = []; // for Roles dropdown
 
-  ProcessStatusOption: SelectControl[] = [];
-
-  FromDepartmentOption: SelectControl[] = []; // for From Department dropdown
-
-  FromHighDepartmentOption: SelectControl[] = []; // for From Department dropdown
-
-  ToDepartmentOption: SelectControl[] = []; // for To Department dropdown
-
-  CCDepartmentOption: SelectControl[] = []; // for CC Department dropdown
-
-  DocumentSecurityLevelOption: SelectControl[] = []; // for DocumentSecurityLevel dropdown
-
-  OrganizationOption: SelectControl[] = []; // for Organization dropdown
-
-  DocumentTypeOption: SelectControl[] = []; // for DocumentType dropdown
-
-  InternalCcDepartmentFromTrackingOptions: SelectControl[] = []; // for Internal CC Department Tracking Option
-
-  CcDepartmentFromTrackingOptions: SelectControl[] = []; // for Department From Tracking Options dropdown
-
-  CcFromToDepartmetNameOptions: SelectControl3[] = []; // for Department From Tracking Options dropdown
-
-  CcOrganizationFromTrackingOptions: SelectControl[] = []; // for Organization From Tracking Options dropdown
-
-  CcFromToOrganizationNameOptions: SelectControl3[] = []; // for Organization From Tracking Options dropdown
-
-  DocumentLinkTypeDropDownOptions: SelectControl[] = []; // for Document link dropdown
-
-  CardTypeOption: SelectControl[] = []; // for Card Type dropdown
-
-  CardOption: SelectControl6[] = []; // for Card  dropdown
-
-  VisitingTypeOption: SelectControl[] = []; // for Visiting Type Dropdown
-
-  ApplicationOption: SelectControl[] = []; // for Application Dropdown
-
   PermissionOption: SelectControl[] = []; // for Application Dropdown
-
-  RequestCategoryOption: SelectControl[] = []; // for dropdown
-
-  ActionRequstOption: SelectControl[] = []; // for dropdown
-
-  ITEmployeeOption: SelectControl[] = []; // for dropdown
 
   EmployeeOption: SelectControl[] = []; // for Employee DDl
 
-  EmployeeOptionByDepartment: SelectControl[] = []; // for Employee DDl
-
-  EmployeeDegreeOption: SelectControl[] = []; // for dropdown
-
   EmployeePositionOption: SelectControl[] = []; // for dropdown
 
-  SoftwareOption: softwares[] = []; // for Software dropdown
-
-  HardwareOption: SelectControl[] = []; // for  Hardware dropdown
-
-  ProjectTypeOption: SelectControl[] = []; // Project Type
-
-  ProjectPriorityOption: SelectControl[] = []; // Project Priority
-
-  ConstructionTypeOption: SelectControl[] = []; // Construction Type
-
-  ActivityTypeOption: SelectControl[] = []; // Activity Type
-
-  AttachmentTypeOption: SelectControl[] = []; // Activity Type
-
-  EducationLevelOption: SelectControl[] = []; // Activity Type
-
   EducationTitleOption: SelectControl[] = []; // Activity Type
-
-  CardGenerationTypeOption: SelectControl[] = []; // Activity Type
-
-  SubActivityTypeOption: SelectControl[] = []; // Sub Activity Type
-
-  ContractTypeOption: SelectControl[] = [];
 
   PositionTitleOption: SelectControl[] = [];
 
   JobPositionOption: SelectControl[] = [];
 
-  GradeOption: SelectControl[] = [];
-
-  GradeStepOption: SelectControl[] = [];
-
   EmpHealthStatusOption: SelectControl[] = [];
 
   // Country Select Control
   CountryOption: SelectControl[] = [];
-
-  // High Level Employee Select Control
-  GetHighLevelEmployee: SelectControl[] = [];
-
-  GetAuthorityEmployee: SelectControl[] = [];
 
   // Get Active Employee
   GetActiveEmployeeOption: SelectControl[] = [];
@@ -174,26 +78,6 @@ export default class commonDroptdown {
   constructor() {
     makeAutoObservable(this);
   }
-
-  loadEmployeeDegreeDropdown = async () => {
-    // try {
-    // const result = await agent.EmployeesDegree.EmpDegreeDDL();
-    //   this.setEmployeeDegreeOptions(result.data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
-  };
-
-  setEmployeeDegreeOptions = (data: EmpDegreeDropdown[]) => {
-    const op = data.map((op) => {
-      const optRow = {
-        text: op.name,
-        value: op.id,
-      };
-      return optRow;
-    });
-    this.EmployeeDegreeOption = op;
-  };
 
   loadRoleDropdown = async () => {
     //console.log(agent.Permissions.getList({pageIndex:0,pageSize:10}));
@@ -235,28 +119,6 @@ export default class commonDroptdown {
       return optRow;
     });
     this.LanguageOption = op;
-  };
-
-  setDocumentSecurityLevelDropdown = (data: DocumentLevelDropdown[]) => {
-    const op = data.map((op) => {
-      const optRow = {
-        text: op.name,
-        value: op.id,
-      };
-      return optRow;
-    });
-    this.DocumentSecurityLevelOption = op;
-  };
-
-  setOrganizationDropdown = (data: OrganizationWithLocalizationDropDown[]) => {
-    const op = data.map((op) => {
-      const optRow = {
-        text: op.name,
-        value: op.id,
-      };
-      return optRow;
-    });
-    this.OrganizationOption = op;
   };
 
   // User  Dropdown
@@ -346,27 +208,6 @@ export default class commonDroptdown {
       return optRow;
     });
     this.ChildUserOption = op;
-  };
-
-  // Year Dropdown
-  loadYearDropdown = async () => {
-    try {
-      const result = await agent.Years.YearDDL();
-      this.setYearOptions(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  setYearOptions = (data: YearsDropdown[]) => {
-    const op = data.map((op) => {
-      const optRow = {
-        text: op.yearShamsi,
-        value: op.id,
-      };
-      return optRow;
-    });
-    this.YearOption = op;
   };
 
   // Shelf Dropdown
@@ -472,27 +313,6 @@ export default class commonDroptdown {
     this.ProvinceOption = op;
   };
 
-  // Province Dropdown
-  loadProvinceDropdownByRegion = async (MainRegionID: number) => {
-    try {
-      const result = await agent.province.provinceDDLByMainRegion(MainRegionID);
-      this.setProvinceByRegionOptions(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  setProvinceByRegionOptions = (data: LanguageDropdown[]) => {
-    const op = data.map((op) => {
-      const optRow = {
-        text: op.name,
-        value: op.id,
-      };
-      return optRow;
-    });
-    this.ProvinceOptionByRegion = op;
-  };
-
   // District Dropdown
   loadDistrictDropdown = async (provinceId: any) => {
     try {
@@ -512,28 +332,6 @@ export default class commonDroptdown {
       return optRow;
     });
     this.DistrictOption = op;
-  };
-
-  // loadContractTypeDDL
-  loadContractTypeDDL = async () => {
-    try {
-      const result = await agent.Customer.DDl(1);
-
-      this.setContractTypeDDL(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  setContractTypeDDL = (data: IDDL[]) => {
-    const op = data.map((op) => {
-      const optRow = {
-        text: op.name,
-        value: op.id,
-      };
-      return optRow;
-    });
-    this.ContractTypeOption = op;
   };
 
   // loadPositionTitleDDL
@@ -557,28 +355,6 @@ export default class commonDroptdown {
       return optRow;
     });
     this.PositionTitleOption = op;
-  };
-
-  // loadPositionTitleDDL
-  loadBranchDDL = async () => {
-    try {
-      const result = await agent.Branch.DDl();
-
-      this.setBranchDDL(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  setBranchDDL = (data: IDDL[]) => {
-    const op = data.map((op) => {
-      const optRow = {
-        text: op.name,
-        value: op.id,
-      };
-      return optRow;
-    });
-    this.BranchOption = op;
   };
 
   // loadJobPositionDDL
@@ -624,27 +400,6 @@ export default class commonDroptdown {
     this.CountryOption = op;
   };
 
-  // ExpenseType Dropdown
-  loadExpenseTypeDropdown = async () => {
-    try {
-      const result = await agent.ExpenseType.DDl();
-      this.setExpenseTypeDDL(result.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  setExpenseTypeDDL = (data: IDDL[]) => {
-    const op = data.map((op) => {
-      const optRow = {
-        text: op.name,
-        value: op.id,
-      };
-      return optRow;
-    });
-    this.ExpenseTypeOption = op;
-  };
-
   // Get Active Employee
   loadGetActiveEmployeeDropdown = async (id: number) => {
     try {
@@ -687,24 +442,180 @@ export default class commonDroptdown {
     this.GetParentEmployeeOption = op;
   };
 
-  // Get High Level Employee Dropdown
-  loadHighLevelEmployeeDropdown = async () => {
+  // ================  start of NPFX DDLS  ========================
+
+  // ExpenseType Dropdown
+  loadExpenseTypeDropdown = async () => {
     try {
-      const result = await agent.GetParentEmp.HighLevelEmployeeDDl();
-      this.setHighLevelEmployeeDDL(result.data);
+      const result = await agent.ExpenseType.DDl();
+      this.setExpenseTypeDDL(result.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  setHighLevelEmployeeDDL = (data: IHighLevelEmployeeDDL[]) => {
+  setExpenseTypeDDL = (data: IDDL[]) => {
     const op = data.map((op) => {
       const optRow = {
-        text: op.employeeFullName,
-        value: op.contractId,
+        text: op.name,
+        value: op.id,
       };
       return optRow;
     });
-    this.GetHighLevelEmployee = op;
+    this.ExpenseTypeOption = op;
+  };
+
+  // Branch DDL
+  loadBranchDDL = async () => {
+    try {
+      const result = await agent.Branch.DDl();
+
+      this.setBranchDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setBranchDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.BranchOption = op;
+  };
+
+  // loadContractTypeDDL
+  loadContractTypeDDL = async () => {
+    try {
+      const result = await agent.ContractType.DDl();
+
+      this.setContractTypeDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setContractTypeDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.ContractTypeOption = op;
+  };
+
+  // loadPartnersDDL
+  loadPartnersDDL = async () => {
+    try {
+      const result = await agent.Partners.DDl();
+
+      this.setPartnersDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setPartnersDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.PartnersOption = op;
+  };
+
+  // loadAssetTypeDDL
+  loadAssetTypeDDL = async () => {
+    try {
+      const result = await agent.AssetType.DDl();
+
+      this.setAssetTypeDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setAssetTypeDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.AssetTypeOption = op;
+  };
+
+  // loadCurrencyTypeDDL
+  loadCurrencyTypeDDL = async () => {
+    try {
+      const result = await agent.CurrencyType.DDl();
+
+      this.setCurrencyTypeDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setCurrencyTypeDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.CurrencyTypeOption = op;
+  };
+
+  // loadLoanTypeDDL
+  loadLoanTypeDDL = async () => {
+    try {
+      const result = await agent.LoanType.DDl();
+
+      this.setLoanTypeDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setLoanTypeDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.LoanTypeOption = op;
+  };
+
+  // loadPayTypeDDL
+  loadPayTypeDDL = async () => {
+    try {
+      const result = await agent.PaymentType.DDl();
+
+      this.setPayTypeDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setPayTypeDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.PayTypeOption = op;
   };
 }

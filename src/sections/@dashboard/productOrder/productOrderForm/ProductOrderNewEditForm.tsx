@@ -13,16 +13,13 @@ import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { useStore } from 'src/stores/store';
 import { observer } from 'mobx-react-lite';
 import useLocales from 'src/hooks/useLocales';
-import uuid from 'react-uuid';
-import CustomRHFAutocomplete from 'src/components/hook-form/CustomRHFAutocomplete';
 import CustomButton from 'src/components/CustomButton';
 
 // ----------------------------------------------------------------------
 export default observer(function ProductOrderNewEditForm() {
   const { translate } = useLocales();
   const { ProductOrderStore, commonDropdown } = useStore();
-  const { loadUserDropdown, loadHighLevelEmployeeDropdown, FromHighDepartmentOption } =
-    commonDropdown;
+  const { loadUserDropdown } = commonDropdown;
 
   const { createProductOrder, editMode, clearSelectedProductOrder, selectedProductOrder } =
     ProductOrderStore;
@@ -203,7 +200,6 @@ export default observer(function ProductOrderNewEditForm() {
     // loadDepartmentDropdown();
     // loadUserHighDepartmentDropdown();
     loadUserDropdown(1);
-    loadHighLevelEmployeeDropdown();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -226,7 +222,7 @@ export default observer(function ProductOrderNewEditForm() {
                   gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' },
                 }}
               >
-                <CustomRHFAutocomplete
+                {/* <CustomRHFAutocomplete
                   name="cusetomerId"
                   loading={FromHighDepartmentOption.length > 0 ? false : true}
                   label={translate('productOrder.Customer')}
@@ -261,7 +257,7 @@ export default observer(function ProductOrderNewEditForm() {
                       {option}
                     </li>
                   )}
-                />
+                /> */}
               </Box>
             </Card>
 
