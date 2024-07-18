@@ -166,14 +166,48 @@ export default observer(function MainAssetList() {
             { name: `${translate('MainAsset.MainAssetList')}` },
           ]}
           action={
-            <Button
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
-              component={RouterLink}
-              to={PATH_DASHBOARD.MainAsset.new}
-            >
-              {translate('CRUD.Create')}
-            </Button>
+            <>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                component={RouterLink}
+                to={PATH_DASHBOARD.MainAsset.new}
+              >
+                {translate('CRUD.Create')}
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                component={RouterLink}
+                to={PATH_DASHBOARD.general.ecommerce}
+              >
+                {translate('CRUD.one')}
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                component={RouterLink}
+                to={PATH_DASHBOARD.general.banking}
+              >
+                {translate('CRUD.two')}
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                component={RouterLink}
+                to={PATH_DASHBOARD.general.booking}
+              >
+                {translate('CRUD.three')}
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                component={RouterLink}
+                to={PATH_DASHBOARD.general.analytics}
+              >
+                {translate('CRUD.four')}
+              </Button>
+            </>
           }
         />
 
