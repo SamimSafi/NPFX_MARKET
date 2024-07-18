@@ -82,6 +82,7 @@ import {
   IWithdrawalTracking,
   IWithdrawalTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
+import { IContractType, IContractTypeParams } from 'src/@types/foamCompanyTypes/CategoryType';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
@@ -450,7 +451,7 @@ const AssetType = {
   //   requests.get<void>(`/AssetType/GetDetail/${AssetTypeId}`),
   delete: (id: number, remark: string) => axios.delete<void>(`/AssetType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/AssetType/GetDropDownList', {
+    axios.get<any>('/AssetType/GetAssetTypeDDL', {
       withCredentials: true,
     }),
 };
@@ -467,7 +468,7 @@ const CurrencyType = {
   delete: (id: number, remark: string) =>
     axios.delete<void>(`/CurrencyType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/CurrencyType/GetDropDownList', {
+    axios.get<any>('/CurrencyType/GetCurrencyTypeDDL', {
       withCredentials: true,
     }),
 };
@@ -482,7 +483,7 @@ const LoanType = {
   //   requests.get<void>(`/LoanType/GetDetail/${LoanTypeId}`),
   delete: (id: number, remark: string) => axios.delete<void>(`/LoanType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/LoanType/GetDropDownList', {
+    axios.get<any>('/LoanType/GetLoanTypeDDL', {
       withCredentials: true,
     }),
 };
@@ -498,7 +499,7 @@ const PaymentType = {
   //   requests.get<void>(`/PaymentType/GetDetail/${PaymentTypeId}`),
   delete: (id: number, remark: string) => axios.delete<void>(`/PayType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/PayType/GetDropDownList', {
+    axios.get<any>('/PayType/GetPayTypeDDL', {
       withCredentials: true,
     }),
 };
@@ -535,6 +536,23 @@ const Partners = {
   update: (Partners: IPartners) => requests.put<void>(`/Partners/${Partners.id}`, Partners),
   delete: (id: number, remark: string) => axios.delete<void>(`/Partners/${id}`, { data: remark }),
   DDl: () => axios.get<any>(`/Partners/GetDropDownList`, { withCredentials: true }),
+};
+
+// ContractType
+const ContractType = {
+  create: (ContractType: IContractType) => requests.post<void>('/ContractType', ContractType),
+  getList: (param: IContractTypeParams) =>
+    axios.post<any>(`/ContractType/GetList`, param, { withCredentials: true }),
+  update: (ContractType: IContractType) =>
+    requests.put<void>(`/ContractType/${ContractType.id}`, ContractType),
+  // detail: (ContractTypeId: any) =>
+  //   requests.get<void>(`/ContractType/GetDetail/${ContractTypeId}`),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/ContractType/${id}`, { data: remark }),
+  DDl: () =>
+    axios.get<any>('/ContractType/GetDropDownList', {
+      withCredentials: true,
+    }),
 };
 
 //  MainAsset
@@ -828,6 +846,7 @@ const agent = {
   ExpenseTracking,
   LoanTracking,
   WithdrawalTracking,
+  ContractType,
 };
 
 export default agent;
