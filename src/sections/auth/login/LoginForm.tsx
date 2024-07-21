@@ -24,7 +24,7 @@ import useLocales from 'src/hooks/useLocales';
 
 export default observer(function LoginForm() {
   const { translate } = useLocales();
-  const { LoginStore,} = useStore();
+  const { LoginStore } = useStore();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -63,7 +63,7 @@ export default observer(function LoginForm() {
     } catch (error) {
       reset();
       console.log(error);
-      
+
       setError('afterSubmit', { ...error, message: error.request.responseText });
     }
   };
@@ -90,17 +90,18 @@ export default observer(function LoginForm() {
         />
       </Stack>
 
-      <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
+      {/* <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
         <RHFCheckbox name="rememberMe" label={translate('login.RememberMe')} />
         <Link component={RouterLink} variant="subtitle2" to={PATH_AUTH.resetPassword}>
           {translate('login.ForgotPassword')}
         </Link>
-      </Stack>
+      </Stack> */}
 
       <LoadingButton
         fullWidth
         size="large"
         type="submit"
+        sx={{ marginTop: 2 }}
         variant="contained"
         loading={isSubmitting}
       >

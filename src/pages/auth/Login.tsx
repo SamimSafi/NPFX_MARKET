@@ -53,13 +53,22 @@ const SectionStyle = styled(Card)(({ theme }) => ({
 
 const ContentStyle = styled('div')(({ theme }) => ({
   // maxWidth: 480,
-  maxWidth: 520,
+  maxWidth: 480,
   margin: 'auto',
   minHeight: '100vh',
   display: 'flex',
   justifyContent: 'center',
   flexDirection: 'column',
   padding: theme.spacing(12, 0),
+}));
+
+const GlassCard = styled(Card)(({ theme }) => ({
+  padding: theme.spacing(5),
+  background: 'rgba(255, 255, 255, 0.1)',
+  backdropFilter: 'blur(10px)',
+  boxShadow: '0 10px 50px rgba(0, 0, 0, 0.1)',
+  borderRadius: '16px', // Add curved corners
+  border: '1px solid rgba(255, 255, 255, 0.3)',
 }));
 
 // ----------------------------------------------------------------------
@@ -105,31 +114,30 @@ export default function Login() {
 
         <Container maxWidth="sm">
           <ContentStyle>
-            <Stack
-              direction="row"
-              justifyContent="center"
-              alignItems="center"
-              spacing={2}
-              sx={{ mb: 4 }}
-            >
-              <img src={require('src/assets/images/npfx logo.png')} alt="logo" height="100" />
-            </Stack>
+            <GlassCard>
+              <Stack
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+                spacing={2}
+                sx={{ mb: 4 }}
+              >
+                <img src={require('src/assets/images/npfx logo.png')} alt="logo" height="100" />
+              </Stack>
 
-            <Alert severity="info" sx={{ mb: 3, textAlign: 'center' }}>
-              {/* <Typography variant="h6">{translate('login.SignInToMinistry')}</Typography> */}
-              <Typography variant="h6">Sgin In To NPFX Market</Typography>
-            </Alert>
+              <Alert severity="info" sx={{ mb: 3, textAlign: 'center' }}>
+                <Typography variant="h6">Sign In To NPFX Market</Typography>
+              </Alert>
 
-            <LoginForm />
+              <LoginForm />
 
-            {!smUp && (
               <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-                Don’t have ddan account?{' '}
+                Don’t have an account?{' '}
                 <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
                   Get started
                 </Link>
               </Typography>
-            )}
+            </GlassCard>
           </ContentStyle>
         </Container>
       </RootStyle>
