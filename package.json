@@ -5,7 +5,7 @@
   "description": "React Scripts & Typescript",
   "private": true,
   "scripts": {
-    "start": "set PORT=3001 && react-app-rewired start",
+    "start": "set PORT=3000 && react-app-rewired start",
     "build": "react-app-rewired build",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .ts,.tsx ./src",

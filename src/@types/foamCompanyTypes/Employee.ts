@@ -10,30 +10,33 @@ export interface IEmployee {
   pashtoFatherName?: string;
   englishGrandFatherName?: string;
   pashtoGrandFatherName?: string;
-  provinceId?: number;
-  districtId?: number;
-  provinceName?: string;
-  districtName?: string;
-  tazkiraNo?: string;
+  gender?: string;
   tazkiraTypeId?: number;
+  tazkiraNo?: string;
   joldNo?: string;
   pageNo?: string;
   regNo?: string;
-  gender?: string;
-  age?: string;
+  dateOfBirth?: Date;
+  temporaryAddress?: string;
+  permenantAddress?: string;
   branchId?: number;
-  isInvestor?: boolean;
-  isCurrent?: boolean;
-  profilePhoto: File | any;
+  bloodGroup?: string;
+  joinDate?: Date;
+  leaveDate?: string;
+  leaveRemark?: string;
+  personalEmail?: string;
   phoneNumber?: string;
   emergencyPhoneNumber?: string;
-  dateOfBirth?: Date;
+  isActive?: boolean;
+  profilePhoto: File | any;
   photoPath?: string;
   afterSubmit?: string;
 }
 
 export interface IEmployeeForEdit {
   id?: number;
+  name?: string;
+  surName?: string;
   englishFirstName?: string;
   pashtoFirstName?: string;
   englishSurName?: string;
@@ -42,24 +45,27 @@ export interface IEmployeeForEdit {
   pashtoFatherName?: string;
   englishGrandFatherName?: string;
   pashtoGrandFatherName?: string;
-  provinceId?: number;
-  districtId?: number;
-  provinceName?: string;
-  districtName?: string;
-  tazkiraNo?: string;
+  gender?: string;
   tazkiraTypeId?: number;
+  tazkiraNo?: string;
   joldNo?: string;
   pageNo?: string;
   regNo?: string;
-  gender?: string;
-  age?: string;
+  dateOfBirth?: Date;
+  temporaryAddress?: string;
+  permenantAddress?: string;
   branchId?: number;
-  isInvestor?: boolean;
-  profilePhoto: File | any;
+  bloodGroup?: string;
+  joinDate?: Date;
+  leaveDate?: string;
+  leaveRemark?: string;
+  personalEmail?: string;
   phoneNumber?: string;
   emergencyPhoneNumber?: string;
-  dateOfBirth?: Date;
+  isActive?: boolean;
+  profilePhoto: File | any;
   photoPath?: string;
+  afterSubmit?: string;
 }
 
 export interface IEmployeeParams {
