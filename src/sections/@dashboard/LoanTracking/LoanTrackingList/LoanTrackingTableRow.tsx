@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function LoanTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { currencyName, asset, date, description, user, loanAmount } = row;
+  const { currencyType, date, dueDate, partner, phone, description, userName, loanAmount } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -35,11 +35,14 @@ export default function LoanTrackingTableRow({ row, onEditRow, onDeleteRow, inde
   return (
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
-      <TableCell align="left">{currencyName}</TableCell>
-      <TableCell align="left">{asset}</TableCell>
+      <TableCell align="left">{currencyType}</TableCell>
+      {/* <TableCell align="left">{asset}</TableCell> */}
       <TableCell align="left">{date}</TableCell>
+      <TableCell align="left">{dueDate}</TableCell>
+      <TableCell align="left">{partner}</TableCell>
+      <TableCell align="left">{phone}</TableCell>
       <TableCell align="left">{description}</TableCell>
-      <TableCell align="left">{user}</TableCell>
+      <TableCell align="left">{userName}</TableCell>
       <TableCell align="left">{loanAmount}</TableCell>
 
       <TableCell align="left">

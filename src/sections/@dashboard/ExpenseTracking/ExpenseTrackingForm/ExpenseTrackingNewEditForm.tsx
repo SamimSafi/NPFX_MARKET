@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, Stack } from '@mui/material';
+import { Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -160,6 +160,9 @@ export default observer(function ExpenseTrackingNewEditForm() {
                 label={translate('ExpenseTracking.Amount')}
                 showAsterisk={true}
                 autoFocus
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
               />
               <RHFTextField
                 name="description"

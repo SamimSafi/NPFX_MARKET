@@ -11,7 +11,11 @@ export default class MainAssetStore {
 
   openDialogDeposit = false;
 
-  MainAssetRegistry = new Map<number, IMainAsset>();
+  openDialogCreateLoan = false;
+
+  openDialogCreateTrade = false;
+
+  MainAssetRegistry = new Map<string, IMainAsset>();
 
   openDetailDialog = false;
 
@@ -58,7 +62,7 @@ export default class MainAssetStore {
     this.loadMainAsset(params);
   };
 
-  getMainAssetFromRegistry = (id: number) => {
+  getMainAssetFromRegistry = (id: string) => {
     let dep = this.MainAssetRegistry.get(id);
 
     if (dep) {
@@ -72,7 +76,7 @@ export default class MainAssetStore {
     this.selectedMainAsset = undefined;
   };
 
-  deleteMainAsset = async (id: number, remark?: string) => {
+  deleteMainAsset = async (id: string, remark?: string) => {
     try {
       await agentMainAsset.MainAsset.delete(id, remark!);
       runInAction(() => {
@@ -90,6 +94,10 @@ export default class MainAssetStore {
   setOpenCloseDialogDeposit = () => (this.openDialogDeposit = !this.openDialogDeposit);
 
   setDetailCloseDialog = () => (this.openDetailDialog = !this.openDetailDialog);
+
+  setOpenCloseDialogCreateLoan = () => (this.openDialogCreateLoan = !this.openDialogCreateLoan);
+
+  setOpenCloseDialogCreateTrade = () => (this.openDialogCreateTrade = !this.openDialogCreateTrade);
 
   createMainAsset = async (MainAsset: IMainAsset) => {
     await agentMainAsset.MainAsset.create(MainAsset);

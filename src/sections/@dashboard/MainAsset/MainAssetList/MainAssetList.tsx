@@ -29,6 +29,8 @@ import MainAssetTableToolbar from './MainAssetTableToolbar';
 import MainAssetDelete from './MainAssetDelete';
 import { IMainAsset } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 import DepositToNewEditForm from '../MainAssetForm/DepositToNewEditForm';
+import LoanTrackingNewEditForm from '../../LoanTracking/LoanTrackingForm/LoanTrackingNewEditForm';
+import TradeTrackingNewEditForm from '../../TradeTracking/TradeTrackingForm/TradeTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +48,10 @@ export default observer(function MainAssetList() {
     openDialog,
     setOpenCloseDialogDeposit,
     openDialogDeposit,
+    setOpenCloseDialogCreateLoan,
+    setOpenCloseDialogCreateTrade,
+    openDialogCreateTrade,
+    openDialogCreateLoan,
   } = MainAssetStore;
   const {
     dense,
@@ -65,7 +71,7 @@ export default observer(function MainAssetList() {
 
   const navigate = useNavigate();
 
-  const [MainAssetId, setMainAssetId] = useState<number>(0);
+  const [MainAssetId, setMainAssetId] = useState<string>('');
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'Currency', label: `${translate('GeneralFields.Name')}`, align: 'left' },
@@ -89,13 +95,8 @@ export default observer(function MainAssetList() {
     }
   };
 
-  const handleOpenConfirm = (id: number) => {
+  const handleOpenConfirm = (id: string) => {
     setOpenCloseDialog();
-    setMainAssetId(id);
-  };
-
-  const handleDepositToUserOpenConfirm = (id: number) => {
-    setOpenCloseDialogDeposit();
     setMainAssetId(id);
   };
 
@@ -103,10 +104,34 @@ export default observer(function MainAssetList() {
     setOpenCloseDialog();
   };
 
+  // Deposit to users
+  const handleDepositToUserOpenConfirm = (id: string) => {
+    setOpenCloseDialogDeposit();
+    setMainAssetId(id);
+  };
   const handleCloseDepositConfirm = () => {
     setOpenCloseDialogDeposit();
   };
-  const handleEditRow = (id: number) => {
+
+  // Create Loan
+  const handleCreateLoanOpenConfirm = (id: string) => {
+    setOpenCloseDialogCreateLoan();
+    setMainAssetId(id);
+  };
+  const handleCloseCreateLoanConfirm = () => {
+    setOpenCloseDialogCreateLoan();
+  };
+
+  // Create Loan
+  const handleCreateTradeOpenConfirm = (id: string) => {
+    setOpenCloseDialogCreateTrade();
+    setMainAssetId(id);
+  };
+  const handleCloseCreateTradeConfirm = () => {
+    setOpenCloseDialogCreateTrade();
+  };
+
+  const handleEditRow = (id: string) => {
     getMainAssetFromRegistry(id);
     navigate(PATH_DASHBOARD.MainAsset.edit);
   };
@@ -235,6 +260,8 @@ export default observer(function MainAssetList() {
                         index={index}
                         onDeleteRow={() => handleOpenConfirm(row.id!)}
                         onDepositToUser={() => handleDepositToUserOpenConfirm(row.id!)}
+                        onCreateLoan={() => handleCreateLoanOpenConfirm(row.id!)}
+                        onCreateTrade={() => handleCreateTradeOpenConfirm(row.id!)}
                         onEditRow={() => handleEditRow(row.id!)}
                       />
                     ))}
@@ -284,7 +311,25 @@ export default observer(function MainAssetList() {
               title={translate('CRUD.DepositToUser')}
               size="md"
             >
-              <DepositToNewEditForm asssetID={MainAssetId} />
+              <DepositToNewEditForm asssetID={MainAssetId!} />
+            </MyDialog>
+
+            <MyDialog
+              open={openDialogCreateLoan}
+              onClose={handleCloseCreateLoanConfirm}
+              title={translate('CRUD.CreateLoan')}
+              size="md"
+            >
+              <LoanTrackingNewEditForm asssetID={MainAssetId!} />
+            </MyDialog>
+
+            <MyDialog
+              open={openDialogCreateTrade}
+              onClose={handleCloseCreateTradeConfirm}
+              title={translate('CRUD.SaveTrade')}
+              size="md"
+            >
+              <TradeTrackingNewEditForm asssetID={MainAssetId!} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}

@@ -17,6 +17,8 @@ type Props = {
   //onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
   onDepositToUser: VoidFunction;
+  onCreateLoan: VoidFunction;
+  onCreateTrade: VoidFunction;
   index: any;
 };
 
@@ -25,6 +27,8 @@ export default function MainAssetTableRow({
   onEditRow,
   onDeleteRow,
   onDepositToUser,
+  onCreateLoan,
+  onCreateTrade,
   index,
 }: Props) {
   const { currencyType, ownerUserName, depositDate, balanceAmount } = row;
@@ -82,6 +86,24 @@ export default function MainAssetTableRow({
               >
                 <Iconify sx={{ color: 'success.main' }} icon={'vaadin:money-deposit'} />
                 {translate('CRUD.DepositToUser')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onCreateLoan();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'success.main' }} icon={'mdi:cash-sync'} />
+                {translate('CRUD.CreateLaon')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onCreateTrade();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'success.main' }} icon={'mdi:cash-plus'} />
+                {translate('CRUD.TradeEntry')}
               </MenuItem>
             </>
           }

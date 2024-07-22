@@ -563,7 +563,7 @@ const MainAsset = {
   getList: (param: IMainAssetParams) =>
     axios.post<any>(`/MainAsset/GetList`, param, { withCredentials: true }),
   update: (MainAsset: IMainAsset) => requests.put<void>(`/MainAsset/${MainAsset.id}`, MainAsset),
-  delete: (id: number, remark: string) => axios.delete<void>(`/MainAsset/${id}`, { data: remark }),
+  delete: (id: string, remark: string) => axios.delete<void>(`/MainAsset/${id}`, { data: remark }),
   DDl: () => axios.get<any>(`/MainAsset/GetDropDownList`, { withCredentials: true }),
 };
 
@@ -583,6 +583,8 @@ const ExpenseTracking = {
 //  LoanTracking
 const LoanTracking = {
   create: (LoanTracking: ILoanTracking) => requests.post<void>('/LoanTracking', LoanTracking),
+  TakeLoanCreateAsset: (LoanTracking: ILoanTracking) =>
+    requests.post<void>('/LoanTracking/TakeLoanAndCreateAsset', LoanTracking),
   getList: (param: ILoanTrackingParams) =>
     axios.post<any>(`/LoanTracking/GetList`, param, { withCredentials: true }),
   update: (LoanTracking: ILoanTracking) =>

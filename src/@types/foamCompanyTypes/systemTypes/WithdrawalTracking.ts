@@ -2,7 +2,7 @@ export interface IWithdrawalTracking {
   id?: number;
   currencyTypeId?: number;
   currencyName?: string;
-  assetId?: number;
+  mainAssetId?: number;
   asset?: string;
   date?: string;
   description?: string;

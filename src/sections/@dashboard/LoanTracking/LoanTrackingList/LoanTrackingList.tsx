@@ -65,13 +65,17 @@ export default observer(function LoanTrackingList() {
   const [LoanTrackingId, setLoanTrackingId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'Currency', label: `${translate('GeneralFields.Currency')}`, align: 'left' },
-    { id: 'Asset', label: `${translate('GeneralFields.Asset')}`, align: 'left' },
+    { id: 'currencyType', label: `${translate('GeneralFields.currencyType')}`, align: 'left' },
+    // { id: 'Asset', label: `${translate('GeneralFields.Asset')}`, align: 'left' },
     { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
-    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
-    { id: 'user', label: `${translate('GeneralFields.user')}`, align: 'left' },
+    { id: 'dueDate', label: `${translate('GeneralFields.dueDate')}`, align: 'left' },
+    { id: 'partner', label: `${translate('GeneralFields.partner')}`, align: 'left' },
+    { id: 'partnerPhone', label: `${translate('GeneralFields.partnerPhone')}`, align: 'left' },
+    { id: 'userName', label: `${translate('GeneralFields.userName')}`, align: 'left' },
     { id: 'LoanAmount', label: `${translate('GeneralFields.LoanAmount')}`, align: 'left' },
-    { id: 'LoanType', label: `${translate('GeneralFields.LoanType')}`, align: 'left' },
+    { id: 'paidAmount', label: `${translate('GeneralFields.paidAmount')}`, align: 'left' },
+    { id: 'remainAmount', label: `${translate('GeneralFields.remainAmount')}`, align: 'left' },
+    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {

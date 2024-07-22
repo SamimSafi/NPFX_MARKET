@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, Stack } from '@mui/material';
+import { Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -48,7 +48,7 @@ export default observer(function WithdrawalTrackingNewEditForm() {
   const defaultValues = useMemo<IWithdrawalTracking>(
     () => ({
       id: selectedWithdrawalTracking?.id,
-      assetId: selectedWithdrawalTracking?.assetId,
+      mainAssetId: selectedWithdrawalTracking?.mainAssetId,
       userId: selectedWithdrawalTracking?.userId,
       currencyTypeId: selectedWithdrawalTracking?.currencyTypeId,
       dueDate: selectedWithdrawalTracking?.dueDate,
@@ -160,6 +160,9 @@ export default observer(function WithdrawalTrackingNewEditForm() {
                 type={'number'}
                 showAsterisk={true}
                 autoFocus
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
               />
               <RHFTextField
                 name="description"

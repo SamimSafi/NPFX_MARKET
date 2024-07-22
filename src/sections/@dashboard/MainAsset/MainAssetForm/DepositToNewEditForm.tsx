@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack } from '@mui/material';
+import { Box, Card, Grid, Stack, InputAdornment } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -16,25 +16,26 @@ import useLocales from 'src/hooks/useLocales';
 import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { IDepositTo, IMainAsset } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import { IDepositTo } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+
 // ----------------------------------------------------------------------
 
 interface Props {
-  asssetID: number;
+  asssetID: string;
 }
 export default observer(function DepositToNewEditForm({ asssetID }: Props) {
   const { MainAssetStore, commonDropdown } = useStore();
   const { loadBranchDDL, BranchOption, loadUserDropdown, UserOption } = commonDropdown;
   const { translate } = useLocales();
-  const { deposit, updateMainAsset, editMode, selectedDepositTo } = MainAssetStore;
+  const { deposit, editMode, selectedDepositTo } = MainAssetStore;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewMainAssetSchema = Yup.object().shape({
-    parentId: Yup.number().required(`${translate('Validation.parent')}`),
+    parentId: Yup.string().required(`${translate('Validation.parent')}`),
     toUserId: Yup.string().required(`${translate('Validation.userId')}`),
     branchId: Yup.number().required(`${translate('Validation.branchId')}`),
     depositDate: Yup.date().required(`${translate('Validation.DariName')}`),
@@ -54,7 +55,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
     [selectedDepositTo, asssetID]
   );
 
-  const methods = useForm<IMainAsset>({
+  const methods = useForm<IDepositTo>({
     resolver: yupResolver(NewMainAssetSchema),
     defaultValues,
   });
@@ -67,7 +68,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
     watch,
   } = methods;
   const val = watch();
-  const onSubmit = (data: IMainAsset) => {
+  const onSubmit = (data: IDepositTo) => {
     if (data.id! === undefined) {
       ///create
       deposit(data).then(() => {
@@ -77,11 +78,11 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
       });
     } else {
       ///update
-      updateMainAsset(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.MainAsset.list);
-      });
+      // updateMainAsset(data).then(() => {
+      //   reset();
+      //   enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
+      //   navigate(PATH_DASHBOARD.MainAsset.list);
+      // });
     }
   };
 
@@ -144,6 +145,9 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
                 label={translate('MainAsset.depositAmmount')}
                 type={'number'}
                 showAsterisk={true}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
                 autoFocus
               />
               <RHFTextField

@@ -91,6 +91,13 @@ export default class LoanTrackingStore {
     });
   };
 
+  TakeLoanCreateAsset = async (LoanTracking: ILoanTracking) => {
+    await agentLoanTracking.LoanTracking.TakeLoanCreateAsset(LoanTracking);
+    runInAction(() => {
+      this.loadLoanTracking({ pageIndex: 0, pageSize: 5 });
+    });
+  };
+
   updateLoanTracking = async (LoanTracking: ILoanTracking) => {
     await agentLoanTracking.LoanTracking.update(LoanTracking);
     runInAction(() => {

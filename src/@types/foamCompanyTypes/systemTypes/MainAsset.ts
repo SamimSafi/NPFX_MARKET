@@ -1,5 +1,5 @@
 export interface IMainAsset {
-  id?: number;
+  id?: string;
   currencyTypeId?: number;
   currencyType?: string;
   branchId?: number;
@@ -12,7 +12,7 @@ export interface IMainAsset {
 
 export interface IDepositTo {
   id?: number;
-  parentId?: number;
+  parentId?: string;
   depositDate?: string;
   toUserName?: string;
   toUserId?: number;

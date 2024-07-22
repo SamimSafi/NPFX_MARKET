@@ -21,11 +21,11 @@ type Props = {
 
 export default function TradeTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
   const {
-    currencyName,
-    assetType,
-    transactionDate,
+    currencyType,
+    date,
     description,
-    user,
+    userName,
+    branch,
     tradeAmount,
     profitAmount,
     lossAmount,
@@ -44,11 +44,11 @@ export default function TradeTrackingTableRow({ row, onEditRow, onDeleteRow, ind
   return (
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
-      <TableCell align="left">{currencyName}</TableCell>
-      <TableCell align="left">{assetType}</TableCell>
-      <TableCell align="left">{transactionDate}</TableCell>
+      <TableCell align="left">{currencyType}</TableCell>
+      <TableCell align="left">{branch}</TableCell>
+      <TableCell align="left">{userName}</TableCell>
+      <TableCell align="left">{date}</TableCell>
       <TableCell align="left">{description}</TableCell>
-      <TableCell align="left">{user}</TableCell>
       <TableCell align="left">{tradeAmount}</TableCell>
       <TableCell align="left">{profitAmount}</TableCell>
       <TableCell align="left">{lossAmount}</TableCell>
