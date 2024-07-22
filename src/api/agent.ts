@@ -198,19 +198,19 @@ const Employees = {
     formData.append('englishGrandFatherName', data.englishGrandFatherName!);
     formData.append('pashtoGrandFatherName', data.pashtoGrandFatherName!);
     formData.append('tazkiraNo', data.tazkiraNo!);
-    formData.append('provinceId', data.provinceId!.toString());
-    formData.append('districtId', data.districtId!.toString());
     formData.append('branchId', data.branchId!.toString());
-    formData.append('gender', data.gender!.toString());
-    // formData.append('age', data.age!);
-    formData.append('isInvestor', data.isInvestor!.toString());
+    formData.append('gender', data.gender!);
     formData.append('tazkiraTypeId', data.tazkiraTypeId!.toString());
+    formData.append('dateOfBirth', data.dateOfBirth!.toDateString());
     formData.append('joldNo', data.joldNo!);
     formData.append('pageNo', data.pageNo!);
     formData.append('regNo', data.regNo!);
     formData.append('phoneNumber', data.phoneNumber!);
+    formData.append('temporaryAddress', data.temporaryAddress!);
+    formData.append('personalEmail', data.personalEmail!);
+    formData.append('permenantAddress', data.permenantAddress!);
     formData.append('emergencyPhoneNumber', data.emergencyPhoneNumber!);
-    formData.append('isCurrent', data.isCurrent!.toString());
+    formData.append('joinDate', data.joinDate!.toDateString());
     formData.append('profilePhoto', file);
     return axios.post<IEmployee, any>('/EmployeeProfile', formData, {
       headers: { 'Content-type': 'multipart/form-data' },
@@ -231,19 +231,21 @@ const Employees = {
     formData.append('englishGrandFatherName', data.englishGrandFatherName!);
     formData.append('pashtoGrandFatherName', data.pashtoGrandFatherName!);
     formData.append('tazkiraNo', data.tazkiraNo!);
-    formData.append('provinceId', data.provinceId!.toString());
-    formData.append('districtId', data.districtId!.toString());
     formData.append('branchId', data.branchId!.toString());
-    formData.append('gender', data.gender!.toString());
-    // formData.append('age', data.age!);
-    formData.append('isInvestor', data.isInvestor!.toString());
+    formData.append('gender', data.gender!);
     formData.append('tazkiraTypeId', data.tazkiraTypeId!.toString());
+    formData.append('dateOfBirth', data.dateOfBirth!.toDateString());
     formData.append('joldNo', data.joldNo!);
     formData.append('pageNo', data.pageNo!);
     formData.append('regNo', data.regNo!);
     formData.append('phoneNumber', data.phoneNumber!);
+    formData.append('temporaryAddress', data.temporaryAddress!);
+    formData.append('permenantAddress', data.permenantAddress!);
     formData.append('emergencyPhoneNumber', data.emergencyPhoneNumber!);
-    formData.append('isCurrent', data.isCurrent!.toString());
+    formData.append('personalEmail', data.personalEmail!);
+    formData.append('joinDate', data.joinDate!.toDateString());
+    formData.append('profilePhoto', file);
+    // formData.append('isCurrent', data.isCurrent!.toString());
     if (file) {
       formData.append('profilePhoto', file);
     }
