@@ -14,7 +14,7 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import useLocales from 'src/hooks/useLocales';
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFTextField } from '../../../../components/hook-form';
+import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { IBranch } from 'src/@types/foamCompanyTypes/looks/branch';
@@ -33,6 +33,7 @@ export default observer(function BranchNewEditForm() {
     dariName: Yup.string().required(`${translate('Validation.DariName')}`),
     pashtoName: Yup.string().required(`${translate('Validation.PashtoName')}`),
     address: Yup.string().required(`${translate('Validation.address')}`),
+    parentId: Yup.number().required(`${translate('Validation.address')}`),
   });
 
   const defaultValues = useMemo<IBranch>(
@@ -41,7 +42,9 @@ export default observer(function BranchNewEditForm() {
       englishName: selectedBranch?.englishName || '',
       dariName: selectedBranch?.dariName || '',
       pashtoName: selectedBranch?.pashtoName || '',
+      code: selectedBranch?.code || '',
       address: selectedBranch?.address || '',
+      parentId: selectedBranch?.parentId || undefined,
     }),
     [selectedBranch]
   );
@@ -74,6 +77,13 @@ export default observer(function BranchNewEditForm() {
       });
     }
   };
+  const bloodGroup = [
+    { title: 'A+', value: 1 },
+    { title: 'A-', value: 2 },
+    { title: 'B+', value: 3 },
+    { title: 'B-', value: 4 },
+    { title: 'O+', value: 5 },
+  ];
 
   useEffect(() => {
     if (editMode) {
@@ -98,8 +108,8 @@ export default observer(function BranchNewEditForm() {
               }}
             >
               <RHFTextField
-                name="enlgishName"
-                label={translate('GeneralFields.EnlgishName')}
+                name="englishName"
+                label={translate('GeneralFields.EnglishName')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -116,11 +126,25 @@ export default observer(function BranchNewEditForm() {
                 autoFocus
               />
               <RHFTextField
+                name="code"
+                label={translate('GeneralFields.Code')}
+                showAsterisk={true}
+                autoFocus
+              />
+              <RHFTextField
                 name="address"
                 label={translate('Branch.address')}
                 showAsterisk={true}
                 autoFocus
               />
+              <RHFSelect name="parentId" label={translate('MainAsset.Parent')}>
+                <option value="" />
+                {bloodGroup.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.title}
+                  </option>
+                ))}
+              </RHFSelect>
             </Box>
 
             <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>

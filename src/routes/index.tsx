@@ -35,8 +35,6 @@ import SupplierList from 'src/sections/@dashboard/Supplier/SupplierList/Supplier
 import SupplierCreate from 'src/sections/@dashboard/Supplier/SupplierForm/SupplierCreate';
 import ExpenseTypeList from 'src/sections/@dashboard/ExpenseType/ExpenseTypeList/ExpenseTypeList';
 import ExpenseTypeCreate from 'src/sections/@dashboard/ExpenseType/ExpenseTypeForm/ExpenseTypeCreate';
-import ExpenseList from 'src/sections/@dashboard/Expense/ExpenseList/ExpenseList';
-import ExpenseCreate from 'src/sections/@dashboard/Expense/ExpenseForm/ExpenseCreate';
 import BranchCreate from 'src/sections/@dashboard/Branch/BranchForm/BranchCreate';
 import BranchList from 'src/sections/@dashboard/Branch/BranchList/BranchList';
 import AssetTypeCreate from 'src/sections/@dashboard/AssetType/AssetTypeForm/AssetTypeCreate';
@@ -53,9 +51,12 @@ import PartnersCreate from 'src/sections/@dashboard/Partners/PartnersForm/Partne
 import PartnersList from 'src/sections/@dashboard/Partners/PartnersList/PartnersList';
 import MainAssetCreate from 'src/sections/@dashboard/MainAsset/MainAssetForm/MainAssetCreate';
 import MainAssetList from 'src/sections/@dashboard/MainAsset/MainAssetList/MainAssetList';
-import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingForm/ExpenseTrackingCreate';
+import LoanTrackingList from 'src/sections/@dashboard/LoanTracking/LoanTrackingList/LoanTrackingList';
+import LoanTrackingCreate from 'src/sections/@dashboard/LoanTracking/LoanTrackingForm/LoanTrackingCreate';
+import WithdrawalTrackingList from 'src/sections/@dashboard/WithdrawalTracking/WithdrawalTrackingList/WithdrawalTrackingList';
+import WithdrawalTrackingCreate from 'src/sections/@dashboard/WithdrawalTracking/WithdrawalTrackingForm/WithdrawalTrackingCreate';
 import ExpenseTrackingList from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingList/ExpenseTrackingList';
-
+import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingForm/ExpenseTrackingCreate';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: ElementType) => (props: any) => {
@@ -401,6 +402,66 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['ExpenseTracking-Update']}>
                   <ExpenseTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'LoanTracking',
+          children: [
+            { element: <Navigate to="/dashboard/LoanTracking/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['LoanTracking-GetAll']}>
+                  <LoanTrackingList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['LoanTracking-Create']}>
+                  <LoanTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['LoanTracking-Update']}>
+                  <LoanTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'WithdrawalTracking',
+          children: [
+            { element: <Navigate to="/dashboard/WithdrawalTracking/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-GetAll']}>
+                  <WithdrawalTrackingList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-Create']}>
+                  <WithdrawalTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-Update']}>
+                  <WithdrawalTrackingCreate />
                 </PermissionBasedGuard>
               ),
             },
@@ -824,38 +885,6 @@ export default function Router() {
             },
           ],
         },
-        // Expense Routs
-        {
-          path: 'Expense',
-          children: [
-            { element: <Navigate to="/dashboard/Expense/list" replace />, index: true },
-            {
-              path: 'list',
-              element: (
-                <PermissionBasedGuard hasContent permissions={['Expenses-GetList']}>
-                  <ExpenseList />
-                </PermissionBasedGuard>
-              ),
-            },
-            {
-              path: 'new',
-              element: (
-                <PermissionBasedGuard hasContent permissions={['Expenses-Create']}>
-                  <ExpenseCreate />
-                </PermissionBasedGuard>
-              ),
-            },
-            {
-              path: 'edit',
-              element: (
-                <PermissionBasedGuard hasContent permissions={['Expenses-Update']}>
-                  <ExpenseCreate />
-                </PermissionBasedGuard>
-              ),
-            },
-          ],
-        },
-
         // JobPosition Routs
         {
           path: 'JobPosition',

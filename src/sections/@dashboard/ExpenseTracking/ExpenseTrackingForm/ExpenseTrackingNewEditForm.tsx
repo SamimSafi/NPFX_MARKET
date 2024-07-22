@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, Stack } from '@mui/material';
+import { Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -19,11 +19,10 @@ import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/ho
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { IExpenseTracking } from 'src/@types/foamCompanyTypes/systemTypes/ExpenseTracking';
-import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 // ----------------------------------------------------------------------
 
 export default observer(function ExpenseTrackingNewEditForm() {
-  const { ExpenseTrackingStore } = useStore();
+  const { ExpenseTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
   const {
     createExpenseTracking,
@@ -32,26 +31,35 @@ export default observer(function ExpenseTrackingNewEditForm() {
     selectedExpenseTracking,
     clearSelectedExpenseTracking,
   } = ExpenseTrackingStore;
+  const {
+    loadBranchDDL,
+    BranchOption,
+    loadUserDropdown,
+    UserOption,
+    loadExpenseTypeDropdown,
+    ExpenseTypeOption,
+  } = commonDropdown;
   const navigate = useNavigate();
+
   const { enqueueSnackbar } = useSnackbar();
 
   const NewExpenseTrackingSchema = Yup.object().shape({
-    assetTypeId: Yup.number().required(`${translate('Validation.EnglishName')}`),
-    currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    userId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
-    amount: Yup.number().required(`${translate('Validation.Code')}`),
+    ExpenseTypeId: Yup.number().required(`${translate('Validation.ExpenseTrackingType')}`),
+    branchId: Yup.number().required(`${translate('Validation.branch')}`),
+    userId: Yup.string().required(`${translate('Validation.user')}`),
+    date: Yup.date().required(`${translate('Validation.user')}`),
+    amount: Yup.number().required(`${translate('Validation.amount')}`),
   });
 
   const defaultValues = useMemo<IExpenseTracking>(
     () => ({
       id: selectedExpenseTracking?.id,
-      assetTypeId: selectedExpenseTracking?.assetTypeId,
-      userId: selectedExpenseTracking?.userId,
-      currencyTypeId: selectedExpenseTracking?.currencyTypeId,
+      expenseTypeId: selectedExpenseTracking?.expenseTypeId || undefined,
+      branchId: selectedExpenseTracking?.branchId || undefined,
+      userId: selectedExpenseTracking?.userId || '',
+      date: selectedExpenseTracking?.date || new Date().toDateString(),
+      amount: selectedExpenseTracking?.amount || undefined,
       description: selectedExpenseTracking?.description || '',
-      date: selectedExpenseTracking?.date || '',
-      amount: selectedExpenseTracking?.amount,
     }),
     [selectedExpenseTracking]
   );
@@ -61,50 +69,49 @@ export default observer(function ExpenseTrackingNewEditForm() {
     defaultValues,
   });
 
-  const bloodGroup = [
-    { title: 'A+', value: 'A+' },
-    { title: 'A-', value: 'A-' },
-    { title: 'B+', value: 'B+' },
-    { title: 'B-', value: 'B-' },
-    { title: 'O+', value: 'O+' },
-    { title: 'O-', value: 'O-' },
-    { title: 'AB+', value: 'AB+' },
-    { title: 'AB-', value: 'AB-' },
-  ];
-
   const {
     reset,
     handleSubmit,
+    watch,
     formState: { isSubmitting },
-    control,
   } = methods;
-
+  const val = watch();
   const onSubmit = (data: IExpenseTracking) => {
     if (data.id! === undefined) {
       ///create
       createExpenseTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.ExpenseTracking.list);
       });
     } else {
       ///update
       updateExpenseTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.ExpenseTracking.list);
       });
     }
   };
 
   useEffect(() => {
+    loadExpenseTypeDropdown();
     if (editMode) {
       reset(defaultValues);
     }
     if (!editMode) {
       reset(defaultValues);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, editMode, defaultValues]);
+
+  useEffect(() => {
+    loadBranchDDL();
+  }, [loadBranchDDL]);
+
+  useEffect(() => {
+    loadUserDropdown(val.branchId);
+  }, [loadUserDropdown, val.branchId]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -119,62 +126,47 @@ export default observer(function ExpenseTrackingNewEditForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="assetTypeId" label={translate('ExpenseTracking.AssetType')}>
+              <RHFSelect
+                name="ExpenseTypeId"
+                label={translate('ExpenseTracking.Expenseype')}
+                showAsterisk={true}
+              >
                 <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
-                    {op.title}
+                {ExpenseTypeOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="currencyTypeId" label={translate('ExpenseTracking.currencyType')}>
+              <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
                 <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
-                    {op.title}
-                  </option>
-                ))}
-              </RHFSelect>
-              <RHFSelect name="userId" label={translate('ExpenseTracking.user')}>
-                <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
-                    {op.title}
+                {BranchOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
                   </option>
                 ))}
               </RHFSelect>
 
-              <LocalizDatePicker
-                name="transactionDate"
-                label={translate('ExpenseTracking.transactionDate')}
-                control={control}
-                showAsterisk={true}
-              />
-
+              <RHFSelect name="userId" label={translate('MainAsset.User')}>
+                <option value="" />
+                {UserOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
               <RHFTextField
-                name="tradeAmount"
-                label={translate('ExpenseTracking.tradeAmount')}
-                type={'number'}
+                name="amount"
+                label={translate('ExpenseTracking.Amount')}
                 showAsterisk={true}
                 autoFocus
-              />
-              <RHFTextField
-                name="profitAmount"
-                label={translate('ExpenseTracking.profitAmount')}
-                type={'number'}
-                showAsterisk={true}
-                autoFocus
-              />
-              <RHFTextField
-                name="lossAmount"
-                label={translate('ExpenseTracking.lossAmount')}
-                type={'number'}
-                showAsterisk={true}
-                autoFocus
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
               />
               <RHFTextField
                 name="description"
-                label={translate('ExpenseTracking.description')}
+                label={translate('GeneralFields.description')}
                 showAsterisk={true}
                 autoFocus
               />

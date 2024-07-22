@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, Stack } from '@mui/material';
+import { Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -15,46 +15,46 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import useLocales from 'src/hooks/useLocales';
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { ITradeTracking } from 'src/@types/foamCompanyTypes/systemTypes/TradeTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 // ----------------------------------------------------------------------
-
-export default observer(function TradeTrackingNewEditForm() {
-  const { TradeTrackingStore } = useStore();
+interface Props {
+  asssetID: string;
+}
+export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
+  const { TradeTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
-  const {
-    createTradeTracking,
-    updateTradeTracking,
-    editMode,
-    selectedTradeTracking,
-    clearSelectedTradeTracking,
-  } = TradeTrackingStore;
+  const { setOpenCloseDialogCreateTrade } = MainAssetStore;
+  const { createTradeTracking, updateTradeTracking, editMode, selectedTradeTracking } =
+    TradeTrackingStore;
+  // const { loadBranchDDL, BranchOption, loadUserDropdown, UserOption } = commonDropdown;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewTradeTrackingSchema = Yup.object().shape({
     assetTypeId: Yup.number().required(`${translate('Validation.EnglishName')}`),
     currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    transactionDate: Yup.date().required(`${translate('Validation.DariName')}`),
+    date: Yup.date().required(`${translate('Validation.DariName')}`),
     income: Yup.number().required(`${translate('Validation.Code')}`),
   });
 
   const defaultValues = useMemo<ITradeTracking>(
     () => ({
       id: selectedTradeTracking?.id,
-      assetTypeId: selectedTradeTracking?.assetTypeId,
-      userId: selectedTradeTracking?.userId,
-      currencyTypeId: selectedTradeTracking?.currencyTypeId,
+      mainAssetId: selectedTradeTracking?.mainAssetId || asssetID,
+      // branchId: selectedTradeTracking?.branchId,
+      // userId: selectedTradeTracking?.userId,
+      // currencyTypeId: selectedTradeTracking?.currencyTypeId,
       description: selectedTradeTracking?.description || '',
-      transactionDate: selectedTradeTracking?.transactionDate || '',
+      date: selectedTradeTracking?.date || '',
       tradeAmount: selectedTradeTracking?.tradeAmount,
       profitAmount: selectedTradeTracking?.profitAmount,
       lossAmount: selectedTradeTracking?.lossAmount,
     }),
-    [selectedTradeTracking]
+    [selectedTradeTracking, asssetID]
   );
 
   const methods = useForm<ITradeTracking>({
@@ -62,24 +62,14 @@ export default observer(function TradeTrackingNewEditForm() {
     defaultValues,
   });
 
-  const bloodGroup = [
-    { title: 'A+', value: 'A+' },
-    { title: 'A-', value: 'A-' },
-    { title: 'B+', value: 'B+' },
-    { title: 'B-', value: 'B-' },
-    { title: 'O+', value: 'O+' },
-    { title: 'O-', value: 'O-' },
-    { title: 'AB+', value: 'AB+' },
-    { title: 'AB-', value: 'AB-' },
-  ];
-
   const {
     reset,
     handleSubmit,
     formState: { isSubmitting },
     control,
+    // watch,
   } = methods;
-
+  // const val = watch();
   const onSubmit = (data: ITradeTracking) => {
     if (data.id! === undefined) {
       ///create
@@ -106,6 +96,13 @@ export default observer(function TradeTrackingNewEditForm() {
       reset(defaultValues);
     }
   }, [reset, editMode, defaultValues]);
+  // useEffect(() => {
+  //   loadBranchDDL();
+  // }, [loadBranchDDL]);
+
+  // useEffect(() => {
+  //   loadUserDropdown(val.branchId);
+  // }, [loadUserDropdown, val.branchId]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -120,34 +117,27 @@ export default observer(function TradeTrackingNewEditForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="assetTypeId" label={translate('TradeTracking.AssetType')}>
+              {/* <RHFSelect name="branchId" label={translate('MainAsset.branch')} autoFocus>
                 <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
-                    {op.title}
-                  </option>
-                ))}
-              </RHFSelect>
-              <RHFSelect name="currencyTypeId" label={translate('TradeTracking.currencyType')}>
-                <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
-                    {op.title}
-                  </option>
-                ))}
-              </RHFSelect>
-              <RHFSelect name="userId" label={translate('TradeTracking.user')}>
-                <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.title}>
-                    {op.title}
+                {BranchOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
                   </option>
                 ))}
               </RHFSelect>
 
+              <RHFSelect name="userId" label={translate('TradeTracking.user')}>
+                <option value="" />
+                {UserOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect> */}
+
               <LocalizDatePicker
-                name="transactionDate"
-                label={translate('TradeTracking.transactionDate')}
+                name="date"
+                label={translate('TradeTracking.date')}
                 control={control}
                 showAsterisk={true}
               />
@@ -156,28 +146,33 @@ export default observer(function TradeTrackingNewEditForm() {
                 name="tradeAmount"
                 label={translate('TradeTracking.tradeAmount')}
                 type={'number'}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
                 showAsterisk={true}
-                autoFocus
               />
               <RHFTextField
                 name="profitAmount"
                 label={translate('TradeTracking.profitAmount')}
                 type={'number'}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
                 showAsterisk={true}
-                autoFocus
               />
               <RHFTextField
                 name="lossAmount"
                 label={translate('TradeTracking.lossAmount')}
                 type={'number'}
+                InputProps={{
+                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                }}
                 showAsterisk={true}
-                autoFocus
               />
               <RHFTextField
                 name="description"
                 label={translate('TradeTracking.description')}
                 showAsterisk={true}
-                autoFocus
               />
             </Box>
 
@@ -187,11 +182,9 @@ export default observer(function TradeTrackingNewEditForm() {
                 type="submit"
                 variant="contained"
                 loading={isSubmitting}
-                startIcon={
-                  !editMode ? <Iconify icon="eva:plus-fill" /> : <Iconify icon="eva:edit-fill" />
-                }
+                startIcon={<Iconify icon="eva:plus-fill" />}
               >
-                {!editMode ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
+                {translate('CRUD.Save')}
               </LoadingButton>
               <Button
                 fullWidth
@@ -199,11 +192,10 @@ export default observer(function TradeTrackingNewEditForm() {
                 color="error"
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
-                  clearSelectedTradeTracking();
-                  navigate(PATH_DASHBOARD.TradeTracking.list);
+                  setOpenCloseDialogCreateTrade();
                 }}
               >
-                {translate('CRUD.BackToList')}
+                {translate('CRUD.Cancle')}
               </Button>
             </Stack>
           </Card>

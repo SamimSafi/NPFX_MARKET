@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// @mui
 import { TableRow, TableCell, MenuItem } from '@mui/material';
 // @types
 
@@ -19,8 +18,8 @@ type Props = {
   index: any;
 };
 
-export default function ExpenseTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { currencyName, assetType, date, description, user, amount } = row;
+export default function ExpenseTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
+  const { amount, description, currencyType, branch, userName, date } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -35,12 +34,12 @@ export default function ExpenseTrackingTableRow({ row, onEditRow, onDeleteRow, i
   return (
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
-      <TableCell align="left">{currencyName}</TableCell>
-      <TableCell align="left">{assetType}</TableCell>
-      <TableCell align="left">{date}</TableCell>
-      <TableCell align="left">{description}</TableCell>
-      <TableCell align="left">{user}</TableCell>
       <TableCell align="left">{amount}</TableCell>
+      <TableCell align="left">{currencyType}</TableCell>
+      <TableCell align="left">{date}</TableCell>
+      <TableCell align="left">{branch}</TableCell>
+      <TableCell align="left">{userName}</TableCell>
+      <TableCell align="left">{description}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

@@ -16,11 +16,22 @@ type Props = {
   onEditRow: VoidFunction;
   //onSelectRow: VoidFunction;
   onDeleteRow: VoidFunction;
+  onDepositToUser: VoidFunction;
+  onCreateLoan: VoidFunction;
+  onCreateTrade: VoidFunction;
   index: any;
 };
 
-export default function MainAssetTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { currencyName, user, date, balanceAmount } = row;
+export default function MainAssetTableRow({
+  row,
+  onEditRow,
+  onDeleteRow,
+  onDepositToUser,
+  onCreateLoan,
+  onCreateTrade,
+  index,
+}: Props) {
+  const { currencyType, ownerUserName, depositDate, balanceAmount } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -35,11 +46,10 @@ export default function MainAssetTableRow({ row, onEditRow, onDeleteRow, index }
   return (
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
-      <TableCell align="left">{currencyName}</TableCell>
-      <TableCell align="left">{user}</TableCell>
+      <TableCell align="left">{currencyType}</TableCell>
       <TableCell align="left">{balanceAmount}</TableCell>
-      <TableCell align="left">{date}</TableCell>
-      <TableCell align="left">{user}</TableCell>
+      <TableCell align="left">{depositDate}</TableCell>
+      <TableCell align="left">{ownerUserName}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu
@@ -67,6 +77,33 @@ export default function MainAssetTableRow({ row, onEditRow, onDeleteRow, index }
               >
                 <Iconify sx={{ color: 'warning.main' }} icon={'eva:edit-fill'} />
                 {translate('CRUD.Update')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onDepositToUser();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'success.main' }} icon={'vaadin:money-deposit'} />
+                {translate('CRUD.DepositToUser')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onCreateLoan();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'success.main' }} icon={'mdi:cash-sync'} />
+                {translate('CRUD.CreateLaon')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onCreateTrade();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'success.main' }} icon={'mdi:cash-plus'} />
+                {translate('CRUD.TradeEntry')}
               </MenuItem>
             </>
           }

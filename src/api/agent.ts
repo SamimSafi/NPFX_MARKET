@@ -65,15 +65,28 @@ import {
   ITradeTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/TradeTracking';
 import { IPartners, IPartnersParams } from 'src/@types/foamCompanyTypes/systemTypes/Partners';
-import { IMainAsset, IMainAssetParams } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import {
+  IDepositTo,
+  IMainAsset,
+  IMainAssetParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 import {
   IExpenseTracking,
   IExpenseTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/ExpenseTracking';
+import {
+  ILoanTracking,
+  ILoanTrackingParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
+import {
+  IWithdrawalTracking,
+  IWithdrawalTrackingParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
+import { IContractType, IContractTypeParams } from 'src/@types/foamCompanyTypes/CategoryType';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-// axios.defaults.baseURL = 'http://localhost:7073/api/';
-axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
+axios.defaults.baseURL = 'http://localhost:9090/api/';
+// axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
 
 axios.interceptors.request.use(
   (config) => {
@@ -438,7 +451,7 @@ const AssetType = {
   //   requests.get<void>(`/AssetType/GetDetail/${AssetTypeId}`),
   delete: (id: number, remark: string) => axios.delete<void>(`/AssetType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/AssetType/GetDropDownList', {
+    axios.get<any>('/AssetType/GetAssetTypeDDL', {
       withCredentials: true,
     }),
 };
@@ -455,7 +468,7 @@ const CurrencyType = {
   delete: (id: number, remark: string) =>
     axios.delete<void>(`/CurrencyType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/CurrencyType/GetDropDownList', {
+    axios.get<any>('/CurrencyType/GetCurrencyTypeDDL', {
       withCredentials: true,
     }),
 };
@@ -470,24 +483,23 @@ const LoanType = {
   //   requests.get<void>(`/LoanType/GetDetail/${LoanTypeId}`),
   delete: (id: number, remark: string) => axios.delete<void>(`/LoanType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/LoanType/GetDropDownList', {
+    axios.get<any>('/LoanType/GetLoanTypeDDL', {
       withCredentials: true,
     }),
 };
 
 // Payment Type
 const PaymentType = {
-  create: (PaymentType: IPaymentType) => requests.post<void>('/PaymentType', PaymentType),
+  create: (PaymentType: IPaymentType) => requests.post<void>('/PayType', PaymentType),
   getList: (param: IPaymentTypeParams) =>
-    axios.post<any>(`/PaymentType/GetList`, param, { withCredentials: true }),
+    axios.post<any>(`/PayType/GetList`, param, { withCredentials: true }),
   update: (PaymentType: IPaymentType) =>
-    requests.put<void>(`/PaymentType/${PaymentType.id}`, PaymentType),
+    requests.put<void>(`/PayType/${PaymentType.id}`, PaymentType),
   // detail: (PaymentTypeId: any) =>
   //   requests.get<void>(`/PaymentType/GetDetail/${PaymentTypeId}`),
-  delete: (id: number, remark: string) =>
-    axios.delete<void>(`/PaymentType/${id}`, { data: remark }),
+  delete: (id: number, remark: string) => axios.delete<void>(`/PayType/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/PaymentType/GetDropDownList', {
+    axios.get<any>('/PayType/GetPayTypeDDL', {
       withCredentials: true,
     }),
 };
@@ -501,7 +513,7 @@ const ExpenseType = {
     requests.put<void>(`/ExpenseType/${expenseType.id}`, expenseType),
   delete: (id: number, remark: string) =>
     axios.delete<void>(`/ExpenseType/${id}`, { data: remark }),
-  DDl: () => axios.get<any>(`/ExpenseType/GetDropDownList`, { withCredentials: true }),
+  DDl: () => axios.get<any>(`/ExpenseType/GetExpenseTypeDDL`, { withCredentials: true }),
 };
 
 //  TradeTracking
@@ -526,13 +538,32 @@ const Partners = {
   DDl: () => axios.get<any>(`/Partners/GetDropDownList`, { withCredentials: true }),
 };
 
+// ContractType
+const ContractType = {
+  create: (ContractType: IContractType) => requests.post<void>('/ContractType', ContractType),
+  getList: (param: IContractTypeParams) =>
+    axios.post<any>(`/ContractType/GetList`, param, { withCredentials: true }),
+  update: (ContractType: IContractType) =>
+    requests.put<void>(`/ContractType/${ContractType.id}`, ContractType),
+  // detail: (ContractTypeId: any) =>
+  //   requests.get<void>(`/ContractType/GetDetail/${ContractTypeId}`),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/ContractType/${id}`, { data: remark }),
+  DDl: () =>
+    axios.get<any>('/ContractType/GetDropDownList', {
+      withCredentials: true,
+    }),
+};
+
 //  MainAsset
 const MainAsset = {
   create: (MainAsset: IMainAsset) => requests.post<void>('/MainAsset', MainAsset),
+  deposit: (DepositAsset: IDepositTo) =>
+    requests.post<void>('/MainAsset/DepositToUser', DepositAsset),
   getList: (param: IMainAssetParams) =>
     axios.post<any>(`/MainAsset/GetList`, param, { withCredentials: true }),
   update: (MainAsset: IMainAsset) => requests.put<void>(`/MainAsset/${MainAsset.id}`, MainAsset),
-  delete: (id: number, remark: string) => axios.delete<void>(`/MainAsset/${id}`, { data: remark }),
+  delete: (id: string, remark: string) => axios.delete<void>(`/MainAsset/${id}`, { data: remark }),
   DDl: () => axios.get<any>(`/MainAsset/GetDropDownList`, { withCredentials: true }),
 };
 
@@ -548,6 +579,34 @@ const ExpenseTracking = {
     axios.delete<void>(`/ExpenseTracking/${id}`, { data: remark }),
   DDl: () => axios.get<any>(`/ExpenseTracking/GetDropDownList`, { withCredentials: true }),
 };
+
+//  LoanTracking
+const LoanTracking = {
+  create: (LoanTracking: ILoanTracking) => requests.post<void>('/LoanTracking', LoanTracking),
+  TakeLoanCreateAsset: (LoanTracking: ILoanTracking) =>
+    requests.post<void>('/LoanTracking/TakeLoanAndCreateAsset', LoanTracking),
+  getList: (param: ILoanTrackingParams) =>
+    axios.post<any>(`/LoanTracking/GetList`, param, { withCredentials: true }),
+  update: (LoanTracking: ILoanTracking) =>
+    requests.put<void>(`/LoanTracking/${LoanTracking.id}`, LoanTracking),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/LoanTracking/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/LoanTracking/GetDropDownList`, { withCredentials: true }),
+};
+
+//  WithdrawalTracking
+const WithdrawalTracking = {
+  create: (WithdrawalTracking: IWithdrawalTracking) =>
+    requests.post<void>('/WithdrawalTracking', WithdrawalTracking),
+  getList: (param: IWithdrawalTrackingParams) =>
+    axios.post<any>(`/WithdrawalTracking/GetList`, param, { withCredentials: true }),
+  update: (WithdrawalTracking: IWithdrawalTracking) =>
+    requests.put<void>(`/WithdrawalTracking/${WithdrawalTracking.id}`, WithdrawalTracking),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/WithdrawalTracking/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/WithdrawalTracking/GetDropDownList`, { withCredentials: true }),
+};
+
 // Country Lookup
 const Country = {
   getList: (param: ICountry) =>
@@ -599,13 +658,11 @@ const GetParentEmp = {
 
 // Branch
 const Branch = {
-  create: (Branch: IBranch) => requests.post<void>('/Branch', Branch),
-  getList: (param: IBranchParams) =>
-    axios.post<any>(`/Branch/GetList`, param, { withCredentials: true }),
-  update: (Branch: IBranch) => requests.put<void>(`/Branch/${Branch.id}`, Branch),
+  create: (Branch: IBranch) => axios.post<void>('/Branch', Branch),
+  getList: (param: IBranchParams) => axios.post<any>(`/Branch/GetList`, param),
+  update: (Branch: IBranch) => axios.put<void>(`/Branch/${Branch.id}`, Branch),
   delete: (id: number, remark: string) => axios.delete<void>(`/Branch/${id}`, { data: remark }),
-  DDl: (departmentId: any) =>
-    axios.get<any>(`/Branch/GetDropDownList/${departmentId}`, { withCredentials: true }),
+  DDl: () => axios.get<any>(`/Branch/GetBranchDDL`, { withCredentials: true }),
 };
 // Customer
 const Customer = {
@@ -789,6 +846,9 @@ const agent = {
   Partners,
   MainAsset,
   ExpenseTracking,
+  LoanTracking,
+  WithdrawalTracking,
+  ContractType,
 };
 
 export default agent;

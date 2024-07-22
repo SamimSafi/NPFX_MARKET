@@ -1,17 +1,29 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { SelectControl } from '../../@types/common';
 import agentMainAsset from '../../api/agent';
-import { IMainAsset, IMainAssetParams } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import {
+  IDepositTo,
+  IMainAsset,
+  IMainAssetParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 export default class MainAssetStore {
   openDialog = false;
 
-  MainAssetRegistry = new Map<number, IMainAsset>();
+  openDialogDeposit = false;
+
+  openDialogCreateLoan = false;
+
+  openDialogCreateTrade = false;
+
+  MainAssetRegistry = new Map<string, IMainAsset>();
 
   openDetailDialog = false;
 
   editMode = false; //When click on edit button
 
   selectedMainAsset: IMainAsset | undefined;
+
+  selectedDepositTo: IDepositTo | undefined;
 
   totalRecord: number = 0;
 
@@ -50,7 +62,7 @@ export default class MainAssetStore {
     this.loadMainAsset(params);
   };
 
-  getMainAssetFromRegistry = (id: number) => {
+  getMainAssetFromRegistry = (id: string) => {
     let dep = this.MainAssetRegistry.get(id);
 
     if (dep) {
@@ -64,7 +76,7 @@ export default class MainAssetStore {
     this.selectedMainAsset = undefined;
   };
 
-  deleteMainAsset = async (id: number, remark?: string) => {
+  deleteMainAsset = async (id: string, remark?: string) => {
     try {
       await agentMainAsset.MainAsset.delete(id, remark!);
       runInAction(() => {
@@ -79,10 +91,23 @@ export default class MainAssetStore {
 
   setOpenCloseDialog = () => (this.openDialog = !this.openDialog);
 
+  setOpenCloseDialogDeposit = () => (this.openDialogDeposit = !this.openDialogDeposit);
+
   setDetailCloseDialog = () => (this.openDetailDialog = !this.openDetailDialog);
+
+  setOpenCloseDialogCreateLoan = () => (this.openDialogCreateLoan = !this.openDialogCreateLoan);
+
+  setOpenCloseDialogCreateTrade = () => (this.openDialogCreateTrade = !this.openDialogCreateTrade);
 
   createMainAsset = async (MainAsset: IMainAsset) => {
     await agentMainAsset.MainAsset.create(MainAsset);
+    runInAction(() => {
+      this.loadMainAsset({ pageIndex: 0, pageSize: 5 });
+    });
+  };
+
+  deposit = async (DepositAsset: IDepositTo) => {
+    await agentMainAsset.MainAsset.deposit(DepositAsset);
     runInAction(() => {
       this.loadMainAsset({ pageIndex: 0, pageSize: 5 });
     });

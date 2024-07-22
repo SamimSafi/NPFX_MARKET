@@ -21,33 +21,29 @@ import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
 import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../components/table';
-import { useSnackbar } from 'notistack';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import MyDialog from 'src/components/MyDialog';
-import { IUnitOfMeasure } from 'src/@types/foamCompanyTypes/unitOfMeasure';
-import MeasurementTableToolbar from './ExpenseTableToolbar';
-import { ContractTypeTableRow } from '../../ContractType/ContractTypeList';
-import MeasurementDelete from './ExpenseDelete';
-import { IExpense } from 'src/@types/foamCompanyTypes/Expense';
-import ExpenseTableRow from './ExpenseTableRow';
-import ExpenseDelete from './ExpenseDelete';
+import LoanTrackingTableRow from './LoanTrackingTableRow';
+import LoanTrackingTableToolbar from './LoanTrackingTableToolbar';
+import LoanTrackingDelete from './LoanTrackingDelete';
+import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 
 // ----------------------------------------------------------------------
 
-export default observer(function ExpenseList() {
-  const { ExpenseStore } = useStore();
+export default observer(function LoanTrackingList() {
+  const { LoanTrackingStore } = useStore();
   const { translate } = useLocales();
   const {
-    loadExpense,
-    ExpenseList,
-    ExpenseRegistry,
+    loadLoanTracking,
+    LoanTrackingList,
+    LoanTrackingRegistry,
     totalRecord,
-    Expenseearch,
-    getExpenseFromRegistry,
+    LoanTrackingearch,
+    getLoanTrackingFromRegistry,
     setOpenCloseDialog,
     openDialog,
-  } = ExpenseStore;
+  } = LoanTrackingStore;
   const {
     dense,
     page,
@@ -66,13 +62,19 @@ export default observer(function ExpenseList() {
 
   const navigate = useNavigate();
 
-  const { enqueueSnackbar } = useSnackbar();
-
-  const [ContractTypeId, setContractTypeId] = useState<number>(0);
+  const [LoanTrackingId, setLoanTrackingId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'ExpenseType', label: `${translate('Expense.ExpenseType')}`, align: 'left' },
-    { id: 'Amount', label: `${translate('Expense.Amount')}`, align: 'left' },
+    { id: 'currencyType', label: `${translate('GeneralFields.currencyType')}`, align: 'left' },
+    // { id: 'Asset', label: `${translate('GeneralFields.Asset')}`, align: 'left' },
+    { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
+    { id: 'dueDate', label: `${translate('GeneralFields.dueDate')}`, align: 'left' },
+    { id: 'partner', label: `${translate('GeneralFields.partner')}`, align: 'left' },
+    { id: 'partnerPhone', label: `${translate('GeneralFields.partnerPhone')}`, align: 'left' },
+    { id: 'userName', label: `${translate('GeneralFields.userName')}`, align: 'left' },
+    { id: 'LoanAmount', label: `${translate('GeneralFields.LoanAmount')}`, align: 'left' },
+    { id: 'paidAmount', label: `${translate('GeneralFields.paidAmount')}`, align: 'left' },
+    { id: 'remainAmount', label: `${translate('GeneralFields.remainAmount')}`, align: 'left' },
     { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
@@ -80,27 +82,27 @@ export default observer(function ExpenseList() {
     setFilterName(filterName);
     setPage(0);
     if (filterName.length > 1) {
-      Expenseearch({
+      LoanTrackingearch({
         pageIndex: 0,
         pageSize: rowsPerPage,
-        search: filterName,
+        name: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      Expenseearch({ pageIndex: 0, pageSize: rowsPerPage });
+      LoanTrackingearch({ pageIndex: 0, pageSize: rowsPerPage });
     }
   };
 
   const handleOpenConfirm = (id: number) => {
     setOpenCloseDialog();
-    setContractTypeId(id);
+    setLoanTrackingId(id);
   };
 
   const handleCloseConfirm = () => {
     setOpenCloseDialog();
   };
   const handleEditRow = (id: number) => {
-    getExpenseFromRegistry(id);
+    getLoanTrackingFromRegistry(id);
     navigate(PATH_DASHBOARD.ContractType.edit);
   };
 
@@ -123,21 +125,22 @@ export default observer(function ExpenseList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    loadExpense({ pageIndex: newPage, pageSize: rowsPerPage });
+    loadLoanTracking({ pageIndex: newPage, pageSize: rowsPerPage });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeRowsPerPage(event);
     let pageZize = parseInt(event.target.value);
-    loadExpense({ pageIndex: 0, pageSize: pageZize });
+    loadLoanTracking({ pageIndex: 0, pageSize: pageZize });
   };
   useEffect(() => {
-    if (ExpenseRegistry.size <= 1) {
-      loadExpense({ pageIndex: 0, pageSize: rowsPerPage });
+    if (LoanTrackingRegistry.size <= 1) {
+      loadLoanTracking({ pageIndex: 0, pageSize: rowsPerPage });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dataFiltered = applySortFilter({
-    tableData: ExpenseList,
+    tableData: LoanTrackingList,
     comparator: getComparator(order, orderBy),
     filterName: '',
   });
@@ -147,21 +150,21 @@ export default observer(function ExpenseList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('Expense.Title')}>
+    <Page title={translate('LoanTracking.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.ExpenseList')}
+          heading={translate('LoanTracking.LoanTrackingList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Expense.ExpenseList')}` },
+            { name: `${translate('LoanTracking.LoanTrackingList')}` },
           ]}
           action={
             <Button
               variant="contained"
               startIcon={<Iconify icon="eva:plus-fill" />}
               component={RouterLink}
-              to={PATH_DASHBOARD.Expense.new}
+              to={PATH_DASHBOARD.LoanTracking.new}
             >
               {translate('CRUD.Create')}
             </Button>
@@ -169,7 +172,7 @@ export default observer(function ExpenseList() {
         />
 
         <Card>
-          <MeasurementTableToolbar filterName={filterName} onFilterName={handleFilterName} />
+          <LoanTrackingTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>
             <TableContainer sx={{ minWidth: 960, position: 'relative' }}>
@@ -186,7 +189,7 @@ export default observer(function ExpenseList() {
                   {dataFiltered
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => (
-                      <ExpenseTableRow
+                      <LoanTrackingTableRow
                         key={row.id}
                         row={row}
                         index={index}
@@ -226,7 +229,7 @@ export default observer(function ExpenseList() {
               title={translate('CRUD.DeleteTitle')}
               size="md"
             >
-              <ExpenseDelete id={ContractTypeId} />
+              <LoanTrackingDelete id={LoanTrackingId} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
@@ -247,7 +250,7 @@ function applySortFilter({
   comparator,
   filterName,
 }: {
-  tableData: IExpense[];
+  tableData: ILoanTracking[];
   comparator: (a: any, b: any) => number;
   filterName: string;
 }) {

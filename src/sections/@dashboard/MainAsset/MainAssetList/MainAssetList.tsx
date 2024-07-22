@@ -28,6 +28,9 @@ import MainAssetTableRow from './MainAssetTableRow';
 import MainAssetTableToolbar from './MainAssetTableToolbar';
 import MainAssetDelete from './MainAssetDelete';
 import { IMainAsset } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import DepositToNewEditForm from '../MainAssetForm/DepositToNewEditForm';
+import LoanTrackingNewEditForm from '../../LoanTracking/LoanTrackingForm/LoanTrackingNewEditForm';
+import TradeTrackingNewEditForm from '../../TradeTracking/TradeTrackingForm/TradeTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +46,12 @@ export default observer(function MainAssetList() {
     getMainAssetFromRegistry,
     setOpenCloseDialog,
     openDialog,
+    setOpenCloseDialogDeposit,
+    openDialogDeposit,
+    setOpenCloseDialogCreateLoan,
+    setOpenCloseDialogCreateTrade,
+    openDialogCreateTrade,
+    openDialogCreateLoan,
   } = MainAssetStore;
   const {
     dense,
@@ -62,14 +71,13 @@ export default observer(function MainAssetList() {
 
   const navigate = useNavigate();
 
-  const [MainAssetId, setMainAssetId] = useState<number>(0);
+  const [MainAssetId, setMainAssetId] = useState<string>('');
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'Currency', label: `${translate('GeneralFields.Name')}`, align: 'left' },
-    { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
-    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
-    { id: 'user', label: `${translate('GeneralFields.user')}`, align: 'left' },
     { id: 'balanceAmount', label: `${translate('GeneralFields.balanceAmount')}`, align: 'left' },
+    { id: 'depositDate', label: `${translate('GeneralFields.Date')}`, align: 'left' },
+    { id: 'owneruser', label: `${translate('GeneralFields.ownerUser')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
@@ -87,7 +95,7 @@ export default observer(function MainAssetList() {
     }
   };
 
-  const handleOpenConfirm = (id: number) => {
+  const handleOpenConfirm = (id: string) => {
     setOpenCloseDialog();
     setMainAssetId(id);
   };
@@ -95,9 +103,37 @@ export default observer(function MainAssetList() {
   const handleCloseConfirm = () => {
     setOpenCloseDialog();
   };
-  const handleEditRow = (id: number) => {
+
+  // Deposit to users
+  const handleDepositToUserOpenConfirm = (id: string) => {
+    setOpenCloseDialogDeposit();
+    setMainAssetId(id);
+  };
+  const handleCloseDepositConfirm = () => {
+    setOpenCloseDialogDeposit();
+  };
+
+  // Create Loan
+  const handleCreateLoanOpenConfirm = (id: string) => {
+    setOpenCloseDialogCreateLoan();
+    setMainAssetId(id);
+  };
+  const handleCloseCreateLoanConfirm = () => {
+    setOpenCloseDialogCreateLoan();
+  };
+
+  // Create Loan
+  const handleCreateTradeOpenConfirm = (id: string) => {
+    setOpenCloseDialogCreateTrade();
+    setMainAssetId(id);
+  };
+  const handleCloseCreateTradeConfirm = () => {
+    setOpenCloseDialogCreateTrade();
+  };
+
+  const handleEditRow = (id: string) => {
     getMainAssetFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.MainAsset.edit);
   };
 
   // const handleDelete = () => {
@@ -121,6 +157,7 @@ export default observer(function MainAssetList() {
     setPage(newPage);
     loadMainAsset({ pageIndex: newPage, pageSize: rowsPerPage });
   };
+
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeRowsPerPage(event);
     let pageZize = parseInt(event.target.value);
@@ -222,6 +259,9 @@ export default observer(function MainAssetList() {
                         row={row}
                         index={index}
                         onDeleteRow={() => handleOpenConfirm(row.id!)}
+                        onDepositToUser={() => handleDepositToUserOpenConfirm(row.id!)}
+                        onCreateLoan={() => handleCreateLoanOpenConfirm(row.id!)}
+                        onCreateTrade={() => handleCreateTradeOpenConfirm(row.id!)}
                         onEditRow={() => handleEditRow(row.id!)}
                       />
                     ))}
@@ -258,6 +298,38 @@ export default observer(function MainAssetList() {
               size="md"
             >
               <MainAssetDelete id={MainAssetId} />
+            </MyDialog>
+            <FormControlLabel
+              control={<Switch checked={dense} onChange={onChangeDense} />}
+              label={translate('Pagination.Dense')}
+              sx={{ px: 3, py: 1.5, top: 0, position: { md: 'absolute' } }}
+            />
+
+            <MyDialog
+              open={openDialogDeposit}
+              onClose={handleCloseDepositConfirm}
+              title={translate('CRUD.DepositToUser')}
+              size="md"
+            >
+              <DepositToNewEditForm asssetID={MainAssetId!} />
+            </MyDialog>
+
+            <MyDialog
+              open={openDialogCreateLoan}
+              onClose={handleCloseCreateLoanConfirm}
+              title={translate('CRUD.CreateLoan')}
+              size="md"
+            >
+              <LoanTrackingNewEditForm asssetID={MainAssetId!} />
+            </MyDialog>
+
+            <MyDialog
+              open={openDialogCreateTrade}
+              onClose={handleCloseCreateTradeConfirm}
+              title={translate('CRUD.SaveTrade')}
+              size="md"
+            >
+              <TradeTrackingNewEditForm asssetID={MainAssetId!} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}

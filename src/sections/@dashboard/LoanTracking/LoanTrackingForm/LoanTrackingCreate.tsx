@@ -1,5 +1,4 @@
-import { paramCase, capitalCase } from 'change-case';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 // @mui
 import { Container } from '@mui/material';
 // routes
@@ -7,52 +6,50 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 // hooks
 import useSettings from '../../../../hooks/useSettings';
 import useLocales from 'src/hooks/useLocales';
-// _mock_
-import { _userList } from '../../../../_mock';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import ExpenseTypeNewEditForm from './ExpenseNewEditForm';
-import React from 'react';
-import ExpenseNewEditForm from './ExpenseNewEditForm';
-// sections
-
-// @type
+import TakeLoanTrackingNewEditForm from './TakeLoanTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
 
-export default function ExpenseCreate() {
+export default function LoanTrackingCreate() {
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
   const { translate } = useLocales();
-  const { name = '' } = useParams();
 
   const isEdit = pathname.includes('edit');
 
   return (
     <Page
-      title={!isEdit ? `${translate('Expense.AddTitle')}` : `${translate('Expense.UpdateTitle')}`}
+      title={
+        !isEdit
+          ? `${translate('LoanTracking.AddTitle')}`
+          : `${translate('LoanTracking.UpdateTitle')}`
+      }
     >
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={
             !isEdit
-              ? `${translate('Expense.CreateExpense')}`
-              : `${translate('Expense.EditExpense')}`
+              ? `${translate('LoanTracking.CreateLoanTracking')}`
+              : `${translate('LoanTracking.EditLoanTracking')}`
           }
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
-              name: `${translate('Expense.ExpenseList')}`,
+              name: `${translate('LoanTracking.LoanTrackingList')}`,
               href: PATH_DASHBOARD.ContractDetails.list,
             },
             {
-              name: !isEdit ? `${translate('Expense.New')}` : `${translate('Expense.Update')}`,
+              name: !isEdit
+                ? `${translate('LoanTracking.New')}`
+                : `${translate('LoanTracking.Update')}`,
             },
           ]}
         />
-        <ExpenseNewEditForm />
+        <TakeLoanTrackingNewEditForm />
       </Container>
     </Page>
   );

@@ -1,21 +1,17 @@
 import { useState } from 'react';
 // @mui
-import { useTheme } from '@mui/material/styles';
-import { TableRow, TableCell, Typography, MenuItem } from '@mui/material';
+import { TableRow, TableCell, MenuItem } from '@mui/material';
 // @types
 
 // components
 import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
-
-import { IBranch } from 'src/@types/foamCompanyTypes/looks/branch';
-import { IUnitOfMeasure } from 'src/@types/foamCompanyTypes/unitOfMeasure';
-import { IExpense } from 'src/@types/foamCompanyTypes/Expense';
+import { IWithdrawalTracking } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
 // ----------------------------------------------------------------------
 
 type Props = {
-  row: IExpense;
+  row: IWithdrawalTracking;
   // selected: boolean;
   onEditRow: VoidFunction;
   //onSelectRow: VoidFunction;
@@ -23,10 +19,8 @@ type Props = {
   index: any;
 };
 
-export default function ExpenseTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const theme = useTheme();
-
-  const { id, expenseType, amount, description } = row;
+export default function WithdrawalTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
+  const { currencyName, asset, date, dueDate, description, user, withdrawalAmount } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -41,9 +35,13 @@ export default function ExpenseTableRow({ row, onEditRow, onDeleteRow, index }: 
   return (
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
-      <TableCell align="left">{expenseType}</TableCell>
-      <TableCell align="left">{amount}</TableCell>
+      <TableCell align="left">{currencyName}</TableCell>
+      <TableCell align="left">{asset}</TableCell>
+      <TableCell align="left">{date}</TableCell>
+      <TableCell align="left">{dueDate}</TableCell>
       <TableCell align="left">{description}</TableCell>
+      <TableCell align="left">{user}</TableCell>
+      <TableCell align="left">{withdrawalAmount}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

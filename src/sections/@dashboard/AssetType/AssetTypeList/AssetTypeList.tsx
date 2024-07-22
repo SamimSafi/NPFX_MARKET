@@ -37,7 +37,6 @@ export default observer(function AssetTypeList() {
   const {
     loadAssetType,
     AssetTypeList,
-    AssetTypeRegistry,
     totalRecord,
     AssetTypeearch,
     getAssetTypeFromRegistry,
@@ -94,7 +93,7 @@ export default observer(function AssetTypeList() {
   };
   const handleEditRow = (id: number) => {
     getAssetTypeFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.AssetType.edit);
   };
 
   // const handleDelete = () => {
@@ -124,9 +123,8 @@ export default observer(function AssetTypeList() {
     loadAssetType({ pageIndex: 0, pageSize: pageZize });
   };
   useEffect(() => {
-    if (AssetTypeRegistry.size <= 1) {
-      loadAssetType({ pageIndex: 0, pageSize: rowsPerPage });
-    }
+    loadAssetType({ pageIndex: 0, pageSize: rowsPerPage });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -141,14 +139,14 @@ export default observer(function AssetTypeList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('Expense.Title')}>
+    <Page title={translate('Asset.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.AssetTypeList')}
+          heading={translate('Asset.AssetTypeList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Expense.AssetTypeList')}` },
+            { name: `${translate('Asset.AssetTypeList')}` },
           ]}
           action={
             <Button

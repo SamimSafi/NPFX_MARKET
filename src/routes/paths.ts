@@ -138,6 +138,24 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/ExpenseTracking/edit'),
     detail: path(ROOTS_DASHBOARD, '/ExpenseTracking/detail'),
   },
+
+  // LoanTracking
+  LoanTracking: {
+    root: path(ROOTS_DASHBOARD, '/LoanTracking'),
+    list: path(ROOTS_DASHBOARD, '/LoanTracking/list'),
+    new: path(ROOTS_DASHBOARD, '/LoanTracking/new'),
+    edit: path(ROOTS_DASHBOARD, '/LoanTracking/edit'),
+    detail: path(ROOTS_DASHBOARD, '/LoanTracking/detail'),
+  },
+
+  // WithdrawalTracking
+  WithdrawalTracking: {
+    root: path(ROOTS_DASHBOARD, '/WithdrawalTracking'),
+    list: path(ROOTS_DASHBOARD, '/WithdrawalTracking/list'),
+    new: path(ROOTS_DASHBOARD, '/WithdrawalTracking/new'),
+    edit: path(ROOTS_DASHBOARD, '/WithdrawalTracking/edit'),
+    detail: path(ROOTS_DASHBOARD, '/WithdrawalTracking/detail'),
+  },
   // Users Path
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),

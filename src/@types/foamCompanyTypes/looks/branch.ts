@@ -1,7 +1,9 @@
 import { ICommonFieldType } from './commonFieldsType';
 export interface IBranch extends ICommonFieldType {
   address?: string;
-  afterSubmit?: string;
+  modifiedOn?: string;
+  parentBranchName?: string;
+  parentId?: number;
 }
 
 export interface IBranchParams {

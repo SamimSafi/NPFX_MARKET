@@ -94,7 +94,7 @@ export default observer(function LoanTypeList() {
   };
   const handleEditRow = (id: number) => {
     getLoanTypeFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.LoanType.edit);
   };
 
   // const handleDelete = () => {
@@ -141,14 +141,14 @@ export default observer(function LoanTypeList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('Expense.Title')}>
+    <Page title={translate('LoanType.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.LoanTypeList')}
+          heading={translate('LoanType.LoanTypeList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Expense.LoanTypeList')}` },
+            { name: `${translate('LoanType.LoanTypeList')}` },
           ]}
           action={
             <Button

@@ -66,7 +66,7 @@ export default observer(function CurrencyTypeList() {
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'Name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
-    // { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
+    { id: 'code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
@@ -76,7 +76,7 @@ export default observer(function CurrencyTypeList() {
       CurrencyTypeearch({
         pageIndex: 0,
         pageSize: rowsPerPage,
-        name: filterName,
+        searchBy: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
@@ -141,14 +141,14 @@ export default observer(function CurrencyTypeList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('Expense.Title')}>
+    <Page title={translate('CurrencyType.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.CurrencyTypeList')}
+          heading={translate('CurrencyType.CurrencyTypeList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Expense.CurrencyTypeList')}` },
+            { name: `${translate('CurrencyType.CurrencyTypeList')}` },
           ]}
           action={
             <Button

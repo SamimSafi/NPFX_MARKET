@@ -1,2 +1,2 @@
-export { default as ExpenseTrackingTableRow } from './ExpenseTrackingTableRow';
-export { default as ExpenseTrackingTableToolbar } from './ExpenseTrackingTableToolbar';
+export { default as ExpenseTableRow } from './ExpenseTrackingTableRow';
+export { default as ExpenseTableToolbar } from './ExpenseTrackingTableToolbar';

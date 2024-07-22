@@ -10,7 +10,7 @@ type Props = {
   onFilterName: (value: string) => void;
 };
 
-export default function ExpenseTableToolbar({ filterName, onFilterName }: Props) {
+export default function WithdrawalTrackingTableToolbar({ filterName, onFilterName }: Props) {
   const { translate } = useLocales();
   return (
     <Stack spacing={2} direction={{ xs: 'column', sm: 'row' }} sx={{ py: 2.5, px: 3 }}>
@@ -18,7 +18,7 @@ export default function ExpenseTableToolbar({ filterName, onFilterName }: Props)
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder={translate('ExpenseType.Placeholder')}
+        placeholder={translate('WithdrawalTracking.Placeholder')}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

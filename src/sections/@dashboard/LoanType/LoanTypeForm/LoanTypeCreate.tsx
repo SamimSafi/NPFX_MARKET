@@ -36,7 +36,7 @@ export default function LoanTypeCreate() {
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
               name: `${translate('LoanType.LoanTypeList')}`,
-              href: PATH_DASHBOARD.ContractDetails.list,
+              href: PATH_DASHBOARD.LoanType.list,
             },
             {
               name: !isEdit ? `${translate('LoanType.New')}` : `${translate('LoanType.Update')}`,

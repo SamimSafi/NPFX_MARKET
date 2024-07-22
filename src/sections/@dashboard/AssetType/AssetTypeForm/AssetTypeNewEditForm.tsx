@@ -71,7 +71,7 @@ export default observer(function AssetTypeNewEditForm() {
       updateAssetType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.AssetType.list);
       });
     }
   };
@@ -118,7 +118,7 @@ export default observer(function AssetTypeNewEditForm() {
               />
 
               <RHFTextField
-                name="Code"
+                name="code"
                 label={translate('GeneralFields.Code')}
                 showAsterisk={true}
                 autoFocus

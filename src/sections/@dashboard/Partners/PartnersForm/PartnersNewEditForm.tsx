@@ -30,17 +30,18 @@ export default observer(function PartnersNewEditForm() {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewPartnersSchema = Yup.object().shape({
-    name: Yup.string().required(`${translate('Validation.name')}`),
+    nameInEnglish: Yup.string().required(`${translate('Validation.EnglishName')}`),
+    nameInPashto: Yup.string().required(`${translate('Validation.DariName')}`),
     phone: Yup.string().required(`${translate('Validation.phone')}`),
-    pashtoName: Yup.string().required(`${translate('Validation.DariName')}`),
-    code: Yup.string().required(`${translate('Validation.Code')}`),
   });
 
   const defaultValues = useMemo<IPartners>(
     () => ({
       id: selectedPartners?.id,
-      name: selectedPartners?.name || '',
+      nameInEnglish: selectedPartners?.nameInEnglish || '',
+      nameInPashto: selectedPartners?.nameInPashto || '',
       phone: selectedPartners?.phone || '',
+      email: selectedPartners?.email || '',
     }),
     [selectedPartners]
   );
@@ -62,14 +63,14 @@ export default observer(function PartnersNewEditForm() {
       createPartners(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.Partners.list);
       });
     } else {
       ///update
       updatePartners(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.Partners.list);
       });
     }
   };
@@ -97,14 +98,26 @@ export default observer(function PartnersNewEditForm() {
               }}
             >
               <RHFTextField
-                name="name"
-                label={translate('GeneralFields.name')}
+                name="nameInEnglish"
+                label={translate('GeneralFields.EnglishName')}
+                showAsterisk={true}
+                autoFocus
+              />
+              <RHFTextField
+                name="nameInPashto"
+                label={translate('GeneralFields.PashtoName')}
                 showAsterisk={true}
                 autoFocus
               />
               <RHFTextField
                 name="phone"
-                label={translate('GeneralFields.phone')}
+                label={translate('Employee.PhoneNumber')}
+                showAsterisk={true}
+                autoFocus
+              />
+              <RHFTextField
+                name="email"
+                label={translate('Employee.Email')}
                 showAsterisk={true}
                 autoFocus
               />

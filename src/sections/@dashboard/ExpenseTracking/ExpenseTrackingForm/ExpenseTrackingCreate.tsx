@@ -9,11 +9,12 @@ import useLocales from 'src/hooks/useLocales';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
+import React from 'react';
 import ExpenseTrackingNewEditForm from './ExpenseTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
 
-export default function ExpenseTrackingCreate() {
+export default function ExpenseCreate() {
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -23,29 +24,23 @@ export default function ExpenseTrackingCreate() {
 
   return (
     <Page
-      title={
-        !isEdit
-          ? `${translate('ExpenseTracking.AddTitle')}`
-          : `${translate('ExpenseTracking.UpdateTitle')}`
-      }
+      title={!isEdit ? `${translate('Expense.AddTitle')}` : `${translate('Expense.UpdateTitle')}`}
     >
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={
             !isEdit
-              ? `${translate('ExpenseTracking.CreateExpenseTracking')}`
-              : `${translate('ExpenseTracking.EditExpenseTracking')}`
+              ? `${translate('Expense.CreateExpense')}`
+              : `${translate('Expense.EditExpense')}`
           }
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
-              name: `${translate('ExpenseTracking.ExpenseTrackingList')}`,
+              name: `${translate('Expense.ExpenseList')}`,
               href: PATH_DASHBOARD.ContractDetails.list,
             },
             {
-              name: !isEdit
-                ? `${translate('ExpenseTracking.New')}`
-                : `${translate('ExpenseTracking.Update')}`,
+              name: !isEdit ? `${translate('Expense.New')}` : `${translate('Expense.Update')}`,
             },
           ]}
         />

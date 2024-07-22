@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CancelIcon from '@mui/icons-material/Cancel';
 
 interface Props {
-  id: number;
+  id: string;
 }
 
 export default observer(function MainAssetDelete({ id }: Props) {

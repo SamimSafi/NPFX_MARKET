@@ -1,13 +1,15 @@
 export interface ITradeTracking {
   id?: number;
   currencyTypeId?: number;
-  currencyName?: string;
-  assetTypeId?: number;
+  currencyType?: string;
+  date?: string;
+  mainAssetId?: string;
   assetType?: string;
-  transactionDate?: string;
   description?: string;
+  branchId?: number;
+  branch?: string;
   userId?: number;
-  user?: string;
+  userName?: string;
   tradeAmount?: number;
   profitAmount?: number;
   lossAmount?: number;

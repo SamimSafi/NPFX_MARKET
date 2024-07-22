@@ -24,14 +24,13 @@ import { TableNoData, TableEmptyRows, TableHeadCustom } from '../../../../compon
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import MyDialog from 'src/components/MyDialog';
-import ExpenseTrackingTableRow from './ExpenseTrackingTableRow';
 import ExpenseTrackingTableToolbar from './ExpenseTrackingTableToolbar';
+import ExpenseTrackingTableRow from './ExpenseTrackingTableRow';
 import ExpenseTrackingDelete from './ExpenseTrackingDelete';
 import { IExpenseTracking } from 'src/@types/foamCompanyTypes/systemTypes/ExpenseTracking';
-
 // ----------------------------------------------------------------------
 
-export default observer(function ExpenseTrackingList() {
+export default observer(function ExpenseTrackinggList() {
   const { ExpenseTrackingStore } = useStore();
   const { translate } = useLocales();
   const {
@@ -62,17 +61,15 @@ export default observer(function ExpenseTrackingList() {
 
   const navigate = useNavigate();
 
-  const [ExpenseTrackingId, setExpenseTrackingId] = useState<number>(0);
+  const [ExpenseTrackingTypeId, setExpenseTrackingTypeId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'Currency', label: `${translate('GeneralFields.Name')}`, align: 'left' },
-    { id: 'Account', label: `${translate('GeneralFields.Account')}`, align: 'left' },
-    { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
+    { id: 'amount', label: `${translate('ExpenseTracking.currencyType')}`, align: 'left' },
+    { id: 'currencyType', label: `${translate('ExpenseTracking.currencyType')}`, align: 'left' },
+    { id: 'date', label: `${translate('ExpenseTracking.date')}`, align: 'left' },
+    { id: 'branch', label: `${translate('ExpenseTracking.branch')}`, align: 'left' },
+    { id: 'userName', label: `${translate('ExpenseTracking.userName')}`, align: 'left' },
     { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
-    { id: 'user', label: `${translate('GeneralFields.user')}`, align: 'left' },
-    { id: 'TradeAmount', label: `${translate('GeneralFields.TradeAmount')}`, align: 'left' },
-    { id: 'ProfitAmount', label: `${translate('GeneralFields.ProfitAmount')}`, align: 'left' },
-    { id: 'LossAmount', label: `${translate('GeneralFields.LossAmount')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
@@ -92,7 +89,7 @@ export default observer(function ExpenseTrackingList() {
 
   const handleOpenConfirm = (id: number) => {
     setOpenCloseDialog();
-    setExpenseTrackingId(id);
+    setExpenseTrackingTypeId(id);
   };
 
   const handleCloseConfirm = () => {
@@ -100,7 +97,7 @@ export default observer(function ExpenseTrackingList() {
   };
   const handleEditRow = (id: number) => {
     getExpenseTrackingFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.ExpenseTracking.edit);
   };
 
   // const handleDelete = () => {
@@ -226,7 +223,7 @@ export default observer(function ExpenseTrackingList() {
               title={translate('CRUD.DeleteTitle')}
               size="md"
             >
-              <ExpenseTrackingDelete id={ExpenseTrackingId} />
+              <ExpenseTrackingDelete id={ExpenseTrackingTypeId} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
