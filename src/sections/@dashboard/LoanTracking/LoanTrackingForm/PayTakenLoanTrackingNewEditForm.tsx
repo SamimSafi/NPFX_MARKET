@@ -3,11 +3,11 @@ import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, Stack } from '@mui/material';
+import { Box, Card, Grid, InputAdornment, Stack, TextField } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -18,59 +18,47 @@ import Iconify from '../../../../components/Iconify';
 import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { ILoanTracking, IPayTakenLoan } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
+import { IPayTakenLoan } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
+import CancelIcon from '@mui/icons-material/Cancel';
 // ----------------------------------------------------------------------
-
-export default observer(function PayTakenLoanTrackingNewEditForm() {
+interface Props {
+  LoanTrackingId: number;
+}
+export default observer(function PayTakenLoanTrackingNewEditForm({ LoanTrackingId }: Props) {
   const { LoanTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
   const {
-    createLoanTracking,
+    PayTakenLoan,
     updateLoanTracking,
     editMode,
     selectedLoanTracking,
-    clearSelectedLoanTracking,
+    setOpenCloseDialogPayTakenLoan,
   } = LoanTrackingStore;
-  const {
-    loadLoanTypeDDL,
-    LoanTypeOption,
-    loadPartnersDDL,
-    PartnersOption,
-    loadCurrencyTypeDDL,
-    CurrencyTypeOption,
-    loadBranchDDL,
-    BranchOption,
-    loadUserDropdown,
-    UserOption,
-  } = commonDropdown;
+  const { loadMainAssetDDL, MainAssetOption } = commonDropdown;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewLoanTrackingSchema = Yup.object().shape({
-    currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    userId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    loanTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
-    amount: Yup.number().required(`${translate('Validation.Code')}`),
+    amountByMainAssetCurrencyType: Yup.number().required(`${translate('Validation.Code')}`),
+    amountByLoanTrackingCurrencyType: Yup.number().required(`${translate('Validation.Code')}`),
   });
 
   const defaultValues = useMemo<IPayTakenLoan>(
     () => ({
-      loanTrackingId: selectedLoanTracking?.id || undefined,
-      userId: selectedLoanTracking?.userId || '',
+      loanTrackingId: selectedLoanTracking?.id || LoanTrackingId,
       mainAssetId: selectedLoanTracking?.mainAssetId,
       date: selectedLoanTracking?.date || '',
       description: selectedLoanTracking?.description || '',
       amountByMainAssetCurrencyType: 0,
-      loanCurrencyToSelectedCurrencyExchangeRate: 0,
-      selectedCurrencyToLoanCurrencyExchangeRate: 0,
       amountByLoanTrackingCurrencyType: 0,
+      exchangeRate: 0,
     }),
-    [selectedLoanTracking]
+    [selectedLoanTracking, LoanTrackingId]
   );
 
-  const methods = useForm<ILoanTracking>({
+  const methods = useForm<IPayTakenLoan>({
     resolver: yupResolver(NewLoanTrackingSchema),
     defaultValues,
   });
@@ -81,13 +69,31 @@ export default observer(function PayTakenLoanTrackingNewEditForm() {
     watch,
     formState: { isSubmitting },
     control,
+    setValue,
   } = methods;
 
-  const val = watch();
-  const onSubmit = (data: ILoanTracking) => {
-    if (data.id! === undefined) {
+  const exchangeRate = watch('exchangeRate');
+  const amountByMainAssetCurrencyType = watch('amountByMainAssetCurrencyType');
+
+  const handleUSDChange = (usd: number) => {
+    const afn = usd * exchangeRate;
+    setValue('amountByLoanTrackingCurrencyType', afn);
+  };
+
+  const handleAFNChange = (afn: number) => {
+    const usd = afn / exchangeRate;
+    setValue('amountByMainAssetCurrencyType', usd);
+  };
+
+  const handleExchangeRateChange = (rate: number) => {
+    setValue('exchangeRate', rate);
+    const afn = amountByMainAssetCurrencyType * rate;
+    setValue('amountByLoanTrackingCurrencyType', afn);
+  };
+  const onSubmit = (data: IPayTakenLoan) => {
+    if (data.loanTrackingId! === undefined) {
       ///create
-      createLoanTracking(data).then(() => {
+      PayTakenLoan(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);
@@ -108,16 +114,9 @@ export default observer(function PayTakenLoanTrackingNewEditForm() {
     }
     if (!editMode) {
       reset(defaultValues);
-      loadLoanTypeDDL();
-      loadPartnersDDL();
-      loadCurrencyTypeDDL();
-      loadBranchDDL();
+      loadMainAssetDDL();
     }
-  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadCurrencyTypeDDL, loadBranchDDL]);
-
-  useEffect(() => {
-    loadUserDropdown(val.branchId);
-  }, [loadUserDropdown, val.branchId]);
+  }, [reset, editMode, defaultValues, loadMainAssetDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -130,44 +129,117 @@ export default observer(function PayTakenLoanTrackingNewEditForm() {
                 columnGap: 2,
                 rowGap: 3,
                 padding: 3,
-                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' },
+                justifyItems: 'center',
               }}
             >
-              <RHFTextField
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+                <option value="" />
+                {MainAssetOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
+            </Box>
+            <Box
+              sx={{
+                display: 'grid',
+                columnGap: 2,
+                rowGap: 3,
+                padding: 3,
+                gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
+                justifyItems: 'center',
+              }}
+            >
+              <Box
+                display="flex"
+                flexDirection="column"
+                alignItems="center"
+                justifyContent="center"
+                border={1}
+                borderRadius={1}
+                borderColor="grey.400"
+                width="100%"
+                height="100%"
+                sx={{ gridColumn: 'span 2', textAlign: 'center' }}
+              >
+                <Controller
+                  name="exchangeRate"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      label="1 USD ="
+                      type="text" // Changed to text to control input better
+                      onChange={(e) => {
+                        let { value } = e.target;
+                        // Restrict input to only digits and max 3 digits
+                        if (/^\d{0,3}$/.test(value)) {
+                          if (value === '') {
+                            value = '0';
+                          }
+                          const rate = parseFloat(value);
+                          field.onChange(e);
+                          handleExchangeRateChange(rate);
+                        }
+                      }}
+                      value={field.value === undefined ? '0' : field.value}
+                      margin="normal"
+                      sx={{
+                        width: '130px',
+                      }}
+                      InputProps={{
+                        endAdornment: <InputAdornment position="start">؋</InputAdornment>,
+                        sx: { textAlign: 'center' },
+                      }}
+                      inputProps={{
+                        maxLength: 3, // Max length to restrict input
+                        style: { textAlign: 'center' },
+                      }}
+                    />
+                  )}
+                />
+              </Box>
+              <Controller
                 name="amountByMainAssetCurrencyType"
-                label={translate('LoanTracking.amountByMainAssetCurrencyType')}
-                showAsterisk={true}
-                autoFocus
-                type="number"
-              />
-              <RHFTextField
-                name="loanCurrencyToSelectedCurrencyExchangeRate"
-                label={translate('LoanTracking.loanCurrencyToSelectedCurrencyExchangeRate')}
-                showAsterisk={true}
-                autoFocus
-                type="number"
-              />
-              <RHFTextField
-                name="selectedCurrencyToLoanCurrencyExchangeRate"
-                label={translate(
-                  'LoanTracking.amountByMainAssetCurrencselectedCurrencyToLoanCurrencyExchangeRateyType'
+                control={control}
+                render={({ field }) => (
+                  <RHFTextField
+                    {...field}
+                    label="USD"
+                    type="number"
+                    onChange={(e) => {
+                      const usd = parseFloat(e.target.value);
+                      field.onChange(e);
+                      handleUSDChange(usd);
+                    }}
+                    margin="normal"
+                    InputProps={{
+                      endAdornment: <InputAdornment position="start">$</InputAdornment>,
+                    }}
+                  />
                 )}
-                showAsterisk={true}
-                autoFocus
-                type="number"
               />
-              <RHFTextField
+              <Controller
                 name="amountByLoanTrackingCurrencyType"
-                label={translate('LoanTracking.amountByLoanTrackingCurrencyType')}
-                showAsterisk={true}
-                autoFocus
-                type="number"
-              />
-              <RHFTextField
-                name="email"
-                label={translate('LoanTracking.nameInPashto')}
-                showAsterisk={true}
-                autoFocus
+                control={control}
+                render={({ field }) => (
+                  <RHFTextField
+                    {...field}
+                    label="AFN"
+                    type="number"
+                    onChange={(e) => {
+                      const afn = parseFloat(e.target.value);
+                      field.onChange(e);
+                      handleAFNChange(afn);
+                    }}
+                    margin="normal"
+                    InputProps={{
+                      endAdornment: <InputAdornment position="start">؋</InputAdornment>,
+                    }}
+                  />
+                )}
               />
               <LocalizDatePicker
                 name="date"
@@ -176,31 +248,6 @@ export default observer(function PayTakenLoanTrackingNewEditForm() {
                 showAsterisk={true}
               />
 
-              {/* <RHFSelect name="currencyTypeId" label={translate('LoanTracking.currencyType')}>
-                <option value="" />
-                {CurrencyTypeOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect> */}
-              {/* <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
-                <option value="" />
-                {BranchOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect> */}
-
-              <RHFSelect name="userId" label={translate('MainAsset.User')}>
-                <option value="" />
-                {UserOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect>
               <RHFTextField
                 name="description"
                 label={translate('LoanTracking.description')}
@@ -220,18 +267,15 @@ export default observer(function PayTakenLoanTrackingNewEditForm() {
               >
                 {!editMode ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
               </LoadingButton>
-              <Button
-                fullWidth
+              <LoadingButton
                 variant="contained"
-                color="error"
-                startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
-                onClick={() => {
-                  clearSelectedLoanTracking();
-                  navigate(PATH_DASHBOARD.LoanTracking.list);
-                }}
+                size="small"
+                onClick={() => setOpenCloseDialogPayTakenLoan()}
+                color="secondary"
+                startIcon={<CancelIcon />}
               >
-                {translate('CRUD.BackToList')}
-              </Button>
+                {translate('CRUD.Cancle')}
+              </LoadingButton>
             </Stack>
           </Card>
         </Grid>

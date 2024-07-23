@@ -339,6 +339,7 @@ export default observer(function MainAssetList() {
             >
               <TradeTrackingNewEditForm asssetID={MainAssetId!} />
             </MyDialog>
+
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
               label={translate('Pagination.Dense')}

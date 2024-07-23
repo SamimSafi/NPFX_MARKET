@@ -15,19 +15,19 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import useLocales from 'src/hooks/useLocales';
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFTextField } from '../../../../components/hook-form';
+import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { ITradeTracking } from 'src/@types/foamCompanyTypes/systemTypes/TradeTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 // ----------------------------------------------------------------------
 interface Props {
-  asssetID: string;
+  asssetID?: string;
 }
 export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
-  const { TradeTrackingStore, commonDropdown, MainAssetStore } = useStore();
+  const { TradeTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
-  const { setOpenCloseDialogCreateTrade } = MainAssetStore;
+  const { loadMainAssetDDL, MainAssetOption } = commonDropdown;
   const { createTradeTracking, updateTradeTracking, editMode, selectedTradeTracking } =
     TradeTrackingStore;
   // const { loadBranchDDL, BranchOption, loadUserDropdown, UserOption } = commonDropdown;
@@ -35,10 +35,10 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewTradeTrackingSchema = Yup.object().shape({
-    assetTypeId: Yup.number().required(`${translate('Validation.EnglishName')}`),
-    currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
+    mainAssetId: Yup.number().required(`${translate('Validation.EnglishName')}`),
+    // currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
-    income: Yup.number().required(`${translate('Validation.Code')}`),
+    tradeAmount: Yup.number().required(`${translate('Validation.tradeAmount')}`),
   });
 
   const defaultValues = useMemo<ITradeTracking>(
@@ -95,7 +95,8 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
     if (!editMode) {
       reset(defaultValues);
     }
-  }, [reset, editMode, defaultValues]);
+    loadMainAssetDDL();
+  }, [reset, editMode, defaultValues, loadMainAssetDDL]);
   // useEffect(() => {
   //   loadBranchDDL();
   // }, [loadBranchDDL]);
@@ -117,23 +118,14 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              {/* <RHFSelect name="branchId" label={translate('MainAsset.branch')} autoFocus>
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
                 <option value="" />
-                {BranchOption.map((op) => (
+                {MainAssetOption.map((op) => (
                   <option key={op.value} value={op.value}>
                     {op.text}
                   </option>
                 ))}
               </RHFSelect>
-
-              <RHFSelect name="userId" label={translate('TradeTracking.user')}>
-                <option value="" />
-                {UserOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect> */}
 
               <LocalizDatePicker
                 name="date"
@@ -192,10 +184,10 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                 color="error"
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
-                  setOpenCloseDialogCreateTrade();
+                  navigate(PATH_DASHBOARD.ContractType.list);
                 }}
               >
-                {translate('CRUD.Cancle')}
+                {translate('CRUD.BackToList')}
               </Button>
             </Stack>
           </Card>

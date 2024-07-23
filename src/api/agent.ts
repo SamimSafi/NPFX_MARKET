@@ -77,6 +77,8 @@ import {
 import {
   ILoanTracking,
   ILoanTrackingParams,
+  IPayTakenLoan,
+  IRecieveGivenLoan,
 } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 import {
   IWithdrawalTracking,
@@ -587,6 +589,10 @@ const LoanTracking = {
   create: (LoanTracking: ILoanTracking) => requests.post<void>('/LoanTracking', LoanTracking),
   TakeLoanCreateAsset: (LoanTracking: ILoanTracking) =>
     requests.post<void>('/LoanTracking/TakeLoanAndCreateAsset', LoanTracking),
+  PayTakenLoan: (LoanTracking: IPayTakenLoan) =>
+    requests.post<void>('/LoanTracking/PayBackOfRecievedLoan', LoanTracking),
+  TakePaidLoan: (LoanTracking: IRecieveGivenLoan) =>
+    requests.post<void>('/LoanTracking/RecievedGivenLoanPayment', LoanTracking),
   getList: (param: ILoanTrackingParams) =>
     axios.post<any>(`/LoanTracking/GetList`, param, { withCredentials: true }),
   update: (LoanTracking: ILoanTracking) =>

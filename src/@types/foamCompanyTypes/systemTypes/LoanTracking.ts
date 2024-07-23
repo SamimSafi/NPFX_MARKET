@@ -32,11 +32,19 @@ export interface ILoanTrackingParams {
 export interface IPayTakenLoan {
   loanTrackingId?: number;
   mainAssetId?: string;
+  exchangeRate: number;
   amountByMainAssetCurrencyType: number;
-  loanCurrencyToSelectedCurrencyExchangeRate: number;
-  selectedCurrencyToLoanCurrencyExchangeRate: number;
   amountByLoanTrackingCurrencyType: number;
   date: string;
   description: string;
-  userId: string;
+}
+
+export interface IRecieveGivenLoan {
+  loanTrackingId?: number;
+  currencyTypeId?: number;
+  amountBySelectedCurrencyType: number;
+  exchangeRate: number;
+  amountByLoanTrackingCurrencyType: number;
+  date?: string;
+  description?: string;
 }
