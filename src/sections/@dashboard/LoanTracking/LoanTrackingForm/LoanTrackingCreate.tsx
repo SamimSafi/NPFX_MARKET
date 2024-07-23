@@ -9,7 +9,7 @@ import useLocales from 'src/hooks/useLocales';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import TakeLoanTrackingNewEditForm from './TakeLoanTrackingNewEditForm';
+import TakeLoanCreateAssetNewEditForm from './TakeLoanCreateAssetNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ export default function LoanTrackingCreate() {
             },
           ]}
         />
-        <TakeLoanTrackingNewEditForm />
+        <TakeLoanCreateAssetNewEditForm />
       </Container>
     </Page>
   );

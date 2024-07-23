@@ -23,22 +23,24 @@ import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 import CancelIcon from '@mui/icons-material/Cancel';
 // ----------------------------------------------------------------------
 
-interface Props {
-  asssetID: string;
-}
-export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
+export default observer(function TakeLoanCreateAssetNewEditForm() {
   const { LoanTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
-  const { createLoanTracking, updateLoanTracking, editMode, selectedLoanTracking } =
+  const { TakeLoanCreateAsset, updateLoanTracking, editMode, selectedLoanTracking } =
     LoanTrackingStore;
-  const { loadLoanTypeDDL, LoanTypeOption, loadPartnersDDL, PartnersOption } = commonDropdown;
+  const {
+    loadLoanTypeDDL,
+    LoanTypeOption,
+    loadPartnersDDL,
+    PartnersOption,
+    loadCurrencyTypeDDL,
+    CurrencyTypeOption,
+  } = commonDropdown;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewLoanTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
-    // currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    userId: Yup.string().required(`${translate('Validation.PashtoName')}`),
+    currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     loanTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
     loanAmount: Yup.number().required(`${translate('Validation.loanAmount')}`),
@@ -47,10 +49,10 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   const defaultValues = useMemo<ILoanTracking>(
     () => ({
       id: selectedLoanTracking?.id,
-      mainAssetId: selectedLoanTracking?.mainAssetId || asssetID,
+      mainAssetId: selectedLoanTracking?.mainAssetId,
       partnerId: selectedLoanTracking?.partnerId,
       userId: selectedLoanTracking?.userId,
-      currencyTypeId: 1,
+      currencyTypeId: selectedLoanTracking?.currencyTypeId,
       loanTypeId: selectedLoanTracking?.loanTypeId,
       description: selectedLoanTracking?.description || '',
       nameInEnglish: selectedLoanTracking?.nameInEnglish || '',
@@ -62,7 +64,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
       isGiven: selectedLoanTracking?.isGiven || true,
       loanAmount: selectedLoanTracking?.loanAmount,
     }),
-    [selectedLoanTracking, asssetID]
+    [selectedLoanTracking]
   );
 
   const methods = useForm<ILoanTracking>({
@@ -82,18 +84,18 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   const onSubmit = (data: ILoanTracking) => {
     if (data.id! === undefined) {
       ///create
-      createLoanTracking(data).then(() => {
+      TakeLoanCreateAsset(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        // navigate(PATH_DASHBOARD.ContractType.list);
-        MainAssetStore.setOpenCloseDialogCreateLoan();
+        navigate(PATH_DASHBOARD.LoanTracking.list);
+        // MainAssetStore.setOpenCloseDialogCreateLoan();
       });
     } else {
       ///update
       updateLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.LoanTracking.list);
       });
     }
   };
@@ -106,8 +108,9 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
       reset(defaultValues);
       loadLoanTypeDDL();
       loadPartnersDDL();
+      loadCurrencyTypeDDL();
     }
-  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL]);
+  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadCurrencyTypeDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -162,6 +165,15 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                   />
                 </>
               )}
+
+              <RHFSelect name="currencyTypeId" label={translate('LoanTracking.currencyType')}>
+                <option value="" />
+                {CurrencyTypeOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
               <RHFSelect name="loanTypeId" label={translate('LoanTracking.loanType')}>
                 <option value="" />
                 {LoanTypeOption.map((op) => (

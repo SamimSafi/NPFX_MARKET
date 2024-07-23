@@ -4,13 +4,19 @@ import agentLoanTracking from '../../api/agent';
 import {
   ILoanTracking,
   ILoanTrackingParams,
+  IPayTakenLoan,
+  IRecieveGivenLoan,
 } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 export default class LoanTrackingStore {
   openDialog = false;
 
+  openDialogPayTakenLoan = false;
+
   LoanTrackingRegistry = new Map<number, ILoanTracking>();
 
   openDetailDialog = false;
+
+  openDialogPayBackLoan = false;
 
   editMode = false; //When click on edit button
 
@@ -82,6 +88,11 @@ export default class LoanTrackingStore {
 
   setOpenCloseDialog = () => (this.openDialog = !this.openDialog);
 
+  setOpenCloseDialogPayTakenLoan = () =>
+    (this.openDialogPayTakenLoan = !this.openDialogPayTakenLoan);
+
+  setOpenCloseDialogPayBackLoan = () => (this.openDialogPayBackLoan = !this.openDialogPayBackLoan);
+
   setDetailCloseDialog = () => (this.openDetailDialog = !this.openDetailDialog);
 
   createLoanTracking = async (LoanTracking: ILoanTracking) => {
@@ -93,6 +104,20 @@ export default class LoanTrackingStore {
 
   TakeLoanCreateAsset = async (LoanTracking: ILoanTracking) => {
     await agentLoanTracking.LoanTracking.TakeLoanCreateAsset(LoanTracking);
+    runInAction(() => {
+      this.loadLoanTracking({ pageIndex: 0, pageSize: 5 });
+    });
+  };
+
+  PayTakenLoan = async (LoanTracking: IPayTakenLoan) => {
+    await agentLoanTracking.LoanTracking.PayTakenLoan(LoanTracking);
+    runInAction(() => {
+      this.loadLoanTracking({ pageIndex: 0, pageSize: 5 });
+    });
+  };
+
+  TakePaidLoan = async (LoanTracking: IRecieveGivenLoan) => {
+    await agentLoanTracking.LoanTracking.TakePaidLoan(LoanTracking);
     runInAction(() => {
       this.loadLoanTracking({ pageIndex: 0, pageSize: 5 });
     });

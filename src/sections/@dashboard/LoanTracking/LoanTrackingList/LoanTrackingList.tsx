@@ -28,6 +28,8 @@ import LoanTrackingTableRow from './LoanTrackingTableRow';
 import LoanTrackingTableToolbar from './LoanTrackingTableToolbar';
 import LoanTrackingDelete from './LoanTrackingDelete';
 import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
+import TakeLoanTrackingNewEditForm from '../LoanTrackingForm/TakeLoanTrackingNewEditForm';
+import PayTakenLoanTrackingNewEditForm from '../LoanTrackingForm/PayTakenLoanTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -43,6 +45,10 @@ export default observer(function LoanTrackingList() {
     getLoanTrackingFromRegistry,
     setOpenCloseDialog,
     openDialog,
+    setOpenCloseDialogPayTakenLoan,
+    openDialogPayTakenLoan,
+    setOpenCloseDialogPayBackLoan,
+    openDialogPayBackLoan,
   } = LoanTrackingStore;
   const {
     dense,
@@ -101,9 +107,27 @@ export default observer(function LoanTrackingList() {
   const handleCloseConfirm = () => {
     setOpenCloseDialog();
   };
+
+  const handleOpenConfirmPayTakenLoan = (id: number) => {
+    setOpenCloseDialogPayTakenLoan();
+    setLoanTrackingId(id);
+  };
+
+  const handleCloseConfirmPayTakenLoan = () => {
+    setOpenCloseDialogPayTakenLoan();
+  };
   const handleEditRow = (id: number) => {
     getLoanTrackingFromRegistry(id);
     navigate(PATH_DASHBOARD.ContractType.edit);
+  };
+
+  // Paye Recieved Loan
+  const handlePayBackLoanOpenConfirm = (id: number) => {
+    setOpenCloseDialogPayBackLoan();
+    setLoanTrackingId(id);
+  };
+  const handleClosePayBackLoanConfirm = () => {
+    setOpenCloseDialogPayBackLoan();
   };
 
   // const handleDelete = () => {
@@ -194,6 +218,8 @@ export default observer(function LoanTrackingList() {
                         row={row}
                         index={index}
                         onDeleteRow={() => handleOpenConfirm(row.id!)}
+                        onPayTakenLoanClicked={() => handleOpenConfirmPayTakenLoan(row.id!)}
+                        onTakePaidLoanClicked={() => handlePayBackLoanOpenConfirm(row.id!)}
                         onEditRow={() => handleEditRow(row.id!)}
                       />
                     ))}
@@ -230,6 +256,23 @@ export default observer(function LoanTrackingList() {
               size="md"
             >
               <LoanTrackingDelete id={LoanTrackingId} />
+            </MyDialog>
+            <MyDialog
+              open={openDialogPayBackLoan}
+              onClose={handleClosePayBackLoanConfirm}
+              title={translate('CRUD.PayLoan')}
+              size="md"
+            >
+              <TakeLoanTrackingNewEditForm TrackingId={LoanTrackingId} />
+            </MyDialog>
+
+            <MyDialog
+              open={openDialogPayTakenLoan}
+              onClose={handleCloseConfirmPayTakenLoan}
+              title={translate('CRUD.PayTakenLoan')}
+              size="md"
+            >
+              <PayTakenLoanTrackingNewEditForm LoanTrackingId={LoanTrackingId!} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}

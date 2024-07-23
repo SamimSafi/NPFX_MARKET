@@ -14,12 +14,20 @@ type Props = {
   row: ILoanTracking;
   // selected: boolean;
   onEditRow: VoidFunction;
-  //onSelectRow: VoidFunction;
+  onPayTakenLoanClicked: VoidFunction;
+  onTakePaidLoanClicked: VoidFunction;
   onDeleteRow: VoidFunction;
   index: any;
 };
 
-export default function LoanTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
+export default function LoanTrackingTableRow({
+  row,
+  onEditRow,
+  onDeleteRow,
+  onPayTakenLoanClicked,
+  onTakePaidLoanClicked,
+  index,
+}: Props) {
   const { currencyType, date, dueDate, partner, phone, description, userName, loanAmount } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
@@ -71,6 +79,24 @@ export default function LoanTrackingTableRow({ row, onEditRow, onDeleteRow, inde
               >
                 <Iconify sx={{ color: 'warning.main' }} icon={'eva:edit-fill'} />
                 {translate('CRUD.Update')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onPayTakenLoanClicked();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'warning.main' }} icon={'mdi:cash-minus'} />
+                {translate('CRUD.PayTakenLoan')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onTakePaidLoanClicked();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'warning.main' }} icon={'mdi:cash-plus'} />
+                {translate('CRUD.TakePaidLoan')}
               </MenuItem>
             </>
           }
