@@ -111,9 +111,11 @@ export default function GeneralBanking() {
                     variant="fullWidth"
                     aria-label="full width tabs example"
                   >
-                    <Tab label="Item One" {...a11yProps(0)} />
-                    <Tab label="Item Two" {...a11yProps(1)} />
-                    <Tab label="Item Three" {...a11yProps(2)} />
+                    <Tab label="Asset Tracking" {...a11yProps(0)} />
+                    <Tab label="Loan Tracking" {...a11yProps(1)} />
+                    <Tab label="Expense Tracking" {...a11yProps(2)} />
+                    <Tab label="Trade Tracking" {...a11yProps(3)} />
+                    <Tab label="Widthrawal Tracking" {...a11yProps(4)} />
                   </Tabs>
                 </AppBar>
                 <SwipeableViews
@@ -148,6 +150,32 @@ export default function GeneralBanking() {
                     />
                   </TabPanel>
                   <TabPanel value={value} index={2} dir={theme.direction}>
+                    <MainAssetRecentTransitions
+                      title="Recent Transitions"
+                      tableData={_bankingRecentTransitions}
+                      tableLabels={[
+                        { id: 'description', label: 'Description' },
+                        { id: 'date', label: 'Date' },
+                        { id: 'amount', label: 'Amount' },
+                        { id: 'status', label: 'Status' },
+                        { id: '' },
+                      ]}
+                    />
+                  </TabPanel>
+                  <TabPanel value={value} index={3} dir={theme.direction}>
+                    <MainAssetRecentTransitions
+                      title="Recent Transitions"
+                      tableData={_bankingRecentTransitions}
+                      tableLabels={[
+                        { id: 'description', label: 'Description' },
+                        { id: 'date', label: 'Date' },
+                        { id: 'amount', label: 'Amount' },
+                        { id: 'status', label: 'Status' },
+                        { id: '' },
+                      ]}
+                    />
+                  </TabPanel>
+                  <TabPanel value={value} index={4} dir={theme.direction}>
                     <MainAssetRecentTransitions
                       title="Recent Transitions"
                       tableData={_bankingRecentTransitions}

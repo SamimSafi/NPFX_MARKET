@@ -208,7 +208,7 @@ export default observer(function MainAssetList() {
               >
                 {translate('CRUD.Details')}
               </Button>
-              <Button
+              {/* <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
                 component={RouterLink}
@@ -239,7 +239,7 @@ export default observer(function MainAssetList() {
                 to={PATH_DASHBOARD.general.analytics}
               >
                 {translate('CRUD.four')}
-              </Button>
+              </Button> */}
             </>
           }
         />
