@@ -42,18 +42,7 @@ export default function EmployeeTableRow({
 }: Props) {
   const theme = useTheme();
   const language = window.localStorage.getItem('i18nextLng');
-  const {
-    id,
-    surName,
-    profilePhoto,
-    phoneNumber,
-    name,
-    provinceName,
-    districtName,
-    tazkiraNo,
-    gender,
-    age,
-  } = row;
+  const { id, surName, profilePhoto, phoneNumber, name } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -82,10 +71,6 @@ export default function EmployeeTableRow({
 
         <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
           {surName}
-        </TableCell>
-
-        <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-          {provinceName}
         </TableCell>
 
         <TableCell

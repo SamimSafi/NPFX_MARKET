@@ -204,6 +204,14 @@ export default observer(function MainAssetList() {
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
                 component={RouterLink}
+                to={PATH_DASHBOARD.MainAsset.detail}
+              >
+                {translate('CRUD.Details')}
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                component={RouterLink}
                 to={PATH_DASHBOARD.general.ecommerce}
               >
                 {translate('CRUD.one')}

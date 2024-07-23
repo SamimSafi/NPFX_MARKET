@@ -63,8 +63,6 @@ export default observer(function UserNewEditForm() {
   const [rolesOptions, setRolesOptions] = useState<any[]>([]);
   const [departmentsOption, setDepartmentsOption] = useState<any[]>([]);
 
-
-
   const { UserStore, commonDropdown } = useStore();
   const {
     createUser,
@@ -75,10 +73,7 @@ export default observer(function UserNewEditForm() {
     clearSelectedUser,
     clearSelectedUserDetail,
   } = UserStore;
-  const {
-    loadEmployeeDropdown,
-    EmployeeOption,
-  } = commonDropdown;
+  const { loadEmployeeDropdown, EmployeeOption } = commonDropdown;
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -98,13 +93,12 @@ export default observer(function UserNewEditForm() {
       : Yup.string(),
   });
 
-
   const defaultValues = useMemo<CreateUser>(
     () => ({
       id: selectedUser?.id || undefined,
       userName: selectedUser?.userName || '',
       // employeeName: selectedUser?.employeeName || '',
-      employeeId:  selectedEmployee?.id || undefined,
+      employeeId: selectedEmployee?.id || undefined,
     }),
     [selectedUser]
   );
@@ -127,7 +121,6 @@ export default observer(function UserNewEditForm() {
   } = methods;
 
   const onSubmit = (data: CreateUser) => {
-
     if (data.id === undefined) {
       ///create
 
@@ -143,7 +136,7 @@ export default observer(function UserNewEditForm() {
           var json = JSON.parse(err.request.response);
           if (json.error.EmployeeId != null) {
             setError('afterSubmit', { ...err, message: json.error.EmployeeId });
-          }  else if (json.error.userName != null) {
+          } else if (json.error.userName != null) {
             setError('afterSubmit', { ...err, message: json.error.UserName });
           } else {
             setError('afterSubmit', { ...err, message: json.error });
@@ -164,7 +157,7 @@ export default observer(function UserNewEditForm() {
           var json = JSON.parse(err.request.response);
           if (json.error.EmployeeId != null) {
             setError('afterSubmit', { ...err, message: json.error.EmployeeId });
-          }  else if (json.error.userName != null) {
+          } else if (json.error.userName != null) {
             setError('afterSubmit', { ...err, message: json.error.UserName });
           } else {
             setError('afterSubmit', { ...err, message: json.error });
@@ -179,44 +172,23 @@ export default observer(function UserNewEditForm() {
     setFullName(nameWithOutSpaces);
   };
 
- 
- 
   useEffect(() => {
-
-
     if (editMode) {
-
       setValue('userName', defaultValues.userName);
       setFullName(defaultValues.userName);
       reset(defaultValues);
     }
     if (!editMode) {
-
-
       reset(defaultValues);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, editMode, defaultValues]);
 
   useEffect(() => {
-    if (selectedEmployee?.id) {
-      loadEmployeeDropdown(true)
-        .then(() => {
-          if (selectedEmployee?.id != undefined) {
-            console.log(selectedEmployee.id);
+    loadEmployeeDropdown(true);
 
-            setEmployeeName(EmployeeOption.find((e) => e.value === selectedEmployee?.id)?.text);
-            // setValue('employeeName', employeeName);
-          }
-        })
-        .finally(() => {
-          if (selectedEmployee?.id != undefined) {
-            setEmployeeName(EmployeeOption.find((e) => e.value === selectedEmployee?.id)?.text);
-            // setValue('employeeName', employeeName);
-          }
-        });
-    }
-  }, [employeeName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (editMode) {
@@ -269,7 +241,11 @@ export default observer(function UserNewEditForm() {
                   onChange={handleFullNameChange}
                 />
                 <RHFTextField name="email" label={translate('User.email')} showAsterisk={true} />
-                <RHFTextField name="password" label={translate('User.password')} showAsterisk={true} />
+                <RHFTextField
+                  name="password"
+                  label={translate('User.password')}
+                  showAsterisk={true}
+                />
               </Box>
 
               <Box
@@ -290,16 +266,16 @@ export default observer(function UserNewEditForm() {
                   options={
                     // !editMode
                     //   ? EmployeeOption.filter((item) => item.hasAccount != true).map((i) => i.text)
-                      EmployeeOption.map((i) => i.text)
+                    EmployeeOption.map((i) => i.text)
                   }
                   getOptionLabel={(option: any) => `${option}`}
                   onChange={(event, newValue: any) => {
-                    const find = 
-                    // !editMode
-                    //   ? EmployeeOption.filter(
-                    //       (item) => item.text === newValue && item.hasAccount != true
-                    //     )[0] : 
-                    EmployeeOption.filter((item) => item.text === newValue)[0];
+                    const find =
+                      // !editMode
+                      //   ? EmployeeOption.filter(
+                      //       (item) => item.text === newValue && item.hasAccount != true
+                      //     )[0] :
+                      EmployeeOption.filter((item) => item.text === newValue)[0];
 
                     if (find) {
                       const id = find?.value;
@@ -312,13 +288,11 @@ export default observer(function UserNewEditForm() {
                   }}
                   freeSolo
                   fullWidth
-                  renderOption={(props, option: any) => {
-                    return (
-                      <li {...props} key={option + '-' + uuid()}>
-                        {option}
-                      </li>
-                    );
-                  }}
+                  renderOption={(props, option: any) => (
+                    <li {...props} key={option + '-' + uuid()}>
+                      {option}
+                    </li>
+                  )}
                 />
               </Box>
 
