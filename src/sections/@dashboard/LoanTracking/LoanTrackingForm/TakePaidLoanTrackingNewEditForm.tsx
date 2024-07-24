@@ -84,22 +84,22 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
 
   const handleUSDChange = (usd: number) => {
     const afn = usd * exchangeRate;
-    setValue('usd', roundOff(afn, 2));
+    setValue('afn', roundOff(afn, 2));
   };
 
   const handleAFNChange = (afn: number) => {
     const usd = afn / exchangeRate;
-    setValue('afn', roundOff(usd, 2));
+    setValue('usd', roundOff(usd, 2));
   };
 
   const handleExchangeRateChange = (rate: number) => {
     setValue('exchangeRate', rate);
     const afn = usdDollor! * rate;
-    setValue('usd', roundOff(afn, 2));
+    setValue('afn', roundOff(afn, 2));
   };
   const onSubmit = (data: IRecieveGivenLoan) => {
     // this statements checks if row currency  is usd set usd and if it's afn then set afn value
-    switch (currencyTypeId) {
+    switch (Number(currencyTypeId)) {
       case currency.USD: // USD
         data.amountByLoanTrackingCurrencyType = val.usd!;
         break;
@@ -107,7 +107,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
         data.amountByLoanTrackingCurrencyType = val.afn!;
     }
     // this statements checks if ddl currency  is usd set usd and if it's afn then set afn value
-    switch (val.currencyTypeId) {
+    switch (Number(val.currencyTypeId)) {
       case currency.USD: // USD
         data.amountBySelectedCurrencyType = val.usd!;
         break;
@@ -115,21 +115,21 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
         data.amountBySelectedCurrencyType = val.afn!;
     }
 
-    if (data.loanTrackingId! === undefined) {
-      ///create
-      TakePaidLoan(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
-      });
-    } else {
-      ///update
-      updateLoanTracking(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
-      });
-    }
+    // if (data.loanTrackingId! === undefined) {
+    ///create
+    TakePaidLoan(data).then(() => {
+      reset();
+      enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+      navigate(PATH_DASHBOARD.ContractType.list);
+    });
+    // } else {
+    //   ///update
+    //   updateLoanTracking(data).then(() => {
+    //     reset();
+    //     enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
+    //     navigate(PATH_DASHBOARD.ContractType.list);
+    //   });
+    // }
   };
 
   useEffect(() => {

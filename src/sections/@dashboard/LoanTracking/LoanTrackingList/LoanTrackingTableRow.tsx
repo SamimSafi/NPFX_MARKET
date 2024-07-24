@@ -28,7 +28,18 @@ export default function LoanTrackingTableRow({
   onTakePaidLoanClicked,
   index,
 }: Props) {
-  const { currencyType, date, dueDate, partner, phone, description, userName, loanAmount } = row;
+  const {
+    currencyType,
+    date,
+    dueDate,
+    partner,
+    partnerPhone,
+    description,
+    userName,
+    loanAmount,
+    paidAmount,
+    remainAmount,
+  } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -48,10 +59,12 @@ export default function LoanTrackingTableRow({
       <TableCell align="left">{date}</TableCell>
       <TableCell align="left">{dueDate}</TableCell>
       <TableCell align="left">{partner}</TableCell>
-      <TableCell align="left">{phone}</TableCell>
-      <TableCell align="left">{description}</TableCell>
+      <TableCell align="left">{partnerPhone}</TableCell>
       <TableCell align="left">{userName}</TableCell>
       <TableCell align="left">{loanAmount}</TableCell>
+      <TableCell align="left">{paidAmount}</TableCell>
+      <TableCell align="left">{remainAmount}</TableCell>
+      <TableCell align="left">{description}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

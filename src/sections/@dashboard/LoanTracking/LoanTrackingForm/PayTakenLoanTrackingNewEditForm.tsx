@@ -27,10 +27,12 @@ import { roundOff } from 'src/utils/general';
 interface Props {
   LoanTrackingId: number;
   currencyTypeId: number;
+  mainAssetId: string;
 }
 export default observer(function PayTakenLoanTrackingNewEditForm({
   LoanTrackingId,
   currencyTypeId,
+  mainAssetId,
 }: Props) {
   const { LoanTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
@@ -54,14 +56,14 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
   const defaultValues = useMemo<IPayTakenLoan>(
     () => ({
       loanTrackingId: selectedLoanTracking?.id || LoanTrackingId,
-      mainAssetId: selectedLoanTracking?.mainAssetId,
+      mainAssetId: selectedLoanTracking?.mainAssetId || mainAssetId,
       date: selectedLoanTracking?.date || '',
       description: selectedLoanTracking?.description || '',
       amountByMainAssetCurrencyType: 0,
       amountByLoanTrackingCurrencyType: 0,
       exchangeRate: 0,
     }),
-    [selectedLoanTracking, LoanTrackingId]
+    [selectedLoanTracking, LoanTrackingId, mainAssetId]
   );
 
   const methods = useForm<IPayTakenLoan>({
@@ -98,7 +100,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
   };
   const onSubmit = (data: IPayTakenLoan) => {
     // this statements checks if row currency  is usd set usd and if it's afn then set afn value
-    switch (currencyTypeId) {
+    switch (Number(currencyTypeId)) {
       case currency.USD: // USD
         data.amountByLoanTrackingCurrencyType = val.usd!;
         break;
@@ -106,7 +108,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
         data.amountByLoanTrackingCurrencyType = val.afn!;
     }
     // this statements checks if ddl currency  is usd set usd and if it's afn then set afn value
-    switch (val.currencyTypeId) {
+    switch (Number(val.currencyTypeId)) {
       case currency.USD: // USD
         data.amountByMainAssetCurrencyType = val.usd!;
         break;
@@ -114,21 +116,22 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
         data.amountByMainAssetCurrencyType = val.afn!;
     }
 
-    if (data.loanTrackingId! === undefined) {
-      ///create
-      PayTakenLoan(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
-      });
-    } else {
-      ///update
-      updateLoanTracking(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
-      });
-    }
+    // if (data.loanTrackingId! === undefined) {
+    ///create
+    PayTakenLoan(data).then(() => {
+      reset();
+      enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+      // navigate(PATH_DASHBOARD.ContractType.list);
+      setOpenCloseDialogPayTakenLoan();
+    });
+    // } else {
+    //   ///update
+    //   updateLoanTracking(data).then(() => {
+    //     reset();
+    //     enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
+    //     navigate(PATH_DASHBOARD.ContractType.list);
+    //   });
+    // }
   };
 
   useEffect(() => {

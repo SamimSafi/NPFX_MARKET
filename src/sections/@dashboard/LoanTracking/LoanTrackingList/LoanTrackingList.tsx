@@ -70,6 +70,7 @@ export default observer(function LoanTrackingList() {
 
   const [LoanTrackingId, setLoanTrackingId] = useState<number>(0);
   const [currencyTypeId, setCurrencyTypeId] = useState<number>(0);
+  const [mainAssetId, setMainAssetId] = useState<string>('');
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'currencyType', label: `${translate('GeneralFields.currencyType')}`, align: 'left' },
@@ -109,10 +110,15 @@ export default observer(function LoanTrackingList() {
     setOpenCloseDialog();
   };
 
-  const handleOpenConfirmPayTakenLoan = (id: number, currencyTypeID: number) => {
+  const handleOpenConfirmPayTakenLoan = (
+    id: number,
+    currencyTypeID: number,
+    mainAssetId: string
+  ) => {
     setOpenCloseDialogPayTakenLoan();
     setLoanTrackingId(id);
     setCurrencyTypeId(currencyTypeID);
+    setMainAssetId(mainAssetId);
   };
 
   const handleCloseConfirmPayTakenLoan = () => {
@@ -222,7 +228,11 @@ export default observer(function LoanTrackingList() {
                         index={index}
                         onDeleteRow={() => handleOpenConfirm(row.id!)}
                         onPayTakenLoanClicked={() =>
-                          handleOpenConfirmPayTakenLoan(row.id!, row.currencyTypeId!)
+                          handleOpenConfirmPayTakenLoan(
+                            row.id!,
+                            row.currencyTypeId!,
+                            row.mainAssetId!
+                          )
                         }
                         onTakePaidLoanClicked={() =>
                           handleTakePaidLoanOpenConfirm(row.id!, row.currencyTypeId!)
@@ -285,6 +295,7 @@ export default observer(function LoanTrackingList() {
               <PayTakenLoanTrackingNewEditForm
                 LoanTrackingId={LoanTrackingId!}
                 currencyTypeId={currencyTypeId}
+                mainAssetId={mainAssetId}
               />
             </MyDialog>
             <FormControlLabel
