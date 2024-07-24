@@ -28,7 +28,7 @@ import LoanTrackingTableRow from './LoanTrackingTableRow';
 import LoanTrackingTableToolbar from './LoanTrackingTableToolbar';
 import LoanTrackingDelete from './LoanTrackingDelete';
 import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
-import TakeLoanTrackingNewEditForm from '../LoanTrackingForm/TakeLoanTrackingNewEditForm';
+import TakePaidLoanTrackingNewEditForm from '../LoanTrackingForm/TakePaidLoanTrackingNewEditForm';
 import PayTakenLoanTrackingNewEditForm from '../LoanTrackingForm/PayTakenLoanTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
@@ -47,8 +47,8 @@ export default observer(function LoanTrackingList() {
     openDialog,
     setOpenCloseDialogPayTakenLoan,
     openDialogPayTakenLoan,
-    setOpenCloseDialogPayBackLoan,
-    openDialogPayBackLoan,
+    setOpenCloseDialogTakePaidLoan,
+    openDialogTakePaidLoan,
   } = LoanTrackingStore;
   const {
     dense,
@@ -69,6 +69,7 @@ export default observer(function LoanTrackingList() {
   const navigate = useNavigate();
 
   const [LoanTrackingId, setLoanTrackingId] = useState<number>(0);
+  const [currencyTypeId, setCurrencyTypeId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'currencyType', label: `${translate('GeneralFields.currencyType')}`, align: 'left' },
@@ -108,9 +109,10 @@ export default observer(function LoanTrackingList() {
     setOpenCloseDialog();
   };
 
-  const handleOpenConfirmPayTakenLoan = (id: number) => {
+  const handleOpenConfirmPayTakenLoan = (id: number, currencyTypeID: number) => {
     setOpenCloseDialogPayTakenLoan();
     setLoanTrackingId(id);
+    setCurrencyTypeId(currencyTypeID);
   };
 
   const handleCloseConfirmPayTakenLoan = () => {
@@ -118,16 +120,17 @@ export default observer(function LoanTrackingList() {
   };
   const handleEditRow = (id: number) => {
     getLoanTrackingFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.LoanTracking.edit);
   };
 
   // Paye Recieved Loan
-  const handlePayBackLoanOpenConfirm = (id: number) => {
-    setOpenCloseDialogPayBackLoan();
+  const handleTakePaidLoanOpenConfirm = (id: number, currencyTypeID: number) => {
+    setOpenCloseDialogTakePaidLoan();
     setLoanTrackingId(id);
+    setCurrencyTypeId(currencyTypeID);
   };
-  const handleClosePayBackLoanConfirm = () => {
-    setOpenCloseDialogPayBackLoan();
+  const handleCloseTakePaidLoanConfirm = () => {
+    setOpenCloseDialogTakePaidLoan();
   };
 
   // const handleDelete = () => {
@@ -218,8 +221,12 @@ export default observer(function LoanTrackingList() {
                         row={row}
                         index={index}
                         onDeleteRow={() => handleOpenConfirm(row.id!)}
-                        onPayTakenLoanClicked={() => handleOpenConfirmPayTakenLoan(row.id!)}
-                        onTakePaidLoanClicked={() => handlePayBackLoanOpenConfirm(row.id!)}
+                        onPayTakenLoanClicked={() =>
+                          handleOpenConfirmPayTakenLoan(row.id!, row.currencyTypeId!)
+                        }
+                        onTakePaidLoanClicked={() =>
+                          handleTakePaidLoanOpenConfirm(row.id!, row.currencyTypeId!)
+                        }
                         onEditRow={() => handleEditRow(row.id!)}
                       />
                     ))}
@@ -258,12 +265,15 @@ export default observer(function LoanTrackingList() {
               <LoanTrackingDelete id={LoanTrackingId} />
             </MyDialog>
             <MyDialog
-              open={openDialogPayBackLoan}
-              onClose={handleClosePayBackLoanConfirm}
+              open={openDialogTakePaidLoan}
+              onClose={handleCloseTakePaidLoanConfirm}
               title={translate('CRUD.PayLoan')}
               size="md"
             >
-              <TakeLoanTrackingNewEditForm TrackingId={LoanTrackingId} />
+              <TakePaidLoanTrackingNewEditForm
+                TrackingId={LoanTrackingId}
+                currencyTypeId={currencyTypeId}
+              />
             </MyDialog>
 
             <MyDialog
@@ -272,7 +282,10 @@ export default observer(function LoanTrackingList() {
               title={translate('CRUD.PayTakenLoan')}
               size="md"
             >
-              <PayTakenLoanTrackingNewEditForm LoanTrackingId={LoanTrackingId!} />
+              <PayTakenLoanTrackingNewEditForm
+                LoanTrackingId={LoanTrackingId!}
+                currencyTypeId={currencyTypeId}
+              />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}

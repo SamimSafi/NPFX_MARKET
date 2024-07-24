@@ -638,6 +638,7 @@ export default class commonDroptdown {
       const optRow = {
         text: op.code + ('(' + op.assetType + ')'),
         value: op.id,
+        currencyTypeId: op.currencyTypeId,
       };
       return optRow;
     });

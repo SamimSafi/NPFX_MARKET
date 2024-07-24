@@ -21,11 +21,17 @@ import { useStore } from '../../../../stores/store';
 import { IPayTakenLoan } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { currency } from 'src/constantFile/CommonConstant';
+import { roundOff } from 'src/utils/general';
 // ----------------------------------------------------------------------
 interface Props {
   LoanTrackingId: number;
+  currencyTypeId: number;
 }
-export default observer(function PayTakenLoanTrackingNewEditForm({ LoanTrackingId }: Props) {
+export default observer(function PayTakenLoanTrackingNewEditForm({
+  LoanTrackingId,
+  currencyTypeId,
+}: Props) {
   const { LoanTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
   const {
@@ -71,26 +77,43 @@ export default observer(function PayTakenLoanTrackingNewEditForm({ LoanTrackingI
     control,
     setValue,
   } = methods;
-
+  const val = watch();
   const exchangeRate = watch('exchangeRate');
-  const amountByMainAssetCurrencyType = watch('amountByMainAssetCurrencyType');
+  const usdDollor = watch('usd');
 
   const handleUSDChange = (usd: number) => {
     const afn = usd * exchangeRate;
-    setValue('amountByLoanTrackingCurrencyType', afn);
+    setValue('afn', roundOff(afn, 2));
   };
 
   const handleAFNChange = (afn: number) => {
     const usd = afn / exchangeRate;
-    setValue('amountByMainAssetCurrencyType', usd);
+    setValue('usd', roundOff(usd, 2));
   };
 
   const handleExchangeRateChange = (rate: number) => {
     setValue('exchangeRate', rate);
-    const afn = amountByMainAssetCurrencyType * rate;
-    setValue('amountByLoanTrackingCurrencyType', afn);
+    const afn = usdDollor! * rate;
+    setValue('afn', roundOff(afn, 2));
   };
   const onSubmit = (data: IPayTakenLoan) => {
+    // this statements checks if row currency  is usd set usd and if it's afn then set afn value
+    switch (currencyTypeId) {
+      case currency.USD: // USD
+        data.amountByLoanTrackingCurrencyType = val.usd!;
+        break;
+      default:
+        data.amountByLoanTrackingCurrencyType = val.afn!;
+    }
+    // this statements checks if ddl currency  is usd set usd and if it's afn then set afn value
+    switch (val.currencyTypeId) {
+      case currency.USD: // USD
+        data.amountByMainAssetCurrencyType = val.usd!;
+        break;
+      default:
+        data.amountByMainAssetCurrencyType = val.afn!;
+    }
+
     if (data.loanTrackingId! === undefined) {
       ///create
       PayTakenLoan(data).then(() => {
@@ -136,7 +159,11 @@ export default observer(function PayTakenLoanTrackingNewEditForm({ LoanTrackingI
               <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
                 <option value="" />
                 {MainAssetOption.map((op) => (
-                  <option key={op.value} value={op.value}>
+                  <option
+                    key={op.value}
+                    value={op.value}
+                    onChange={() => setValue('currencyTypeId', op.currencyTypeId)}
+                  >
                     {op.text}
                   </option>
                 ))}
@@ -202,7 +229,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({ LoanTrackingI
                 />
               </Box>
               <Controller
-                name="amountByMainAssetCurrencyType"
+                name="usd"
                 control={control}
                 render={({ field }) => (
                   <RHFTextField
@@ -222,7 +249,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({ LoanTrackingI
                 )}
               />
               <Controller
-                name="amountByLoanTrackingCurrencyType"
+                name="afn"
                 control={control}
                 render={({ field }) => (
                   <RHFTextField
@@ -268,6 +295,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({ LoanTrackingI
                 {!editMode ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
               </LoadingButton>
               <LoadingButton
+                fullWidth
                 variant="contained"
                 size="small"
                 onClick={() => setOpenCloseDialogPayTakenLoan()}

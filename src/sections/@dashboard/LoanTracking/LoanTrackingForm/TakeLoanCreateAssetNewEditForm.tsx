@@ -26,8 +26,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 export default observer(function TakeLoanCreateAssetNewEditForm() {
   const { LoanTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
-  const { TakeLoanCreateAsset, updateLoanTracking, editMode, selectedLoanTracking } =
-    LoanTrackingStore;
+  const {
+    TakeLoanCreateAsset,
+    updateLoanTracking,
+    clearSelectedLoanTracking,
+    editMode,
+    selectedLoanTracking,
+  } = LoanTrackingStore;
   const {
     loadLoanTypeDDL,
     LoanTypeOption,
@@ -49,9 +54,7 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
   const defaultValues = useMemo<ILoanTracking>(
     () => ({
       id: selectedLoanTracking?.id,
-      mainAssetId: selectedLoanTracking?.mainAssetId,
       partnerId: selectedLoanTracking?.partnerId,
-      userId: selectedLoanTracking?.userId,
       currencyTypeId: selectedLoanTracking?.currencyTypeId,
       loanTypeId: selectedLoanTracking?.loanTypeId,
       description: selectedLoanTracking?.description || '',
@@ -61,7 +64,6 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
       email: selectedLoanTracking?.email || '',
       date: selectedLoanTracking?.date || '',
       dueDate: selectedLoanTracking?.dueDate || '',
-      isGiven: selectedLoanTracking?.isGiven || true,
       loanAmount: selectedLoanTracking?.loanAmount,
     }),
     [selectedLoanTracking]
@@ -95,6 +97,7 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
       updateLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
+        clearSelectedLoanTracking();
         navigate(PATH_DASHBOARD.LoanTracking.list);
       });
     }
@@ -208,26 +211,6 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
                 showAsterisk={true}
                 autoFocus
               />
-              <Controller
-                name="isGiven"
-                control={control}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        {...field}
-                        onChange={(e) => {
-                          field.onChange(e); // Notify React Hook Form of the value change
-                          // handleChange(e); // Handle the switch state change
-                        }}
-                        checked={field.value}
-                      />
-                    }
-                    label={translate('LoanTracking.isGiven')}
-                    labelPlacement="end"
-                  />
-                )}
-              />
             </Box>
             <Box
               sx={{
@@ -247,13 +230,16 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
                   {translate('CRUD.CreateLoan')}
                 </LoadingButton>
                 <LoadingButton
+                  fullWidth
                   variant="contained"
-                  size="small"
-                  onClick={() => MainAssetStore.setOpenCloseDialogCreateLoan()}
-                  color="secondary"
-                  startIcon={<CancelIcon />}
+                  color="error"
+                  startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
+                  onClick={() => {
+                    navigate(PATH_DASHBOARD.LoanTracking.list);
+                    clearSelectedLoanTracking();
+                  }}
                 >
-                  {translate('CRUD.Cancle')}
+                  {translate('CRUD.BackToList')}
                 </LoadingButton>
               </Stack>
             </Box>

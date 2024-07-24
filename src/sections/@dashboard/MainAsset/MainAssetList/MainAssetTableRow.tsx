@@ -88,7 +88,7 @@ export default function MainAssetTableRow({
                   handleCloseMenu();
                 }}
               >
-                <Iconify sx={{ color: 'success.main' }} icon={'vaadin:money-deposit'} />
+                <Iconify sx={{ color: 'success.main' }} icon={'mdi:bank-transfer'} />
                 {translate('CRUD.DepositToUser')}
               </MenuItem>
               <MenuItem
@@ -124,8 +124,8 @@ export default function MainAssetTableRow({
                   handleCloseMenu();
                 }}
               >
-                <Iconify sx={{ color: 'success.main' }} icon={'mdi:cash-plus'} />
-                {translate('CRUD.DepositCash')}
+                <Iconify sx={{ color: 'success.main' }} icon={'mdi:cash-minus'} />
+                {translate('CRUD.WithDrawCash')}
               </MenuItem>
             </>
           }

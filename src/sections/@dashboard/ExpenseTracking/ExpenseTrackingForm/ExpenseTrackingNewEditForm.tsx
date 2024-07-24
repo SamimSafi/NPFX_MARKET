@@ -38,13 +38,18 @@ export default observer(function ExpenseTrackingNewEditForm() {
     UserOption,
     loadExpenseTypeDropdown,
     ExpenseTypeOption,
+    loadMainAssetDDL,
+    MainAssetOption,
   } = commonDropdown;
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
 
   const NewExpenseTrackingSchema = Yup.object().shape({
-    ExpenseTypeId: Yup.number().required(`${translate('Validation.ExpenseTrackingType')}`),
+    expenseTypeId: Yup.number().required(`${translate('Validation.ExpenseTrackingType')}`),
+    mainAssetId: !editMode
+      ? Yup.string().required(`${translate('Validation.ExpenseTrackingType')}`)
+      : Yup.string(),
     branchId: Yup.number().required(`${translate('Validation.branch')}`),
     userId: Yup.string().required(`${translate('Validation.user')}`),
     date: Yup.date().required(`${translate('Validation.user')}`),
@@ -55,6 +60,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
     () => ({
       id: selectedExpenseTracking?.id,
       expenseTypeId: selectedExpenseTracking?.expenseTypeId || undefined,
+      mainAssetId: selectedExpenseTracking?.mainAssetId || undefined,
       branchId: selectedExpenseTracking?.branchId || undefined,
       userId: selectedExpenseTracking?.userId || '',
       date: selectedExpenseTracking?.date || new Date().toDateString(),
@@ -107,7 +113,8 @@ export default observer(function ExpenseTrackingNewEditForm() {
 
   useEffect(() => {
     loadBranchDDL();
-  }, [loadBranchDDL]);
+    loadMainAssetDDL();
+  }, [loadBranchDDL, loadMainAssetDDL]);
 
   useEffect(() => {
     loadUserDropdown(val.branchId);
@@ -126,8 +133,21 @@ export default observer(function ExpenseTrackingNewEditForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
+              {editMode ? (
+                <></>
+              ) : (
+                <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+                  <option value="" />
+                  {MainAssetOption.map((op) => (
+                    <option key={op.value} value={op.value}>
+                      {op.text}
+                    </option>
+                  ))}
+                </RHFSelect>
+              )}
+
               <RHFSelect
-                name="ExpenseTypeId"
+                name="expenseTypeId"
                 label={translate('ExpenseTracking.Expenseype')}
                 showAsterisk={true}
               >

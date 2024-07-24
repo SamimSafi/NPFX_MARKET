@@ -157,6 +157,7 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
 
               {asssetID !== undefined ? (
                 <LoadingButton
+                  fullWidth
                   variant="contained"
                   size="small"
                   onClick={() => setOpenCloseDialogWithdrawCash()}

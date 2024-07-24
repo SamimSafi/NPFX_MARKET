@@ -16,7 +16,7 @@ export default class LoanTrackingStore {
 
   openDetailDialog = false;
 
-  openDialogPayBackLoan = false;
+  openDialogTakePaidLoan = false;
 
   editMode = false; //When click on edit button
 
@@ -91,7 +91,8 @@ export default class LoanTrackingStore {
   setOpenCloseDialogPayTakenLoan = () =>
     (this.openDialogPayTakenLoan = !this.openDialogPayTakenLoan);
 
-  setOpenCloseDialogPayBackLoan = () => (this.openDialogPayBackLoan = !this.openDialogPayBackLoan);
+  setOpenCloseDialogTakePaidLoan = () =>
+    (this.openDialogTakePaidLoan = !this.openDialogTakePaidLoan);
 
   setDetailCloseDialog = () => (this.openDetailDialog = !this.openDetailDialog);
 

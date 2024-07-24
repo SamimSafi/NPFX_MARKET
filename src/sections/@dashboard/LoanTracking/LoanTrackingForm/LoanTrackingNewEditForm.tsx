@@ -31,7 +31,14 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   const { translate } = useLocales();
   const { createLoanTracking, updateLoanTracking, editMode, selectedLoanTracking } =
     LoanTrackingStore;
-  const { loadLoanTypeDDL, LoanTypeOption, loadPartnersDDL, PartnersOption } = commonDropdown;
+  const {
+    loadLoanTypeDDL,
+    LoanTypeOption,
+    loadPartnersDDL,
+    PartnersOption,
+    loadMainAssetDDL,
+    MainAssetOption,
+  } = commonDropdown;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -106,8 +113,9 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
       reset(defaultValues);
       loadLoanTypeDDL();
       loadPartnersDDL();
+      loadMainAssetDDL();
     }
-  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL]);
+  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadMainAssetDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -123,6 +131,14 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+                <option value="" />
+                {MainAssetOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
               <RHFSelect name="partnerId" label={translate('LoanTracking.Partner')}>
                 <option value="" />
                 {PartnersOption.map((op) => (
@@ -235,6 +251,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                   {translate('CRUD.CreateLoan')}
                 </LoadingButton>
                 <LoadingButton
+                  fullWidth
                   variant="contained"
                   size="small"
                   onClick={() => MainAssetStore.setOpenCloseDialogCreateLoan()}
