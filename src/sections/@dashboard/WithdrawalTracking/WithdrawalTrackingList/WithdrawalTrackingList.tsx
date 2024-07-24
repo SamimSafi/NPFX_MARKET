@@ -160,14 +160,24 @@ export default observer(function WithdrawalTrackingList() {
             { name: `${translate('WithdrawalTracking.WithdrawalTrackingList')}` },
           ]}
           action={
-            <Button
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
-              component={RouterLink}
-              to={PATH_DASHBOARD.WithdrawalTracking.new}
-            >
-              {translate('CRUD.Create')}
-            </Button>
+            <>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                component={RouterLink}
+                to={PATH_DASHBOARD.WithdrawalTracking.new}
+              >
+                {translate('CRUD.WithdraFromAccount')}
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<Iconify icon="eva:plus-fill" />}
+                component={RouterLink}
+                to={PATH_DASHBOARD.WithdrawalTracking.deposit}
+              >
+                {translate('CRUD.DepositToAccount')}
+              </Button>
+            </>
           }
         />
 

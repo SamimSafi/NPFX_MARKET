@@ -25,22 +25,23 @@ import CancelIcon from '@mui/icons-material/Cancel';
 interface Props {
   asssetID?: string;
 }
-export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Props) {
+export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID }: Props) {
   const { WithdrawalTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
   const { MainAssetOption, loadMainAssetDDL } = commonDropdown;
   const {
-    createWithdrawalTracking,
+    DepositToAccount,
     updateWithdrawalTracking,
     editMode,
     selectedWithdrawalTracking,
     clearSelectedWithdrawalTracking,
   } = WithdrawalTrackingStore;
+  const { setOpenCloseDialogDepositCash } = MainAssetStore;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewWithdrawalTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
+    mainAssetId: Yup.number().required(`${translate('Validation.EnglishName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
     withdrawalAmount: Yup.number().required(`${translate('Validation.Code')}`),
   });
@@ -67,21 +68,21 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
     formState: { isSubmitting },
     control,
   } = methods;
-  const { setOpenCloseDialogWithdrawCash } = MainAssetStore;
+
   const onSubmit = (data: IWithdrawalTracking) => {
     if (data.id! === undefined) {
       ///create
-      createWithdrawalTracking(data).then(() => {
+      DepositToAccount(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.WithdrawalTracking.list);
       });
     } else {
       ///update
       updateWithdrawalTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.WithdrawalTracking.list);
       });
     }
   };
@@ -154,12 +155,11 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
               >
                 {!editMode ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
               </LoadingButton>
-
               {asssetID !== undefined ? (
                 <LoadingButton
                   variant="contained"
                   size="small"
-                  onClick={() => setOpenCloseDialogWithdrawCash()}
+                  onClick={() => setOpenCloseDialogDepositCash()}
                   color="secondary"
                   startIcon={<CancelIcon />}
                 >

@@ -64,7 +64,7 @@ export default observer(function AssetTypeNewEditForm() {
       createAssetType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.AssetType.list);
       });
     } else {
       ///update

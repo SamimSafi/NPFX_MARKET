@@ -16,6 +16,7 @@ import {
   IDDL,
   IGetActiveEmp,
   IGetParentEmp,
+  MainAssetDropdown,
 } from 'src/@types/commonDropdownTypes';
 
 import agent from 'src/api/agent';
@@ -632,10 +633,10 @@ export default class commonDroptdown {
     }
   };
 
-  setMainAssetDDL = (data: IDDL[]) => {
+  setMainAssetDDL = (data: MainAssetDropdown[]) => {
     const op = data.map((op) => {
       const optRow = {
-        text: op.name,
+        text: op.code + ('(' + op.assetType + ')'),
         value: op.id,
       };
       return optRow;

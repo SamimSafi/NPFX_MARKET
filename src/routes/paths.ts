@@ -153,6 +153,8 @@ export const PATH_DASHBOARD = {
     root: path(ROOTS_DASHBOARD, '/WithdrawalTracking'),
     list: path(ROOTS_DASHBOARD, '/WithdrawalTracking/list'),
     new: path(ROOTS_DASHBOARD, '/WithdrawalTracking/new'),
+    deposit: path(ROOTS_DASHBOARD, '/WithdrawalTracking/deposit'),
+    depositEdit: path(ROOTS_DASHBOARD, '/WithdrawalTracking/depositEdit'),
     edit: path(ROOTS_DASHBOARD, '/WithdrawalTracking/edit'),
     detail: path(ROOTS_DASHBOARD, '/WithdrawalTracking/detail'),
   },
