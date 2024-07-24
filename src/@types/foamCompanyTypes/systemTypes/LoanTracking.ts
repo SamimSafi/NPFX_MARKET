@@ -35,6 +35,9 @@ export interface IPayTakenLoan {
   exchangeRate: number;
   amountByMainAssetCurrencyType: number;
   amountByLoanTrackingCurrencyType: number;
+  afn?: number;
+  usd?: number;
+  currencyTypeId?: number;
   date: string;
   description: string;
 }
@@ -45,6 +48,8 @@ export interface IRecieveGivenLoan {
   amountBySelectedCurrencyType: number;
   exchangeRate: number;
   amountByLoanTrackingCurrencyType: number;
+  afn?: number;
+  usd?: number;
   date?: string;
   description?: string;
 }

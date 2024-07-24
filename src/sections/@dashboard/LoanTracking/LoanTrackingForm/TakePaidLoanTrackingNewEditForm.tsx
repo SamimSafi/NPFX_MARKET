@@ -21,11 +21,17 @@ import { useStore } from '../../../../stores/store';
 import { IRecieveGivenLoan } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { currency } from 'src/constantFile/CommonConstant';
+import { roundOff } from 'src/utils/general';
 // ----------------------------------------------------------------------
 interface Props {
   TrackingId: number;
+  currencyTypeId: number;
 }
-export default observer(function TakeLoanTrackingNewEditForm({ TrackingId }: Props) {
+export default observer(function TakePaidLoanTrackingNewEditForm({
+  TrackingId,
+  currencyTypeId,
+}: Props) {
   const { LoanTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
   const {
@@ -33,7 +39,7 @@ export default observer(function TakeLoanTrackingNewEditForm({ TrackingId }: Pro
     updateLoanTracking,
     editMode,
     selectedLoanTracking,
-    setOpenCloseDialogPayBackLoan,
+    setOpenCloseDialogTakePaidLoan,
   } = LoanTrackingStore;
   const { loadCurrencyTypeDDL, CurrencyTypeOption } = commonDropdown;
   const navigate = useNavigate();
@@ -71,26 +77,44 @@ export default observer(function TakeLoanTrackingNewEditForm({ TrackingId }: Pro
     control,
     setValue,
   } = methods;
+  const val = watch();
 
   const exchangeRate = watch('exchangeRate');
-  const amountBySelectedCurrencyType = watch('amountBySelectedCurrencyType');
+  const usdDollor = watch('usd');
 
   const handleUSDChange = (usd: number) => {
     const afn = usd * exchangeRate;
-    setValue('amountByLoanTrackingCurrencyType', afn);
+    setValue('usd', roundOff(afn, 2));
   };
 
   const handleAFNChange = (afn: number) => {
     const usd = afn / exchangeRate;
-    setValue('amountBySelectedCurrencyType', usd);
+    setValue('afn', roundOff(usd, 2));
   };
 
   const handleExchangeRateChange = (rate: number) => {
     setValue('exchangeRate', rate);
-    const afn = amountBySelectedCurrencyType * rate;
-    setValue('amountByLoanTrackingCurrencyType', afn);
+    const afn = usdDollor! * rate;
+    setValue('usd', roundOff(afn, 2));
   };
   const onSubmit = (data: IRecieveGivenLoan) => {
+    // this statements checks if row currency  is usd set usd and if it's afn then set afn value
+    switch (currencyTypeId) {
+      case currency.USD: // USD
+        data.amountByLoanTrackingCurrencyType = val.usd!;
+        break;
+      default:
+        data.amountByLoanTrackingCurrencyType = val.afn!;
+    }
+    // this statements checks if ddl currency  is usd set usd and if it's afn then set afn value
+    switch (val.currencyTypeId) {
+      case currency.USD: // USD
+        data.amountBySelectedCurrencyType = val.usd!;
+        break;
+      default:
+        data.amountBySelectedCurrencyType = val.afn!;
+    }
+
     if (data.loanTrackingId! === undefined) {
       ///create
       TakePaidLoan(data).then(() => {
@@ -202,7 +226,7 @@ export default observer(function TakeLoanTrackingNewEditForm({ TrackingId }: Pro
                 />
               </Box>
               <Controller
-                name="amountBySelectedCurrencyType"
+                name="usd"
                 control={control}
                 render={({ field }) => (
                   <RHFTextField
@@ -222,7 +246,7 @@ export default observer(function TakeLoanTrackingNewEditForm({ TrackingId }: Pro
                 )}
               />
               <Controller
-                name="amountByLoanTrackingCurrencyType"
+                name="afn"
                 control={control}
                 render={({ field }) => (
                   <RHFTextField
@@ -268,9 +292,10 @@ export default observer(function TakeLoanTrackingNewEditForm({ TrackingId }: Pro
                 {translate('CRUD.Save')}
               </LoadingButton>
               <LoadingButton
+                fullWidth
                 variant="contained"
                 size="small"
-                onClick={() => setOpenCloseDialogPayBackLoan()}
+                onClick={() => setOpenCloseDialogTakePaidLoan()}
                 color="secondary"
                 startIcon={<CancelIcon />}
               >

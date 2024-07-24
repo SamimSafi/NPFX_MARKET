@@ -20,12 +20,13 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { ITradeTracking } from 'src/@types/foamCompanyTypes/systemTypes/TradeTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
+import CancelIcon from '@mui/icons-material/Cancel';
 // ----------------------------------------------------------------------
 interface Props {
   asssetID?: string;
 }
 export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
-  const { TradeTrackingStore, commonDropdown } = useStore();
+  const { TradeTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
   const { loadMainAssetDDL, MainAssetOption } = commonDropdown;
   const { createTradeTracking, updateTradeTracking, editMode, selectedTradeTracking } =
@@ -76,7 +77,12 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
       createTradeTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.TradeTracking.list);
+        asssetID !== undefined
+          ? (() => {
+              MainAssetStore.setOpenCloseDialogCreateTrade();
+              MainAssetStore.loadMainAsset({ pageIndex: 0, pageSize: 10 });
+            })()
+          : navigate(PATH_DASHBOARD.TradeTracking.list);
       });
     } else {
       ///update
@@ -178,17 +184,30 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
               >
                 {translate('CRUD.Save')}
               </LoadingButton>
-              <Button
-                fullWidth
-                variant="contained"
-                color="error"
-                startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
-                onClick={() => {
-                  navigate(PATH_DASHBOARD.TradeTracking.list);
-                }}
-              >
-                {translate('CRUD.BackToList')}
-              </Button>
+              {asssetID !== undefined ? (
+                <LoadingButton
+                  fullWidth
+                  variant="contained"
+                  size="small"
+                  onClick={() => MainAssetStore.setOpenCloseDialogCreateTrade()}
+                  color="secondary"
+                  startIcon={<CancelIcon />}
+                >
+                  {translate('CRUD.Cancle')}
+                </LoadingButton>
+              ) : (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
+                  onClick={() => {
+                    navigate(PATH_DASHBOARD.TradeTracking.list);
+                  }}
+                >
+                  {translate('CRUD.BackToList')}
+                </Button>
+              )}
             </Stack>
           </Card>
         </Grid>

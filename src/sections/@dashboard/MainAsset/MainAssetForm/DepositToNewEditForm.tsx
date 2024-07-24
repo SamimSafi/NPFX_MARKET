@@ -167,6 +167,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
             >
               <Stack direction="row" spacing={3}>
                 <LoadingButton
+                  fullWidth
                   type="submit"
                   variant="contained"
                   size="small"
@@ -178,6 +179,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
                 </LoadingButton>
 
                 <LoadingButton
+                  fullWidth
                   variant="contained"
                   size="small"
                   onClick={() => MainAssetStore.setOpenCloseDialogDeposit()}
