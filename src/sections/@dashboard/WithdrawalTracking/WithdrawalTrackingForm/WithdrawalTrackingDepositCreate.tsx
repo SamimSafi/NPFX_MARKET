@@ -9,11 +9,11 @@ import useLocales from 'src/hooks/useLocales';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import WithdrawalTrackingNewEditForm from './WithdrawalTrackingNewEditForm';
+import WithdrawalTrackingDepositNewEditForm from './WithdrawalTrackingDepositNewEditForm';
 
 // ----------------------------------------------------------------------
 
-export default function WithdrawalTrackingCreate() {
+export default function WithdrawalTrackingDepositCreate() {
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -33,8 +33,8 @@ export default function WithdrawalTrackingCreate() {
         <HeaderBreadcrumbs
           heading={
             !isEdit
-              ? `${translate('WithdrawalTracking.CreateWithdrawalTracking')}`
-              : `${translate('WithdrawalTracking.EditWithdrawalTracking')}`
+              ? `${translate('WithdrawalTracking.CreateDeposit')}`
+              : `${translate('WithdrawalTracking.EditDeposit')}`
           }
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
@@ -44,12 +44,12 @@ export default function WithdrawalTrackingCreate() {
             },
             {
               name: !isEdit
-                ? `${translate('WithdrawalTracking.New')}`
-                : `${translate('WithdrawalTracking.Update')}`,
+                ? `${translate('WithdrawalTracking.DepositToAccount')}`
+                : `${translate('WithdrawalTracking.UpdateDeposit')}`,
             },
           ]}
         />
-        <WithdrawalTrackingNewEditForm />
+        <WithdrawalTrackingDepositNewEditForm />
       </Container>
     </Page>
   );

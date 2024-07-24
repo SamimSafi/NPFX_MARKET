@@ -100,7 +100,7 @@ export default observer(function TradeTrackingList() {
   };
   const handleEditRow = (id: number) => {
     getTradeTrackingFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.TradeTracking.edit);
   };
 
   // const handleDelete = () => {

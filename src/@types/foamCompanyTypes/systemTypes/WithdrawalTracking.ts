@@ -2,12 +2,13 @@ export interface IWithdrawalTracking {
   id?: number;
   currencyTypeId?: number;
   currencyName?: string;
-  mainAssetId?: number;
-  asset?: string;
+  mainAssetId?: string;
   date?: string;
   description?: string;
   userId?: number;
-  user?: string;
+  userName?: string;
+  branchId?: number;
+  branch?: string;
   withdrawalAmount?: number;
   dueDate?: string;
   afterSubmit?: string;

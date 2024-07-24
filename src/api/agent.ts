@@ -606,6 +606,8 @@ const LoanTracking = {
 const WithdrawalTracking = {
   create: (WithdrawalTracking: IWithdrawalTracking) =>
     requests.post<void>('/WithdrawalTracking', WithdrawalTracking),
+  DepositToAccount: (WithdrawalTracking: IWithdrawalTracking) =>
+    requests.post<void>('/WithdrawalTracking/Deposit', WithdrawalTracking),
   getList: (param: IWithdrawalTrackingParams) =>
     axios.post<any>(`/WithdrawalTracking/GetList`, param, { withCredentials: true }),
   update: (WithdrawalTracking: IWithdrawalTracking) =>

@@ -91,6 +91,13 @@ export default class WithdrawalTrackingStore {
     });
   };
 
+  DepositToAccount = async (WithdrawalTracking: IWithdrawalTracking) => {
+    await agentWithdrawalTracking.WithdrawalTracking.DepositToAccount(WithdrawalTracking);
+    runInAction(() => {
+      this.loadWithdrawalTracking({ pageIndex: 0, pageSize: 5 });
+    });
+  };
+
   updateWithdrawalTracking = async (WithdrawalTracking: IWithdrawalTracking) => {
     await agentWithdrawalTracking.WithdrawalTracking.update(WithdrawalTracking);
     runInAction(() => {

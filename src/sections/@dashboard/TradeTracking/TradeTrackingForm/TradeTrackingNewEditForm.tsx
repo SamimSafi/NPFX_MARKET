@@ -35,7 +35,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewTradeTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.number().required(`${translate('Validation.EnglishName')}`),
+    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
     // currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
     tradeAmount: Yup.number().required(`${translate('Validation.tradeAmount')}`),
@@ -51,8 +51,8 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
       description: selectedTradeTracking?.description || '',
       date: selectedTradeTracking?.date || '',
       tradeAmount: selectedTradeTracking?.tradeAmount,
-      profitAmount: selectedTradeTracking?.profitAmount,
-      lossAmount: selectedTradeTracking?.lossAmount,
+      profitAmount: selectedTradeTracking?.profitAmount || 0,
+      lossAmount: selectedTradeTracking?.lossAmount || 0,
     }),
     [selectedTradeTracking, asssetID]
   );
@@ -76,14 +76,14 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
       createTradeTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.TradeTracking.list);
       });
     } else {
       ///update
       updateTradeTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.TradeTracking.list);
       });
     }
   };
@@ -184,7 +184,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                 color="error"
                 startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                 onClick={() => {
-                  navigate(PATH_DASHBOARD.ContractType.list);
+                  navigate(PATH_DASHBOARD.TradeTracking.list);
                 }}
               >
                 {translate('CRUD.BackToList')}

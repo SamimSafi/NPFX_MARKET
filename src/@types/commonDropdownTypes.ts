@@ -147,9 +147,14 @@ export interface VisitorDropdown {
   fatherName: string;
 }
 //Application Dropdown
-export interface ApplicationDropdown {
+export interface MainAssetDropdown {
   id: number;
-  applicationName: string;
+  currencyTypeId: number;
+  currencyType: string;
+  assetTypeId: number;
+  assetType: number;
+  code: string;
+  balanceAmount: number;
 }
 
 //Permission Dropdown

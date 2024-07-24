@@ -58,6 +58,7 @@ import WithdrawalTrackingCreate from 'src/sections/@dashboard/WithdrawalTracking
 import ExpenseTrackingList from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingList/ExpenseTrackingList';
 import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingForm/ExpenseTrackingCreate';
 import MainAssetDetails from 'src/sections/@dashboard/MainAsset/MainAssetDetails/MainAssetDetails';
+import WithdrawalTrackingDepositCreate from 'src/sections/@dashboard/WithdrawalTracking/WithdrawalTrackingForm/WithdrawalTrackingDepositCreate';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: ElementType) => (props: any) => {
@@ -479,6 +480,22 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-Update']}>
                   <WithdrawalTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'deposit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-Deposit']}>
+                  <WithdrawalTrackingDepositCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'depositEdit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-Deposit']}>
+                  <WithdrawalTrackingDepositCreate />
                 </PermissionBasedGuard>
               ),
             },

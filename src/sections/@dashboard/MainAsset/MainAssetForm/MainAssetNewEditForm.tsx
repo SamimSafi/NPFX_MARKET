@@ -32,6 +32,8 @@ export default observer(function MainAssetNewEditForm() {
     UserOption,
     CurrencyTypeOption,
     loadCurrencyTypeDDL,
+    loadAssetTypeDDL,
+    AssetTypeOption,
   } = commonDropdown;
   const { translate } = useLocales();
   const { createMainAsset, updateMainAsset, editMode, selectedMainAsset, clearSelectedMainAsset } =
@@ -42,6 +44,7 @@ export default observer(function MainAssetNewEditForm() {
   const NewMainAssetSchema = Yup.object().shape({
     currencyTypeId: Yup.number().required(`${translate('Validation.currencyTypeId')}`),
     branchId: Yup.number().required(`${translate('Validation.currencyTypeId')}`),
+    assetTypeId: Yup.number().required(`${translate('Validation.currencyTypeId')}`),
     ownerUserId: Yup.string().required(`${translate('Validation.ownerUserId')}`),
     depositDate: Yup.date().required(`${translate('Validation.DariName')}`),
     balanceAmount: Yup.number().required(`${translate('Validation.Code')}`),
@@ -53,6 +56,7 @@ export default observer(function MainAssetNewEditForm() {
       currencyTypeId: selectedMainAsset?.currencyTypeId || undefined,
       ownerUserId: selectedMainAsset?.ownerUserId || undefined,
       branchId: selectedMainAsset?.branchId || undefined,
+      assetTypeId: selectedMainAsset?.branchId || undefined,
       depositDate: selectedMainAsset?.depositDate,
       balanceAmount: selectedMainAsset?.balanceAmount,
     }),
@@ -102,7 +106,8 @@ export default observer(function MainAssetNewEditForm() {
   useEffect(() => {
     loadBranchDDL();
     loadCurrencyTypeDDL();
-  }, [loadBranchDDL, loadCurrencyTypeDDL]);
+    loadAssetTypeDDL();
+  }, [loadBranchDDL, loadCurrencyTypeDDL, loadAssetTypeDDL]);
 
   useEffect(() => {
     loadUserDropdown(val.branchId);
@@ -121,6 +126,14 @@ export default observer(function MainAssetNewEditForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
+              <RHFSelect name="assetTypeId" label={translate('MainAsset.AssetType')}>
+                <option value="" />
+                {AssetTypeOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
               <RHFSelect name="currencyTypeId" label={translate('MainAsset.currencyType')}>
                 <option value="" />
                 {CurrencyTypeOption.map((op) => (
