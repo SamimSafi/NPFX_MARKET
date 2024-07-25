@@ -17,17 +17,11 @@ export interface ILoanTracking {
   currencyType?: string;
   mainAssetId?: string;
   asset?: string;
-
-  loanAmount?: number;
-  paidAmount?: number;
-  remainAmount?: number;
-
   date?: string;
   dueDate?: string;
   description?: string;
   userId?: string;
   userName?: string;
-  partnerPhone?: string;
   isGiven?: boolean;
   afterSubmit?: string;
 }
