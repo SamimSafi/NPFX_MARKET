@@ -35,7 +35,10 @@ import TradeTrackingNewEditForm from '../../TradeTracking/TradeTrackingForm/Trad
 // ----------------------------------------------------------------------
 
 export default observer(function MainAssetList() {
-  const { MainAssetStore } = useStore();
+  const {
+    MainAssetStore,
+    MainAssetDetailsStore: { loadMainAssetDetail },
+  } = useStore();
   const { translate } = useLocales();
   const {
     loadMainAsset,
@@ -136,6 +139,12 @@ export default observer(function MainAssetList() {
     navigate(PATH_DASHBOARD.MainAsset.edit);
   };
 
+  const handleDetail = (id: string) => {
+    loadMainAssetDetail(id).then(() => {
+      navigate(PATH_DASHBOARD.MainAsset.detail);
+    });
+  };
+
   // const handleDelete = () => {
   //   deleteConstructionType(ConstructionTypeId)
   //     .then(() => {
@@ -200,14 +209,14 @@ export default observer(function MainAssetList() {
               >
                 {translate('CRUD.Create')}
               </Button>
-              <Button
+              {/* <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
                 component={RouterLink}
                 to={PATH_DASHBOARD.MainAsset.detail}
               >
                 {translate('CRUD.Details')}
-              </Button>
+              </Button> */}
               {/* <Button
                 variant="contained"
                 startIcon={<Iconify icon="eva:plus-fill" />}
@@ -271,6 +280,7 @@ export default observer(function MainAssetList() {
                         onCreateLoan={() => handleCreateLoanOpenConfirm(row.id!)}
                         onCreateTrade={() => handleCreateTradeOpenConfirm(row.id!)}
                         onEditRow={() => handleEditRow(row.id!)}
+                        onDetailsRow={() => handleDetail(row.id!)}
                       />
                     ))}
 

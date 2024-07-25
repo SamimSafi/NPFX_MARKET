@@ -18,4 +18,5 @@ export interface IExpenseTrackingParams {
   pageIndex: number;
   pageSize: number;
   name?: string;
+  mainAssetId?: string;
 }

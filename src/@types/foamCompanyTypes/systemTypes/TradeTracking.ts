@@ -20,4 +20,5 @@ export interface ITradeTrackingParams {
   pageIndex: number;
   pageSize: number;
   name?: string;
+  mainAssetId?: string;
 }

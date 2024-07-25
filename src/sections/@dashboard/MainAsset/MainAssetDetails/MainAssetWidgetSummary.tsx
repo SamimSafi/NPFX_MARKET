@@ -29,7 +29,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 interface Props extends CardProps {
   title: string;
-  total: number;
+  total?: number;
   percent: number;
   chartData: number[];
   color?: ColorSchema;
@@ -91,22 +91,22 @@ export default function MainAssetWidgetSummary({
       <Stack spacing={1} sx={{ p: 3 }}>
         <Typography sx={{ typography: 'subtitle2' }}>{title}</Typography>
 
-        <Typography sx={{ typography: 'h3' }}>{fCurrency(total)}</Typography>
+        <Typography sx={{ typography: 'h3' }}>{fCurrency(total!)}</Typography>
         <Stack direction="row" alignItems="center" flexWrap="wrap">
-          <Iconify
+          {/* <Iconify
             width={20}
             height={20}
             icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
-          />
+          /> */}
 
-          <Typography variant="subtitle2" component="span" sx={{ ml: 0.5 }}>
+          {/* <Typography variant="subtitle2" component="span" sx={{ ml: 0.5 }}>
             {percent > 0 && '+'}
             {fPercent(percent)}
           </Typography>
 
           <Typography variant="body2" component="span" sx={{ opacity: 0.72 }}>
             &nbsp;than last month
-          </Typography>
+          </Typography> */}
         </Stack>
       </Stack>
 

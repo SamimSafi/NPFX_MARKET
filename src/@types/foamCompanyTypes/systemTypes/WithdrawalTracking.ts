@@ -8,6 +8,8 @@ export interface IWithdrawalTracking {
   description?: string;
   userId?: number;
   user?: string;
+  branch?: string;
+  amount?: string;
   withdrawalAmount?: number;
   dueDate?: string;
   afterSubmit?: string;
@@ -17,4 +19,5 @@ export interface IWithdrawalTrackingParams {
   pageIndex: number;
   pageSize: number;
   name?: string;
+  mainAssetId?: string;
 }

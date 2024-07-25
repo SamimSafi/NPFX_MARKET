@@ -46,7 +46,6 @@ export default class MainAssetStore {
     try {
       const result = await agentMainAsset.MainAsset.getList(params);
       runInAction(() => {
-        this.totalRecord = result.data.totalRecord;
         result.data.data.forEach((lst: any) => {
           this.setMainAssetList(lst);
         });
@@ -121,6 +120,15 @@ export default class MainAssetStore {
       this.MainAssetRegistry.set(MainAsset.id!, MainAsset);
     });
   };
+
+  // GetMainAssetTracking = async (MainAssetTrackingParam: IMainAssetTrackingParam) => {
+  //   try {
+  //     const result = agentMainAsset.MainAsset.Gettracking(MainAssetTrackingParam);
+  //     console.log(result);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   // loadMainAssetTypeDropdown = async () => {
   //   try {

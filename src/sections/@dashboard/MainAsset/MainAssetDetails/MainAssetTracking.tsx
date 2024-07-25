@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import { format } from 'date-fns';
-import { sentenceCase } from 'change-case';
 import { IconifyIcon } from '@iconify/react';
 // @mui
-import { useTheme } from '@mui/material/styles';
 import {
   Box,
   Card,
@@ -11,7 +8,6 @@ import {
   Avatar,
   Button,
   Divider,
-  MenuItem,
   TableRow,
   TableBody,
   TableCell,
@@ -23,33 +19,21 @@ import {
 // utils
 import { fCurrency } from '../../../../utils/formatNumber';
 // components
-import Label from '../../../../components/Label';
 import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
-import { TableMoreMenu, TableHeadCustom } from '../../../../components/table';
+import { TableHeadCustom } from '../../../../components/table';
+import { IGetMainAssetTracking } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 
 // ----------------------------------------------------------------------
-
-type RowProps = {
-  id: string;
-  name: string | null;
-  avatar: string | null;
-  type: string;
-  message: string;
-  category: string;
-  date: number;
-  status: string;
-  amount: number;
-};
 
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  tableData: RowProps[];
+  tableData: IGetMainAssetTracking[];
   tableLabels: any;
 }
 
-export default function MainAssetRecentTransitions({
+export default function MainAssetTracking({
   title,
   subheader,
   tableLabels,
@@ -67,7 +51,7 @@ export default function MainAssetRecentTransitions({
 
             <TableBody>
               {tableData.map((row) => (
-                <BankingRecentTransitionsRow key={row.id} row={row} />
+                <BankingRecentTransitionsRow key={row.currencyTypeId} row={row} />
               ))}
             </TableBody>
           </Table>
@@ -92,111 +76,71 @@ export default function MainAssetRecentTransitions({
 // ----------------------------------------------------------------------
 
 type BankingRecentTransitionsRowProps = {
-  row: RowProps;
+  row: IGetMainAssetTracking;
 };
 
 function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) {
-  const theme = useTheme();
+  // const theme = useTheme();
 
-  const isLight = theme.palette.mode === 'light';
+  // const isLight = theme.palette.mode === 'light';
 
-  const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
+  // const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
-  const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setOpenMenuActions(event.currentTarget);
-  };
+  // const handleOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
+  //   setOpenMenuActions(event.currentTarget);
+  // };
 
-  const handleCloseMenu = () => {
-    setOpenMenuActions(null);
-  };
+  // const handleCloseMenu = () => {
+  //   setOpenMenuActions(null);
+  // };
 
-  const handleDownload = () => {
-    handleCloseMenu();
-    console.log('DOWNLOAD', row.id);
-  };
+  // const handleDownload = () => {
+  //   handleCloseMenu();
+  //   console.log('DOWNLOAD', row.currencyTypeId);
+  // };
 
-  const handlePrint = () => {
-    handleCloseMenu();
-    console.log('PRINT', row.id);
-  };
+  // const handlePrint = () => {
+  //   handleCloseMenu();
+  //   console.log('PRINT', row.currencyTypeId);
+  // };
 
-  const handleShare = () => {
-    handleCloseMenu();
-    console.log('SHARE', row.id);
-  };
+  // const handleShare = () => {
+  //   handleCloseMenu();
+  //   console.log('SHARE', row.currencyTypeId);
+  // };
 
-  const handleDelete = () => {
-    handleCloseMenu();
-    console.log('DELETE', row.id);
-  };
+  // const handleDelete = () => {
+  //   handleCloseMenu();
+  //   console.log('DELETE', row.currencyTypeId);
+  // };
 
   return (
     <TableRow>
       <TableCell>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ position: 'relative' }}>
-            {renderAvatar(row.category, row.avatar)}
-            <Box
-              sx={{
-                right: 0,
-                bottom: 0,
-                width: 18,
-                height: 18,
-                display: 'flex',
-                borderRadius: '50%',
-                position: 'absolute',
-                alignItems: 'center',
-                color: 'common.white',
-                bgcolor: 'error.main',
-                justifyContent: 'center',
-                ...(row.type === 'Income' && {
-                  bgcolor: 'success.main',
-                }),
-              }}
-            >
-              <Iconify
-                icon={
-                  row.type === 'Income'
-                    ? 'eva:diagonal-arrow-left-down-fill'
-                    : 'eva:diagonal-arrow-right-up-fill'
-                }
-                width={16}
-                height={16}
-              />
-            </Box>
-          </Box>
           <Box sx={{ ml: 2 }}>
-            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {row.message}
-            </Typography>
-            <Typography variant="subtitle2"> {row.category}</Typography>
+            <Typography variant="body2">{row.userName}</Typography>
+            {/* <Typography variant="subtitle2"> {row.description}</Typography> */}
           </Box>
         </Box>
       </TableCell>
 
       <TableCell>
-        <Typography variant="subtitle2">{format(new Date(row.date), 'dd MMM yyyy')}</Typography>
+        <Typography variant="subtitle2">
+          {format(new Date(row.transactionDate), 'dd MMM yyyy')}
+        </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {format(new Date(row.date), 'p')}
+          {format(new Date(row.transactionDate), 'p')}
         </Typography>
       </TableCell>
 
-      <TableCell>{fCurrency(row.amount)}</TableCell>
+      <TableCell>{fCurrency(row.debitAmount)}</TableCell>
 
-      <TableCell>
-        <Label
-          variant={isLight ? 'ghost' : 'filled'}
-          color={
-            (row.status === 'completed' && 'success') ||
-            (row.status === 'in_progress' && 'warning') ||
-            'error'
-          }
-        >
-          {sentenceCase(row.status)}
-        </Label>
-      </TableCell>
+      <TableCell>{fCurrency(row.creditAmount)}</TableCell>
+      <TableCell>{fCurrency(row.balanceAmount)}</TableCell>
+      <TableCell>{fCurrency(row.description)}</TableCell>
 
-      <TableCell align="right">
+      {/* <TableCell align="right">
         <TableMoreMenu
           open={openMenu}
           onOpen={handleOpenMenu}
@@ -227,7 +171,7 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
             </>
           }
         />
-      </TableCell>
+      </TableCell> */}
     </TableRow>
   );
 }

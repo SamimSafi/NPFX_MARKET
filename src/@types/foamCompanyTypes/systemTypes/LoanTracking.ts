@@ -8,17 +8,20 @@ export interface ILoanTracking {
   phone?: string;
   email?: string;
   loanTypeId?: number;
+  loanAmount?: number;
+  paidAmount?: number;
+  remainAmount?: number;
   loanTypeName?: string;
   currencyTypeId?: number;
   currencyType?: string;
   mainAssetId?: string;
   asset?: string;
-  loanAmount?: number;
   date?: string;
   dueDate?: string;
   description?: string;
   userId?: string;
   userName?: string;
+  partnerPhone?: string;
   isGiven?: boolean;
   afterSubmit?: string;
 }
@@ -27,6 +30,8 @@ export interface ILoanTrackingParams {
   pageIndex: number;
   pageSize: number;
   name?: string;
+  mainAssetId?: string;
+  isGiven?: boolean;
 }
 
 export interface IPayTakenLoan {
