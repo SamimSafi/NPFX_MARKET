@@ -129,7 +129,7 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="partnerId" label={translate('LoanTracking.Partner')}>
+              <RHFSelect name="partnerId" label={translate('Partner.Partner')}>
                 <option value="" />
                 {PartnersOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -144,32 +144,32 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
                 <>
                   <RHFTextField
                     name="nameInEnglish"
-                    label={translate('LoanTracking.nameInEnglish')}
+                    label={translate('GeneralFields.NameInEnglish')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="nameInPashto"
-                    label={translate('LoanTracking.nameInPashto')}
+                    label={translate('GeneralFields.NameInPashto')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="phone"
-                    label={translate('LoanTracking.phone')}
+                    label={translate('Partner.PartnerPhone')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="email"
-                    label={translate('LoanTracking.email')}
+                    label={translate('User.email')}
                     showAsterisk={true}
                     autoFocus
                   />
                 </>
               )}
 
-              <RHFSelect name="currencyTypeId" label={translate('LoanTracking.currencyType')}>
+              <RHFSelect name="currencyTypeId" label={translate('CurrencyType.CurrencyType')}>
                 <option value="" />
                 {CurrencyTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -177,7 +177,7 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="loanTypeId" label={translate('LoanTracking.loanType')}>
+              <RHFSelect name="loanTypeId" label={translate('LoanType.LoanType')}>
                 <option value="" />
                 {LoanTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -187,7 +187,7 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
               </RHFSelect>
               <RHFTextField
                 name="loanAmount"
-                label={translate('LoanTracking.loanAmount')}
+                label={translate('LoanTracking.LoanAmount')}
                 showAsterisk={true}
                 autoFocus
                 type="number"
@@ -195,19 +195,19 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
 
               <LocalizDatePicker
                 name="date"
-                label={translate('LoanTracking.date')}
+                label={translate('GeneralFields.Date')}
                 control={control}
                 showAsterisk={true}
               />
               <LocalizDatePicker
                 name="dueDate"
-                label={translate('LoanTracking.dueDate')}
+                label={translate('GeneralFields.DueDate')}
                 control={control}
                 showAsterisk={true}
               />
               <RHFTextField
                 name="description"
-                label={translate('LoanTracking.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />

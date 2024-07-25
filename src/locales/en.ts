@@ -26,15 +26,58 @@ const en = {
     DepositDate: `Deposit Date`,
     BalanceAmount: `Account Balance`,
     Description: `Description`,
+    MainAsset: `Account`,
   },
   Branch: {
     Branch: `Branch`,
+  },
+  LoanType: {
+    LoanType: `Loan Type`,
+  },
+  Partner: {
+    Partner: `Partner `,
+    PartnerPhone: `Partner Phone `,
+  },
+  Department: {
+    Dashboard: 'Dashboard',
+  },
+  //========================== Menu Translation ========================
+  AssetManagementMenu: `Account Management`,
+  LoanTrackingMenu: `Loan Management`,
+  TradeTracking: `Trade Management`,
+  ExpenseTracking: `Expense Management`,
+  WithdrawalTracking: `Withdraw Management`,
+  lookuptable: `System Settings`,
+  BranchMenu: `Branch`,
+  ExpenseTypeMenu: `Expense Type`,
+  AssetTypeMenu: `Account Type`,
+  LoanTypeMenu: `Loan Type`,
+  PaymentTypeMenu: `Payment Type`,
+  CurrencyTypeMenu: `Currency Type`,
+  PartnersMenu: `Partners`,
+  // ========================= End Menu Translation =====================
+
+  LoanTracking: {
+    AddTitle: `Create Loan`,
+    UpdateTitle: `Update Loan`,
+    CreateLoanTracking: `Create New Loan`,
+    EditLoanTracking: `Edit Loan`,
+    LoanTrackingList: `Loans List`,
+    New: `New Loan`,
+    Update: `Update Loan`,
+    LoanAmount: `Loan Amount`,
+    PaidAmount: `Paid Amount`,
+    RemainAmount: `Remain Amount`,
+    Placeholder: `Search Loan Records`,
   },
   CurrencyType: {
     CurrencyType: `Currency Type`,
   },
   CRUD: {
     Create: `Create`,
+    CreateLoan: `Create Loan`,
+    PayTakenLoan: `Pay Loan`,
+    TakePaidLoan: `Receive Loan`,
     Update: `Update`,
     Delete: `Delete`,
     List: `List`,
@@ -179,9 +222,9 @@ const en = {
   GeneralFields: {
     Id: 'Id',
     Name: 'Name',
-    EnglishName: 'Name in English',
-    PashtoName: 'Name in Pashto',
-    DariName: 'Name in Dari',
+    NameInEnglish: 'English Name',
+    NameInPashto: 'Pashto Name',
+    NameInDari: 'Dari Name',
     Code: 'Code',
     Action: 'Action',
     StartDate: 'Start Date',
@@ -189,6 +232,10 @@ const en = {
     Remarks: 'Remarks',
     Description: 'Description',
     Date: 'Date',
+    DueDate: 'Due Date',
+    OneDollor: '1 USD =',
+    AFN: 'AFN',
+    USD: 'USD',
   },
 
   Tostar: {
@@ -883,17 +930,6 @@ const en = {
   other_cases: `other cases`,
   item_by_roles: `item by roles`,
   only_admin_can_see_this_item: `Only admin can see this item`,
-  // Menu Translation
-  AssetManagement: `Account Management`,
-  LoanTracking: `Account Management`,
-  lookuptable: `System Settings`,
-  BranchMenu: `Branch`,
-  ExpenseTypeMenu: `Expense Type`,
-  AssetTypeMenu: `Account Type`,
-  LoanTypeMenu: `Loan Type`,
-  PaymentTypeMenu: `Payment Type`,
-  CurrencyTypeMenu: `Currency Type`,
-  PartnersMenu: `Partners`,
 };
 
 export default en;

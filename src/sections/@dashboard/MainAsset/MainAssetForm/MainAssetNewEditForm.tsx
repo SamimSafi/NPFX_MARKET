@@ -134,7 +134,7 @@ export default observer(function MainAssetNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="currencyTypeId" label={translate('MainAsset.currencyType')}>
+              <RHFSelect name="currencyTypeId" label={translate('CurrencyType.CurrencyType')}>
                 <option value="" />
                 {CurrencyTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -142,7 +142,7 @@ export default observer(function MainAssetNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
+              <RHFSelect name="branchId" label={translate('Branch.Branch')}>
                 <option value="" />
                 {BranchOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -161,14 +161,14 @@ export default observer(function MainAssetNewEditForm() {
 
               <LocalizDatePicker
                 name="depositDate"
-                label={translate('MainAsset.depositDate')}
+                label={translate('MainAsset.DepositDate')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
                 name="balanceAmount"
-                label={translate('MainAsset.balanceAmount')}
+                label={translate('MainAsset.BalanceAmount')}
                 type={'number'}
                 showAsterisk={true}
                 InputProps={{

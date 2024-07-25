@@ -201,12 +201,12 @@ const navConfig = [
         roles: ['MainAsset-GetList', 'CardDetails-GetPrintableCardList'],
         children: [
           {
-            title: 'AssetManagement',
+            title: 'AssetManagementMenu',
             path: PATH_DASHBOARD.MainAsset.list,
             roles: ['MainAsset-GetList'],
           },
           {
-            title: 'LoanTracking',
+            title: 'LoanTrackingMenu',
             path: PATH_DASHBOARD.LoanTracking.list,
             roles: ['LoanTracking-GetList'],
           },

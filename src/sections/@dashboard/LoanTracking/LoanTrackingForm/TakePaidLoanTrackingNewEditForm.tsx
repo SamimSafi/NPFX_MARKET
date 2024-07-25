@@ -157,7 +157,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                 justifyItems: 'center',
               }}
             >
-              <RHFSelect name="currencyTypeId" label={translate('MainAsset.currencyType')}>
+              <RHFSelect name="currencyTypeId" label={translate('CurrencyType.CurrencyType')}>
                 <option value="" />
                 {CurrencyTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -194,7 +194,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                   render={({ field }) => (
                     <TextField
                       {...field}
-                      label="1 USD ="
+                      label={translate('GeneralFields.OneDollor')}
                       type="text" // Changed to text to control input better
                       onChange={(e) => {
                         let { value } = e.target;
@@ -231,7 +231,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                 render={({ field }) => (
                   <RHFTextField
                     {...field}
-                    label="USD"
+                    label={translate('GeneralFields.USD')}
                     type="number"
                     onChange={(e) => {
                       const usd = parseFloat(e.target.value);
@@ -251,7 +251,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                 render={({ field }) => (
                   <RHFTextField
                     {...field}
-                    label="AFN"
+                    label={translate('GeneralFields.AFN')}
                     type="number"
                     onChange={(e) => {
                       const afn = parseFloat(e.target.value);
@@ -267,14 +267,14 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
               />
               <LocalizDatePicker
                 name="date"
-                label={translate('LoanTracking.date')}
+                label={translate('GeneralFields.Date')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
                 name="description"
-                label={translate('LoanTracking.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -289,7 +289,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                   !editMode ? <Iconify icon="eva:plus-fill" /> : <Iconify icon="eva:edit-fill" />
                 }
               >
-                {translate('CRUD.Save')}
+                {translate('CRUD.TakePaidLoan')}
               </LoadingButton>
               <LoadingButton
                 fullWidth

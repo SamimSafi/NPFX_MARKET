@@ -8,6 +8,7 @@ import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
 import { IMainAsset } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import { DateConverter } from 'src/sections/common/DateConverter';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -43,7 +44,16 @@ export default function MainAssetTableRow({
 
   index,
 }: Props) {
-  const { currencyType, ownerUserName, depositDate, balanceAmount } = row;
+  const {
+    currencyType,
+    ownerUserName,
+    depositDate,
+    branch,
+    balanceAmount,
+    assetType,
+    description,
+    code,
+  } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -58,10 +68,16 @@ export default function MainAssetTableRow({
   return (
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
+      <TableCell align="left">{assetType}</TableCell>
       <TableCell align="left">{currencyType}</TableCell>
       <TableCell align="left">{balanceAmount}</TableCell>
-      <TableCell align="left">{depositDate}</TableCell>
+      <TableCell align="left">{branch}</TableCell>
+      <TableCell align="left">
+        <DateConverter date={depositDate} />
+      </TableCell>
       <TableCell align="left">{ownerUserName}</TableCell>
+      <TableCell align="left">{description}</TableCell>
+      <TableCell align="left">{code}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

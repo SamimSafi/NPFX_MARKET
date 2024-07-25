@@ -73,17 +73,17 @@ export default observer(function LoanTrackingList() {
   const [mainAssetId, setMainAssetId] = useState<string>('');
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'currencyType', label: `${translate('GeneralFields.currencyType')}`, align: 'left' },
+    { id: 'currencyType', label: `${translate('CurrencyType.CurrencyType')}`, align: 'left' },
     // { id: 'Asset', label: `${translate('GeneralFields.Asset')}`, align: 'left' },
     { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
-    { id: 'dueDate', label: `${translate('GeneralFields.dueDate')}`, align: 'left' },
-    { id: 'partner', label: `${translate('GeneralFields.partner')}`, align: 'left' },
-    { id: 'partnerPhone', label: `${translate('GeneralFields.partnerPhone')}`, align: 'left' },
-    { id: 'userName', label: `${translate('GeneralFields.userName')}`, align: 'left' },
-    { id: 'LoanAmount', label: `${translate('GeneralFields.LoanAmount')}`, align: 'left' },
-    { id: 'paidAmount', label: `${translate('GeneralFields.paidAmount')}`, align: 'left' },
-    { id: 'remainAmount', label: `${translate('GeneralFields.remainAmount')}`, align: 'left' },
-    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
+    { id: 'dueDate', label: `${translate('GeneralFields.DueDate')}`, align: 'left' },
+    { id: 'partner', label: `${translate('Partner.Partner')}`, align: 'left' },
+    { id: 'partnerPhone', label: `${translate('Partner.PartnerPhone')}`, align: 'left' },
+    { id: 'userName', label: `${translate('User.userName')}`, align: 'left' },
+    { id: 'LoanAmount', label: `${translate('LoanTracking.LoanAmount')}`, align: 'left' },
+    { id: 'paidAmount', label: `${translate('LoanTracking.PaidAmount')}`, align: 'left' },
+    { id: 'remainAmount', label: `${translate('LoanTracking.RemainAmount')}`, align: 'left' },
+    { id: 'description', label: `${translate('GeneralFields.Description')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
@@ -277,7 +277,7 @@ export default observer(function LoanTrackingList() {
             <MyDialog
               open={openDialogTakePaidLoan}
               onClose={handleCloseTakePaidLoanConfirm}
-              title={translate('CRUD.PayLoan')}
+              title={translate('CRUD.TakePaidLoan')}
               size="md"
             >
               <TakePaidLoanTrackingNewEditForm
