@@ -70,7 +70,7 @@ export default observer(function ContractTypeList() {
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
-    { id: 'code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
+  
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {

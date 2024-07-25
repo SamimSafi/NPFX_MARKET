@@ -39,7 +39,7 @@ export default function ExpenseTracking({
 }: Props) {
   return (
     <Card {...other}>
-      <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
+      <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
@@ -58,13 +58,12 @@ export default function ExpenseTracking({
       <Divider />
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
+        {/* eslint-disable-next-line react/self-closing-comp */}
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}
-        >
-          View All
-        </Button>
+          // endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}
+        ></Button>
       </Box>
     </Card>
   );

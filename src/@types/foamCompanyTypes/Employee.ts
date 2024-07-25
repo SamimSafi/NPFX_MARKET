@@ -23,6 +23,7 @@ export interface IEmployee {
   bloodGroup?: string;
   joinDate?: Date;
   leaveDate?: string;
+  email?: string;
   leaveRemark?: string;
   personalEmail?: string;
   phoneNumber?: string;
@@ -30,6 +31,7 @@ export interface IEmployee {
   isActive?: boolean;
   profilePhoto: File | any;
   photoPath?: string;
+  branchName?: string;
   afterSubmit?: string;
 }
 

@@ -6,12 +6,10 @@ export interface ILoanTracking {
   nameInEnglish?: string;
   nameInPashto?: string;
   phone?: string;
-  partnerPhone?: string;
+
   email?: string;
   loanTypeId?: number;
-  loanAmount?: number;
-  paidAmount?: number;
-  remainAmount?: number;
+
   loanTypeName?: string;
   currencyTypeId?: number;
   currencyType?: string;

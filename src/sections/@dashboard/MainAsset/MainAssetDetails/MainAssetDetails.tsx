@@ -45,7 +45,7 @@ function TabPanel(props: TabPanelProps) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -79,6 +79,8 @@ export default function GeneralBanking() {
     loadWithdrawalTracking,
     LoadWidthrawalTracking,
     MainAssetDetail,
+    loadMainAssetChildAsset,
+    MainAssetChild,
   } = MainAssetDetailsStore;
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -115,11 +117,13 @@ export default function GeneralBanking() {
       pageSize: 2,
       mainAssetId: MainAssetDetail!.id,
     });
+    loadMainAssetChildAsset(MainAssetDetail!.id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [MainAssetDetail!.id]);
 
   // console.log(LoadMainAssetTracking.map((data) => data.balanceAmount));
-  console.log(LoadLoanTracking.map((data) => data.branchId));
+  // console.log(LoadLoanTracking.map((data) => data.branchId));
+  // console.log(MainAssetChild.map((data) => data.balanceAmount));
 
   return (
     <Page title="General: Banking">
@@ -214,7 +218,7 @@ export default function GeneralBanking() {
                   </TabPanel>
                   <TabPanel value={value} index={2} dir={theme.direction}>
                     <ExpenseTracking
-                      title="Recent Transitions"
+                      title=""
                       tableData={LoadExpenseTracking}
                       tableLabels={[
                         { id: 'expenseType', label: 'expenseType' },
@@ -227,7 +231,7 @@ export default function GeneralBanking() {
                   </TabPanel>
                   <TabPanel value={value} index={3} dir={theme.direction}>
                     <TradeTracking
-                      title="Recent Transitions"
+                      title=""
                       tableData={LoadTradeTracking}
                       tableLabels={[
                         { id: 'userName', label: 'userName' },
@@ -242,7 +246,7 @@ export default function GeneralBanking() {
                   </TabPanel>
                   <TabPanel value={value} index={4} dir={theme.direction}>
                     <WidthrawalTracking
-                      title="Recent Transitions"
+                      title=""
                       tableData={LoadWidthrawalTracking}
                       tableLabels={[
                         { id: 'userName', label: 'userName' },
@@ -316,13 +320,14 @@ export default function GeneralBanking() {
 
           <Grid item xs={12} md={4}>
             <Stack spacing={3}>
-              <MainAssetQuickTransfer title="Members balances" list={_bankingContacts} />
+              {/* <MainAssetQuickTransfer title="Members balances" list={MainAssetChild} /> */}
 
-              {/* <MainAssetContacts
-                title="Members who benefited"
+              <MainAssetContacts
+                title="Members Balance"
                 subheader="You have 122 Members whe benefited"
-                list={_bankingContacts.slice(-5)}
+                list={MainAssetChild}
               />
+              {/*
               <MainAssetContacts
                 title="Members who failed"
                 subheader="You have 122 Members who failed"

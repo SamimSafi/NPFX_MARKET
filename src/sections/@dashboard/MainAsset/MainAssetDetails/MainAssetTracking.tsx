@@ -1,11 +1,9 @@
 import { format } from 'date-fns';
-import { IconifyIcon } from '@iconify/react';
 // @mui
 import {
   Box,
   Card,
   Table,
-  Avatar,
   Button,
   Divider,
   TableRow,
@@ -19,7 +17,6 @@ import {
 // utils
 import { fCurrency } from '../../../../utils/formatNumber';
 // components
-import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 import { TableHeadCustom } from '../../../../components/table';
 import { IGetMainAssetTracking } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
@@ -42,7 +39,7 @@ export default function MainAssetTracking({
 }: Props) {
   return (
     <Card {...other}>
-      <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
+      <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
@@ -61,13 +58,12 @@ export default function MainAssetTracking({
       <Divider />
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
+        {/*  eslint-disable-next-line react/self-closing-comp */}
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}
-        >
-          View All
-        </Button>
+          // endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}
+        ></Button>
       </Box>
     </Card>
   );
@@ -174,43 +170,4 @@ function BankingRecentTransitionsRow({ row }: BankingRecentTransitionsRowProps) 
       </TableCell> */}
     </TableRow>
   );
-}
-
-// ----------------------------------------------------------------------
-
-type AvatarIconProps = {
-  icon: IconifyIcon | string;
-};
-
-function AvatarIcon({ icon }: AvatarIconProps) {
-  return (
-    <Avatar
-      sx={{
-        width: 48,
-        height: 48,
-        color: 'text.secondary',
-        bgcolor: 'background.neutral',
-      }}
-    >
-      <Iconify icon={icon} width={24} height={24} />
-    </Avatar>
-  );
-}
-
-// ----------------------------------------------------------------------
-
-function renderAvatar(category: string, avatar: string | null) {
-  if (category === 'Books') {
-    return <AvatarIcon icon={'eva:book-fill'} />;
-  }
-  if (category === 'Beauty & Health') {
-    return <AvatarIcon icon={'eva:heart-fill'} />;
-  }
-  return avatar ? (
-    <Avatar
-      alt={category}
-      src={avatar}
-      sx={{ width: 48, height: 48, boxShadow: (theme) => theme.customShadows.z8 }}
-    />
-  ) : null;
 }

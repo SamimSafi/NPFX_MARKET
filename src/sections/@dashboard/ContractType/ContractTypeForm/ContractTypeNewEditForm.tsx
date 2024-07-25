@@ -39,12 +39,16 @@ export default observer(function ContractTypeNewEditForm() {
     englishName: Yup.string().required(`${translate('Validation.EnglishName')}`),
     pashtoName: Yup.string().required(`${translate('Validation.PashtoName')}`),
     dariName: Yup.string().required(`${translate('Validation.DariName')}`),
+    code: Yup.string().required(`${translate('Validation.code')}`),
   });
 
   const defaultValues = useMemo<IContractType>(
     () => ({
       id: selectedContractType?.id,
-      name: selectedContractType?.name || '',
+      englishName: selectedContractType?.englishName || '',
+      dariName: selectedContractType?.dariName || '',
+      pashtoName: selectedContractType?.pashtoName || '',
+      code: selectedContractType?.code || '',
     }),
     [selectedContractType]
   );
@@ -121,7 +125,7 @@ export default observer(function ContractTypeNewEditForm() {
               />
               <RHFTextField
                 name="code"
-                label={translate('GeneralFields.Code')}
+                label={translate('GeneralFields.code')}
                 showAsterisk={true}
                 autoFocus
               />

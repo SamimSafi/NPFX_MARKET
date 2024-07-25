@@ -85,9 +85,9 @@ export default observer(function ContractDetailsList() {
   const [ContractDetailsId, setContractDetailsId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('Employee.Id')}`, align: 'left' },
-    // { id: 'employeeName', label: `${translate('Employee.Name')}`, align: 'left' },
+    { id: 'employeeName', label: `${translate('Employee.Name')}`, align: 'left' },
     { id: 'contractType', label: `${translate('ContractType.ContractType')}`, align: 'left' },
-     { id: 'branchName', label: `${translate('branch.branchName')}`, align: 'left' },
+    { id: 'branchName', label: `${translate('branch.branchName')}`, align: 'left' },
     { id: 'positionTitle', label: `${translate('PositionTitle.PositionTitle')}`, align: 'left' },
     { id: 'salaryPerHour', label: `${translate('ContractType.salaryPerHour')}`, align: 'left' },
     { id: 'startDate', label: `${translate('GeneralFields.StartDate')}`, align: 'left' },

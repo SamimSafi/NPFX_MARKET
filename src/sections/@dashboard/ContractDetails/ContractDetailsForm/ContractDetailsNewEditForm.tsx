@@ -12,43 +12,25 @@ import { PATH_DASHBOARD } from '../../../../routes/paths';
 import useLocales from 'src/hooks/useLocales';
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFSelect, RHFSwitch, RHFTextField } from '../../../../components/hook-form';
+import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { DatePicker, LoadingButton, LocalizationProvider } from '@mui/lab';
-import {
-  Box,
-  Button,
-  Card,
-  FormControlLabel,
-  Grid,
-  Stack,
-  Switch,
-  TextField,
-  Alert,
-} from '@mui/material';
-import { newDate } from 'date-fns-jalali';
+import { LoadingButton } from '@mui/lab';
+import { Box, Button, Card, FormControlLabel, Grid, Stack, Switch, Alert } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import { faJalaliIR } from 'date-fns-jalali/locale';
-import { enUS, faIR } from 'date-fns/locale';
-import { size } from 'lodash';
-import AdapterJalali from '@date-io/date-fns-jalali';
-import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
+
 import { IContractDetails } from 'src/@types/foamCompanyTypes/ContractDetails';
 import useLocalStorage from 'src/hooks/useLocalStorage';
-import CustomRHFAutocomplete from 'src/components/hook-form/CustomRHFAutocomplete';
-import uuid from 'react-uuid';
-import Label from 'src/components/Label';
+import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
+
 // ----------------------------------------------------------------------
 
 export default observer(function ContractDetailsNewEditForm() {
   const { ContractDetailsStore, commonDropdown } = useStore();
   const [EmpData] = useLocalStorage('DetailsData', null);
   const [checked, setChecked] = useState(false);
+  const [branch, setBranch] = useState<number>();
   const { translate } = useLocales();
-
-  const [departmentName, setDepartmentName] = useState<string | undefined>('');
-  const [positionTitleName, setPositionTitleName] = useState<string | undefined>('');
 
   const {
     createContractDetails,
@@ -64,10 +46,12 @@ export default observer(function ContractDetailsNewEditForm() {
   const {
     loadContractTypeDDL,
     ContractTypeOption,
-    loadPositionTitleDDL,
+    loadCurrencyTypeDDL,
     PositionTitleOption,
-    loadJobPositionDDL,
-    JobPositionOption,
+    CurrencyTypeOption,
+    loadPositionTitleDDL,
+    BranchOption,
+    loadBranchDDL,
   } = commonDropdown;
 
   const navigate = useNavigate();
@@ -93,18 +77,14 @@ export default observer(function ContractDetailsNewEditForm() {
     () => ({
       id: selectedContractDetails?.id,
       employeeProfileId: EmpData?.id || undefined,
+      currencyTypeId: selectedContractDetails?.currencyTypeId || undefined,
+      positionTitleId: selectedContractDetails?.positionTitleId || undefined,
+      branchId: selectedContractDetails?.branchId || undefined,
+      salaryAmount: selectedContractDetails?.salaryAmount || undefined,
       contractTypeId:
         selectedContractDetails?.contractTypeId ||
         EmpCurrentContractDetails?.contractTypeId ||
         undefined,
-      positionTitleId:
-        selectedContractDetails?.positionTitleId ||
-        EmpCurrentContractDetails?.positionTitleId ||
-        undefined,
-      // jobPositionId:
-      //   selectedContractDetails?.jobPositionId ||
-      //   EmpCurrentContractDetails?.jobPositionId ||
-      //   undefined,
       startDate:
         selectedContractDetails?.startDate || EmpCurrentContractDetails?.startDate || new Date(),
       endDate: selectedContractDetails?.endDate || EmpCurrentContractDetails?.endDate || undefined,
@@ -135,8 +115,6 @@ export default observer(function ContractDetailsNewEditForm() {
   // const [contractType, setContractType] = useState(0);
 
   const onSubmit = (data: IContractDetails) => {
-    data.positionTitleId = val.positionTitleId;
-
     if (data.id! === undefined) {
       ///create
       createContractDetails(data)
@@ -194,11 +172,11 @@ export default observer(function ContractDetailsNewEditForm() {
 
   useEffect(() => {
     loadContractTypeDDL();
-  }, [loadContractTypeDDL, loadPositionTitleDDL, loadJobPositionDDL, val.contractTypeId]);
-
-  useEffect(() => {
-    setValue('positionTitleName', positionTitleName);
-  }, [positionTitleName]);
+    loadCurrencyTypeDDL();
+    loadPositionTitleDDL(branch);
+    loadBranchDDL();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [val.contractTypeId, branch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (val.contractTypeId == 19 && editMode !== true) {
@@ -239,11 +217,30 @@ export default observer(function ContractDetailsNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
+              <RHFSelect
+                name="branchId"
+                label={`${translate('PositionTitle.branchId')}` + ' ' + '*'}
+                onChange={(e) => {
+                  setBranch(parseInt(e.target.value));
+                  setValue('branchId', parseInt(e.target.value));
+                }}
+              >
+                <option value="" />
+                {BranchOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
 
               <RHFSelect
                 name="positionTitleId"
-                label={`${translate('PositionTitle.PositionTitle')}` + ' ' + '*'}
-                // onChange={(e) => handleDocumentType(parseInt(e.target.value))}
+                label={translate('ContractType.positionTitleId')}
+                showAsterisk={true}
+                // onChange={(e) => {
+                //   setContractType(parseInt(e.target.value));
+                //   setValue('contractTypeId', parseInt(e.target.value));
+                // }}
               >
                 <option value="" />
                 {PositionTitleOption.map((op) => (
@@ -253,6 +250,20 @@ export default observer(function ContractDetailsNewEditForm() {
                 ))}
               </RHFSelect>
 
+              <RHFSelect
+                name="currencyTypeId"
+                label={`${translate('PositionTitle.currencyTypeId')}` + ' ' + '*'}
+                // onChange={(e) => handleDocumentType(parseInt(e.target.value))}
+              >
+                <option value="" />
+                {ContractTypeOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
+
+              <RHFTextField name="salaryAmount" label={translate('GeneralFields.salaryAmount')} />
               {/* <RHFSelect
                 name="branchId"
                 label={translate('JobPosition.Branch')}

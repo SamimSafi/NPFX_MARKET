@@ -48,6 +48,7 @@ import { IEmployee } from 'src/@types/foamCompanyTypes/Employee';
 export default observer(function EmployeeNewEditForm() {
   const language = window.localStorage.getItem('i18nextLng');
   const { EmployeeStore, commonDropdown } = useStore();
+  const [checked, setChecked] = useState(false);
   const { translate } = useLocales();
   const [isTrue, setIsTrue] = useState<boolean>(true);
   const [isImageUpdate, setIsImageUpdated] = useState(false);
@@ -134,7 +135,7 @@ export default observer(function EmployeeNewEditForm() {
     formState: { errors, isSubmitting },
   } = methods;
   const val = watch();
-
+console.log(val.isActive)
   const onSubmit = (data: IEmployee) => {
     data.phoneNumber = muiPhone.replace(/\s+/g, '');
     data.emergencyPhoneNumber = muiEmergencyPhone.replace(/\s+/g, '');
@@ -210,14 +211,14 @@ export default observer(function EmployeeNewEditForm() {
     }
   };
 
-  useEffect(() => {
-    let value = String(val.isActive);
-    // eslint-disable-next-line eqeqeq
-    if (value != '0') {
-      setIsTrue(!isTrue);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [val.isActive]);
+  // useEffect(() => {
+  //   let value = String(val.isActive);
+  //   // eslint-disable-next-line eqeqeq
+  //   if (value != '0') {
+  //     setIsTrue(!isTrue);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [val.isActive]);
 
   useEffect(() => {
     if (editMode) {
@@ -243,6 +244,10 @@ export default observer(function EmployeeNewEditForm() {
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [departmentName]);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+  };
 
   const handleDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -547,6 +552,31 @@ export default observer(function EmployeeNewEditForm() {
                   name="emergencyPhoneNumber"
                   customFlag={CustomFlag}
                 />
+
+                {editMode ? (
+                  <Controller
+                    name="isActive"
+                    control={control}
+                    render={({ field }) => (
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            {...field}
+                            onChange={(e) => {
+                              field.onChange(e); // Notify React Hook Form of the value change
+                              handleChange(e); // Handle the switch state change
+                            }}
+                            checked={field.value}
+                          />
+                        }
+                        label={translate('employee.isActive')}
+                        labelPlacement="end"
+                      />
+                    )}
+                  />
+                ) : (
+                  <></>
+                )}
 
                 {/* <RHFSelect
                   name="genderId"

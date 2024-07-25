@@ -39,7 +39,7 @@ export default function TradeTracking({
 }: Props) {
   return (
     <Card {...other}>
-      <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
+      <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
@@ -58,13 +58,8 @@ export default function TradeTracking({
       <Divider />
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
-        <Button
-          size="small"
-          color="inherit"
-          endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}
-        >
-          View All
-        </Button>
+        {/* eslint-disable-next-line react/self-closing-comp */}
+        <Button size="small" color="inherit"></Button>
       </Box>
     </Card>
   );

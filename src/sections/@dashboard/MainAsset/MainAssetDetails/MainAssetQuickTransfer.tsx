@@ -26,6 +26,8 @@ import {
 import { fCurrency } from '../../../../utils/formatNumber';
 // components
 import { CarouselArrows } from '../../../../components/carousel';
+import { IMainAssetChild } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
+import _mock from 'src/_mock';
 
 // ----------------------------------------------------------------------
 
@@ -40,12 +42,7 @@ const STEP = 50;
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  list: {
-    id: string;
-    name: string;
-    email: string;
-    avatar: string;
-  }[];
+  list: IMainAssetChild[];
 }
 
 export default function MainAssetQuickTransfer({ title, subheader, list, sx, ...other }: Props) {
@@ -163,12 +160,12 @@ export default function MainAssetQuickTransfer({ title, subheader, list, sx, ...
               }}
             >
               <Slider ref={carouselRef} {...sliderSettings}>
-                {list.map((contact, index) => (
-                  <Box key={contact.id} sx={{ py: 5 }}>
+                {list.map((data, index) => (
+                  <Box key={data.id} sx={{ py: 5 }}>
                     <Box sx={{ width: 40, height: 40 }}>
-                      <Tooltip key={contact.id} title={contact.name} arrow placement="top">
+                      <Tooltip key={data.id} title={data.ownerUserName} arrow placement="top">
                         <Avatar
-                          src={contact.avatar}
+                          src={_mock.image.avatar(index)}
                           sx={{
                             opacity: 0.48,
                             cursor: 'pointer',

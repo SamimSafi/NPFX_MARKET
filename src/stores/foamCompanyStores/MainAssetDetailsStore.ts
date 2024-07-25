@@ -2,6 +2,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import agentMainAsset from '../../api/agent';
 import {
   IGetMainAssetTracking,
+  IMainAssetChild,
   IMainAssetTrackingDetails,
   IMainAssetTrackingParam,
 } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
@@ -33,6 +34,8 @@ export default class MainAssetDetailsStore {
   LoadWidthrawalTracking: IWithdrawalTracking[] = [];
 
   MainAssetDetail: IMainAssetTrackingDetails | undefined;
+
+  MainAssetChild: IMainAssetChild[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -98,6 +101,17 @@ export default class MainAssetDetailsStore {
       const axiosResponse = await agentMainAsset.MainAsset.detail(id);
       runInAction(() => {
         this.MainAssetDetail = axiosResponse;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  loadMainAssetChildAsset = async (id?: string) => {
+    try {
+      const axiosResponse = await agentMainAsset.MainAsset.GetChildAssetDDL(id);
+      runInAction(() => {
+        this.MainAssetChild = axiosResponse.data;
       });
     } catch (error) {
       console.log(error);

@@ -2,18 +2,20 @@ export interface IContractDetails {
   id?: number;
   employeeProfileId?: number;
   contractTypeId?: number;
+  currencyTypeId?: number;
   positionTitleId?: number;
   branchId?: number;
-  salaryPerHour?: number;
+  salaryAmount?: number;
   startDate?: Date;
   endDate?: Date;
   isCurrent?: boolean;
   remarks?: string;
-  branch?: string;
-  contractType?: string;
   employeeName?: string;
+  positionTitle?: string;
+  contractType?: string;
+  salaryPerHour?: string;
+  branch?: string;
   afterSubmit?: string;
-  positionTitleName?: string;
 }
 
 export interface IContractDetailsParams {
