@@ -35,7 +35,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewMainAssetSchema = Yup.object().shape({
-    parentId: Yup.string().required(`${translate('Validation.parent')}`),
+    // parentId: Yup.string().required(`${translate('Validation.parent')}`),
     toUserId: Yup.string().required(`${translate('Validation.userId')}`),
     branchId: Yup.number().required(`${translate('Validation.branchId')}`),
     depositDate: Yup.date().required(`${translate('Validation.DariName')}`),

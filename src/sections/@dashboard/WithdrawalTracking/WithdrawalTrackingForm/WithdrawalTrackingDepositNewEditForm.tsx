@@ -41,7 +41,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
   const { enqueueSnackbar } = useSnackbar();
 
   const NewWithdrawalTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.number().required(`${translate('Validation.EnglishName')}`),
+    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
     withdrawalAmount: Yup.number().required(`${translate('Validation.Code')}`),
   });

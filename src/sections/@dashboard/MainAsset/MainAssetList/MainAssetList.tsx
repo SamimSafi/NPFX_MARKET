@@ -83,10 +83,14 @@ export default observer(function MainAssetList() {
   const [MainAssetId, setMainAssetId] = useState<string>('');
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'Currency', label: `${translate('GeneralFields.Name')}`, align: 'left' },
-    { id: 'balanceAmount', label: `${translate('GeneralFields.balanceAmount')}`, align: 'left' },
-    { id: 'depositDate', label: `${translate('GeneralFields.Date')}`, align: 'left' },
-    { id: 'owneruser', label: `${translate('GeneralFields.ownerUser')}`, align: 'left' },
+    { id: 'AssetType', label: `${translate('MainAsset.AssetType')}`, align: 'left' },
+    { id: 'Currency', label: `${translate('CurrencyType.CurrencyType')}`, align: 'left' },
+    { id: 'balanceAmount', label: `${translate('MainAsset.BalanceAmount')}`, align: 'left' },
+    { id: 'branch', label: `${translate('Branch.Branch')}`, align: 'left' },
+    { id: 'depositDate', label: `${translate('MainAsset.DepositDate')}`, align: 'left' },
+    { id: 'owneruser', label: `${translate('MainAsset.Owneruser')}`, align: 'left' },
+    { id: 'Description', label: `${translate('MainAsset.Description')}`, align: 'left' },
+    { id: 'Code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
