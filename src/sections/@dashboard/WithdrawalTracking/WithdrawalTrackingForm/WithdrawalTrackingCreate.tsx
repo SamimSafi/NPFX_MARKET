@@ -40,7 +40,7 @@ export default function WithdrawalTrackingCreate() {
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
               name: `${translate('WithdrawalTracking.WithdrawalTrackingList')}`,
-              href: PATH_DASHBOARD.ContractDetails.list,
+              href: PATH_DASHBOARD.WithdrawalTracking.list,
             },
             {
               name: !isEdit

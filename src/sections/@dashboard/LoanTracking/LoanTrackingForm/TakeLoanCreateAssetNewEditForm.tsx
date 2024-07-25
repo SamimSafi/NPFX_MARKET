@@ -3,11 +3,11 @@ import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, Stack } from '@mui/material';
+import { Box, Card, FormControlLabel, Grid, Stack, Switch } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -20,17 +20,18 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
+import CancelIcon from '@mui/icons-material/Cancel';
 // ----------------------------------------------------------------------
 
-export default observer(function TakeLoanTrackingNewEditForm() {
-  const { LoanTrackingStore, commonDropdown } = useStore();
+export default observer(function TakeLoanCreateAssetNewEditForm() {
+  const { LoanTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
   const {
     TakeLoanCreateAsset,
     updateLoanTracking,
+    clearSelectedLoanTracking,
     editMode,
     selectedLoanTracking,
-    clearSelectedLoanTracking,
   } = LoanTrackingStore;
   const {
     loadLoanTypeDDL,
@@ -39,27 +40,21 @@ export default observer(function TakeLoanTrackingNewEditForm() {
     PartnersOption,
     loadCurrencyTypeDDL,
     CurrencyTypeOption,
-    loadBranchDDL,
-    BranchOption,
-    loadUserDropdown,
-    UserOption,
   } = commonDropdown;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewLoanTrackingSchema = Yup.object().shape({
     currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    userId: Yup.string().required(`${translate('Validation.PashtoName')}`),
     loanTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
-    loanAmount: Yup.number().required(`${translate('Validation.Code')}`),
+    loanAmount: Yup.number().required(`${translate('Validation.loanAmount')}`),
   });
 
   const defaultValues = useMemo<ILoanTracking>(
     () => ({
       id: selectedLoanTracking?.id,
       partnerId: selectedLoanTracking?.partnerId,
-      userId: selectedLoanTracking?.userId,
       currencyTypeId: selectedLoanTracking?.currencyTypeId,
       loanTypeId: selectedLoanTracking?.loanTypeId,
       description: selectedLoanTracking?.description || '',
@@ -94,14 +89,16 @@ export default observer(function TakeLoanTrackingNewEditForm() {
       TakeLoanCreateAsset(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.LoanTracking.list);
+        // MainAssetStore.setOpenCloseDialogCreateLoan();
       });
     } else {
       ///update
       updateLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        clearSelectedLoanTracking();
+        navigate(PATH_DASHBOARD.LoanTracking.list);
       });
     }
   };
@@ -115,19 +112,14 @@ export default observer(function TakeLoanTrackingNewEditForm() {
       loadLoanTypeDDL();
       loadPartnersDDL();
       loadCurrencyTypeDDL();
-      loadBranchDDL();
     }
-  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadCurrencyTypeDDL, loadBranchDDL]);
-
-  useEffect(() => {
-    loadUserDropdown(val.branchId);
-  }, [loadUserDropdown, val.branchId]);
+  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadCurrencyTypeDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={12}>
-          <Card sx={{ p: 3 }}>
+      <Card>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={12}>
             <Box
               sx={{
                 display: 'grid',
@@ -146,7 +138,6 @@ export default observer(function TakeLoanTrackingNewEditForm() {
                 ))}
               </RHFSelect>
               {/* Partner Name */}
-
               {val.partnerId ? (
                 <></>
               ) : (
@@ -178,6 +169,14 @@ export default observer(function TakeLoanTrackingNewEditForm() {
                 </>
               )}
 
+              <RHFSelect name="currencyTypeId" label={translate('LoanTracking.currencyType')}>
+                <option value="" />
+                {CurrencyTypeOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
               <RHFSelect name="loanTypeId" label={translate('LoanTracking.loanType')}>
                 <option value="" />
                 {LoanTypeOption.map((op) => (
@@ -186,13 +185,12 @@ export default observer(function TakeLoanTrackingNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-
               <RHFTextField
                 name="loanAmount"
                 label={translate('LoanTracking.loanAmount')}
-                type={'number'}
                 showAsterisk={true}
                 autoFocus
+                type="number"
               />
 
               <LocalizDatePicker
@@ -207,32 +205,6 @@ export default observer(function TakeLoanTrackingNewEditForm() {
                 control={control}
                 showAsterisk={true}
               />
-
-              <RHFSelect name="currencyTypeId" label={translate('LoanTracking.currencyType')}>
-                <option value="" />
-                {CurrencyTypeOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect>
-              <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
-                <option value="" />
-                {BranchOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect>
-
-              <RHFSelect name="userId" label={translate('MainAsset.User')}>
-                <option value="" />
-                {UserOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect>
               <RHFTextField
                 name="description"
                 label={translate('LoanTracking.description')}
@@ -240,34 +212,40 @@ export default observer(function TakeLoanTrackingNewEditForm() {
                 autoFocus
               />
             </Box>
-            <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
-              <LoadingButton
-                fullWidth
-                type="submit"
-                variant="contained"
-                loading={isSubmitting}
-                startIcon={
-                  !editMode ? <Iconify icon="eva:plus-fill" /> : <Iconify icon="eva:edit-fill" />
-                }
-              >
-                {!editMode ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
-              </LoadingButton>
-              <Button
-                fullWidth
-                variant="contained"
-                color="error"
-                startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
-                onClick={() => {
-                  clearSelectedLoanTracking();
-                  navigate(PATH_DASHBOARD.LoanTracking.list);
-                }}
-              >
-                {translate('CRUD.BackToList')}
-              </Button>
-            </Stack>
-          </Card>
+            <Box
+              sx={{
+                ml: 4,
+                mt: 4,
+                mb: 4,
+              }}
+            >
+              <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
+                <LoadingButton
+                  fullWidth
+                  type="submit"
+                  variant="contained"
+                  loading={isSubmitting}
+                  startIcon={<Iconify icon="mdi:cash-edit" />}
+                >
+                  {translate('CRUD.CreateLoan')}
+                </LoadingButton>
+                <LoadingButton
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
+                  onClick={() => {
+                    navigate(PATH_DASHBOARD.LoanTracking.list);
+                    clearSelectedLoanTracking();
+                  }}
+                >
+                  {translate('CRUD.BackToList')}
+                </LoadingButton>
+              </Stack>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
+      </Card>
     </FormProvider>
   );
 });

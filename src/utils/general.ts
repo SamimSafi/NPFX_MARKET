@@ -76,3 +76,8 @@ export function stripHtmlTags(html: any, isSubstring?: boolean) {
   temp.innerHTML = html;
   return isSubstring !== false ? temp.textContent!.substring(0, 30) : temp.textContent!;
 }
+
+export function roundOff(number: number, decimalPlaces = 0) {
+  const factor = Math.pow(10, decimalPlaces);
+  return Math.round(number * factor) / factor;
+}

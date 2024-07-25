@@ -16,6 +16,7 @@ import {
   IDDL,
   IGetActiveEmp,
   IGetParentEmp,
+  MainAssetDropdown,
 } from 'src/@types/commonDropdownTypes';
 
 import agent from 'src/api/agent';
@@ -25,6 +26,8 @@ export default class commonDroptdown {
   LoanTypeOption: SelectControl[] = []; // for Department Type dropdown
 
   PayTypeOption: SelectControl[] = []; // for Department Type dropdown
+
+  MainAssetOption: SelectControl[] = []; // for Department Type dropdown
 
   PartnersOption: SelectControl[] = []; // for Department Type dropdown
 
@@ -617,5 +620,28 @@ export default class commonDroptdown {
       return optRow;
     });
     this.PayTypeOption = op;
+  };
+
+  // loadMainAssetDDL
+  loadMainAssetDDL = async () => {
+    try {
+      const result = await agent.MainAsset.DDl();
+
+      this.setMainAssetDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setMainAssetDDL = (data: MainAssetDropdown[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.code + ('(' + op.assetType + ')'),
+        value: op.id,
+        currencyTypeId: op.currencyTypeId,
+      };
+      return optRow;
+    });
+    this.MainAssetOption = op;
   };
 }

@@ -1,5 +1,6 @@
 export interface IMainAsset {
   id?: string;
+  assetTypeId?: number;
   currencyTypeId?: number;
   currencyType?: string;
   branchId?: number;

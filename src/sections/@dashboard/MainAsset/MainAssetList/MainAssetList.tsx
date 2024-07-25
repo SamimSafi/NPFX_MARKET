@@ -31,6 +31,8 @@ import { IMainAsset } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 import DepositToNewEditForm from '../MainAssetForm/DepositToNewEditForm';
 import LoanTrackingNewEditForm from '../../LoanTracking/LoanTrackingForm/LoanTrackingNewEditForm';
 import TradeTrackingNewEditForm from '../../TradeTracking/TradeTrackingForm/TradeTrackingNewEditForm';
+import WithdrawalTrackingDepositNewEditForm from '../../WithdrawalTracking/WithdrawalTrackingForm/WithdrawalTrackingDepositNewEditForm';
+import WithdrawalTrackingNewEditForm from '../../WithdrawalTracking/WithdrawalTrackingForm/WithdrawalTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -55,6 +57,10 @@ export default observer(function MainAssetList() {
     setOpenCloseDialogCreateTrade,
     openDialogCreateTrade,
     openDialogCreateLoan,
+    setOpenCloseDialogDepositCash,
+    openDialogDepositCash,
+    setOpenCloseDialogWithdrawCash,
+    openDialogWithdrawCash,
   } = MainAssetStore;
   const {
     dense,
@@ -132,6 +138,24 @@ export default observer(function MainAssetList() {
   };
   const handleCloseCreateTradeConfirm = () => {
     setOpenCloseDialogCreateTrade();
+  };
+
+  // Deposit Cash
+  const handleDepositCashOpenConfirm = (id: string) => {
+    setOpenCloseDialogDepositCash();
+    setMainAssetId(id);
+  };
+  const handleCloseDepositCashConfirm = () => {
+    setOpenCloseDialogDepositCash();
+  };
+
+  // Withdraw Cash
+  const handleWithdrawCashOpenConfirm = (id: string) => {
+    setOpenCloseDialogWithdrawCash();
+    setMainAssetId(id);
+  };
+  const handleCloseWithdrawCashConfirm = () => {
+    setOpenCloseDialogWithdrawCash();
   };
 
   const handleEditRow = (id: string) => {
@@ -279,6 +303,8 @@ export default observer(function MainAssetList() {
                         onDepositToUser={() => handleDepositToUserOpenConfirm(row.id!)}
                         onCreateLoan={() => handleCreateLoanOpenConfirm(row.id!)}
                         onCreateTrade={() => handleCreateTradeOpenConfirm(row.id!)}
+                        onDepositCash={() => handleDepositCashOpenConfirm(row.id!)}
+                        onWithdrawCash={() => handleWithdrawCashOpenConfirm(row.id!)}
                         onEditRow={() => handleEditRow(row.id!)}
                         onDetailsRow={() => handleDetail(row.id!)}
                       />
@@ -326,7 +352,7 @@ export default observer(function MainAssetList() {
             <MyDialog
               open={openDialogDeposit}
               onClose={handleCloseDepositConfirm}
-              title={translate('CRUD.DepositToUser')}
+              title={translate('CRUD.TransferMoney')}
               size="md"
             >
               <DepositToNewEditForm asssetID={MainAssetId!} />
@@ -349,6 +375,24 @@ export default observer(function MainAssetList() {
             >
               <TradeTrackingNewEditForm asssetID={MainAssetId!} />
             </MyDialog>
+            <MyDialog
+              open={openDialogDepositCash}
+              onClose={handleCloseDepositCashConfirm}
+              title={translate('CRUD.DepositCash')}
+              size="md"
+            >
+              <WithdrawalTrackingDepositNewEditForm asssetID={MainAssetId} />
+            </MyDialog>
+
+            <MyDialog
+              open={openDialogWithdrawCash}
+              onClose={handleCloseWithdrawCashConfirm}
+              title={translate('CRUD.WithdrawCash')}
+              size="md"
+            >
+              <WithdrawalTrackingNewEditForm asssetID={MainAssetId} />
+            </MyDialog>
+
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}
               label={translate('Pagination.Dense')}

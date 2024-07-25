@@ -20,11 +20,15 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { IWithdrawalTracking } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
+import CancelIcon from '@mui/icons-material/Cancel';
 // ----------------------------------------------------------------------
-
-export default observer(function WithdrawalTrackingNewEditForm() {
-  const { WithdrawalTrackingStore } = useStore();
+interface Props {
+  asssetID?: string;
+}
+export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Props) {
+  const { WithdrawalTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
+  const { MainAssetOption, loadMainAssetDDL } = commonDropdown;
   const {
     createWithdrawalTracking,
     updateWithdrawalTracking,
@@ -36,27 +40,20 @@ export default observer(function WithdrawalTrackingNewEditForm() {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewWithdrawalTrackingSchema = Yup.object().shape({
-    assetId: Yup.number().required(`${translate('Validation.EnglishName')}`),
-    currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    userId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    loanTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
+    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
-    dueDate: Yup.date().required(`${translate('Validation.DariName')}`),
     withdrawalAmount: Yup.number().required(`${translate('Validation.Code')}`),
   });
 
   const defaultValues = useMemo<IWithdrawalTracking>(
     () => ({
       id: selectedWithdrawalTracking?.id,
-      mainAssetId: selectedWithdrawalTracking?.mainAssetId,
-      userId: selectedWithdrawalTracking?.userId,
-      currencyTypeId: selectedWithdrawalTracking?.currencyTypeId,
-      dueDate: selectedWithdrawalTracking?.dueDate,
+      mainAssetId: selectedWithdrawalTracking?.mainAssetId || asssetID,
       description: selectedWithdrawalTracking?.description || '',
       date: selectedWithdrawalTracking?.date || new Date().toLocaleDateString(),
       withdrawalAmount: selectedWithdrawalTracking?.withdrawalAmount,
     }),
-    [selectedWithdrawalTracking]
+    [selectedWithdrawalTracking, asssetID]
   );
 
   const methods = useForm<IWithdrawalTracking>({
@@ -64,24 +61,13 @@ export default observer(function WithdrawalTrackingNewEditForm() {
     defaultValues,
   });
 
-  const bloodGroup = [
-    { title: 'A+', value: 'A+' },
-    { title: 'A-', value: 'A-' },
-    { title: 'B+', value: 'B+' },
-    { title: 'B-', value: 'B-' },
-    { title: 'O+', value: 'O+' },
-    { title: 'O-', value: 'O-' },
-    { title: 'AB+', value: 'AB+' },
-    { title: 'AB-', value: 'AB-' },
-  ];
-
   const {
     reset,
     handleSubmit,
     formState: { isSubmitting },
     control,
   } = methods;
-
+  const { setOpenCloseDialogWithdrawCash } = MainAssetStore;
   const onSubmit = (data: IWithdrawalTracking) => {
     if (data.id! === undefined) {
       ///create
@@ -107,7 +93,8 @@ export default observer(function WithdrawalTrackingNewEditForm() {
     if (!editMode) {
       reset(defaultValues);
     }
-  }, [reset, editMode, defaultValues]);
+    loadMainAssetDDL();
+  }, [reset, editMode, defaultValues, loadMainAssetDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -122,31 +109,14 @@ export default observer(function WithdrawalTrackingNewEditForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="assetId" label={translate('WithdrawalTracking.AssetType')}>
+              <RHFSelect name="mainAssetId" label={translate('WithdrawalTracking.Account')}>
                 <option value="" />
-                {bloodGroup.map((op) => (
+                {MainAssetOption.map((op) => (
                   <option key={op.value} value={op.value}>
-                    {op.title}
+                    {op.text}
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="currencyTypeId" label={translate('WithdrawalTracking.currencyType')}>
-                <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.title}
-                  </option>
-                ))}
-              </RHFSelect>
-              <RHFSelect name="userId" label={translate('WithdrawalTracking.user')}>
-                <option value="" />
-                {bloodGroup.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.title}
-                  </option>
-                ))}
-              </RHFSelect>
-
               <LocalizDatePicker
                 name="date"
                 label={translate('WithdrawalTracking.date')}
@@ -184,18 +154,32 @@ export default observer(function WithdrawalTrackingNewEditForm() {
               >
                 {!editMode ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
               </LoadingButton>
-              <Button
-                fullWidth
-                variant="contained"
-                color="error"
-                startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
-                onClick={() => {
-                  clearSelectedWithdrawalTracking();
-                  navigate(PATH_DASHBOARD.ExpenseTracking.list);
-                }}
-              >
-                {translate('CRUD.BackToList')}
-              </Button>
+
+              {asssetID !== undefined ? (
+                <LoadingButton
+                  fullWidth
+                  variant="contained"
+                  size="small"
+                  onClick={() => setOpenCloseDialogWithdrawCash()}
+                  color="secondary"
+                  startIcon={<CancelIcon />}
+                >
+                  {translate('CRUD.Cancle')}
+                </LoadingButton>
+              ) : (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="error"
+                  startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
+                  onClick={() => {
+                    clearSelectedWithdrawalTracking();
+                    navigate(PATH_DASHBOARD.WithdrawalTracking.list);
+                  }}
+                >
+                  {translate('CRUD.BackToList')}
+                </Button>
+              )}
             </Stack>
           </Card>
         </Grid>

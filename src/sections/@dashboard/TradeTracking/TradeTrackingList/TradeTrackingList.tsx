@@ -82,7 +82,7 @@ export default observer(function TradeTrackingList() {
       TradeTrackingearch({
         pageIndex: 0,
         pageSize: rowsPerPage,
-        name: filterName,
+        searchBy: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
@@ -100,7 +100,7 @@ export default observer(function TradeTrackingList() {
   };
   const handleEditRow = (id: number) => {
     getTradeTrackingFromRegistry(id);
-    navigate(PATH_DASHBOARD.ContractType.edit);
+    navigate(PATH_DASHBOARD.TradeTracking.edit);
   };
 
   // const handleDelete = () => {
@@ -264,7 +264,7 @@ function applySortFilter({
   if (filterName) {
     tableData = tableData.filter(
       (item: Record<string, any>) =>
-        item.search.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+        item.searchBy.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
     );
   }
 

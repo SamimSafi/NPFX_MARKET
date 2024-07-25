@@ -14,13 +14,32 @@ type Props = {
   row: ILoanTracking;
   // selected: boolean;
   onEditRow: VoidFunction;
-  //onSelectRow: VoidFunction;
+  onPayTakenLoanClicked: VoidFunction;
+  onTakePaidLoanClicked: VoidFunction;
   onDeleteRow: VoidFunction;
   index: any;
 };
 
-export default function LoanTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { currencyType, date, dueDate, partner, phone, description, userName, loanAmount } = row;
+export default function LoanTrackingTableRow({
+  row,
+  onEditRow,
+  onDeleteRow,
+  onPayTakenLoanClicked,
+  onTakePaidLoanClicked,
+  index,
+}: Props) {
+  const {
+    currencyType,
+    date,
+    dueDate,
+    partner,
+    partnerPhone,
+    description,
+    userName,
+    loanAmount,
+    paidAmount,
+    remainAmount,
+  } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -40,10 +59,12 @@ export default function LoanTrackingTableRow({ row, onEditRow, onDeleteRow, inde
       <TableCell align="left">{date}</TableCell>
       <TableCell align="left">{dueDate}</TableCell>
       <TableCell align="left">{partner}</TableCell>
-      <TableCell align="left">{phone}</TableCell>
-      <TableCell align="left">{description}</TableCell>
+      <TableCell align="left">{partnerPhone}</TableCell>
       <TableCell align="left">{userName}</TableCell>
       <TableCell align="left">{loanAmount}</TableCell>
+      <TableCell align="left">{paidAmount}</TableCell>
+      <TableCell align="left">{remainAmount}</TableCell>
+      <TableCell align="left">{description}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu
@@ -71,6 +92,24 @@ export default function LoanTrackingTableRow({ row, onEditRow, onDeleteRow, inde
               >
                 <Iconify sx={{ color: 'warning.main' }} icon={'eva:edit-fill'} />
                 {translate('CRUD.Update')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onPayTakenLoanClicked();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'warning.main' }} icon={'mdi:cash-minus'} />
+                {translate('CRUD.PayTakenLoan')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onTakePaidLoanClicked();
+                  handleCloseMenu();
+                }}
+              >
+                <Iconify sx={{ color: 'warning.main' }} icon={'mdi:cash-plus'} />
+                {translate('CRUD.TakePaidLoan')}
               </MenuItem>
             </>
           }

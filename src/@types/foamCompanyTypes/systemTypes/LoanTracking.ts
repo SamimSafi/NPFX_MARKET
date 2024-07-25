@@ -6,6 +6,7 @@ export interface ILoanTracking {
   nameInEnglish?: string;
   nameInPashto?: string;
   phone?: string;
+  partnerPhone?: string;
   email?: string;
   loanTypeId?: number;
   loanAmount?: number;
@@ -16,6 +17,11 @@ export interface ILoanTracking {
   currencyType?: string;
   mainAssetId?: string;
   asset?: string;
+
+  loanAmount?: number;
+  paidAmount?: number;
+  remainAmount?: number;
+
   date?: string;
   dueDate?: string;
   description?: string;
@@ -37,11 +43,24 @@ export interface ILoanTrackingParams {
 export interface IPayTakenLoan {
   loanTrackingId?: number;
   mainAssetId?: string;
+  exchangeRate: number;
   amountByMainAssetCurrencyType: number;
-  loanCurrencyToSelectedCurrencyExchangeRate: number;
-  selectedCurrencyToLoanCurrencyExchangeRate: number;
   amountByLoanTrackingCurrencyType: number;
+  afn?: number;
+  usd?: number;
+  currencyTypeId?: number;
   date: string;
   description: string;
-  userId: string;
+}
+
+export interface IRecieveGivenLoan {
+  loanTrackingId?: number;
+  currencyTypeId?: number;
+  amountBySelectedCurrencyType: number;
+  exchangeRate: number;
+  amountByLoanTrackingCurrencyType: number;
+  afn?: number;
+  usd?: number;
+  date?: string;
+  description?: string;
 }

@@ -15,6 +15,12 @@ export default class MainAssetStore {
 
   openDialogCreateTrade = false;
 
+  openDialogPayBackLoan = false;
+
+  openDialogWithdrawCash = false;
+
+  openDialogDepositCash = false;
+
   MainAssetRegistry = new Map<string, IMainAsset>();
 
   openDetailDialog = false;
@@ -97,6 +103,13 @@ export default class MainAssetStore {
   setOpenCloseDialogCreateLoan = () => (this.openDialogCreateLoan = !this.openDialogCreateLoan);
 
   setOpenCloseDialogCreateTrade = () => (this.openDialogCreateTrade = !this.openDialogCreateTrade);
+
+  setOpenCloseDialogPayBackLoan = () => (this.openDialogPayBackLoan = !this.openDialogPayBackLoan);
+
+  setOpenCloseDialogWithdrawCash = () =>
+    (this.openDialogWithdrawCash = !this.openDialogWithdrawCash);
+
+  setOpenCloseDialogDepositCash = () => (this.openDialogDepositCash = !this.openDialogDepositCash);
 
   createMainAsset = async (MainAsset: IMainAsset) => {
     await agentMainAsset.MainAsset.create(MainAsset);

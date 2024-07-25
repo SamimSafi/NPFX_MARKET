@@ -9,7 +9,7 @@ import useLocales from 'src/hooks/useLocales';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-// import TradeTrackingNewEditForm from './TradeTrackingNewEditForm';
+import TradeTrackingNewEditForm from './TradeTrackingNewEditForm';
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ export default function TradeTrackingCreate() {
             },
           ]}
         />
-        {/* <TradeTrackingNewEditForm /> */}
+        <TradeTrackingNewEditForm />
       </Container>
     </Page>
   );

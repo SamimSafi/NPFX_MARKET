@@ -18,48 +18,47 @@ import Iconify from '../../../../components/Iconify';
 import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { ITradeTracking } from 'src/@types/foamCompanyTypes/systemTypes/TradeTracking';
+import { IWithdrawalTracking } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 import CancelIcon from '@mui/icons-material/Cancel';
 // ----------------------------------------------------------------------
 interface Props {
   asssetID?: string;
 }
-export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
-  const { TradeTrackingStore, commonDropdown, MainAssetStore } = useStore();
+export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID }: Props) {
+  const { WithdrawalTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
-  const { loadMainAssetDDL, MainAssetOption } = commonDropdown;
-  const { createTradeTracking, updateTradeTracking, editMode, selectedTradeTracking } =
-    TradeTrackingStore;
-  // const { loadBranchDDL, BranchOption, loadUserDropdown, UserOption } = commonDropdown;
+  const { MainAssetOption, loadMainAssetDDL } = commonDropdown;
+  const {
+    DepositToAccount,
+    updateWithdrawalTracking,
+    editMode,
+    selectedWithdrawalTracking,
+    clearSelectedWithdrawalTracking,
+  } = WithdrawalTrackingStore;
+  const { setOpenCloseDialogDepositCash } = MainAssetStore;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
-  const NewTradeTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
-    // currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
+  const NewWithdrawalTrackingSchema = Yup.object().shape({
+    mainAssetId: Yup.number().required(`${translate('Validation.EnglishName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
-    tradeAmount: Yup.number().required(`${translate('Validation.tradeAmount')}`),
+    withdrawalAmount: Yup.number().required(`${translate('Validation.Code')}`),
   });
 
-  const defaultValues = useMemo<ITradeTracking>(
+  const defaultValues = useMemo<IWithdrawalTracking>(
     () => ({
-      id: selectedTradeTracking?.id,
-      mainAssetId: selectedTradeTracking?.mainAssetId || asssetID,
-      // branchId: selectedTradeTracking?.branchId,
-      // userId: selectedTradeTracking?.userId,
-      // currencyTypeId: selectedTradeTracking?.currencyTypeId,
-      description: selectedTradeTracking?.description || '',
-      date: selectedTradeTracking?.date || '',
-      tradeAmount: selectedTradeTracking?.tradeAmount,
-      profitAmount: selectedTradeTracking?.profitAmount || 0,
-      lossAmount: selectedTradeTracking?.lossAmount || 0,
+      id: selectedWithdrawalTracking?.id,
+      mainAssetId: selectedWithdrawalTracking?.mainAssetId || asssetID,
+      description: selectedWithdrawalTracking?.description || '',
+      date: selectedWithdrawalTracking?.date || new Date().toLocaleDateString(),
+      withdrawalAmount: selectedWithdrawalTracking?.withdrawalAmount,
     }),
-    [selectedTradeTracking, asssetID]
+    [selectedWithdrawalTracking, asssetID]
   );
 
-  const methods = useForm<ITradeTracking>({
-    resolver: yupResolver(NewTradeTrackingSchema),
+  const methods = useForm<IWithdrawalTracking>({
+    resolver: yupResolver(NewWithdrawalTrackingSchema),
     defaultValues,
   });
 
@@ -68,28 +67,22 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
     handleSubmit,
     formState: { isSubmitting },
     control,
-    // watch,
   } = methods;
-  // const val = watch();
-  const onSubmit = (data: ITradeTracking) => {
+
+  const onSubmit = (data: IWithdrawalTracking) => {
     if (data.id! === undefined) {
       ///create
-      createTradeTracking(data).then(() => {
+      DepositToAccount(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        asssetID !== undefined
-          ? (() => {
-              MainAssetStore.setOpenCloseDialogCreateTrade();
-              MainAssetStore.loadMainAsset({ pageIndex: 0, pageSize: 10 });
-            })()
-          : navigate(PATH_DASHBOARD.TradeTracking.list);
+        navigate(PATH_DASHBOARD.WithdrawalTracking.list);
       });
     } else {
       ///update
-      updateTradeTracking(data).then(() => {
+      updateWithdrawalTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.TradeTracking.list);
+        navigate(PATH_DASHBOARD.WithdrawalTracking.list);
       });
     }
   };
@@ -103,13 +96,6 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
     }
     loadMainAssetDDL();
   }, [reset, editMode, defaultValues, loadMainAssetDDL]);
-  // useEffect(() => {
-  //   loadBranchDDL();
-  // }, [loadBranchDDL]);
-
-  // useEffect(() => {
-  //   loadUserDropdown(val.branchId);
-  // }, [loadUserDropdown, val.branchId]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -124,7 +110,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+              <RHFSelect name="mainAssetId" label={translate('WithdrawalTracking.Account')}>
                 <option value="" />
                 {MainAssetOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -132,45 +118,28 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                   </option>
                 ))}
               </RHFSelect>
-
               <LocalizDatePicker
                 name="date"
-                label={translate('TradeTracking.date')}
+                label={translate('WithdrawalTracking.date')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
-                name="tradeAmount"
-                label={translate('TradeTracking.tradeAmount')}
+                name="withdrawalAmount"
+                label={translate('WithdrawalTracking.withdrawalAmount')}
                 type={'number'}
+                showAsterisk={true}
+                autoFocus
                 InputProps={{
                   endAdornment: <InputAdornment position="start">$</InputAdornment>,
                 }}
-                showAsterisk={true}
-              />
-              <RHFTextField
-                name="profitAmount"
-                label={translate('TradeTracking.profitAmount')}
-                type={'number'}
-                InputProps={{
-                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
-                }}
-                showAsterisk={true}
-              />
-              <RHFTextField
-                name="lossAmount"
-                label={translate('TradeTracking.lossAmount')}
-                type={'number'}
-                InputProps={{
-                  endAdornment: <InputAdornment position="start">$</InputAdornment>,
-                }}
-                showAsterisk={true}
               />
               <RHFTextField
                 name="description"
-                label={translate('TradeTracking.description')}
+                label={translate('WithdrawalTracking.description')}
                 showAsterisk={true}
+                autoFocus
               />
             </Box>
 
@@ -180,16 +149,18 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                 type="submit"
                 variant="contained"
                 loading={isSubmitting}
-                startIcon={<Iconify icon="eva:plus-fill" />}
+                startIcon={
+                  !editMode ? <Iconify icon="eva:plus-fill" /> : <Iconify icon="eva:edit-fill" />
+                }
               >
-                {translate('CRUD.Save')}
+                {!editMode ? `${translate('CRUD.Save')}` : `${translate('CRUD.Update')}`}
               </LoadingButton>
               {asssetID !== undefined ? (
                 <LoadingButton
                   fullWidth
                   variant="contained"
                   size="small"
-                  onClick={() => MainAssetStore.setOpenCloseDialogCreateTrade()}
+                  onClick={() => setOpenCloseDialogDepositCash()}
                   color="secondary"
                   startIcon={<CancelIcon />}
                 >
@@ -202,7 +173,8 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                   color="error"
                   startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                   onClick={() => {
-                    navigate(PATH_DASHBOARD.TradeTracking.list);
+                    clearSelectedWithdrawalTracking();
+                    navigate(PATH_DASHBOARD.WithdrawalTracking.list);
                   }}
                 >
                   {translate('CRUD.BackToList')}

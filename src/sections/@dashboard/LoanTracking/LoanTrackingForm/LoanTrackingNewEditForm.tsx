@@ -36,12 +36,8 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
     LoanTypeOption,
     loadPartnersDDL,
     PartnersOption,
-    loadCurrencyTypeDDL,
-    CurrencyTypeOption,
-    loadBranchDDL,
-    BranchOption,
-    loadUserDropdown,
-    UserOption,
+    loadMainAssetDDL,
+    MainAssetOption,
   } = commonDropdown;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -117,14 +113,9 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
       reset(defaultValues);
       loadLoanTypeDDL();
       loadPartnersDDL();
-      loadCurrencyTypeDDL();
-      loadBranchDDL();
+      loadMainAssetDDL();
     }
-  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadCurrencyTypeDDL, loadBranchDDL]);
-
-  useEffect(() => {
-    loadUserDropdown(val.branchId);
-  }, [loadUserDropdown, val.branchId]);
+  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadMainAssetDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -140,6 +131,14 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+                <option value="" />
+                {MainAssetOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
               <RHFSelect name="partnerId" label={translate('LoanTracking.Partner')}>
                 <option value="" />
                 {PartnersOption.map((op) => (
@@ -207,32 +206,6 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                 control={control}
                 showAsterisk={true}
               />
-              {/* 
-              <RHFSelect name="currencyTypeId" label={translate('LoanTracking.currencyType')}>
-                <option value="" />
-                {CurrencyTypeOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect> */}
-              <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
-                <option value="" />
-                {BranchOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect>
-
-              <RHFSelect name="userId" label={translate('MainAsset.User')}>
-                <option value="" />
-                {UserOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect>
               <RHFTextField
                 name="description"
                 label={translate('LoanTracking.description')}
@@ -278,6 +251,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                   {translate('CRUD.CreateLoan')}
                 </LoadingButton>
                 <LoadingButton
+                  fullWidth
                   variant="contained"
                   size="small"
                   onClick={() => MainAssetStore.setOpenCloseDialogCreateLoan()}

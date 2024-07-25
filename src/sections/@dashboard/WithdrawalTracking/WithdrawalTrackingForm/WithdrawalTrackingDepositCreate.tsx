@@ -9,11 +9,11 @@ import useLocales from 'src/hooks/useLocales';
 // components
 import Page from '../../../../components/Page';
 import HeaderBreadcrumbs from '../../../../components/HeaderBreadcrumbs';
-import TakeLoanCreateAssetNewEditForm from './TakeLoanCreateAssetNewEditForm';
+import WithdrawalTrackingDepositNewEditForm from './WithdrawalTrackingDepositNewEditForm';
 
 // ----------------------------------------------------------------------
 
-export default function LoanTrackingCreate() {
+export default function WithdrawalTrackingDepositCreate() {
   const { themeStretch } = useSettings();
 
   const { pathname } = useLocation();
@@ -25,31 +25,31 @@ export default function LoanTrackingCreate() {
     <Page
       title={
         !isEdit
-          ? `${translate('LoanTracking.AddTitle')}`
-          : `${translate('LoanTracking.UpdateTitle')}`
+          ? `${translate('WithdrawalTracking.AddTitle')}`
+          : `${translate('WithdrawalTracking.UpdateTitle')}`
       }
     >
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={
             !isEdit
-              ? `${translate('LoanTracking.CreateLoanTracking')}`
-              : `${translate('LoanTracking.EditLoanTracking')}`
+              ? `${translate('WithdrawalTracking.CreateDeposit')}`
+              : `${translate('WithdrawalTracking.EditDeposit')}`
           }
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
-              name: `${translate('LoanTracking.LoanTrackingList')}`,
-              href: PATH_DASHBOARD.ContractDetails.list,
+              name: `${translate('WithdrawalTracking.WithdrawalTrackingList')}`,
+              href: PATH_DASHBOARD.WithdrawalTracking.list,
             },
             {
               name: !isEdit
-                ? `${translate('LoanTracking.New')}`
-                : `${translate('LoanTracking.Update')}`,
+                ? `${translate('WithdrawalTracking.DepositToAccount')}`
+                : `${translate('WithdrawalTracking.UpdateDeposit')}`,
             },
           ]}
         />
-        <TakeLoanCreateAssetNewEditForm />
+        <WithdrawalTrackingDepositNewEditForm />
       </Container>
     </Page>
   );

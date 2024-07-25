@@ -7,8 +7,9 @@ export interface tableRowsColor {
 export interface SelectControl {
   text: string;
   value: string | number;
-  hasAccount?:boolean;
-  isActive?:boolean;
+  currencyTypeId?: number;
+  hasAccount?: boolean;
+  isActive?: boolean;
 }
 
 export interface SelectControlAttachments {
@@ -112,5 +113,4 @@ export interface EmpPositionDropdown {
 export interface EmployeeDropdown {
   id: number;
   name: string;
-  
 }
