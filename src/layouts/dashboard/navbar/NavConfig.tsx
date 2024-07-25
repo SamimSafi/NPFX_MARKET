@@ -211,7 +211,7 @@ const navConfig = [
             roles: ['LoanTracking-GetList'],
           },
           {
-            title: 'TradeTracking',
+            title: 'TradeTrackingMenu',
             path: PATH_DASHBOARD.TradeTracking.list,
             roles: ['TradeTracking-GetList'],
           },

@@ -22,6 +22,7 @@ export interface ILoanTracking {
   description?: string;
   userId?: string;
   userName?: string;
+  status?: string;
   isGiven?: boolean;
   afterSubmit?: string;
 }

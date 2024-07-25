@@ -45,7 +45,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   const NewLoanTrackingSchema = Yup.object().shape({
     mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
     // currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    userId: Yup.string().required(`${translate('Validation.PashtoName')}`),
+    // userId: Yup.string().required(`${translate('Validation.PashtoName')}`),
     loanTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     date: Yup.date().required(`${translate('Validation.DariName')}`),
     loanAmount: Yup.number().required(`${translate('Validation.loanAmount')}`),
@@ -131,7 +131,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.MainAsset')}>
                 <option value="" />
                 {MainAssetOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -139,7 +139,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="partnerId" label={translate('LoanTracking.Partner')}>
+              <RHFSelect name="partnerId" label={translate('Partner.Partner')}>
                 <option value="" />
                 {PartnersOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -154,31 +154,31 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                 <>
                   <RHFTextField
                     name="nameInEnglish"
-                    label={translate('LoanTracking.nameInEnglish')}
+                    label={translate('GeneralFields.NameInEnglish')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="nameInPashto"
-                    label={translate('LoanTracking.nameInPashto')}
+                    label={translate('GeneralFields.NameInPashto')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="phone"
-                    label={translate('LoanTracking.phone')}
+                    label={translate('Partner.PartnerPhone')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="email"
-                    label={translate('LoanTracking.email')}
+                    label={translate('User.email')}
                     showAsterisk={true}
                     autoFocus
                   />
                 </>
               )}
-              <RHFSelect name="loanTypeId" label={translate('LoanTracking.loanType')}>
+              <RHFSelect name="loanTypeId" label={translate('LoanType.LoanType')}>
                 <option value="" />
                 {LoanTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -188,7 +188,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
               </RHFSelect>
               <RHFTextField
                 name="loanAmount"
-                label={translate('LoanTracking.loanAmount')}
+                label={translate('LoanTracking.LoanAmount')}
                 showAsterisk={true}
                 autoFocus
                 type="number"
@@ -196,19 +196,19 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
 
               <LocalizDatePicker
                 name="date"
-                label={translate('LoanTracking.date')}
+                label={translate('GeneralFields.Date')}
                 control={control}
                 showAsterisk={true}
               />
               <LocalizDatePicker
                 name="dueDate"
-                label={translate('LoanTracking.dueDate')}
+                label={translate('GeneralFields.DueDate')}
                 control={control}
                 showAsterisk={true}
               />
               <RHFTextField
                 name="description"
-                label={translate('LoanTracking.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />
