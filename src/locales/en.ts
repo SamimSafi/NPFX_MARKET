@@ -41,10 +41,14 @@ const en = {
   Department: {
     Dashboard: 'Dashboard',
   },
+  TradeTracking: {
+    TradeTracking: 'Trade Tracking List',
+    Title: 'Trade List',
+  },
   //========================== Menu Translation ========================
   AssetManagementMenu: `Account Management`,
   LoanTrackingMenu: `Loan Management`,
-  TradeTracking: `Trade Management`,
+  TradeTrackingMenu: `Trade Management`,
   ExpenseTracking: `Expense Management`,
   WithdrawalTracking: `Withdraw Management`,
   lookuptable: `System Settings`,
@@ -75,6 +79,7 @@ const en = {
   },
   CRUD: {
     Create: `Create`,
+    CreateTrade: `Create Trade`,
     CreateLoan: `Create Loan`,
     PayTakenLoan: `Pay Loan`,
     TakePaidLoan: `Receive Loan`,
@@ -222,6 +227,7 @@ const en = {
   GeneralFields: {
     Id: 'Id',
     Name: 'Name',
+    Status: 'Status',
     NameInEnglish: 'English Name',
     NameInPashto: 'Pashto Name',
     NameInDari: 'Dari Name',

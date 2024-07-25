@@ -57,7 +57,7 @@ export default function MainFooter() {
           </Grid>
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
-              Any Content For MEW ERP
+              Any Content For NPFX Market
             </Typography>
 
             <Stack

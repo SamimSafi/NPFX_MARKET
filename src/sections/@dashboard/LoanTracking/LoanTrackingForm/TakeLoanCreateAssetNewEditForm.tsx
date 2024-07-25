@@ -40,6 +40,8 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
     PartnersOption,
     loadCurrencyTypeDDL,
     CurrencyTypeOption,
+    loadAssetTypeDDL,
+    AssetTypeOption,
   } = commonDropdown;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -112,8 +114,9 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
       loadLoanTypeDDL();
       loadPartnersDDL();
       loadCurrencyTypeDDL();
+      loadAssetTypeDDL();
     }
-  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadCurrencyTypeDDL]);
+  }, [reset, editMode, defaultValues, loadLoanTypeDDL, loadPartnersDDL, loadCurrencyTypeDDL, loadAssetTypeDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -168,6 +171,15 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
                   />
                 </>
               )}
+
+              <RHFSelect name="assetTypeId" label={translate('MainAsset.AssetType')}>
+                <option value="" />
+                {AssetTypeOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
 
               <RHFSelect name="currencyTypeId" label={translate('CurrencyType.CurrencyType')}>
                 <option value="" />

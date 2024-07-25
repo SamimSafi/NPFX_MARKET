@@ -80,6 +80,7 @@ export default observer(function LoanTrackingList() {
     { id: 'partner', label: `${translate('Partner.Partner')}`, align: 'left' },
     { id: 'partnerPhone', label: `${translate('Partner.PartnerPhone')}`, align: 'left' },
     { id: 'userName', label: `${translate('User.userName')}`, align: 'left' },
+    { id: 'status', label: `${translate('GeneralFields.Status')}`, align: 'left' },
     { id: 'LoanAmount', label: `${translate('LoanTracking.LoanAmount')}`, align: 'left' },
     { id: 'paidAmount', label: `${translate('LoanTracking.PaidAmount')}`, align: 'left' },
     { id: 'remainAmount', label: `${translate('LoanTracking.RemainAmount')}`, align: 'left' },
