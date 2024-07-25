@@ -108,6 +108,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
         data.amountByLoanTrackingCurrencyType = val.afn!;
     }
     // this statements checks if ddl currency  is usd set usd and if it's afn then set afn value
+
     switch (Number(val.currencyTypeId)) {
       case currency.USD: // USD
         data.amountByMainAssetCurrencyType = val.usd!;
@@ -159,14 +160,21 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
                 justifyItems: 'center',
               }}
             >
-              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+              <RHFSelect
+                name="mainAssetId"
+                onChange={(event) => {
+                  const selectedOption = MainAssetOption.find(
+                    (op) => op.value === event.target.value
+                  );
+                  if (selectedOption) {
+                    setValue('currencyTypeId', selectedOption.currencyTypeId);
+                  }
+                }}
+                label={translate('MainAsset.mainAsset')}
+              >
                 <option value="" />
                 {MainAssetOption.map((op) => (
-                  <option
-                    key={op.value}
-                    value={op.value}
-                    onChange={() => setValue('currencyTypeId', op.currencyTypeId)}
-                  >
+                  <option key={op.value} value={op.value}>
                     {op.text}
                   </option>
                 ))}
