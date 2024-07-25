@@ -23,7 +23,7 @@ type Props = {
 export default function PositionTitleTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
   const theme = useTheme();
 
-  const { id, name, branchName } = row;
+  const { id, name, branch, code } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -39,9 +39,10 @@ export default function PositionTitleTableRow({ row, onEditRow, onDeleteRow, ind
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
       <TableCell align="left">{name}</TableCell>
+      <TableCell align="left">{code}</TableCell>
 
       <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-        {branchName}
+        {branch}
       </TableCell>
 
       <TableCell align="center">

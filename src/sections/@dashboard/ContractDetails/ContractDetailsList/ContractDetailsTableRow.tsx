@@ -29,10 +29,10 @@ export default function ContractDetailsTableRow({ row, onEditRow, onDeleteRow, i
     startDate,
     endDate,
     isCurrent,
-    positionTitleName,
+    positionTitle,
     branch,
-    remarks,
-    salaryPerHour
+
+    salaryPerHour,
   } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
@@ -50,13 +50,16 @@ export default function ContractDetailsTableRow({ row, onEditRow, onDeleteRow, i
       <TableCell align="left">{index + 1}</TableCell>
       {/* <TableCell align="left">{employeeName}</TableCell> */}
       <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
+        {employeeName}
+      </TableCell>
+      <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
         {contractType}
       </TableCell>
       <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
         {branch}
       </TableCell>
       <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-        {positionTitleName}
+        {positionTitle}
       </TableCell>
       <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
         {salaryPerHour}

@@ -79,10 +79,7 @@ export default observer(function PositionTitleList() {
   const [PositionTitleId, setPositionTitleId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'englishName', label: `${translate('GeneralFields.EnglishName')}`, align: 'left' },
-    { id: 'pashtoName', label: `${translate('GeneralFields.PashtoName')}`, align: 'left' },
-    { id: 'dariName', label: `${translate('GeneralFields.DariName')}`, align: 'left' },
-    { id: 'jobPosition', label: `${translate('JobPosition.JobPosition')}`, align: 'left' },
+    { id: 'name', label: `${translate('GeneralFields.name')}`, align: 'left' },
     { id: 'code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
     { id: 'isActive', label: `${translate('GeneralFields.isActive')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },

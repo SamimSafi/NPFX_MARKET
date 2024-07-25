@@ -42,7 +42,7 @@ export default function EmployeeTableRow({
 }: Props) {
   const theme = useTheme();
   const language = window.localStorage.getItem('i18nextLng');
-  const { id, surName, profilePhoto, phoneNumber, name } = row;
+  const { id, surName, profilePhoto, phoneNumber, name, branchName, email } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -59,7 +59,9 @@ export default function EmployeeTableRow({
       title={
         <span>
           {translate('Employee.DoubleClick')}{' '}
-          <span style={{ color: '#00bcd4', fontSize: '13px', fontWeight: 'bold' }}>{name}</span>{' '}
+          <span style={{ color: '#00bcd4', fontSize: '13px', fontWeight: 'bold' }}>
+            {name + ' ' + surName}
+          </span>{' '}
           {translate('Employee.EmployeeDetail')}
         </span>
       }
@@ -67,10 +69,10 @@ export default function EmployeeTableRow({
     >
       <TableRow hover onClick={doubleClick}>
         <TableCell align="left">{index + 1}</TableCell>
-        <TableCell align="left">{name}</TableCell>
+        <TableCell align="left">{name + ' ' + surName}</TableCell>
 
         <TableCell align="left" sx={{ textTransform: 'capitalize' }}>
-          {surName}
+          {branchName}
         </TableCell>
 
         <TableCell
@@ -78,9 +80,15 @@ export default function EmployeeTableRow({
           sx={{ textTransform: 'capitalize', alignItems: 'left' }}
           dir={language === 'en' ? 'ltr' : 'ltr'}
         >
+          {email}
+        </TableCell>
+        <TableCell
+          align="left"
+          sx={{ textTransform: 'capitalize', alignItems: 'left' }}
+          dir={language === 'en' ? 'ltr' : 'ltr'}
+        >
           {phoneNumber}
         </TableCell>
-
         <TableCell align="left">
           <TableMoreMenu
             open={openMenu}
@@ -135,7 +143,7 @@ export default function EmployeeTableRow({
                   {translate('Employee.ContractDetails')}
                 </MenuItem>
 
-                <MenuItem
+                {/* <MenuItem
                   onClick={() => {
                     onCardDetails();
                     handleCloseMenu();
@@ -143,8 +151,8 @@ export default function EmployeeTableRow({
                 >
                   <Iconify sx={{ color: 'success.main' }} icon={'entypo:v-card'} />
                   {translate('Employee.CardDetails')}
-                </MenuItem>
-                <MenuItem
+                </MenuItem> */}
+                {/* <MenuItem
                   onClick={() => {
                     onEducationalLevelDetails();
                     handleCloseMenu();
@@ -152,7 +160,7 @@ export default function EmployeeTableRow({
                 >
                   <Iconify sx={{ color: 'warning.main' }} icon={'icon-park-outline:degree-hat'} />
                   {translate('Employee.EducationalLevelDetails')}
-                </MenuItem>
+                </MenuItem> */}
                 <PermissionBasedGuard permissions={['Employee-GetDetail']}>
                   <MenuItem
                     onClick={() => {

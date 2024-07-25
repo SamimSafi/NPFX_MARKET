@@ -109,16 +109,16 @@ const navConfig = [
                 path: PATH_DASHBOARD.Partners.list,
                 roles: ['Partners-GetList'],
               },
-              // {
-              //   title: 'contractType',
-              //   path: PATH_DASHBOARD.ContractType.list,
-              //   roles: ['ExpenseType-GetList'],
-              // },
-              // {
-              //   title: 'positionTitle',
-              //   path: PATH_DASHBOARD.PositionTitle.list,
-              //   roles: ['PositionTitle-GetList'],
-              // },
+              {
+                title: 'contractType',
+                path: PATH_DASHBOARD.ContractType.list,
+                // roles: ['ExpenseType-GetList'],
+              },
+              {
+                title: 'positionTitle',
+                path: PATH_DASHBOARD.PositionTitle.list,
+                roles: ['PositionTitle-GetList'],
+              },
             ],
           },
           //HR lookups Table

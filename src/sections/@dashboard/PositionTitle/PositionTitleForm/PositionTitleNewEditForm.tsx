@@ -39,7 +39,7 @@ export default observer(function PositionTitleNewEditForm() {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const { loadJobPositionDDL, JobPositionOption } = commonDropdown;
+  const { loadBranchDDL, BranchOption } = commonDropdown;
 
   const NewPositionTitleSchema = Yup.object().shape({
     englishName: Yup.string().required(`${translate('Validation.EnglishName')}`),
@@ -89,6 +89,9 @@ export default observer(function PositionTitleNewEditForm() {
       });
     }
   };
+  useEffect(() => {
+    loadBranchDDL();
+  }, []);
 
   useEffect(() => {
     if (editMode) {
@@ -112,6 +115,18 @@ export default observer(function PositionTitleNewEditForm() {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
+              <RHFSelect
+                name="branchId"
+                label={`${translate('PositionTitle.branchId')}` + ' ' + '*'}
+                // onChange={(e) => handleDocumentType(parseInt(e.target.value))}
+              >
+                <option value="" />
+                {BranchOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
               <RHFTextField
                 name="englishName"
                 label={translate('GeneralFields.EnglishName')}
@@ -135,6 +150,27 @@ export default observer(function PositionTitleNewEditForm() {
                 label={translate('GeneralFields.Code')}
                 showAsterisk={true}
                 autoFocus
+              />
+
+              <Controller
+                name="isActive"
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        {...field}
+                        onChange={(e) => {
+                          field.onChange(e); // Notify React Hook Form of the value change
+                          // handleChange(e); // Handle the switch state change
+                        }}
+                        checked={field.value}
+                      />
+                    }
+                    label={translate('Employee.isCurrent')}
+                    labelPlacement="end"
+                  />
+                )}
               />
               {/* 
               <RHFSelect

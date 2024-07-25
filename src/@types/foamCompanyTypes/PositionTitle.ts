@@ -8,6 +8,7 @@ export interface IPositionTitle {
   isActive?: boolean;
   branchId?: number;
   branchName?: string;
+  branch?: string;
 }
 
 export interface IPositionTitleParams {

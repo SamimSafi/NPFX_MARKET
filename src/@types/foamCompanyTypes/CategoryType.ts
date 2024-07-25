@@ -6,7 +6,10 @@ export interface ICategoryType {
 export interface IContractType {
   id?: number;
   name?: string;
-  description?: string;
+  englishName?: string;
+  dariName?: string;
+  pashtoName?: string;
+  code?: string;
 }
 
 export interface IContractTypeParams {
