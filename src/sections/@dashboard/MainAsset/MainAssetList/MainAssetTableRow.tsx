@@ -19,8 +19,12 @@ type Props = {
   onDepositToUser: VoidFunction;
   onCreateLoan: VoidFunction;
   onCreateTrade: VoidFunction;
+
+  onDetailsRow: VoidFunction;
+
   onDepositCash: VoidFunction;
   onWithdrawCash: VoidFunction;
+
   index: any;
 };
 
@@ -31,8 +35,12 @@ export default function MainAssetTableRow({
   onDepositToUser,
   onCreateLoan,
   onCreateTrade,
+
+  onDetailsRow,
+
   onDepositCash,
   onWithdrawCash,
+
   index,
 }: Props) {
   const { currencyType, ownerUserName, depositDate, balanceAmount } = row;
@@ -81,6 +89,14 @@ export default function MainAssetTableRow({
               >
                 <Iconify sx={{ color: 'warning.main' }} icon={'eva:edit-fill'} />
                 {translate('CRUD.Update')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  onDetailsRow();
+                }}
+              >
+                <Iconify sx={{ color: 'success.main' }} icon={'eva:clipboard-outline'} />
+                {translate('CRUD.Detail')}
               </MenuItem>
               <MenuItem
                 onClick={() => {

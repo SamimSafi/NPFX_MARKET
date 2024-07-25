@@ -3,17 +3,21 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Stack, Box, Typography, Tab, Tabs, AppBar } from '@mui/material';
 import useSettings from 'src/hooks/useSettings';
 import Page from 'src/components/Page';
-import { _bankingCreditCard, _bankingRecentTransitions, _bankingContacts } from 'src/_mock';
+import { _bankingCreditCard, _bankingContacts } from 'src/_mock';
 import MainAssetBalanceStatistics from './MainAssetBalanceStatistics';
 import MainAssetContacts from './MainAssetContacts';
 import MainAssetCurrentBalance from './MainAssetCurrentBalance';
 import MainAssetExpensesCategories from './MainAssetExpensesCategories';
-import MainAssetInviteFriends from './MainAssetInviteFriends';
 import MainAssetQuickTransfer from './MainAssetQuickTransfer';
-import MainAssetRecentTransitions from './MainAssetRecentTransitions';
 import MainAssetWidgetSummary from './MainAssetWidgetSummary';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
+import { useStore } from 'src/stores/store';
+import MainAssetTracking from './MainAssetTracking';
+import LoanTracking from './LoanTracking';
+import ExpenseTracking from './ExpenseTracking';
+import TradeTracking from './TradeTracking';
+import WidthrawalTracking from './WidthrawalTracking';
 // hooks
 
 // _mock_
@@ -61,42 +65,99 @@ export default function GeneralBanking() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
 
+  const { MainAssetDetailsStore } = useStore();
+
+  const {
+    GetMainAssetTracking,
+    LoadMainAssetTracking,
+    GetLoanTracking,
+    LoadLoanTracking,
+    loadExpenseTracking,
+    LoadExpenseTracking,
+    loadTradeTracking,
+    LoadTradeTracking,
+    loadWithdrawalTracking,
+    LoadWidthrawalTracking,
+    MainAssetDetail,
+  } = MainAssetDetailsStore;
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
+
   const { themeStretch } = useSettings();
+  useEffect(() => {
+    GetMainAssetTracking({
+      pageIndex: 0,
+      pageSize: 2,
+      mainAssetId: MainAssetDetail!.id,
+    });
+    GetLoanTracking({
+      pageIndex: 0,
+      pageSize: 2,
+      mainAssetId: MainAssetDetail!.id,
+    });
+    loadExpenseTracking({
+      pageIndex: 0,
+      pageSize: 2,
+      mainAssetId: MainAssetDetail!.id,
+    });
+    loadTradeTracking({
+      pageIndex: 0,
+      pageSize: 2,
+      mainAssetId: MainAssetDetail!.id,
+    });
+    loadWithdrawalTracking({
+      pageIndex: 0,
+      pageSize: 2,
+      mainAssetId: MainAssetDetail!.id,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [MainAssetDetail!.id]);
+
+  // console.log(LoadMainAssetTracking.map((data) => data.balanceAmount));
+  console.log(LoadLoanTracking.map((data) => data.branchId));
 
   return (
     <Page title="General: Banking">
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={12}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
               <MainAssetWidgetSummary
-                title="Profit"
+                title="Total Credit Amount"
                 icon={'eva:diagonal-arrow-left-down-fill'}
                 percent={2.6}
-                total={18765}
+                total={MainAssetDetail!.totalCreditAmount}
                 chartData={[111, 136, 76, 108, 74, 54, 57, 84]}
               />
 
               <MainAssetWidgetSummary
-                title="Defect"
+                title="Total Debit Amount"
                 color="warning"
                 icon={'eva:diagonal-arrow-right-up-fill'}
                 percent={-0.5}
-                total={8938}
+                total={MainAssetDetail!.totalDebitAmount}
+                chartData={[111, 136, 76, 108, 74, 54, 57, 84]}
+              />
+
+              <MainAssetWidgetSummary
+                title="Total Debit Amount"
+                color="success"
+                icon={'eva:diagonal-arrow-right-up-fill'}
+                percent={-0.5}
+                total={MainAssetDetail!.balanceAmount}
                 chartData={[111, 136, 76, 108, 74, 54, 57, 84]}
               />
             </Stack>
           </Grid>
-
+          {/* 
           <Grid item xs={12} md={5}>
             <MainAssetCurrentBalance list={_bankingCreditCard} />
-          </Grid>
+          </Grid> */}
 
           <Grid item xs={12} md={8}>
             <Stack spacing={3}>
@@ -124,66 +185,71 @@ export default function GeneralBanking() {
                   onChangeIndex={handleChangeIndex}
                 >
                   <TabPanel value={value} index={0} dir={theme.direction}>
-                    <MainAssetRecentTransitions
-                      title="Recent Transitions"
-                      tableData={_bankingRecentTransitions}
+                    <MainAssetTracking
+                      tableData={LoadMainAssetTracking}
                       tableLabels={[
-                        { id: 'description', label: 'Description' },
-                        { id: 'date', label: 'Date' },
-                        { id: 'amount', label: 'Amount' },
-                        { id: 'status', label: 'Status' },
+                        { id: 'userName', label: 'User Name' },
+                        { id: 'transactionDate', label: 'Transaction Date' },
+                        { id: 'debitAmount', label: 'debit Amount' },
+                        { id: 'creditAmount', label: 'creditAmount' },
+                        { id: 'balanceAmount', label: 'balanceAmount' },
+                        { id: 'description', label: 'description' },
                         { id: '' },
                       ]}
                     />
                   </TabPanel>
                   <TabPanel value={value} index={1} dir={theme.direction}>
-                    <MainAssetRecentTransitions
-                      title="Recent Transitions"
-                      tableData={_bankingRecentTransitions}
+                    <LoanTracking
+                      tableData={LoadLoanTracking}
                       tableLabels={[
-                        { id: 'description', label: 'Description' },
-                        { id: 'date', label: 'Date' },
-                        { id: 'amount', label: 'Amount' },
-                        { id: 'status', label: 'Status' },
+                        { id: 'partner', label: 'partner' },
+                        { id: 'partnerPhone', label: 'partnerPhone' },
+                        { id: 'loanAmount', label: 'loanAmount' },
+                        { id: 'paidAmount', label: 'paidAmount' },
+                        { id: 'remainAmount', label: 'remainAmount' },
+                        { id: 'description', label: 'description' },
                         { id: '' },
                       ]}
                     />
                   </TabPanel>
                   <TabPanel value={value} index={2} dir={theme.direction}>
-                    <MainAssetRecentTransitions
+                    <ExpenseTracking
                       title="Recent Transitions"
-                      tableData={_bankingRecentTransitions}
+                      tableData={LoadExpenseTracking}
                       tableLabels={[
-                        { id: 'description', label: 'Description' },
-                        { id: 'date', label: 'Date' },
-                        { id: 'amount', label: 'Amount' },
-                        { id: 'status', label: 'Status' },
+                        { id: 'expenseType', label: 'expenseType' },
+                        { id: 'amount', label: 'amount' },
+                        { id: 'date', label: 'date' },
+                        { id: 'description', label: 'description' },
                         { id: '' },
                       ]}
                     />
                   </TabPanel>
                   <TabPanel value={value} index={3} dir={theme.direction}>
-                    <MainAssetRecentTransitions
+                    <TradeTracking
                       title="Recent Transitions"
-                      tableData={_bankingRecentTransitions}
+                      tableData={LoadTradeTracking}
                       tableLabels={[
-                        { id: 'description', label: 'Description' },
-                        { id: 'date', label: 'Date' },
-                        { id: 'amount', label: 'Amount' },
-                        { id: 'status', label: 'Status' },
+                        { id: 'userName', label: 'userName' },
+                        { id: 'branch', label: 'branch' },
+                        { id: 'tradeAmount', label: 'tradeAmount' },
+                        { id: 'profitAmount', label: 'profitAmount' },
+                        { id: 'lossAmount', label: 'lossAmount' },
+                        { id: 'description', label: 'description' },
                         { id: '' },
                       ]}
                     />
                   </TabPanel>
                   <TabPanel value={value} index={4} dir={theme.direction}>
-                    <MainAssetRecentTransitions
+                    <WidthrawalTracking
                       title="Recent Transitions"
-                      tableData={_bankingRecentTransitions}
+                      tableData={LoadWidthrawalTracking}
                       tableLabels={[
-                        { id: 'description', label: 'Description' },
-                        { id: 'date', label: 'Date' },
+                        { id: 'userName', label: 'userName' },
+                        { id: 'branch', label: 'branch' },
                         { id: 'amount', label: 'Amount' },
-                        { id: 'status', label: 'Status' },
+                        { id: 'date', label: 'date' },
+                        { id: 'description', label: 'description' },
                         { id: '' },
                       ]}
                     />
@@ -191,7 +257,7 @@ export default function GeneralBanking() {
                 </SwipeableViews>
               </Box>
               {/* end Tab */}
-              <MainAssetBalanceStatistics
+              {/* <MainAssetBalanceStatistics
                 title="Balance Statistics"
                 subheader="(+43% Income | +12% Expense) than last year"
                 chartLabels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']}
@@ -218,9 +284,9 @@ export default function GeneralBanking() {
                     ],
                   },
                 ]}
-              />
+              /> */}
 
-              <MainAssetExpensesCategories
+              {/* <MainAssetExpensesCategories
                 title="Expenses Categories"
                 chartData={[
                   { label: 'Category 1', value: 14 },
@@ -244,7 +310,7 @@ export default function GeneralBanking() {
                   theme.palette.success.darker,
                   theme.palette.chart.green[0],
                 ]}
-              />
+              /> */}
             </Stack>
           </Grid>
 
@@ -252,7 +318,7 @@ export default function GeneralBanking() {
             <Stack spacing={3}>
               <MainAssetQuickTransfer title="Members balances" list={_bankingContacts} />
 
-              <MainAssetContacts
+              {/* <MainAssetContacts
                 title="Members who benefited"
                 subheader="You have 122 Members whe benefited"
                 list={_bankingContacts.slice(-5)}
@@ -261,7 +327,7 @@ export default function GeneralBanking() {
                 title="Members who failed"
                 subheader="You have 122 Members who failed"
                 list={_bankingContacts.slice(-5)}
-              />
+              /> */}
 
               {/* <MainAssetInviteFriends
                 price="$50"

@@ -28,3 +28,46 @@ export interface IMainAssetParams {
   pageIndex: number;
   name?: string;
 }
+
+export interface IMainAssetTrackingParam {
+  mainAssetId?: string;
+  pageIndex?: number;
+  pageSize?: number;
+  userId?: string;
+  fromDate?: Date;
+  toDate?: Date;
+  searchBy?: string;
+}
+export interface IGetMainAssetTracking {
+  currencyTypeId: number;
+  currencyType: string;
+  userId: string;
+  userName: string;
+  transactionDate: string;
+  debitAmount: number;
+  creditAmount: number;
+  balanceAmount: number;
+  description: string;
+  isExpenceTransaction: boolean;
+  isTradeTransaction: boolean;
+  isLoanTransaction: boolean;
+  isWithdrawalTransaction: boolean;
+  isPayrollTransaction: boolean;
+}
+
+export interface IMainAssetTrackingDetails {
+  id?: string;
+  currencyTypeId?: number;
+  currencyType?: string;
+  depositDate?: string;
+  description?: string;
+  code?: string;
+  branchId?: number;
+  branch?: string;
+  ownerUserId?: string;
+  ownerUserName?: string;
+  totalDebitAmount?: number;
+  totalCreditAmount?: number;
+  balanceAmount?: number;
+  parentId?: number;
+}

@@ -19,6 +19,8 @@ export interface ITradeTracking {
 export interface ITradeTrackingParams {
   pageIndex: number;
   pageSize: number;
+
   searchBy?: string;
+
   mainAssetId?: string;
 }

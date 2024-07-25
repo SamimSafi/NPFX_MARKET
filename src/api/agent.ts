@@ -67,8 +67,11 @@ import {
 import { IPartners, IPartnersParams } from 'src/@types/foamCompanyTypes/systemTypes/Partners';
 import {
   IDepositTo,
+  IGetMainAssetTracking,
   IMainAsset,
   IMainAssetParams,
+  IMainAssetTrackingDetails,
+  IMainAssetTrackingParam,
 } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 import {
   IExpenseTracking,
@@ -569,6 +572,11 @@ const MainAsset = {
   update: (MainAsset: IMainAsset) => requests.put<void>(`/MainAsset/${MainAsset.id}`, MainAsset),
   delete: (id: string, remark: string) => axios.delete<void>(`/MainAsset/${id}`, { data: remark }),
   DDl: () => axios.get<any>(`/MainAsset/GetDropDownList`, { withCredentials: true }),
+  Gettracking: (param: IMainAssetTrackingParam) =>
+    axios.post<any>(`MainAsset/GetAssetTrackingList/${param.mainAssetId}`, param, {
+      withCredentials: true,
+    }),
+  detail: (MainAssetId: string) => requests.get<IMainAssetTrackingDetails>(`/MainAsset/GetDetail/${MainAssetId}`),
 };
 
 //  ExpenseTracking
