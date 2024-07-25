@@ -1,4 +1,3 @@
-
 // @mui
 import {
   Box,
@@ -16,7 +15,6 @@ import {
 } from '@mui/material';
 // utils
 // components
-import Iconify from '../../../../components/Iconify';
 import Scrollbar from '../../../../components/Scrollbar';
 import { TableHeadCustom } from '../../../../components/table';
 import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
@@ -39,7 +37,7 @@ export default function MainAssetTracking({
 }: Props) {
   return (
     <Card {...other}>
-      <CardHeader title={title} subheader={subheader} sx={{ mb: 3 }} />
+      <CardHeader title={title} subheader={subheader} />
 
       <Scrollbar>
         <TableContainer sx={{ minWidth: 720 }}>
@@ -58,13 +56,12 @@ export default function MainAssetTracking({
       <Divider />
 
       <Box sx={{ p: 2, textAlign: 'right' }}>
+        {/* eslint-disable-next-line react/self-closing-comp */}
         <Button
           size="small"
           color="inherit"
-          endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}
-        >
-          View All
-        </Button>
+          // endIcon={<Iconify icon={'eva:arrow-ios-forward-fill'} />}
+        ></Button>
       </Box>
     </Card>
   );
@@ -77,8 +74,6 @@ type BankingRecentTransitionsRowProps = {
 };
 
 function LoanTracking({ row }: BankingRecentTransitionsRowProps) {
-  
-
   return (
     <TableRow>
       <TableCell>
@@ -91,9 +86,7 @@ function LoanTracking({ row }: BankingRecentTransitionsRowProps) {
       </TableCell>
 
       <TableCell>
-        <Typography variant="subtitle2">
-          {row.partner}
-        </Typography>
+        <Typography variant="subtitle2">{row.partner}</Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {row.partnerPhone}
         </Typography>
@@ -104,9 +97,6 @@ function LoanTracking({ row }: BankingRecentTransitionsRowProps) {
       <TableCell>{row.paidAmount}</TableCell>
       <TableCell>{row.remainAmount}</TableCell>
       <TableCell>{row.description}</TableCell>
-
-     
     </TableRow>
   );
 }
-

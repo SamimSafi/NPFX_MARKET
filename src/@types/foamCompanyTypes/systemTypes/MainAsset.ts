@@ -71,3 +71,16 @@ export interface IMainAssetTrackingDetails {
   balanceAmount?: number;
   parentId?: number;
 }
+
+export interface IMainAssetChild {
+  id?: string;
+  currencyTypeId?: number;
+  currencyType?: string;
+  assetTypeId?: number;
+  assetType?: string;
+  code?: string;
+  balanceAmount?: number;
+  ownerUserId?: string;
+  ownerUserName: string;
+  ownerPhotoPath?: string;
+}

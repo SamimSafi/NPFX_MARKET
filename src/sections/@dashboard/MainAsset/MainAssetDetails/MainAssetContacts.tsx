@@ -13,18 +13,14 @@ import {
 } from '@mui/material';
 // components
 import Iconify from '../../../../components/Iconify';
+import { IMainAssetChild } from 'src/@types/foamCompanyTypes/systemTypes/MainAsset';
 
 // ----------------------------------------------------------------------
 
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  list: {
-    id: string;
-    name: string;
-    email: string;
-    avatar: string;
-  }[];
+  list: IMainAssetChild[];
 }
 
 export default function MainAssetContacts({ title, subheader, list, ...other }: Props) {
@@ -45,24 +41,24 @@ export default function MainAssetContacts({ title, subheader, list, ...other }: 
       <Stack spacing={3} sx={{ p: 3 }}>
         {list.map((contact) => (
           <Stack direction="row" alignItems="center" key={contact.id}>
-            <Avatar src={contact.avatar} sx={{ width: 48, height: 48 }} />
+            <Avatar src={contact.ownerPhotoPath} sx={{ width: 48, height: 48 }} />
 
             <Box sx={{ flexGrow: 1, ml: 2, minWidth: 100 }}>
               <Typography variant="subtitle2" sx={{ mb: 0.5 }} noWrap>
-                {contact.name}
+                {contact.ownerUserName}
               </Typography>
 
-              <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                {contact.email}
-              </Typography>
+              {/* <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                {contact.balanceAmount}
+              </Typography> */}
             </Box>
             <Box>
-              <Typography variant="body2" noWrap>
-                Earn
-                <Typography variant="body2" sx={{ color: 'success.main' }}>
-                  2000$
-                </Typography>
+              {/* <Typography variant="body2" noWrap>
+                Earn */}
+              <Typography variant="body2" sx={{ color: 'success.main' }}>
+                2000$
               </Typography>
+              {/* </Typography> */}
             </Box>
             {/* <IconButton size="small" color="success">
               <Iconify icon={'eva:bar-chart-2-outline'} width={22} height={22} />
