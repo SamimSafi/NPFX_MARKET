@@ -72,7 +72,8 @@ export const defaultSettings: SettingsValueProps = {
   themeLayout: 'horizontal',
   themeColorPresets: 'default',
   themeStretch: false,
-  tablePagination:10,
+  tablePagination: 10,
+  exchangeRate: 71,
 };
 
 // MULTI LANGUAGES

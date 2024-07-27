@@ -23,6 +23,7 @@ import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { currency } from 'src/constantFile/CommonConstant';
 import { roundOff } from 'src/utils/general';
+import useSettings from 'src/hooks/useSettings';
 // ----------------------------------------------------------------------
 interface Props {
   TrackingId: number;
@@ -34,6 +35,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
 }: Props) {
   const { LoanTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
+  const { exchangeRate, onChangeExchangeRate } = useSettings();
   const {
     TakePaidLoan,
     updateLoanTracking,
@@ -59,9 +61,9 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
       date: selectedLoanTracking?.date || '',
       amountBySelectedCurrencyType: 0,
       amountByLoanTrackingCurrencyType: 0,
-      exchangeRate: 0,
+      exchangeRate: 0 || exchangeRate,
     }),
-    [selectedLoanTracking, TrackingId]
+    [selectedLoanTracking, TrackingId, exchangeRate]
   );
 
   const methods = useForm<IRecieveGivenLoan>({
@@ -79,16 +81,16 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
   } = methods;
   const val = watch();
 
-  const exchangeRate = watch('exchangeRate');
+  const exchangeRates = watch('exchangeRate');
   const usdDollor = watch('usd');
 
   const handleUSDChange = (usd: number) => {
-    const afn = usd * exchangeRate;
+    const afn = usd * exchangeRates;
     setValue('afn', roundOff(afn, 2));
   };
 
   const handleAFNChange = (afn: number) => {
-    const usd = afn / exchangeRate;
+    const usd = afn / exchangeRates;
     setValue('usd', roundOff(usd, 2));
   };
 
@@ -206,6 +208,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                           const rate = parseFloat(value);
                           field.onChange(e);
                           handleExchangeRateChange(rate);
+                          onChangeExchangeRate(rate);
                         }
                       }}
                       value={field.value === undefined ? '0' : field.value}

@@ -136,7 +136,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
               {editMode ? (
                 <></>
               ) : (
-                <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+                <RHFSelect name="mainAssetId" label={translate('MainAsset.MainAsset')}>
                   <option value="" />
                   {MainAssetOption.map((op) => (
                     <option key={op.value} value={op.value}>
@@ -148,7 +148,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
 
               <RHFSelect
                 name="expenseTypeId"
-                label={translate('ExpenseTracking.Expenseype')}
+                label={translate('ExpenseType.ExpenseType')}
                 showAsterisk={true}
               >
                 <option value="" />
@@ -158,7 +158,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
+              <RHFSelect name="branchId" label={translate('Branch.Branch')}>
                 <option value="" />
                 {BranchOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -167,7 +167,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
                 ))}
               </RHFSelect>
 
-              <RHFSelect name="userId" label={translate('MainAsset.User')}>
+              <RHFSelect name="userId" label={translate('User.user')}>
                 <option value="" />
                 {UserOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -177,7 +177,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
               </RHFSelect>
               <RHFTextField
                 name="amount"
-                label={translate('ExpenseTracking.Amount')}
+                label={translate('ExpenseTracking.ExpenseAmount')}
                 showAsterisk={true}
                 autoFocus
                 InputProps={{
@@ -186,7 +186,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
               />
               <RHFTextField
                 name="description"
-                label={translate('GeneralFields.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />

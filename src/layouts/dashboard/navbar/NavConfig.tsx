@@ -216,12 +216,12 @@ const navConfig = [
             roles: ['TradeTracking-GetList'],
           },
           {
-            title: 'ExpenseTracking',
+            title: 'ExpenseTrackingMenu',
             path: PATH_DASHBOARD.ExpenseTracking.list,
             roles: ['ExpenseTracking-GetList'],
           },
           {
-            title: 'WithdrawalTracking',
+            title: 'WithdrawalTrackingMenu',
             path: PATH_DASHBOARD.WithdrawalTracking.list,
             roles: ['WithdrawalTracking-GetList'],
           },

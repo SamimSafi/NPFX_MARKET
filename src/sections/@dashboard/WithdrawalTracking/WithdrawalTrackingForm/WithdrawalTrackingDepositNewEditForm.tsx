@@ -52,7 +52,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
       mainAssetId: selectedWithdrawalTracking?.mainAssetId || asssetID,
       description: selectedWithdrawalTracking?.description || '',
       date: selectedWithdrawalTracking?.date || new Date().toLocaleDateString(),
-      withdrawalAmount: selectedWithdrawalTracking?.withdrawalAmount,
+      withdrawalAmount: selectedWithdrawalTracking?.amount,
     }),
     [selectedWithdrawalTracking, asssetID]
   );
@@ -110,7 +110,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="mainAssetId" label={translate('WithdrawalTracking.Account')}>
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.MainAsset')}>
                 <option value="" />
                 {MainAssetOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -120,14 +120,14 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
               </RHFSelect>
               <LocalizDatePicker
                 name="date"
-                label={translate('WithdrawalTracking.date')}
+                label={translate('GeneralFields.Date')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
                 name="withdrawalAmount"
-                label={translate('WithdrawalTracking.withdrawalAmount')}
+                label={translate('WithdrawalTracking.WithdrawalAmount')}
                 type={'number'}
                 showAsterisk={true}
                 autoFocus
@@ -137,7 +137,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
               />
               <RHFTextField
                 name="description"
-                label={translate('WithdrawalTracking.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />

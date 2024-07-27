@@ -29,8 +29,13 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
   const { TradeTrackingStore, commonDropdown, MainAssetStore } = useStore();
   const { translate } = useLocales();
   const { loadMainAssetDDL, MainAssetOption } = commonDropdown;
-  const { createTradeTracking, updateTradeTracking, editMode, selectedTradeTracking } =
-    TradeTrackingStore;
+  const {
+    createTradeTracking,
+    updateTradeTracking,
+    editMode,
+    selectedTradeTracking,
+    clearSelectedTradeTracking,
+  } = TradeTrackingStore;
   // const { loadBranchDDL, BranchOption, loadUserDropdown, UserOption } = commonDropdown;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
@@ -124,7 +129,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.MainAsset')}>
                 <option value="" />
                 {MainAssetOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -135,14 +140,14 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
 
               <LocalizDatePicker
                 name="date"
-                label={translate('TradeTracking.date')}
+                label={translate('GeneralFields.Date')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
                 name="tradeAmount"
-                label={translate('TradeTracking.tradeAmount')}
+                label={translate('TradeTracking.TradeAmount')}
                 type={'number'}
                 InputProps={{
                   endAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -151,7 +156,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
               />
               <RHFTextField
                 name="profitAmount"
-                label={translate('TradeTracking.profitAmount')}
+                label={translate('TradeTracking.ProfitAmount')}
                 type={'number'}
                 InputProps={{
                   endAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -160,7 +165,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
               />
               <RHFTextField
                 name="lossAmount"
-                label={translate('TradeTracking.lossAmount')}
+                label={translate('TradeTracking.LossAmount')}
                 type={'number'}
                 InputProps={{
                   endAdornment: <InputAdornment position="start">$</InputAdornment>,
@@ -169,7 +174,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
               />
               <RHFTextField
                 name="description"
-                label={translate('TradeTracking.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
               />
             </Box>
@@ -202,6 +207,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
                   color="error"
                   startIcon={<Iconify icon="eva:arrow-ios-back-fill" />}
                   onClick={() => {
+                    clearSelectedTradeTracking();
                     navigate(PATH_DASHBOARD.TradeTracking.list);
                   }}
                 >

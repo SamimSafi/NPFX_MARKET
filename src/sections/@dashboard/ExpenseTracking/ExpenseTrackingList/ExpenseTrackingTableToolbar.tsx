@@ -18,7 +18,7 @@ export default function ExpenseTableToolbar({ filterName, onFilterName }: Props)
         fullWidth
         value={filterName}
         onChange={(event) => onFilterName(event.target.value)}
-        placeholder={translate('ExpenseType.Placeholder')}
+        placeholder={translate('ExpenseTracking.Placeholder')}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">

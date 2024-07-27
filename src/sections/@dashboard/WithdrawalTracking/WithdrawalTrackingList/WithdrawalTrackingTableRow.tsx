@@ -20,7 +20,7 @@ type Props = {
 };
 
 export default function WithdrawalTrackingTableRow({ row, onEditRow, onDeleteRow, index }: Props) {
-  const { currencyName, date, dueDate, description, userName, withdrawalAmount } = row;
+  const { currencyType, date, description, userName, amount, branch } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -35,12 +35,12 @@ export default function WithdrawalTrackingTableRow({ row, onEditRow, onDeleteRow
   return (
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
-      <TableCell align="left">{currencyName}</TableCell>
+      <TableCell align="left">{currencyType}</TableCell>
       <TableCell align="left">{date}</TableCell>
-      <TableCell align="left">{dueDate}</TableCell>
       <TableCell align="left">{description}</TableCell>
+      <TableCell align="left">{branch}</TableCell>
       <TableCell align="left">{userName}</TableCell>
-      <TableCell align="left">{withdrawalAmount}</TableCell>
+      <TableCell align="left">{amount}</TableCell>
 
       <TableCell align="left">
         <TableMoreMenu

@@ -39,7 +39,7 @@ export default function WithdrawalTrackingDepositCreate() {
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
-              name: `${translate('WithdrawalTracking.WithdrawalTrackingList')}`,
+              name: `${translate('WithdrawalTracking.WithdrawalTracking')}`,
               href: PATH_DASHBOARD.WithdrawalTracking.list,
             },
             {

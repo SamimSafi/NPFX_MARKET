@@ -30,17 +30,19 @@ export default function ExpenseCreate() {
         <HeaderBreadcrumbs
           heading={
             !isEdit
-              ? `${translate('Expense.CreateExpense')}`
-              : `${translate('Expense.EditExpense')}`
+              ? `${translate('ExpenseTracking.Create')}`
+              : `${translate('ExpenseTracking.Edit')}`
           }
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
-              name: `${translate('Expense.ExpenseList')}`,
+              name: `${translate('ExpenseTracking.ExpenseTracking')}`,
               href: PATH_DASHBOARD.ContractDetails.list,
             },
             {
-              name: !isEdit ? `${translate('Expense.New')}` : `${translate('Expense.Update')}`,
+              name: !isEdit
+                ? `${translate('ExpenseTracking.New')}`
+                : `${translate('ExpenseTracking.Update')}`,
             },
           ]}
         />
