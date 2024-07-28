@@ -64,12 +64,12 @@ export default observer(function ExpenseTrackinggList() {
   const [ExpenseTrackingTypeId, setExpenseTrackingTypeId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'amount', label: `${translate('ExpenseTracking.currencyType')}`, align: 'left' },
-    { id: 'currencyType', label: `${translate('ExpenseTracking.currencyType')}`, align: 'left' },
-    { id: 'date', label: `${translate('ExpenseTracking.date')}`, align: 'left' },
-    { id: 'branch', label: `${translate('ExpenseTracking.branch')}`, align: 'left' },
-    { id: 'userName', label: `${translate('ExpenseTracking.userName')}`, align: 'left' },
-    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
+    { id: 'amount', label: `${translate('ExpenseTracking.ExpenseAmount')}`, align: 'left' },
+    { id: 'currencyType', label: `${translate('CurrencyType.CurrencyType')}`, align: 'left' },
+    { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
+    { id: 'branch', label: `${translate('Branch.Branch')}`, align: 'left' },
+    { id: 'userName', label: `${translate('User.user')}`, align: 'left' },
+    { id: 'description', label: `${translate('GeneralFields.Description')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
@@ -147,11 +147,11 @@ export default observer(function ExpenseTrackinggList() {
     <Page title={translate('ExpenseTracking.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('ExpenseTracking.ExpenseTrackingList')}
+          heading={translate('ExpenseTracking.ExpenseTracking')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('ExpenseTracking.ExpenseTrackingList')}` },
+            { name: `${translate('ExpenseTracking.ExpenseTracking')}` },
           ]}
           action={
             <Button

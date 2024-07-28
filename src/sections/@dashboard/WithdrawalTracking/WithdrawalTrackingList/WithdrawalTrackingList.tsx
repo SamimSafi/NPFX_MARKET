@@ -65,15 +65,14 @@ export default observer(function WithdrawalTrackingList() {
   const [WithdrawalTrackingId, setWithdrawalTrackingId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'Currency', label: `${translate('GeneralFields.Currency')}`, align: 'left' },
-    { id: 'Asset', label: `${translate('GeneralFields.Asset')}`, align: 'left' },
+    { id: 'Currency', label: `${translate('CurrencyType.CurrencyType')}`, align: 'left' },
     { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
-    { id: 'dueDate', label: `${translate('GeneralFields.dueDate')}`, align: 'left' },
-    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
-    { id: 'user', label: `${translate('GeneralFields.user')}`, align: 'left' },
+    { id: 'description', label: `${translate('GeneralFields.Description')}`, align: 'left' },
+    { id: 'branch', label: `${translate('Branch.Branch')}`, align: 'left' },
+    { id: 'user', label: `${translate('User.user')}`, align: 'left' },
     {
       id: 'withdrawalAmount',
-      label: `${translate('GeneralFields.withdrawalAmount')}`,
+      label: `${translate('WithdrawalTracking.WithdrawalAmount')}`,
       align: 'left',
     },
     { id: '', label: `${translate('GeneralFields.Action')}` },
@@ -153,24 +152,27 @@ export default observer(function WithdrawalTrackingList() {
     <Page title={translate('WithdrawalTracking.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('WithdrawalTracking.WithdrawalTrackingList')}
+          heading={translate('WithdrawalTracking.WithdrawalTracking')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('WithdrawalTracking.WithdrawalTrackingList')}` },
+            { name: `${translate('WithdrawalTracking.WithdrawalTracking')}` },
           ]}
           action={
             <>
               <Button
                 variant="contained"
+                color="error"
                 startIcon={<Iconify icon="eva:plus-fill" />}
                 component={RouterLink}
                 to={PATH_DASHBOARD.WithdrawalTracking.new}
+                sx={{ mr: 1 }}
               >
                 {translate('CRUD.WithdraFromAccount')}
               </Button>
               <Button
                 variant="contained"
+                color="success"
                 startIcon={<Iconify icon="eva:plus-fill" />}
                 component={RouterLink}
                 to={PATH_DASHBOARD.WithdrawalTracking.deposit}

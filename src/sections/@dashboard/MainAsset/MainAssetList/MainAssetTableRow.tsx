@@ -130,7 +130,7 @@ export default function MainAssetTableRow({
                 }}
               >
                 <Iconify sx={{ color: 'success.main' }} icon={'mdi:cash-sync'} />
-                {translate('CRUD.CreateLaon')}
+                {translate('CRUD.TakeOrGiveLoan')}
               </MenuItem>
               <MenuItem
                 onClick={() => {

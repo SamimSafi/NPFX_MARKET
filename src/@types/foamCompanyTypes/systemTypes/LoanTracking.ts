@@ -46,6 +46,7 @@ export interface IPayTakenLoan {
   currencyTypeId?: number;
   date: string;
   description: string;
+  afterSubmit?: string;
 }
 
 export interface IRecieveGivenLoan {
@@ -58,4 +59,5 @@ export interface IRecieveGivenLoan {
   usd?: number;
   date?: string;
   description?: string;
+  afterSubmit?: string;
 }

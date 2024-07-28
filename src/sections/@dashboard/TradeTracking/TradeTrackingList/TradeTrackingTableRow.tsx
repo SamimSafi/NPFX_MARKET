@@ -46,9 +46,9 @@ export default function TradeTrackingTableRow({ row, onEditRow, onDeleteRow, ind
       <TableCell align="left">{index + 1}</TableCell>
       <TableCell align="left">{currencyType}</TableCell>
       <TableCell align="left">{branch}</TableCell>
-      <TableCell align="left">{userName}</TableCell>
       <TableCell align="left">{date}</TableCell>
       <TableCell align="left">{description}</TableCell>
+      <TableCell align="left">{userName}</TableCell>
       <TableCell align="left">{tradeAmount}</TableCell>
       <TableCell align="left">{profitAmount}</TableCell>
       <TableCell align="left">{lossAmount}</TableCell>

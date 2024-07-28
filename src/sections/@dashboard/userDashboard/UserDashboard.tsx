@@ -12,7 +12,6 @@ import { PATH_DASHBOARD } from 'src/routes/paths';
 export default function UserDashboard() {
   const { translate } = useLocales();
   const { userDashboardStore } = useStore();
-  const { dashboardBydepartmentUserSummary } = userDashboardStore;
   const [isloading, setIsloading] = useState(false);
   const theme = useTheme();
   const navigate = useNavigate();
@@ -54,40 +53,7 @@ export default function UserDashboard() {
             <>
               <Grid container xs={12} md={12}>
                 <Grid item xs={12} md={12} sx={{ padding: 1 }}>
-                  {dashboardBydepartmentUserSummary.length > 0 ? (
-                    <SpiderChart
-                      title={translate('UserDashboard.TotalDepartments')}
-                      title2={translate('UserDashboard.TotalUsers')}
-                      chartData={dashboardBydepartmentUserSummary}
-                      chartColors={[
-                        theme.palette.primary.main,
-                        theme.palette.chart.blue[0],
-                        theme.palette.chart.blue[1],
-                        theme.palette.chart.blue[2],
-                        theme.palette.chart.blue[3],
-                        theme.palette.chart.violet[0],
-                        theme.palette.chart.violet[1],
-                        theme.palette.chart.violet[2],
-                        theme.palette.chart.violet[3],
-                        theme.palette.chart.yellow[0],
-                        theme.palette.chart.red[0],
-                        theme.palette.chart.red[1],
-                        theme.palette.chart.red[2],
-                        theme.palette.chart.red[3],
-                        theme.palette.chart.green[0],
-                        theme.palette.chart.green[1],
-                        theme.palette.chart.green[2],
-                        theme.palette.chart.green[3],
-                      ]}
-                    />
-                  ) : (
-                    <EmptyContent
-                      title={translate('ReceptionDashboard.NoRecordFound')}
-                      sx={{
-                        '& span.MuiBox-root': { height: 160 },
-                      }}
-                    />
-                  )}
+                  <></>
                 </Grid>
               </Grid>
             </>

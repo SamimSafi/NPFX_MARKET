@@ -89,6 +89,7 @@ import {
   IWithdrawalTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
 import { IContractType, IContractTypeParams } from 'src/@types/foamCompanyTypes/CategoryType';
+import { IPieChartByBranch } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
@@ -596,6 +597,12 @@ const ExpenseTracking = {
   DDl: () => axios.get<any>(`/ExpenseTracking/GetDropDownList`, { withCredentials: true }),
 };
 
+const npfxDashboards = {
+  UserDashboardByBranch: () =>
+    axios.get<IPieChartByBranch[]>(
+      `UserReportsAndDashboard/DashBoard-EachAndTotalUserInBranchDashBoard`
+    ),
+};
 //  LoanTracking
 const LoanTracking = {
   create: (LoanTracking: ILoanTracking) => requests.post<void>('/LoanTracking', LoanTracking),
@@ -871,6 +878,7 @@ const agent = {
   LoanTracking,
   WithdrawalTracking,
   ContractType,
+  npfxDashboards,
 };
 
 export default agent;

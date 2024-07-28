@@ -16,7 +16,8 @@ export type ThemeContrast = 'default' | 'bold';
 export type ThemeLayout = 'vertical' | 'horizontal';
 export type ThemeColorPresets = 'default' | 'purple' | 'cyan' | 'blue' | 'orange' | 'red';
 export type ThemeStretch = boolean;
-export type TablePagination=5 | 10 | 25 | 50 | 100 | 150 | 200;
+export type TablePagination = 5 | 10 | 25 | 50 | 100 | 150 | 200;
+export type ExchangeRate = any;
 
 export type SettingsValueProps = {
   themeMode: ThemeMode;
@@ -25,7 +26,8 @@ export type SettingsValueProps = {
   themeContrast: ThemeContrast;
   themeDirection: ThemeDirection;
   themeColorPresets: ThemeColorPresets;
-  tablePagination:TablePagination,
+  tablePagination: TablePagination;
+  exchangeRate: ExchangeRate;
 };
 
 export type SettingsContextProps = {
@@ -36,6 +38,7 @@ export type SettingsContextProps = {
   themeColorPresets: ThemeColorPresets;
   themeStretch: boolean;
   tablePagination: TablePagination;
+  exchangeRate: ExchangeRate;
   setColor: ColorVariants;
   colorOption: {
     name: string;
@@ -66,7 +69,8 @@ export type SettingsContextProps = {
   onToggleStretch: VoidFunction;
 
   // Stretch
-  onChangePagination: (event:any) => void;
+  onChangePagination: (event: any) => void;
+  onChangeExchangeRate: (event: any) => void;
 
   // Reset
   onResetSetting: VoidFunction;

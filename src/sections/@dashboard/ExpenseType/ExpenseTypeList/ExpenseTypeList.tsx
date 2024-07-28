@@ -141,14 +141,14 @@ export default observer(function ExpenseTypeList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('Expense.Title')}>
+    <Page title={translate('ExpenseType.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.ExpenseTypeList')}
+          heading={translate('ExpenseType.ExpenseTypeList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Expense.ExpenseTypeList')}` },
+            { name: `${translate('ExpenseType.ExpenseTypeList')}` },
           ]}
           action={
             <Button

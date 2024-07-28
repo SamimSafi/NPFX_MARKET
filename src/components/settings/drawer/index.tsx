@@ -23,6 +23,7 @@ import SettingDirection from './SettingDirection';
 import SettingFullscreen from './SettingFullscreen';
 import SettingColorPresets from './SettingColorPresets';
 import SettingPagination from './SettingPagination';
+import SettingExchangeRate from './SettingExchangeRate';
 
 // ----------------------------------------------------------------------
 
@@ -57,6 +58,8 @@ export default function SettingsDrawer() {
     themeDirection,
     themeColorPresets,
     onResetSetting,
+    exchangeRate,
+    tablePagination,
   } = useSettings();
 
   const [open, setOpen] = useState(false);
@@ -67,7 +70,9 @@ export default function SettingsDrawer() {
     themeStretch !== defaultSettings.themeStretch ||
     themeContrast !== defaultSettings.themeContrast ||
     themeDirection !== defaultSettings.themeDirection ||
-    themeColorPresets !== defaultSettings.themeColorPresets;
+    themeColorPresets !== defaultSettings.themeColorPresets ||
+    exchangeRate !== defaultSettings.exchangeRate ||
+    tablePagination !== defaultSettings.tablePagination;
 
   const varSidebar =
     themeDirection !== 'rtl'
@@ -142,6 +147,10 @@ export default function SettingsDrawer() {
                   <Stack spacing={1.5}>
                     <Typography variant="subtitle2">Table Pagination</Typography>
                     <SettingPagination />
+                  </Stack>
+                  <Stack spacing={1.5}>
+                    <Typography variant="subtitle2">Exchange Rate</Typography>
+                    <SettingExchangeRate />
                   </Stack>
 
                   <Stack spacing={1.5}>

@@ -39,8 +39,8 @@ export default function TradeTrackingCreate() {
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
-              name: `${translate('TradeTracking.TradeTrackingList')}`,
-              href: PATH_DASHBOARD.ContractDetails.list,
+              name: `${translate('TradeTracking.Title')}`,
+              href: PATH_DASHBOARD.TradeTracking.list,
             },
             {
               name: !isEdit

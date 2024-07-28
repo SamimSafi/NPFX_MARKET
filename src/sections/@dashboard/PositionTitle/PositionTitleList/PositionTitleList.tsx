@@ -79,9 +79,9 @@ export default observer(function PositionTitleList() {
   const [PositionTitleId, setPositionTitleId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'name', label: `${translate('GeneralFields.name')}`, align: 'left' },
+    { id: 'name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
     { id: 'code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
-    { id: 'isActive', label: `${translate('GeneralFields.isActive')}`, align: 'left' },
+    { id: 'isActive', label: `${translate('User.isActive')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
@@ -131,8 +131,8 @@ export default observer(function PositionTitleList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    console.log(newPage)
-    console.log(rowsPerPage)
+    console.log(newPage);
+    console.log(rowsPerPage);
     loadPositionTitle({ pageIndex: newPage, pageSize: rowsPerPage });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -142,7 +142,7 @@ export default observer(function PositionTitleList() {
   };
   useEffect(() => {
     if (PositionTitleRegistry.size <= 1) {
-      console.log(rowsPerPage)
+      console.log(rowsPerPage);
       loadPositionTitle({ pageIndex: 0, pageSize: rowsPerPage });
     }
   }, []);

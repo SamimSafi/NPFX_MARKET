@@ -139,14 +139,14 @@ export default observer(function AssetTypeList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('Asset.Title')}>
+    <Page title={translate('AssetType.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Asset.AssetTypeList')}
+          heading={translate('AssetType.AssetTypeList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Asset.AssetTypeList')}` },
+            { name: `${translate('AssetType.AssetTypeList')}` },
           ]}
           action={
             <Button

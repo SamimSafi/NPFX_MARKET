@@ -66,9 +66,7 @@ export default function SpiderChart({
     fill: { opacity: 0.8 },
     yaxis: {
       labels: {
-        formatter: (chartSeries: any) => {
-          return chartSeries.toFixed(1);
-        },
+        formatter: (chartSeries: any) => chartSeries.toFixed(2),
       },
     },
     legend: {
