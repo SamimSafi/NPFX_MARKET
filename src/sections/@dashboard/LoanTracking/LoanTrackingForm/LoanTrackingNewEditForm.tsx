@@ -243,12 +243,22 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                 showAsterisk={true}
                 autoFocus
               />
-              <Controller
-                name="isGiven"
-                control={control}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                direction: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
+                <Controller
+                  name="isGiven"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <label>{translate('LoanTracking.GiveLoan')}</label>
                       <Switch
                         {...field}
                         onChange={(e) => {
@@ -256,13 +266,13 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                           // handleChange(e); // Handle the switch state change
                         }}
                         checked={field.value}
+                        inputProps={{ 'aria-label': 'controlled' }}
                       />
-                    }
-                    label={translate('LoanTracking.isGiven')}
-                    labelPlacement="end"
-                  />
-                )}
-              />
+                      <label>{translate('LoanTracking.TakeLoan')}</label>
+                    </>
+                  )}
+                />
+              </Stack>
             </Box>
             <Box
               sx={{
