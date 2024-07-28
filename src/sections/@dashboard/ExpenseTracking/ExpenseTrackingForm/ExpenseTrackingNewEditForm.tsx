@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
+import { Alert, Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -46,14 +46,14 @@ export default observer(function ExpenseTrackingNewEditForm() {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewExpenseTrackingSchema = Yup.object().shape({
-    expenseTypeId: Yup.number().required(`${translate('Validation.ExpenseTrackingType')}`),
+    expenseTypeId: Yup.number().required(`${translate('Validation.ExpenseType')}`),
     mainAssetId: !editMode
-      ? Yup.string().required(`${translate('Validation.ExpenseTrackingType')}`)
+      ? Yup.string().required(`${translate('Validation.Account')}`)
       : Yup.string(),
-    branchId: Yup.number().required(`${translate('Validation.branch')}`),
-    userId: Yup.string().required(`${translate('Validation.user')}`),
-    date: Yup.date().required(`${translate('Validation.user')}`),
-    amount: Yup.number().required(`${translate('Validation.amount')}`),
+    branchId: Yup.number().required(`${translate('Validation.Branch')}`),
+    userId: Yup.string().required(`${translate('Validation.User')}`),
+    date: Yup.date().required(`${translate('Validation.Date')}`),
+    amount: Yup.number().required(`${translate('Validation.Amount')}`),
   });
 
   const defaultValues = useMemo<IExpenseTracking>(
@@ -79,17 +79,31 @@ export default observer(function ExpenseTrackingNewEditForm() {
     reset,
     handleSubmit,
     watch,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
   } = methods;
   const val = watch();
   const onSubmit = (data: IExpenseTracking) => {
     if (data.id! === undefined) {
       ///create
-      createExpenseTracking(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ExpenseTracking.list);
-      });
+      createExpenseTracking(data)
+        .then(() => {
+          reset();
+          enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+          navigate(PATH_DASHBOARD.ExpenseTracking.list);
+        })
+        .catch((err) => {
+          var json = JSON.parse(err.request.response);
+          if (json.error.Date != null) {
+            setError('afterSubmit', { ...err, message: json.error.Date });
+          } else if (json.error.MainAssetId != null) {
+            setError('afterSubmit', { ...err, message: json.error.MainAssetId });
+          } else if (json.error.Amount != null) {
+            setError('afterSubmit', { ...err, message: json.error.Amount });
+          } else {
+            setError('afterSubmit', { ...err, message: json.error });
+          }
+        });
     } else {
       ///update
       updateExpenseTracking(data).then(() => {
@@ -122,6 +136,11 @@ export default observer(function ExpenseTrackingNewEditForm() {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card sx={{ p: 3 }}>

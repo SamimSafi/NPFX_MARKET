@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, FormControlLabel, Grid, Stack, Switch } from '@mui/material';
+import { Alert, Box, Card, FormControlLabel, Grid, Stack, Switch } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -43,12 +43,12 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewLoanTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
+    mainAssetId: Yup.string().required(`${translate('Validation.Account')}`),
     // currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
     // userId: Yup.string().required(`${translate('Validation.PashtoName')}`),
-    loanTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
-    loanAmount: Yup.number().required(`${translate('Validation.loanAmount')}`),
+    loanTypeId: Yup.number().required(`${translate('Validation.LoanType')}`),
+    date: Yup.date().required(`${translate('Validation.Date')}`),
+    loanAmount: Yup.number().required(`${translate('Validation.LoanAmount')}`),
   });
 
   const defaultValues = useMemo<ILoanTracking>(
@@ -81,7 +81,8 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
     reset,
     handleSubmit,
     watch,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
     control,
   } = methods;
 
@@ -89,18 +90,43 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   const onSubmit = (data: ILoanTracking) => {
     if (data.id! === undefined) {
       ///create
-      createLoanTracking(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        // navigate(PATH_DASHBOARD.ContractType.list);
-        MainAssetStore.setOpenCloseDialogCreateLoan();
-      });
+      createLoanTracking(data)
+        .then(() => {
+          reset();
+          enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+          // navigate(PATH_DASHBOARD.ContractType.list);
+          MainAssetStore.setOpenCloseDialogCreateLoan();
+        })
+        .catch((err) => {
+          var json = JSON.parse(err.request.response);
+          if (json.error.NameInEnglish != null) {
+            setError('afterSubmit', { ...err, message: json.error.NameInEnglish });
+          } else if (json.error.NameInPashto != null) {
+            setError('afterSubmit', { ...err, message: json.error.NameInPashto });
+          } else if (json.error.Phone != null) {
+            setError('afterSubmit', { ...err, message: json.error.Phone });
+          } else if (json.error.Email != null) {
+            setError('afterSubmit', { ...err, message: json.error.Email });
+          } else if (json.error.LoanTypeId != null) {
+            setError('afterSubmit', { ...err, message: json.error.LoanTypeId });
+          } else if (json.error.MainAssetId != null) {
+            setError('afterSubmit', { ...err, message: json.error.MainAssetId });
+          } else if (json.error.LoanAmount != null) {
+            setError('afterSubmit', { ...err, message: json.error.LoanAmount });
+          } else if (json.error.Date != null) {
+            setError('afterSubmit', { ...err, message: json.error.Date });
+          } else if (json.error.DueDate != null) {
+            setError('afterSubmit', { ...err, message: json.error.DueDate });
+          } else {
+            setError('afterSubmit', { ...err, message: json.error });
+          }
+        });
     } else {
       ///update
       updateLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.LoanTracking.list);
       });
     }
   };
@@ -119,6 +145,11 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Card>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>

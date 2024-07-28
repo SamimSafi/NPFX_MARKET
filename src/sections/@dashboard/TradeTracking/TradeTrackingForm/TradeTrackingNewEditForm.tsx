@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
+import { Alert, Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -41,10 +41,10 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewTradeTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
+    mainAssetId: Yup.string().required(`${translate('Validation.Account')}`),
     // currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
-    tradeAmount: Yup.number().required(`${translate('Validation.tradeAmount')}`),
+    date: Yup.date().required(`${translate('Validation.Date')}`),
+    tradeAmount: Yup.number().required(`${translate('Validation.TradeAmount')}`),
   });
 
   const defaultValues = useMemo<ITradeTracking>(
@@ -71,7 +71,8 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
     control,
     // watch,
   } = methods;
@@ -79,16 +80,33 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
   const onSubmit = (data: ITradeTracking) => {
     if (data.id! === undefined) {
       ///create
-      createTradeTracking(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        asssetID !== undefined
-          ? (() => {
-              MainAssetStore.setOpenCloseDialogCreateTrade();
-              MainAssetStore.loadMainAsset({ pageIndex: 0, pageSize: 10 });
-            })()
-          : navigate(PATH_DASHBOARD.TradeTracking.list);
-      });
+      createTradeTracking(data)
+        .then(() => {
+          reset();
+          enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+          asssetID !== undefined
+            ? (() => {
+                MainAssetStore.setOpenCloseDialogCreateTrade();
+                MainAssetStore.loadMainAsset({ pageIndex: 0, pageSize: 10 });
+              })()
+            : navigate(PATH_DASHBOARD.TradeTracking.list);
+        })
+        .catch((err) => {
+          var json = JSON.parse(err.request.response);
+          if (json.error.Date != null) {
+            setError('afterSubmit', { ...err, message: json.error.Date });
+          } else if (json.error.MainAssetId != null) {
+            setError('afterSubmit', { ...err, message: json.error.MainAssetId });
+          } else if (json.error.TradeAmount != null) {
+            setError('afterSubmit', { ...err, message: json.error.TradeAmount });
+          } else if (json.error.ProfitAmount != null) {
+            setError('afterSubmit', { ...err, message: json.error.ProfitAmount });
+          } else if (json.error.LossAmount != null) {
+            setError('afterSubmit', { ...err, message: json.error.LossAmount });
+          } else {
+            setError('afterSubmit', { ...err, message: json.error });
+          }
+        });
     } else {
       ///update
       updateTradeTracking(data).then(() => {
@@ -118,6 +136,11 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card sx={{ p: 3 }}>

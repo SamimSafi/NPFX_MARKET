@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, InputAdornment, Stack, TextField } from '@mui/material';
+import { Alert, Box, Card, Grid, InputAdornment, Stack, TextField } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -50,9 +50,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
   const { enqueueSnackbar } = useSnackbar();
 
   const NewLoanTrackingSchema = Yup.object().shape({
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
-    amountByMainAssetCurrencyType: Yup.number().required(`${translate('Validation.Code')}`),
-    amountByLoanTrackingCurrencyType: Yup.number().required(`${translate('Validation.Code')}`),
+    date: Yup.date().required(`${translate('Validation.Date')}`),
   });
 
   const defaultValues = useMemo<IPayTakenLoan>(
@@ -77,7 +75,8 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
     reset,
     handleSubmit,
     watch,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
     control,
     setValue,
   } = methods;
@@ -121,12 +120,25 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
 
     // if (data.loanTrackingId! === undefined) {
     ///create
-    PayTakenLoan(data).then(() => {
-      reset();
-      enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-      // navigate(PATH_DASHBOARD.ContractType.list);
-      setOpenCloseDialogPayTakenLoan();
-    });
+    PayTakenLoan(data)
+      .then(() => {
+        reset();
+        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+        // navigate(PATH_DASHBOARD.ContractType.list);
+        setOpenCloseDialogPayTakenLoan();
+      })
+      .catch((err) => {
+        var json = JSON.parse(err.request.response);
+        if (json.error.AmountByMainAssetCurrencyType != null) {
+          setError('afterSubmit', { ...err, message: json.error.AmountByMainAssetCurrencyType });
+        } else if (json.error.ExchangeRate != null) {
+          setError('afterSubmit', { ...err, message: json.error.ExchangeRate });
+        } else if (json.error.Date != null) {
+          setError('afterSubmit', { ...err, message: json.error.Date });
+        } else {
+          setError('afterSubmit', { ...err, message: json.error });
+        }
+      });
     // } else {
     //   ///update
     //   updateLoanTracking(data).then(() => {
@@ -149,6 +161,11 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card sx={{ p: 3 }}>

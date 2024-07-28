@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
+import { Alert, Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -41,9 +41,9 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
   const { enqueueSnackbar } = useSnackbar();
 
   const NewWithdrawalTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
-    withdrawalAmount: Yup.number().required(`${translate('Validation.Code')}`),
+    mainAssetId: Yup.string().required(`${translate('Validation.Account')}`),
+    date: Yup.date().required(`${translate('Validation.Date')}`),
+    withdrawalAmount: Yup.number().required(`${translate('Validation.WithdrawalAmount')}`),
   });
 
   const defaultValues = useMemo<IWithdrawalTracking>(
@@ -65,18 +65,32 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
     control,
   } = methods;
 
   const onSubmit = (data: IWithdrawalTracking) => {
     if (data.id! === undefined) {
       ///create
-      DepositToAccount(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.WithdrawalTracking.list);
-      });
+      DepositToAccount(data)
+        .then(() => {
+          reset();
+          enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+          navigate(PATH_DASHBOARD.WithdrawalTracking.list);
+        })
+        .catch((err) => {
+          var json = JSON.parse(err.request.response);
+          if (json.error.Date != null) {
+            setError('afterSubmit', { ...err, message: json.error.Date });
+          } else if (json.error.MainAssetId != null) {
+            setError('afterSubmit', { ...err, message: json.error.MainAssetId });
+          } else if (json.error.DepositAmount != null) {
+            setError('afterSubmit', { ...err, message: json.error.DepositAmount });
+          } else {
+            setError('afterSubmit', { ...err, message: json.error });
+          }
+        });
     } else {
       ///update
       updateWithdrawalTracking(data).then(() => {
@@ -99,6 +113,11 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card sx={{ p: 3 }}>
