@@ -202,6 +202,8 @@ const en = {
     PaidAmount: `Paid Amount`,
     RemainAmount: `Remain Amount`,
     Placeholder: `Search Loan Records`,
+    GiveLoan: `Give Loan`,
+    TakeLoan: `Take Loan`,
   },
   CRUD: {
     Create: `Create`,
