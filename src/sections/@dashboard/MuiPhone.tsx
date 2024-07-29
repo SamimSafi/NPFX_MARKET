@@ -14,7 +14,7 @@ import {
   parseCountry,
   usePhoneInput,
 } from 'react-international-phone';
-import CustomFlag from './CustomFlags/CustomFlag';
+// import CustomFlag from './CustomFlags/CustomFlag';
 //Localization
 import useLocales from 'src/hooks/useLocales';
 
@@ -34,7 +34,7 @@ export const MuiPhone: React.FC<MUIPhoneProps> = ({
     defaultCountry: 'af',
     value,
     countries: defaultCountries,
-    onChange: (data:any) => {
+    onChange: (data: any) => {
       onChange(data.phone);
     },
   });
@@ -91,38 +91,42 @@ export const MuiPhone: React.FC<MUIPhoneProps> = ({
               onChange={(e) => {
                 setCountry(e.target.value as CountryIso2);
               }}
-              renderValue={(value) => {
-                if (value === 'af') {
-                  return (
-                    <img
-                      src={CustomFlag.AF}
-                      alt="Flag for Afghanistan"
-                      style={{ width: '1.5em', height: '1.5em' }}
-                    />
-                  );
-                } else {
-                  return <FlagEmoji iso2={value} style={{ display: 'flex' }} />;
-                }
-              }}
+              renderValue={
+                (value) => (
+                  // if (value === 'af') {
+                  //   return (
+                  //     <img
+                  //       src={CustomFlag.AF}
+                  //       alt="Flag for Afghanistan"
+                  //       style={{ width: '1.5em', height: '1.5em' }}
+                  //     />
+                  //   );
+                  // } else {
+                  <FlagEmoji iso2={value} style={{ display: 'flex' }} />
+                )
+                // }
+              }
             >
-              {defaultCountries.map((c:any) => {
+              {defaultCountries.map((c: any) => {
                 const country = parseCountry(c);
                 return (
                   <MenuItem key={country.iso2} value={country.iso2}>
-                    {c[2] == 'af' ? (
-                      <>
-                        {' '}
-                        <img
-                          src={CustomFlag.AF}
-                          alt="Flag for Afghanistan"
-                          style={{ width: '1.5em', height: '1.5em', marginRight: '8px' }}
-                        />
-                      </>
-                    ) : (
+                    {
+                      // c[2] == 'af' ? (
+                      //   <>
+                      //     {' '}
+                      //     <img
+                      //       src={CustomFlag.AF}
+                      //       alt="Flag for Afghanistan"
+                      //       style={{ width: '1.5em', height: '1.5em', marginRight: '8px' }}
+                      //     />
+                      //   </>
+                      // ) : (
                       <>
                         <FlagEmoji iso2={country.iso2} style={{ marginRight: '8px' }} />
                       </>
-                    )}
+                      // )
+                    }
 
                     <Typography marginRight="8px"> {country.name}</Typography>
                     <Typography color="gray">+{country.dialCode}</Typography>

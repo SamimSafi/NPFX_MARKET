@@ -40,7 +40,7 @@ export default function LoanTrackingCreate() {
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
             {
               name: `${translate('LoanTracking.LoanTrackingList')}`,
-              href: PATH_DASHBOARD.ContractDetails.list,
+              href: PATH_DASHBOARD.LoanTracking.list,
             },
             {
               name: !isEdit

@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
+import { Alert, Box, Button, Card, Grid, InputAdornment, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -40,9 +40,9 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
   const { enqueueSnackbar } = useSnackbar();
 
   const NewWithdrawalTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
-    withdrawalAmount: Yup.number().required(`${translate('Validation.Code')}`),
+    mainAssetId: Yup.string().required(`${translate('Validation.Account')}`),
+    date: Yup.date().required(`${translate('Validation.Date')}`),
+    withdrawalAmount: Yup.number().required(`${translate('Validation.WithdrawalAmount')}`),
   });
 
   const defaultValues = useMemo<IWithdrawalTracking>(
@@ -51,7 +51,7 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
       mainAssetId: selectedWithdrawalTracking?.mainAssetId || asssetID,
       description: selectedWithdrawalTracking?.description || '',
       date: selectedWithdrawalTracking?.date || new Date().toLocaleDateString(),
-      withdrawalAmount: selectedWithdrawalTracking?.withdrawalAmount,
+      withdrawalAmount: selectedWithdrawalTracking?.amount,
     }),
     [selectedWithdrawalTracking, asssetID]
   );
@@ -64,24 +64,38 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
     control,
   } = methods;
   const { setOpenCloseDialogWithdrawCash } = MainAssetStore;
   const onSubmit = (data: IWithdrawalTracking) => {
     if (data.id! === undefined) {
       ///create
-      createWithdrawalTracking(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
-      });
+      createWithdrawalTracking(data)
+        .then(() => {
+          reset();
+          enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+          navigate(PATH_DASHBOARD.WithdrawalTracking.list);
+        })
+        .catch((err) => {
+          var json = JSON.parse(err.request.response);
+          if (json.error.Date != null) {
+            setError('afterSubmit', { ...err, message: json.error.Date });
+          } else if (json.error.MainAssetId != null) {
+            setError('afterSubmit', { ...err, message: json.error.MainAssetId });
+          } else if (json.error.WithdrawalAmount != null) {
+            setError('afterSubmit', { ...err, message: json.error.WithdrawalAmount });
+          } else {
+            setError('afterSubmit', { ...err, message: json.error });
+          }
+        });
     } else {
       ///update
       updateWithdrawalTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.WithdrawalTracking.list);
       });
     }
   };
@@ -98,6 +112,11 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card sx={{ p: 3 }}>
@@ -109,7 +128,7 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="mainAssetId" label={translate('WithdrawalTracking.Account')}>
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.MainAsset')}>
                 <option value="" />
                 {MainAssetOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -119,14 +138,14 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
               </RHFSelect>
               <LocalizDatePicker
                 name="date"
-                label={translate('WithdrawalTracking.date')}
+                label={translate('GeneralFields.Date')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
                 name="withdrawalAmount"
-                label={translate('WithdrawalTracking.withdrawalAmount')}
+                label={translate('WithdrawalTracking.WithdrawalAmount')}
                 type={'number'}
                 showAsterisk={true}
                 autoFocus
@@ -136,7 +155,7 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
               />
               <RHFTextField
                 name="description"
-                label={translate('WithdrawalTracking.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />

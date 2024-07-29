@@ -15,7 +15,7 @@ import userPerformenceDashboardStore from './userPerformenceDashboard/userPerfor
 
 import EmployeeStore from './Employee/EmployeeStore';
 
-import userDashboardStore from './userDashboard/userDashboardStore';
+import userDashboardStore from './npfxDashboardStores/npfxDashboardStore';
 import ProvinceStore from './Province/ProvinceStore';
 
 import DistrictStore from './District/DistrictStore';
@@ -43,7 +43,11 @@ import ExpenseTrackingStore from './foamCompanyStores/ExpenseTrackingStore';
 import LoanTrackingStore from './foamCompanyStores/LoanTrackingStore';
 import WithdrawalTrackingStore from './foamCompanyStores/WithdrawalTrackingStore';
 import MainAssetDetailsStore from './foamCompanyStores/MainAssetDetailsStore';
+
 import ApplicationStore from './applicationStore';
+
+import npfxDashboardStore from './npfxDashboardStores/npfxDashboardStore';
+
 
 interface Store {
   LoginStore: LoginStore;
@@ -103,7 +107,11 @@ interface Store {
   ExpenseTrackingStore: ExpenseTrackingStore;
   LoanTrackingStore: LoanTrackingStore;
   WithdrawalTrackingStore: WithdrawalTrackingStore;
+
   ApplicationStore: ApplicationStore;
+
+  npfxDashboardStore: npfxDashboardStore;
+
 }
 //Include All store below
 export const store: Store = {
@@ -154,7 +162,11 @@ export const store: Store = {
   ExpenseTrackingStore: new ExpenseTrackingStore(),
   LoanTrackingStore: new LoanTrackingStore(),
   WithdrawalTrackingStore: new WithdrawalTrackingStore(),
+
   ApplicationStore: new ApplicationStore(),
+
+  npfxDashboardStore: new npfxDashboardStore(),
+
 };
 
 export const StoreContext = createContext(store);

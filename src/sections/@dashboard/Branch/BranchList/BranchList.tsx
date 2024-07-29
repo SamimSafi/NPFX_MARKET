@@ -67,7 +67,7 @@ export default observer(function BranchList() {
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
     { id: 'name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
     { id: 'parentName', label: `${translate('Branch.ParentName')}`, align: 'left' },
-    { id: 'modifiedOn', label: `${translate('Branch.modifiedOn')}`, align: 'left' },
+    { id: 'modifiedOn', label: `${translate('Branch.ModifiedOn')}`, align: 'left' },
     { id: 'code', label: `${translate('GeneralFields.Code')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];

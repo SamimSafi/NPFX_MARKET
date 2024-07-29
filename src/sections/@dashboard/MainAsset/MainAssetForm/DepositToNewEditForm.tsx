@@ -35,11 +35,11 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewMainAssetSchema = Yup.object().shape({
-    parentId: Yup.string().required(`${translate('Validation.parent')}`),
-    toUserId: Yup.string().required(`${translate('Validation.userId')}`),
-    branchId: Yup.number().required(`${translate('Validation.branchId')}`),
-    depositDate: Yup.date().required(`${translate('Validation.DariName')}`),
-    depositAmmount: Yup.number().required(`${translate('Validation.Code')}`),
+    // parentId: Yup.string().required(`${translate('Validation.parent')}`),
+    toUserId: Yup.string().required(`${translate('Validation.ToUser')}`),
+    branchId: Yup.number().required(`${translate('Validation.Branch')}`),
+    depositDate: Yup.date().required(`${translate('Validation.DepositDate')}`),
+    depositAmmount: Yup.number().required(`${translate('Validation.DepositAmmount')}`),
   });
 
   const defaultValues = useMemo<IDepositTo>(
@@ -63,7 +63,8 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
     control,
     watch,
   } = methods;
@@ -71,11 +72,28 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
   const onSubmit = (data: IDepositTo) => {
     if (data.id! === undefined) {
       ///create
-      deposit(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        navigate(PATH_DASHBOARD.MainAsset.list);
-      });
+      deposit(data)
+        .then(() => {
+          reset();
+          enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+          navigate(PATH_DASHBOARD.MainAsset.list);
+        })
+        .catch((err) => {
+          var json = JSON.parse(err.request.response);
+          if (json.error.DepositDate != null) {
+            setError('afterSubmit', { ...err, message: json.error.DepositDate });
+          } else if (json.error.ToUserId != null) {
+            setError('afterSubmit', { ...err, message: json.error.ToUserId });
+          } else if (json.error.DepositAmmount != null) {
+            setError('afterSubmit', { ...err, message: json.error.DepositAmmount });
+          } else if (json.error.BranchId != null) {
+            setError('afterSubmit', { ...err, message: json.error.BranchId });
+          } else if (json.error.AssetTypeId != null) {
+            setError('afterSubmit', { ...err, message: json.error.AssetTypeId });
+          } else {
+            setError('afterSubmit', { ...err, message: json.error });
+          }
+        });
     } else {
       ///update
       // updateMainAsset(data).then(() => {

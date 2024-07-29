@@ -21,19 +21,19 @@ import { IBranch } from 'src/@types/foamCompanyTypes/looks/branch';
 // ----------------------------------------------------------------------
 
 export default observer(function BranchNewEditForm() {
-  const { branchStore } = useStore();
+  const { branchStore, commonDropdown } = useStore();
   const { translate } = useLocales();
   const { createBranch, updateBranch, editMode, selectedBranch, clearSelectedBranch } = branchStore;
   const navigate = useNavigate();
-
+  const { loadBranchDDL, BranchOption } = commonDropdown;
   const { enqueueSnackbar } = useSnackbar();
 
   const NewBranchSchema = Yup.object().shape({
     englishName: Yup.string().required(`${translate('Validation.EnglishName')}`),
     dariName: Yup.string().required(`${translate('Validation.DariName')}`),
     pashtoName: Yup.string().required(`${translate('Validation.PashtoName')}`),
-    address: Yup.string().required(`${translate('Validation.address')}`),
-    parentId: Yup.number().required(`${translate('Validation.address')}`),
+    code: Yup.string().required(`${translate('Validation.Code')}`),
+    address: Yup.string().required(`${translate('Validation.Address')}`),
   });
 
   const defaultValues = useMemo<IBranch>(
@@ -77,13 +77,6 @@ export default observer(function BranchNewEditForm() {
       });
     }
   };
-  const bloodGroup = [
-    { title: 'A+', value: 1 },
-    { title: 'A-', value: 2 },
-    { title: 'B+', value: 3 },
-    { title: 'B-', value: 4 },
-    { title: 'O+', value: 5 },
-  ];
 
   useEffect(() => {
     if (editMode) {
@@ -92,7 +85,8 @@ export default observer(function BranchNewEditForm() {
     if (!editMode) {
       reset(defaultValues);
     }
-  }, [reset, editMode, defaultValues]);
+    loadBranchDDL();
+  }, [reset, editMode, defaultValues, loadBranchDDL]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -133,15 +127,15 @@ export default observer(function BranchNewEditForm() {
               />
               <RHFTextField
                 name="address"
-                label={translate('Branch.address')}
+                label={translate('Branch.Address')}
                 showAsterisk={true}
                 autoFocus
               />
-              <RHFSelect name="parentId" label={translate('MainAsset.Parent')}>
+              <RHFSelect name="parentId" label={translate('Branch.Parent')}>
                 <option value="" />
-                {bloodGroup.map((op) => (
+                {BranchOption.map((op) => (
                   <option key={op.value} value={op.value}>
-                    {op.title}
+                    {op.text}
                   </option>
                 ))}
               </RHFSelect>

@@ -117,7 +117,8 @@ export default observer(function PositionTitleNewEditForm() {
             >
               <RHFSelect
                 name="branchId"
-                label={`${translate('PositionTitle.branchId')}` + ' ' + '*'}
+                label={`${translate('Branch.Branch')}`}
+                showAsterisk={true}
                 // onChange={(e) => handleDocumentType(parseInt(e.target.value))}
               >
                 <option value="" />

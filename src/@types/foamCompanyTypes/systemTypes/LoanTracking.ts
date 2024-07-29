@@ -6,26 +6,23 @@ export interface ILoanTracking {
   nameInEnglish?: string;
   nameInPashto?: string;
   phone?: string;
-
   email?: string;
   loanTypeId?: number;
-
   loanTypeName?: string;
+  partnerPhone?: string;
+  loanAmount?: number;
+  paidAmount?: number;
+  remainAmount?: number;
   currencyTypeId?: number;
   currencyType?: string;
   mainAssetId?: string;
   asset?: string;
-
-  loanAmount?: number;
-  paidAmount?: number;
-  remainAmount?: number;
-
   date?: string;
   dueDate?: string;
   description?: string;
   userId?: string;
   userName?: string;
-  partnerPhone?: string;
+  status?: string;
   isGiven?: boolean;
   afterSubmit?: string;
 }
@@ -49,6 +46,7 @@ export interface IPayTakenLoan {
   currencyTypeId?: number;
   date: string;
   description: string;
+  afterSubmit?: string;
 }
 
 export interface IRecieveGivenLoan {
@@ -61,4 +59,5 @@ export interface IRecieveGivenLoan {
   usd?: number;
   date?: string;
   description?: string;
+  afterSubmit?: string;
 }

@@ -75,37 +75,37 @@ const navConfig = [
             roles: ['Branch-GetList', 'District-GetList', 'Language-GetList'],
             children: [
               {
-                title: 'Branch',
+                title: 'BranchMenu',
                 path: PATH_DASHBOARD.Branch.list,
                 roles: ['Branch-GetList'],
               },
               {
-                title: 'expenseType',
+                title: 'ExpenseTypeMenu',
                 path: PATH_DASHBOARD.ExpenseType.list,
                 roles: ['ExpenseType-GetList'],
               },
               {
-                title: 'assetType',
+                title: 'AssetTypeMenu',
                 path: PATH_DASHBOARD.AssetType.list,
                 roles: ['AssetType-GetList'],
               },
               {
-                title: 'LoanType',
+                title: 'LoanTypeMenu',
                 path: PATH_DASHBOARD.LoanType.list,
                 roles: ['LoanType-GetList'],
               },
               {
-                title: 'PaymentType',
+                title: 'PaymentTypeMenu',
                 path: PATH_DASHBOARD.PaymentType.list,
                 roles: ['PaymentType-GetList'],
               },
               {
-                title: 'CurrencyType',
+                title: 'CurrencyTypeMenu',
                 path: PATH_DASHBOARD.CurrencyType.list,
                 roles: ['CurrencyType-GetList'],
               },
               {
-                title: 'Partners',
+                title: 'PartnersMenu',
                 path: PATH_DASHBOARD.Partners.list,
                 roles: ['Partners-GetList'],
               },
@@ -214,27 +214,27 @@ const navConfig = [
         roles: ['MainAsset-GetList', 'CardDetails-GetPrintableCardList'],
         children: [
           {
-            title: 'AssetManagement',
+            title: 'AssetManagementMenu',
             path: PATH_DASHBOARD.MainAsset.list,
             roles: ['MainAsset-GetList'],
           },
           {
-            title: 'LoanTracking',
+            title: 'LoanTrackingMenu',
             path: PATH_DASHBOARD.LoanTracking.list,
             roles: ['LoanTracking-GetList'],
           },
           {
-            title: 'TradeTracking',
+            title: 'TradeTrackingMenu',
             path: PATH_DASHBOARD.TradeTracking.list,
             roles: ['TradeTracking-GetList'],
           },
           {
-            title: 'ExpenseTracking',
+            title: 'ExpenseTrackingMenu',
             path: PATH_DASHBOARD.ExpenseTracking.list,
             roles: ['ExpenseTracking-GetList'],
           },
           {
-            title: 'WithdrawalTracking',
+            title: 'WithdrawalTrackingMenu',
             path: PATH_DASHBOARD.WithdrawalTracking.list,
             roles: ['WithdrawalTracking-GetList'],
           },

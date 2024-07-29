@@ -65,14 +65,14 @@ export default observer(function TradeTrackingList() {
   const [TradeTrackingId, setTradeTrackingId] = useState<number>(0);
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'Currency', label: `${translate('GeneralFields.Name')}`, align: 'left' },
-    { id: 'Account', label: `${translate('GeneralFields.Account')}`, align: 'left' },
+    { id: 'Currency', label: `${translate('CurrencyType.CurrencyType')}`, align: 'left' },
+    { id: 'branch', label: `${translate('Branch.Branch')}`, align: 'left' },
     { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
-    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
-    { id: 'user', label: `${translate('GeneralFields.user')}`, align: 'left' },
-    { id: 'TradeAmount', label: `${translate('GeneralFields.TradeAmount')}`, align: 'left' },
-    { id: 'ProfitAmount', label: `${translate('GeneralFields.ProfitAmount')}`, align: 'left' },
-    { id: 'LossAmount', label: `${translate('GeneralFields.LossAmount')}`, align: 'left' },
+    { id: 'Description', label: `${translate('GeneralFields.Description')}`, align: 'left' },
+    { id: 'user', label: `${translate('User.user')}`, align: 'left' },
+    { id: 'TradeAmount', label: `${translate('TradeTracking.TradeAmount')}`, align: 'left' },
+    { id: 'ProfitAmount', label: `${translate('TradeTracking.ProfitAmount')}`, align: 'left' },
+    { id: 'LossAmount', label: `${translate('TradeTracking.LossAmount')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
@@ -150,11 +150,11 @@ export default observer(function TradeTrackingList() {
     <Page title={translate('TradeTracking.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('TradeTracking.TradeTrackingList')}
+          heading={translate('TradeTracking.TradeTracking')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('TradeTracking.TradeTrackingList')}` },
+            { name: `${translate('TradeTracking.TradeTracking')}` },
           ]}
           action={
             <Button
@@ -163,7 +163,7 @@ export default observer(function TradeTrackingList() {
               component={RouterLink}
               to={PATH_DASHBOARD.TradeTracking.new}
             >
-              {translate('CRUD.Create')}
+              {translate('TradeTracking.EnterTrade')}
             </Button>
           }
         />

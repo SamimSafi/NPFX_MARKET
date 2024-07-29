@@ -32,7 +32,8 @@ export default observer(function PartnersNewEditForm() {
   const NewPartnersSchema = Yup.object().shape({
     nameInEnglish: Yup.string().required(`${translate('Validation.EnglishName')}`),
     nameInPashto: Yup.string().required(`${translate('Validation.DariName')}`),
-    phone: Yup.string().required(`${translate('Validation.phone')}`),
+    phone: Yup.string().required(`${translate('Validation.Phone')}`),
+    email: Yup.string().required(`${translate('Validation.Email')}`),
   });
 
   const defaultValues = useMemo<IPartners>(

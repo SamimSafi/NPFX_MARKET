@@ -141,14 +141,14 @@ export default observer(function PartnersList() {
   const isNotFound = !dataFiltered.length && !!filterName;
 
   return (
-    <Page title={translate('Expense.Title')}>
+    <Page title={translate('Partners.Title')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.PartnersList')}
+          heading={translate('Partners.PartnersList')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            { name: `${translate('Expense.PartnersList')}` },
+            { name: `${translate('Partners.PartnersList')}` },
           ]}
           action={
             <Button

@@ -30,9 +30,7 @@ export default function MainAssetCreate() {
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={
-            !isEdit
-              ? `${translate('MainAsset.CreateMainAsset')}`
-              : `${translate('MainAsset.EditMainAsset')}`
+            !isEdit ? `${translate('MainAsset.AddTitle')}` : `${translate('MainAsset.UpdateTitle')}`
           }
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },

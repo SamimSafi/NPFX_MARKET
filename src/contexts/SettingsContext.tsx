@@ -14,6 +14,7 @@ import {
   ThemeColorPresets,
   SettingsContextProps,
   TablePagination,
+  ExchangeRate,
 } from '../components/settings/type';
 
 // ----------------------------------------------------------------------
@@ -45,7 +46,9 @@ const initialState: SettingsContextProps = {
   // Stretch
   onToggleStretch: () => {},
 
-  onChangePagination:()=>{},
+  onChangePagination: () => {},
+
+  onChangeExchangeRate: () => {},
   // Reset
   onResetSetting: () => {},
 };
@@ -67,19 +70,19 @@ function SettingsProvider({ children }: SettingsProviderProps) {
     themeDirection: initialState.themeDirection,
     themeColorPresets: initialState.themeColorPresets,
     tablePagination: initialState.tablePagination,
+    exchangeRate: initialState.exchangeRate,
   });
 
   const isPashto = localStorage.getItem('i18nextLng') === 'ps';
-  const isDari= localStorage.getItem('i18nextLng') === 'dr';
+  const isDari = localStorage.getItem('i18nextLng') === 'dr';
   useEffect(() => {
     if (isPashto) {
       onChangeDirectionByLang('ps');
-    }
-    else if(isDari){
+    } else if (isDari) {
       onChangeDirectionByLang('dr');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isPashto,isDari]);
+  }, [isPashto, isDari]);
 
   // Mode
 
@@ -116,8 +119,7 @@ function SettingsProvider({ children }: SettingsProviderProps) {
   const onChangeDirectionByLang = (lang: string) => {
     setSettings({
       ...settings,
-      themeDirection: lang === 'ps' ? 'rtl' : lang === 'dr'? 'rtl': 'ltr',
-
+      themeDirection: lang === 'ps' ? 'rtl' : lang === 'dr' ? 'rtl' : 'ltr',
     });
   };
 
@@ -171,14 +173,20 @@ function SettingsProvider({ children }: SettingsProviderProps) {
     });
   };
 
-    // Stretch
+  // Stretch
 
-    const onChangePagination = (event:any) => {
-      setSettings({
-        ...settings,
-        tablePagination: event as TablePagination,
-      });
-    };
+  const onChangePagination = (event: any) => {
+    setSettings({
+      ...settings,
+      tablePagination: event as TablePagination,
+    });
+  };
+  const onChangeExchangeRate = (event: any) => {
+    setSettings({
+      ...settings,
+      exchangeRate: event as ExchangeRate,
+    });
+  };
 
   // Reset
 
@@ -221,6 +229,7 @@ function SettingsProvider({ children }: SettingsProviderProps) {
 
         // pagination
         onChangePagination,
+        onChangeExchangeRate,
         // Color
         onChangeColor,
         setColor: getColorPresets(settings.themeColorPresets),

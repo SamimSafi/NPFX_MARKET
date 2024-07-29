@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, FormControlLabel, Grid, Stack, Switch } from '@mui/material';
+import { Alert, Box, Card, FormControlLabel, Grid, Stack, Switch } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -43,12 +43,12 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   const { enqueueSnackbar } = useSnackbar();
 
   const NewLoanTrackingSchema = Yup.object().shape({
-    mainAssetId: Yup.string().required(`${translate('Validation.EnglishName')}`),
+    mainAssetId: Yup.string().required(`${translate('Validation.Account')}`),
     // currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    userId: Yup.string().required(`${translate('Validation.PashtoName')}`),
-    loanTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
-    loanAmount: Yup.number().required(`${translate('Validation.loanAmount')}`),
+    // userId: Yup.string().required(`${translate('Validation.PashtoName')}`),
+    loanTypeId: Yup.number().required(`${translate('Validation.LoanType')}`),
+    date: Yup.date().required(`${translate('Validation.Date')}`),
+    loanAmount: Yup.number().required(`${translate('Validation.LoanAmount')}`),
   });
 
   const defaultValues = useMemo<ILoanTracking>(
@@ -81,7 +81,8 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
     reset,
     handleSubmit,
     watch,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
     control,
   } = methods;
 
@@ -89,18 +90,43 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   const onSubmit = (data: ILoanTracking) => {
     if (data.id! === undefined) {
       ///create
-      createLoanTracking(data).then(() => {
-        reset();
-        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-        // navigate(PATH_DASHBOARD.ContractType.list);
-        MainAssetStore.setOpenCloseDialogCreateLoan();
-      });
+      createLoanTracking(data)
+        .then(() => {
+          reset();
+          enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+          // navigate(PATH_DASHBOARD.ContractType.list);
+          MainAssetStore.setOpenCloseDialogCreateLoan();
+        })
+        .catch((err) => {
+          var json = JSON.parse(err.request.response);
+          if (json.error.NameInEnglish != null) {
+            setError('afterSubmit', { ...err, message: json.error.NameInEnglish });
+          } else if (json.error.NameInPashto != null) {
+            setError('afterSubmit', { ...err, message: json.error.NameInPashto });
+          } else if (json.error.Phone != null) {
+            setError('afterSubmit', { ...err, message: json.error.Phone });
+          } else if (json.error.Email != null) {
+            setError('afterSubmit', { ...err, message: json.error.Email });
+          } else if (json.error.LoanTypeId != null) {
+            setError('afterSubmit', { ...err, message: json.error.LoanTypeId });
+          } else if (json.error.MainAssetId != null) {
+            setError('afterSubmit', { ...err, message: json.error.MainAssetId });
+          } else if (json.error.LoanAmount != null) {
+            setError('afterSubmit', { ...err, message: json.error.LoanAmount });
+          } else if (json.error.Date != null) {
+            setError('afterSubmit', { ...err, message: json.error.Date });
+          } else if (json.error.DueDate != null) {
+            setError('afterSubmit', { ...err, message: json.error.DueDate });
+          } else {
+            setError('afterSubmit', { ...err, message: json.error });
+          }
+        });
     } else {
       ///update
       updateLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
-        navigate(PATH_DASHBOARD.ContractType.list);
+        navigate(PATH_DASHBOARD.LoanTracking.list);
       });
     }
   };
@@ -119,6 +145,11 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Card>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
@@ -131,7 +162,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="mainAssetId" label={translate('MainAsset.mainAsset')}>
+              <RHFSelect name="mainAssetId" label={translate('MainAsset.MainAsset')}>
                 <option value="" />
                 {MainAssetOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -139,7 +170,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="partnerId" label={translate('LoanTracking.Partner')}>
+              <RHFSelect name="partnerId" label={translate('Partner.Partner')}>
                 <option value="" />
                 {PartnersOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -154,31 +185,31 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                 <>
                   <RHFTextField
                     name="nameInEnglish"
-                    label={translate('LoanTracking.nameInEnglish')}
+                    label={translate('GeneralFields.NameInEnglish')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="nameInPashto"
-                    label={translate('LoanTracking.nameInPashto')}
+                    label={translate('GeneralFields.NameInPashto')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="phone"
-                    label={translate('LoanTracking.phone')}
+                    label={translate('Partner.PartnerPhone')}
                     showAsterisk={true}
                     autoFocus
                   />
                   <RHFTextField
                     name="email"
-                    label={translate('LoanTracking.email')}
+                    label={translate('User.email')}
                     showAsterisk={true}
                     autoFocus
                   />
                 </>
               )}
-              <RHFSelect name="loanTypeId" label={translate('LoanTracking.loanType')}>
+              <RHFSelect name="loanTypeId" label={translate('LoanType.LoanType')}>
                 <option value="" />
                 {LoanTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -188,7 +219,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
               </RHFSelect>
               <RHFTextField
                 name="loanAmount"
-                label={translate('LoanTracking.loanAmount')}
+                label={translate('LoanTracking.LoanAmount')}
                 showAsterisk={true}
                 autoFocus
                 type="number"
@@ -196,28 +227,38 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
 
               <LocalizDatePicker
                 name="date"
-                label={translate('LoanTracking.date')}
+                label={translate('GeneralFields.Date')}
                 control={control}
                 showAsterisk={true}
               />
               <LocalizDatePicker
                 name="dueDate"
-                label={translate('LoanTracking.dueDate')}
+                label={translate('GeneralFields.DueDate')}
                 control={control}
                 showAsterisk={true}
               />
               <RHFTextField
                 name="description"
-                label={translate('LoanTracking.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />
-              <Controller
-                name="isGiven"
-                control={control}
-                render={({ field }) => (
-                  <FormControlLabel
-                    control={
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                direction: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
+                <Controller
+                  name="isGiven"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <label>{translate('LoanTracking.GiveLoan')}</label>
                       <Switch
                         {...field}
                         onChange={(e) => {
@@ -225,13 +266,13 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
                           // handleChange(e); // Handle the switch state change
                         }}
                         checked={field.value}
+                        inputProps={{ 'aria-label': 'controlled' }}
                       />
-                    }
-                    label={translate('LoanTracking.isGiven')}
-                    labelPlacement="end"
-                  />
-                )}
-              />
+                      <label>{translate('LoanTracking.TakeLoan')}</label>
+                    </>
+                  )}
+                />
+              </Stack>
             </Box>
             <Box
               sx={{

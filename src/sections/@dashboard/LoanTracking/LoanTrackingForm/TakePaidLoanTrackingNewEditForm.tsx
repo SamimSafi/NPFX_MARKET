@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, InputAdornment, Stack, TextField } from '@mui/material';
+import { Alert, Box, Card, Grid, InputAdornment, Stack, TextField } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -23,6 +23,7 @@ import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { currency } from 'src/constantFile/CommonConstant';
 import { roundOff } from 'src/utils/general';
+import useSettings from 'src/hooks/useSettings';
 // ----------------------------------------------------------------------
 interface Props {
   TrackingId: number;
@@ -34,6 +35,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
 }: Props) {
   const { LoanTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
+  const { exchangeRate, onChangeExchangeRate } = useSettings();
   const {
     TakePaidLoan,
     updateLoanTracking,
@@ -46,9 +48,8 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
   const { enqueueSnackbar } = useSnackbar();
 
   const NewLoanTrackingSchema = Yup.object().shape({
-    currencyTypeId: Yup.number().required(`${translate('Validation.PashtoName')}`),
-    date: Yup.date().required(`${translate('Validation.DariName')}`),
-    amountBySelectedCurrencyType: Yup.number().required(`${translate('Validation.Code')}`),
+    currencyTypeId: Yup.number().required(`${translate('Validation.CurrencyType')}`),
+    date: Yup.date().required(`${translate('Validation.Date')}`),
   });
 
   const defaultValues = useMemo<IRecieveGivenLoan>(
@@ -59,9 +60,9 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
       date: selectedLoanTracking?.date || '',
       amountBySelectedCurrencyType: 0,
       amountByLoanTrackingCurrencyType: 0,
-      exchangeRate: 0,
+      exchangeRate: 0 || exchangeRate,
     }),
-    [selectedLoanTracking, TrackingId]
+    [selectedLoanTracking, TrackingId, exchangeRate]
   );
 
   const methods = useForm<IRecieveGivenLoan>({
@@ -73,22 +74,23 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
     reset,
     handleSubmit,
     watch,
-    formState: { isSubmitting },
+    setError,
+    formState: { isSubmitting, errors },
     control,
     setValue,
   } = methods;
   const val = watch();
 
-  const exchangeRate = watch('exchangeRate');
+  const exchangeRates = watch('exchangeRate');
   const usdDollor = watch('usd');
 
   const handleUSDChange = (usd: number) => {
-    const afn = usd * exchangeRate;
+    const afn = usd * exchangeRates;
     setValue('afn', roundOff(afn, 2));
   };
 
   const handleAFNChange = (afn: number) => {
-    const usd = afn / exchangeRate;
+    const usd = afn / exchangeRates;
     setValue('usd', roundOff(usd, 2));
   };
 
@@ -117,11 +119,24 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
 
     // if (data.loanTrackingId! === undefined) {
     ///create
-    TakePaidLoan(data).then(() => {
-      reset();
-      enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
-      navigate(PATH_DASHBOARD.ContractType.list);
-    });
+    TakePaidLoan(data)
+      .then(() => {
+        reset();
+        enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
+        navigate(PATH_DASHBOARD.ContractType.list);
+      })
+      .catch((err) => {
+        var json = JSON.parse(err.request.response);
+        if (json.error.AmountBySelectedCurrencyType != null) {
+          setError('afterSubmit', { ...err, message: json.error.AmountBySelectedCurrencyType });
+        } else if (json.error.ExchangeRate != null) {
+          setError('afterSubmit', { ...err, message: json.error.ExchangeRate });
+        } else if (json.error.Date != null) {
+          setError('afterSubmit', { ...err, message: json.error.Date });
+        } else {
+          setError('afterSubmit', { ...err, message: json.error });
+        }
+      });
     // } else {
     //   ///update
     //   updateLoanTracking(data).then(() => {
@@ -144,6 +159,11 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Grid container spacing={3}>
         <Grid item xs={12} md={12}>
           <Card sx={{ p: 3 }}>
@@ -157,7 +177,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                 justifyItems: 'center',
               }}
             >
-              <RHFSelect name="currencyTypeId" label={translate('MainAsset.currencyType')}>
+              <RHFSelect name="currencyTypeId" label={translate('CurrencyType.CurrencyType')}>
                 <option value="" />
                 {CurrencyTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -194,7 +214,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                   render={({ field }) => (
                     <TextField
                       {...field}
-                      label="1 USD ="
+                      label={translate('GeneralFields.OneDollor')}
                       type="text" // Changed to text to control input better
                       onChange={(e) => {
                         let { value } = e.target;
@@ -206,6 +226,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                           const rate = parseFloat(value);
                           field.onChange(e);
                           handleExchangeRateChange(rate);
+                          onChangeExchangeRate(rate);
                         }
                       }}
                       value={field.value === undefined ? '0' : field.value}
@@ -231,7 +252,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                 render={({ field }) => (
                   <RHFTextField
                     {...field}
-                    label="USD"
+                    label={translate('GeneralFields.USD')}
                     type="number"
                     onChange={(e) => {
                       const usd = parseFloat(e.target.value);
@@ -251,7 +272,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                 render={({ field }) => (
                   <RHFTextField
                     {...field}
-                    label="AFN"
+                    label={translate('GeneralFields.AFN')}
                     type="number"
                     onChange={(e) => {
                       const afn = parseFloat(e.target.value);
@@ -267,14 +288,14 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
               />
               <LocalizDatePicker
                 name="date"
-                label={translate('LoanTracking.date')}
+                label={translate('GeneralFields.Date')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
                 name="description"
-                label={translate('LoanTracking.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -289,7 +310,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
                   !editMode ? <Iconify icon="eva:plus-fill" /> : <Iconify icon="eva:edit-fill" />
                 }
               >
-                {translate('CRUD.Save')}
+                {translate('CRUD.TakePaidLoan')}
               </LoadingButton>
               <LoadingButton
                 fullWidth

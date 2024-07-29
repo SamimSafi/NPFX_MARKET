@@ -12,6 +12,8 @@ import {
   TableContainer,
   TablePagination,
   FormControlLabel,
+  Tab,
+  Divider,
 } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 import useSettings from '../../../../hooks/useSettings';
@@ -30,6 +32,9 @@ import LoanTrackingDelete from './LoanTrackingDelete';
 import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 import TakePaidLoanTrackingNewEditForm from '../LoanTrackingForm/TakePaidLoanTrackingNewEditForm';
 import PayTakenLoanTrackingNewEditForm from '../LoanTrackingForm/PayTakenLoanTrackingNewEditForm';
+import { Tabs } from '@mui/material';
+import Label from 'src/components/Label';
+import useTabs from 'src/hooks/useTabs';
 
 // ----------------------------------------------------------------------
 
@@ -71,21 +76,48 @@ export default observer(function LoanTrackingList() {
   const [LoanTrackingId, setLoanTrackingId] = useState<number>(0);
   const [currencyTypeId, setCurrencyTypeId] = useState<number>(0);
   const [mainAssetId, setMainAssetId] = useState<string>('');
+  const { currentTab: IsGiven, onChangeTab: onFilterStatus } = useTabs('0');
+
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'currencyType', label: `${translate('GeneralFields.currencyType')}`, align: 'left' },
+    { id: 'currencyType', label: `${translate('CurrencyType.CurrencyType')}`, align: 'left' },
     // { id: 'Asset', label: `${translate('GeneralFields.Asset')}`, align: 'left' },
     { id: 'Date', label: `${translate('GeneralFields.Date')}`, align: 'left' },
-    { id: 'dueDate', label: `${translate('GeneralFields.dueDate')}`, align: 'left' },
-    { id: 'partner', label: `${translate('GeneralFields.partner')}`, align: 'left' },
-    { id: 'partnerPhone', label: `${translate('GeneralFields.partnerPhone')}`, align: 'left' },
-    { id: 'userName', label: `${translate('GeneralFields.userName')}`, align: 'left' },
-    { id: 'LoanAmount', label: `${translate('GeneralFields.LoanAmount')}`, align: 'left' },
-    { id: 'paidAmount', label: `${translate('GeneralFields.paidAmount')}`, align: 'left' },
-    { id: 'remainAmount', label: `${translate('GeneralFields.remainAmount')}`, align: 'left' },
-    { id: 'description', label: `${translate('GeneralFields.description')}`, align: 'left' },
+    { id: 'dueDate', label: `${translate('GeneralFields.DueDate')}`, align: 'left' },
+    { id: 'partner', label: `${translate('Partner.Partner')}`, align: 'left' },
+    { id: 'partnerPhone', label: `${translate('Partner.PartnerPhone')}`, align: 'left' },
+    { id: 'userName', label: `${translate('User.userName')}`, align: 'left' },
+    { id: 'status', label: `${translate('GeneralFields.Status')}`, align: 'left' },
+    { id: 'LoanAmount', label: `${translate('LoanTracking.LoanAmount')}`, align: 'left' },
+    { id: 'paidAmount', label: `${translate('LoanTracking.PaidAmount')}`, align: 'left' },
+    { id: 'remainAmount', label: `${translate('LoanTracking.RemainAmount')}`, align: 'left' },
+    { id: 'description', label: `${translate('GeneralFields.Description')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
+  const getLengthByStatus = (status: boolean) =>
+    LoanTrackingList.filter((item) => item.isGiven === status).length;
+
+  const TABS = [
+    {
+      value: '0',
+      label: translate('ProcessName.All'),
+      color: 'info',
+      count: LoanTrackingList.length,
+    },
+    {
+      value: 'true',
+      label: translate('ProcessName.DueGiven'),
+      color: 'success',
+      count: getLengthByStatus(true),
+    },
+    {
+      value: 'false',
+      label: translate('ProcessName.DueTaken'),
+      color: 'info',
+      count: getLengthByStatus(false),
+    },
+  ] as const;
+
   const handleFilterName = (filterName: string) => {
     setFilterName(filterName);
     setPage(0);
@@ -176,6 +208,7 @@ export default observer(function LoanTrackingList() {
     tableData: LoanTrackingList,
     comparator: getComparator(order, orderBy),
     filterName: '',
+    IsGiven,
   });
 
   const denseHeight = dense ? 52 : 72;
@@ -205,6 +238,26 @@ export default observer(function LoanTrackingList() {
         />
 
         <Card>
+          <Tabs
+            allowScrollButtonsMobile
+            variant="scrollable"
+            scrollButtons="auto"
+            value={IsGiven}
+            onChange={onFilterStatus}
+            sx={{ px: 2, bgcolor: 'background.neutral' }}
+          >
+            {TABS.filter((item) => item.count > 0).map((tab) => (
+              <Tab
+                disableRipple
+                key={tab.value}
+                value={tab.value}
+                icon={<Label color={tab.color}> {tab.count} </Label>}
+                label={tab.label}
+              />
+            ))}
+          </Tabs>
+
+          <Divider />
           <LoanTrackingTableToolbar filterName={filterName} onFilterName={handleFilterName} />
 
           <Scrollbar>
@@ -277,7 +330,7 @@ export default observer(function LoanTrackingList() {
             <MyDialog
               open={openDialogTakePaidLoan}
               onClose={handleCloseTakePaidLoanConfirm}
-              title={translate('CRUD.PayLoan')}
+              title={translate('CRUD.TakePaidLoan')}
               size="md"
             >
               <TakePaidLoanTrackingNewEditForm
@@ -316,10 +369,12 @@ function applySortFilter({
   tableData,
   comparator,
   filterName,
+  IsGiven,
 }: {
   tableData: ILoanTracking[];
   comparator: (a: any, b: any) => number;
   filterName: string;
+  IsGiven: string;
 }) {
   const stabilizedThis = tableData.map((el, index) => [el, index] as const);
 
@@ -335,6 +390,13 @@ function applySortFilter({
     tableData = tableData.filter(
       (item: Record<string, any>) =>
         item.search.toLowerCase().indexOf(filterName.toLowerCase()) !== -1
+    );
+  }
+  if (IsGiven !== '0') {
+    console.log(IsGiven);
+
+    tableData = tableData.filter(
+      (item: Record<string, any>) => item.isGiven.toString() === IsGiven
     );
   }
 
