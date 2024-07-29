@@ -2,7 +2,9 @@ import { IInvestor, IInvestorParams } from './../@types/foamCompanyTypes/investo
 
 import axios, { AxiosResponse } from 'axios';
 import {
+  AuthData,
   LoginFormValue,
+  RecoveryCodes,
   ResetPassword,
   SendVerificationCode,
   User,
@@ -126,6 +128,12 @@ const requests = {
 // Login
 const Logins = {
   login: (login: LoginFormValue) => requests.post<User>('/Auth/SignIn', login),
+  loginWith2fa: (login: LoginFormValue) => requests.post<User>('/Auth/SignInWith2Fa', login),
+  generate2faQrCode: () => requests.get<AuthData>('/Auth/GenerateQrCodeData'),
+  enableTwoFactorAuthentication: (Code: string) =>
+    requests.post<RecoveryCodes>(`Auth/EnableTwoFactorAuthentication?Code=${Code}`, {}),
+  loginWith2faRecoveryCode: (login: LoginFormValue) =>
+    requests.post<User>('/Auth/SignInWithRecoveryCode', login),
   SendCode: (sendCode: SendVerificationCode) =>
     requests.post<void>('/Auth/ForgetPassword-SendVerificationCode', sendCode),
   VerifyCode: (verifyCode: VerifyVerificationCode) =>

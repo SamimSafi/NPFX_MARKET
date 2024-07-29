@@ -1,8 +1,27 @@
 export interface LoginFormValue {
-  userName: string;
+  email: string;
   password: string;
+  code1?: string;
+  code2?: string;
+  code3?: string;
+  code4?: string;
+  code5?: string;
+  code6?: string;
+  twoFactorCode?: string;
+  recoveryCode?: string;
   rememberMe?: boolean;
   afterSubmit?: string;
+}
+export interface AuthData {
+  sharedKey: string;
+  authenticatorUri: string;
+  errorMessage: string | null;
+}
+
+export interface RecoveryCodes {
+  statusMessage: string;
+  recoveryCodes: [];
+  errorMessage: string;
 }
 
 export interface SendVerificationCode {
@@ -14,14 +33,11 @@ export interface VerifyVerificationCode {
   verificationCode: any;
 }
 
-
 export interface VerificationCodeResponse {
-
   code: any;
   message: any;
   data: any;
 }
-
 
 export interface ResetPassword {
   id: any;

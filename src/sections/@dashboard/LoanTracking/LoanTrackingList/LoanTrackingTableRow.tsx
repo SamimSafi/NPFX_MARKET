@@ -85,6 +85,7 @@ export default function LoanTrackingTableRow({
                   onDeleteRow();
                   handleCloseMenu();
                 }}
+                disabled={remainAmount! > 0 ? false : true}
                 sx={{ color: 'error.main' }}
               >
                 <Iconify icon={'eva:trash-2-outline'} />
@@ -96,30 +97,38 @@ export default function LoanTrackingTableRow({
                   onEditRow();
                   handleCloseMenu();
                 }}
+                disabled={remainAmount! > 0 ? false : true}
               >
                 <Iconify sx={{ color: 'warning.main' }} icon={'eva:edit-fill'} />
                 {translate('CRUD.Update')}
               </MenuItem>
               {!isGiven ? (
-                <MenuItem
-                  onClick={() => {
-                    onPayTakenLoanClicked();
-                    handleCloseMenu();
-                  }}
-                >
-                  <Iconify sx={{ color: 'warning.main' }} icon={'mdi:cash-minus'} />
-                  {translate('CRUD.PayTakenLoan')}
-                </MenuItem>
-              ) : (
+                remainAmount! > 0 ? (
+                  <MenuItem
+                    onClick={() => {
+                      onPayTakenLoanClicked();
+                      handleCloseMenu();
+                    }}
+                  >
+                    <Iconify sx={{ color: 'warning.main' }} icon={'mdi:cash-minus'} />
+                    {translate('CRUD.PayTakenLoan')}
+                  </MenuItem>
+                ) : (
+                  <></>
+                )
+              ) : remainAmount! > 0 ? (
                 <MenuItem
                   onClick={() => {
                     onTakePaidLoanClicked();
                     handleCloseMenu();
                   }}
+                  disabled={remainAmount! > 0 ? false : true}
                 >
                   <Iconify sx={{ color: 'warning.main' }} icon={'mdi:cash-plus'} />
                   {translate('CRUD.TakePaidLoan')}
                 </MenuItem>
+              ) : (
+                <></>
               )}
             </>
           }
