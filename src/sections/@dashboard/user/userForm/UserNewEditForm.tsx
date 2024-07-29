@@ -50,18 +50,15 @@ export default observer(function UserNewEditForm() {
   const { translate } = useLocales();
   const [fullName, setFullName] = useState('');
   const [roleid, setRoleId] = useState<any>([]);
-  const [departmentID, setDepartmentID] = useState<any>([]);
-  const [securityLevelID, setSecurityLevelID] = useState<any>([]);
-  const [docTypeid, setdocTypeid] = useState<any>([]);
+  const [branchID, setBranchID] = useState<any>([]);
   const {
     EmployeeStore: { selectedEmployee, clearSelectedEmployee },
   } = useStore();
-  const [checked, setChecked] = useState(false);
   const [selectedRolesName, setSelectedRolesName] = useState<string[]>();
-  const [selectedDepartmentName, setSelectedDepartmentName] = useState<string[]>();
-
+  const [selectedBranch, setSelectedBranch] = useState<string[]>();
   const [rolesOptions, setRolesOptions] = useState<any[]>([]);
-  const [departmentsOption, setDepartmentsOption] = useState<any[]>([]);
+  const [branchOption, setbranchOption] = useState<any[]>([]);
+  const [empEmail, setEmpEmail] = useState<string>();
 
   const { UserStore, commonDropdown } = useStore();
   const {
@@ -73,7 +70,14 @@ export default observer(function UserNewEditForm() {
     clearSelectedUser,
     clearSelectedUserDetail,
   } = UserStore;
-  const { loadEmployeeDropdown, EmployeeOption } = commonDropdown;
+  const {
+    loadEmployeeDropdown,
+    EmployeeOption,
+    loadBranchDDL,
+    BranchOption,
+    loadRoleDropdown,
+    RolesOption,
+  } = commonDropdown;
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -86,22 +90,26 @@ export default observer(function UserNewEditForm() {
 
     // rolesName: !editMode ? Yup.string().required(`${translate('User.rolesIsReuquired')}`) :Yup.array()
     // .of(Yup.string().required(`${translate('User.rolesIsReuquired')}`)),
-    employeeName: !checked
-      ? Yup.string()
-          .required(`${translate('Validation.EmployeeIsRequired')}`)
-          .label('employee')
-      : Yup.string(),
+    employeeName: Yup.string()
+      .required(`${translate('Validation.EmployeeIsRequired')}`)
+      .label('employee'),
   });
+
+  const rolesId = SelecteduserDetail?.userRoles.map((m) => m.id);
 
   const defaultValues = useMemo<CreateUser>(
     () => ({
       id: selectedUser?.id || undefined,
       userName: selectedUser?.userName || '',
-      // employeeName: selectedUser?.employeeName || '',
-      employeeId: selectedEmployee?.id || undefined,
+      userRoles: selectedUser?.userRoles || undefined,
+      email: selectedUser?.email || '',
+      allowedBranchs: selectedUser?.allowedBranchs || undefined,
+      employeeId: SelecteduserDetail?.employeeId || selectedEmployee?.id || undefined,
     }),
-    [selectedUser]
+    [selectedUser, SelecteduserDetail, selectedEmployee]
   );
+
+  console.log(selectedUser?.userRoles);
   const methods = useForm<CreateUser>({
     resolver: yupResolver(NewUserSchema),
     defaultValues,
@@ -121,10 +129,15 @@ export default observer(function UserNewEditForm() {
   } = methods;
 
   const onSubmit = (data: CreateUser) => {
-    if (data.id === undefined) {
+    const newData = {
+      ...data,
+      userRoles: roleid.toString(),
+      allowedBranchs: branchID.toString(),
+    };
+    if (newData.id === undefined) {
       ///create
 
-      createUser(data)
+      createUser(newData)
         .then((res) => {
           console.log(res);
           reset();
@@ -146,7 +159,7 @@ export default observer(function UserNewEditForm() {
         });
     } else {
       //update
-      updateUser(data)
+      updateUser(newData)
         .then(() => {
           reset();
           clearSelectedUser();
@@ -181,12 +194,34 @@ export default observer(function UserNewEditForm() {
     if (!editMode) {
       reset(defaultValues);
     }
+  }, [reset, editMode, defaultValues]);
+
+  useEffect(() => {
+    if (editMode) {
+      setRoleId(rolesId);
+
+      setValue('userName', defaultValues.userName);
+      setFullName(defaultValues.userName);
+      reset(defaultValues);
+    }
+    if (!editMode) {
+      loadRoleDropdown()
+        .then((res) => {
+          setRolesOptions(RolesOption.map((i) => i.text));
+        })
+        .finally(() => {
+          setRolesOptions(RolesOption.map((i) => i.text));
+        });
+
+      reset(defaultValues);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, editMode, defaultValues]);
 
   useEffect(() => {
     loadEmployeeDropdown(true);
-
+    loadBranchDDL();
+    loadRoleDropdown();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -199,19 +234,13 @@ export default observer(function UserNewEditForm() {
       }
     }
   }, [employeeName]);
+
+  useEffect(() => {}, [empEmail]);
+
   useEffect(() => {
     //if(editMode)
     setValue('employeeName', employeeName);
   }, [employeeName]);
-
-  useEffect(() => {}, [checked]);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    resetField('employeeId');
-    resetField('employeeName');
-
-    setChecked(event.target.checked);
-  };
 
   return (
     <>
@@ -233,32 +262,8 @@ export default observer(function UserNewEditForm() {
                   gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
                 }}
               >
-                <RHFTextField
-                  name="userName"
-                  value={fullName}
-                  label={translate('User.fullUserName')}
-                  showAsterisk={true}
-                  onChange={handleFullNameChange}
-                />
-                <RHFTextField name="email" label={translate('User.email')} showAsterisk={true} />
-                <RHFTextField
-                  name="password"
-                  label={translate('User.password')}
-                  showAsterisk={true}
-                />
-              </Box>
-
-              <Box
-                sx={{
-                  mt: 2,
-                  display: 'grid',
-                  columnGap: 2,
-                  rowGap: 3,
-                  gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
-                }}
-              >
                 <CustomRHFAutocomplete
-                  name="employeeName"
+                  name="employeeId"
                   label={translate('User.Employee')}
                   showAsterisk={true}
                   placeholder="Employee"
@@ -266,15 +271,19 @@ export default observer(function UserNewEditForm() {
                   options={
                     // !editMode
                     //   ? EmployeeOption.filter((item) => item.hasAccount != true).map((i) => i.text)
+                    //   :
                     EmployeeOption.map((i) => i.text)
                   }
                   getOptionLabel={(option: any) => `${option}`}
                   onChange={(event, newValue: any) => {
-                    const find =
-                      // !editMode
+                    setEmpEmail(
+                      EmployeeOption.filter((item) => item.text === newValue)[0].personalEmail
+                    );
+                    const find = //!editMode
                       //   ? EmployeeOption.filter(
                       //       (item) => item.text === newValue && item.hasAccount != true
-                      //     )[0] :
+                      //     )[0]
+                      //   :
                       EmployeeOption.filter((item) => item.text === newValue)[0];
 
                     if (find) {
@@ -293,6 +302,130 @@ export default observer(function UserNewEditForm() {
                       {option}
                     </li>
                   )}
+                />
+                <RHFTextField
+                  name="userName"
+                  value={fullName}
+                  label={translate('User.fullUserName')}
+                  showAsterisk={true}
+                  onChange={handleFullNameChange}
+                />
+
+                <RHFTextField
+                  name="email"
+                  value={empEmail}
+                  label={translate('User.email')}
+                  showAsterisk={true}
+                  disabled
+                />
+                <CustomRHFAutocomplete
+                  value={selectedRolesName || []}
+                  loading={rolesOptions.length > 0 ? false : true}
+                  multiple
+                  name="rolesName"
+                  label={translate('User.userRoles')}
+                  placeholder="UserRoles"
+                  // value={watch("rolesName") || []}
+                  options={['Select All', ...rolesOptions]}
+                  onFocus={() => {
+                    if (!editMode) {
+                      loadRoleDropdown()
+                        .then((res) => {
+                          setTimeout(() => {
+                            setRolesOptions(RolesOption.map((i) => i.text));
+                          }, 1000);
+                        })
+                        .finally(() => {
+                          setRolesOptions(RolesOption.map((i) => i.text));
+                        });
+                    }
+                  }}
+                  getOptionLabel={(option: any) => `${option}`}
+                  onChange={(event, newValue: any) => {
+                    if (newValue.includes('Select All')) {
+                      setSelectedRolesName(rolesOptions);
+                      setRoleId(RolesOption.map((d) => d.value));
+                    } else {
+                      setSelectedRolesName(newValue);
+                      const selectedRoles = newValue
+                        .map((res: any) => {
+                          const find = RolesOption.find((item) => item.text === res);
+                          if (find) {
+                            return find.value.toString();
+                          } else {
+                            return null;
+                          }
+                        })
+                        .filter((role: any) => role !== null);
+
+                      setRoleId(selectedRoles);
+                    }
+
+                    // setValue('rolesName',selectedRoles)
+                  }}
+                  freeSolo
+                  fullWidth
+                  // eslint-disable-next-line arrow-body-style
+                  renderOption={(props, option: any) => {
+                    return (
+                      <li {...props} key={option + '-' + uuid()}>
+                        {option}
+                      </li>
+                    );
+                  }}
+                />
+                <CustomRHFAutocomplete
+                  value={selectedBranch || []}
+                  multiple
+                  loading={branchOption.length > 0 ? false : true}
+                  onFocus={() => {
+                    if (!editMode) {
+                      loadBranchDDL()
+                        .then((res) => {
+                          setTimeout(() => {
+                            setbranchOption(BranchOption.map((i) => i.text));
+                          }, 1000);
+                        })
+                        .finally(() => {
+                          setbranchOption(BranchOption.map((i) => i.text));
+                        });
+                    }
+                  }}
+                  name="allowedBranchs"
+                  label={translate('User.AllowBranch')}
+                  placeholder="Branch"
+                  options={['Select All', ...branchOption]}
+                  getOptionLabel={(option: any) => `${option}`}
+                  onChange={(event, newValue: any) => {
+                    if (newValue.includes('Select All')) {
+                      setSelectedBranch(branchOption);
+                      setBranchID(BranchOption.map((d) => d.value));
+                    } else {
+                      setSelectedBranch(newValue);
+                      const selectedBranchID = newValue
+                        .map((res: any) => {
+                          const find = BranchOption.find((item) => item.text === res);
+                          if (find) {
+                            return find.value.toString();
+                          } else {
+                            return null;
+                          }
+                        })
+                        .filter((branch: any) => branch !== null);
+
+                      setBranchID(selectedBranchID);
+                    }
+                  }}
+                  freeSolo
+                  fullWidth
+                  // eslint-disable-next-line arrow-body-style
+                  renderOption={(props, option: any) => {
+                    return (
+                      <li {...props} key={option + '-' + uuid()}>
+                        {option}
+                      </li>
+                    );
+                  }}
                 />
               </Box>
 

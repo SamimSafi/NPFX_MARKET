@@ -10,6 +10,7 @@ export interface SelectControl {
   currencyTypeId?: number;
   hasAccount?: boolean;
   isActive?: boolean;
+  personalEmail?: string;
 }
 
 export interface SelectControlAttachments {

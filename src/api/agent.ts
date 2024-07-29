@@ -91,7 +91,11 @@ import {
   IWithdrawalTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
 import { IContractType, IContractTypeParams } from 'src/@types/foamCompanyTypes/CategoryType';
+
+import { Application, ApplicationParams } from 'src/@types/application';
+
 import { IPieChartByBranch } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
+
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
@@ -469,6 +473,20 @@ const AssetType = {
   delete: (id: number, remark: string) => axios.delete<void>(`/AssetType/${id}`, { data: remark }),
   DDl: () =>
     axios.get<any>('/AssetType/GetAssetTypeDDL', {
+      withCredentials: true,
+    }),
+};
+// Application
+const Applications = {
+  create: (application: Application) => requests.post<void>('/Application', application),
+  getList: (param: ApplicationParams) =>
+    axios.post<any>('/Application/Get-Application-List', param, { withCredentials: true }),
+  update: (application: Application) =>
+    requests.put<void>(`/Application/${application.id}`, application),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/Application/${id}`, { data: remark }),
+  getApplicationddl: () =>
+    axios.get<any>('/Application/GetApplicationDDL', {
       withCredentials: true,
     }),
 };
@@ -886,7 +904,11 @@ const agent = {
   LoanTracking,
   WithdrawalTracking,
   ContractType,
+
+  Applications,
+
   npfxDashboards,
+
 };
 
 export default agent;

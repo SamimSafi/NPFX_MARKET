@@ -77,7 +77,7 @@ export default observer(function UserList() {
     { id: 'ID', label: `${translate('Department.Id')}`, align: 'left' },
     { id: 'userName', label: `${translate('User.userName')}`, align: 'left' },
     { id: 'email', label: `${translate('User.email')}`, align: 'left' },
-    { id: 'empName', label: `${translate('User.Employee')}`, align: 'left' },
+    { id: 'isActive', label: `${translate('User.isActive')}`, align: 'left' },
     { id: '', label: `${translate('Department.Action')}` },
   ];
 

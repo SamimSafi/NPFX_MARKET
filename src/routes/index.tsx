@@ -60,6 +60,9 @@ import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/Expen
 import MainAssetDetails from 'src/sections/@dashboard/MainAsset/MainAssetDetails/MainAssetDetails';
 import WithdrawalTrackingDepositCreate from 'src/sections/@dashboard/WithdrawalTracking/WithdrawalTrackingForm/WithdrawalTrackingDepositCreate';
 import GoogleAuthCreate from 'src/sections/@dashboard/user/userForm/GoogleAuthCreate';
+import ApplicationList from 'src/sections/@dashboard/applicationApi/applicationList/ApplicationList';
+import ApplicationCreate from 'src/sections/@dashboard/applicationApi/applicationForm/ApplicationCreate';
+
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: ElementType) => (props: any) => {
@@ -1028,6 +1031,37 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['ContractType-Update']}>
                   <ContractTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        // Application
+        {
+          path: 'Application',
+          children: [
+            { element: <Navigate to="/dashboard/Application/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Application-GetList']}>
+                  <ApplicationList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'ApplicationCreate/new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Application-Create']}>
+                  <ApplicationCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'Application/edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Application-Update']}>
+                  <ApplicationCreate />
                 </PermissionBasedGuard>
               ),
             },

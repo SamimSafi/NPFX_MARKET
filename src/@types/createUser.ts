@@ -3,8 +3,11 @@ export interface CreateUser {
   employeeId?: number;
   userName: string;
   email?: string;
+  userRoles: string[] | any;
+  allowedBranchs: string[] | any;
   employeeName?: string;
   password?: string;
+  isActive?: boolean;
   afterSubmit?: string;
 }
 
@@ -18,7 +21,7 @@ export interface UserLog {
   ipAddress: string;
   deviceName: string;
   result: boolean;
-  message:   string;
+  message: string;
   browserName: string;
   browserVersion: string;
   os: string;
@@ -138,4 +141,3 @@ export interface userLogParams {
   pageSize?: number;
   search?: string;
 }
-

@@ -17,6 +17,7 @@ import {
   IGetActiveEmp,
   IGetParentEmp,
   MainAssetDropdown,
+  ApplicationDropdown,
 } from 'src/@types/commonDropdownTypes';
 
 import agent from 'src/api/agent';
@@ -28,6 +29,8 @@ export default class commonDroptdown {
   PayTypeOption: SelectControl[] = []; // for Department Type dropdown
 
   MainAssetOption: SelectControl[] = []; // for Department Type dropdown
+
+  ApplicationOption: SelectControl[] = []; // for Application Dropdown
 
   PartnersOption: SelectControl[] = []; // for Department Type dropdown
 
@@ -271,6 +274,7 @@ export default class commonDroptdown {
         text: op.name + ('(' + op.fatherName + ')'),
         value: op.id,
         hasAccount: op.hasAccount,
+        personalEmail: op.personalEmail,
       };
       return optRow;
     });
@@ -335,6 +339,26 @@ export default class commonDroptdown {
       return optRow;
     });
     this.DistrictOption = op;
+  };
+
+  loadApplicationDropdown = async () => {
+    try {
+      const result = await agent.Applications.getApplicationddl();
+      this.setApplicationOptions(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setApplicationOptions = (data: ApplicationDropdown[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.applicationName,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.ApplicationOption = op;
   };
 
   // loadPositionTitleDDL
