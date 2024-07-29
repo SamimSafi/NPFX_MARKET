@@ -327,7 +327,14 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/District/District/edit'),
     detail: path(ROOTS_DASHBOARD, '/District/District/detail'),
   },
-
+  // Application
+  Application: {
+    root: path(ROOTS_DASHBOARD, '/Application'),
+    list: path(ROOTS_DASHBOARD, '/Application/list'),
+    new: path(ROOTS_DASHBOARD, '/Application/ApplicationCreate/new'),
+    edit: path(ROOTS_DASHBOARD, '/Application/Application/edit'),
+    demoEdit: path(ROOTS_DASHBOARD, '/Application/product/nike-blazer-low-77-vintage/edit'),
+  },
   // ContractType
   ContractType: {
     root: path(ROOTS_DASHBOARD, '/ContractType'),

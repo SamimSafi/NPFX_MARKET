@@ -1,33 +1,19 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Card,
-  Chip,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  OutlinedInput,
-  Stack,
-  TextField,
-} from '@mui/material';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Box, Button, Card, Grid, Stack } from '@mui/material';
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 // @types
 import { IRole } from '../../../../@types/role';
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFTextField, RHFSelect, RHFEditor } from '../../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { useStore } from 'src/stores/store';
 import { observer } from 'mobx-react-lite';
 import useLocales from 'src/hooks/useLocales';
@@ -35,46 +21,18 @@ import CustomRHFAutocomplete from 'src/components/hook-form/CustomRHFAutocomplet
 import uuid from 'react-uuid';
 // ----------------------------------------------------------------------
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
 export default observer(function RoleNewEditForm() {
   const { translate } = useLocales();
 
   const [permit, setPermit] = useState<any>([]);
   const [applicationName, setApplicationName] = useState<string | undefined>('');
-
   const [selectedPermission, setSelectedPermission] = useState<string[]>();
   const [newPermissionOptions, setNewPermissionOptions] = useState<any[]>([]);
-
-  const handleChange = (event: SelectChangeEvent<string[]>) => {
-    const {
-      target: { value },
-    } = event;
-
-    setPermit(typeof value === 'string' ? value.split(',') : value);
-  };
-
   const { RoleStore, commonDropdown } = useStore();
-  const {loadPermissionDropdown, PermissionOption } =
+  const { loadApplicationDropdown, ApplicationOption, loadPermissionDropdown, PermissionOption } =
     commonDropdown;
-  const {
-    createRole,
-    updateRole,
-    editMode,
-    selectedRole,
-    selectedRoleDetail,
-    clearSelectedRole,
-    Permissions,
-  } = RoleStore;
+  const { createRole, updateRole, editMode, selectedRole, selectedRoleDetail, clearSelectedRole } =
+    RoleStore;
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -110,7 +68,6 @@ export default observer(function RoleNewEditForm() {
 
   const {
     reset,
-    control,
     setValue,
     handleSubmit,
     watch,
@@ -151,7 +108,9 @@ export default observer(function RoleNewEditForm() {
   };
 
   useEffect(() => {
+    loadApplicationDropdown();
     loadPermissionDropdown(val.applicationId!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [val.applicationId]);
 
   useEffect(() => {
@@ -162,6 +121,7 @@ export default observer(function RoleNewEditForm() {
     if (!editMode) {
       reset(defaultValues);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, editMode, defaultValues]);
 
   //new code added
@@ -187,14 +147,20 @@ export default observer(function RoleNewEditForm() {
   useEffect(() => {
     if (editMode) {
       if (defaultValues.applicationId) {
-      
+        loadApplicationDropdown().then((res) => {
+          setApplicationName(
+            ApplicationOption.find((e) => e.value === defaultValues.applicationId)?.text
+          );
+        });
         loadPermissions();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationName]);
   useEffect(() => {
     //if(editMode)
     setValue('applicationName', applicationName);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationName]);
 
   //new code added
@@ -220,75 +186,52 @@ export default observer(function RoleNewEditForm() {
                   type="text"
                   autoFocus
                 />
+                <CustomRHFAutocomplete
+                  name="applicationName"
+                  label={translate('userRole.Application')}
+                  placeholder="application type"
+                  value={watch('applicationName') || ''}
+                  options={
+                    !editMode
+                      ? ApplicationOption.filter((item) => item.hasAccount !== true).map(
+                          (i) => i.text
+                        )
+                      : ApplicationOption.map((i) => i.text)
+                  }
+                  getOptionLabel={(option: any) => `${option}`}
+                  onChange={(event, newValue: any) => {
+                    const find = !editMode
+                      ? ApplicationOption.filter(
+                          (item) => item.text === newValue && item.hasAccount !== true
+                        )[0]
+                      : ApplicationOption.filter((item) => item.text === newValue)[0];
 
-                {/* <RHFSelect name="applicationId" label={translate('userRole.Application')}>
-                  <option value="Please Select" />
-                  {ApplicationOption.map((op) => (
-                    <option key={op.value} value={op.value}>
-                      {op.text}
-                    </option>
-                  ))}
-                </RHFSelect> */}
+                    if (find) {
+                      const id = find?.value;
+                      setValue('applicationId', Number(id));
+                      setValue(`applicationName`, find?.text);
+                    } else {
+                      setValue('applicationId', undefined);
+                      setValue(`applicationName`, '');
+                    }
+                  }}
+                  freeSolo
+                  fullWidth
+                  // eslint-disable-next-line arrow-body-style
+                  renderOption={(props, option: any) => {
+                    return (
+                      <li {...props} key={option + '-' + uuid()}>
+                        {option}
+                      </li>
+                    );
+                  }}
+                />
 
-            
                 <RHFTextField
                   name="description"
                   label={translate('userRole.Description')}
                   showAsterisk={true}
                 />
-
-                {/* <Controller
-                  name="permissionIds"
-                  control={control}
-                  render={({ field }) => (
-                    <Autocomplete
-                      {...field}
-                      multiple
-                      freeSolo
-                      value={field.value!}
-                      onChange={(event, newValue) => {field.onChange(newValue)}}
-                      options={Permissions.map((option) => option)}
-                      getOptionLabel={(options)=>options.text}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip
-                            {...getTagProps({ index })}
-                            key={option.value}
-                            size="small"
-                            label={option.text}
-                          />
-                        ))
-                      }
-                      renderInput={(params) => <TextField label="Permissions" {...params} />}
-                    />
-                  )}
-                /> */}
-                {/* <FormControl>
-                  <InputLabel id="demo-multiple-name-label">
-                    {translate('userRole.Permission')}
-                  </InputLabel>
-                  <Select
-                    name="permissionIds"
-                    labelId="demo-multiple-name-label"
-                    id="demo-multiple-name"
-                    multiple
-                    value={permit}
-                    onChange={handleChange}
-                    input={<OutlinedInput label="Permissions" />}
-                    MenuProps={MenuProps}
-                  >
-                    {PermissionOption.map((per) => (
-                      <MenuItem
-                        key={per.value}
-                        value={per.value}
-                        // style={getStyles(name, personName, theme)}
-                      >
-                        {per.text}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl> */}
-
                 <CustomRHFAutocomplete
                   value={selectedPermission || []}
                   multiple
@@ -333,6 +276,7 @@ export default observer(function RoleNewEditForm() {
                   }}
                   freeSolo
                   fullWidth
+                  // eslint-disable-next-line arrow-body-style
                   renderOption={(props, option: any) => {
                     return (
                       <li {...props} key={option + '-' + uuid()}>

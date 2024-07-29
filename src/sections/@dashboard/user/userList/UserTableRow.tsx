@@ -35,7 +35,7 @@ export default observer(function UserTableRow({
   const theme = useTheme();
   const { UserStore } = useStore();
   const { UserActivations, clearSelectedUser } = UserStore;
-  const { id, userName, email, employeeName } = row;
+  const { id, userName, email, employeeName, isActive } = row;
   const { enqueueSnackbar } = useSnackbar();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
   const { translate } = useLocales();
@@ -78,10 +78,21 @@ export default observer(function UserTableRow({
         {email}
       </TableCell>
 
-      <TableCell align="left" sx={{ textTransform: 'capitalize', alignItems: 'center' }}>
-        {employeeName}
+      <TableCell
+        onClick={() => handleActivations(id!, isActive!)}
+        align="left"
+        sx={{ textTransform: 'capitalize' }}
+      >
+        {isActive ? (
+          <Button variant="contained" color="success" size="small">
+            {translate('User.active')}
+          </Button>
+        ) : (
+          <Button variant="contained" color="error" size="small">
+            {translate('User.Deactive')}
+          </Button>
+        )}
       </TableCell>
-
 
       <TableCell align="left">
         <TableMoreMenu
