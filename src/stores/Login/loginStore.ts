@@ -1,7 +1,9 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import {
+  AuthData,
   GetUserDataforLocalStorage,
   LoginFormValue,
+  RecoveryCodes,
   ResetPassword,
   SendVerificationCode,
   User,
@@ -24,6 +26,10 @@ export default class LoginStore {
 
   refreshTokenTimeout: any;
 
+  googleAuthData: AuthData | null = null;
+
+  recoveryCodes: RecoveryCodes | null = null;
+
   hubConnection: null | HubConnection | undefined;
 
   userData: GetUserDataforLocalStorage | null = null;
@@ -40,7 +46,14 @@ export default class LoginStore {
   login = async (data: LoginFormValue) => {
     try {
       agent.changeLanguage.ChangeLanguage(language()!);
-      const getuser = await agent.Logins.login(data);
+      let getuser: any;
+      if (data.twoFactorCode && !data.twoFactorCode.includes('undefined')) {
+        getuser = await agent.Logins.loginWith2fa(data);
+      } else if (data.recoveryCode && data.recoveryCode !== 'undefined') {
+        getuser = await agent.Logins.loginWith2faRecoveryCode(data);
+      } else {
+        getuser = await agent.Logins.login(data);
+      }
       console.log(getuser.Token);
 
       store.CommonStore.setToken(getuser.Token);
@@ -73,6 +86,20 @@ export default class LoginStore {
     const sendCode = await agent.Logins.SendCode(data);
     runInAction(() => {
       window.localStorage.setItem('email-recovery', data.email);
+    });
+  };
+
+  generate2faQrCode = async () => {
+    const _2faData = await agent.Logins.generate2faQrCode();
+    runInAction(() => {
+      this.googleAuthData = _2faData;
+    });
+  };
+
+  enableTwoFactorAuthentication = async (code: string) => {
+    const _2faData = await agent.Logins.enableTwoFactorAuthentication(code);
+    runInAction(() => {
+      this.recoveryCodes = _2faData;
     });
   };
 
