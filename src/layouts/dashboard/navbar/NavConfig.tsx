@@ -163,6 +163,19 @@ const navConfig = [
               { title: 'create', path: PATH_DASHBOARD.Role.new, roles: ['Role-Create'] },
             ],
           },
+
+          {
+            title: 'apps',
+            path: '#5',
+            roles: ['Application-GetList'],
+            children: [
+              {
+                title: 'list',
+                path: PATH_DASHBOARD.Application.list,
+                roles: ['Application-GetList'],
+              },
+            ],
+          },
         ],
       },
       // Human resource

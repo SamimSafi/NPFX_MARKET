@@ -9,6 +9,13 @@ export interface EmployeeDropDown {
   fatherName: string;
   position: string;
   hasAccount: boolean;
+  personalEmail: string;
+}
+
+//Application Dropdown
+export interface ApplicationDropdown {
+  id: number;
+  applicationName: string;
 }
 
 export interface RepresentatorDropDown {
