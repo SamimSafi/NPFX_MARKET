@@ -61,6 +61,7 @@ import MainAssetDetails from 'src/sections/@dashboard/MainAsset/MainAssetDetails
 import WithdrawalTrackingDepositCreate from 'src/sections/@dashboard/WithdrawalTracking/WithdrawalTrackingForm/WithdrawalTrackingDepositCreate';
 import ApplicationList from 'src/sections/@dashboard/applicationApi/applicationList/ApplicationList';
 import ApplicationCreate from 'src/sections/@dashboard/applicationApi/applicationForm/ApplicationCreate';
+import NPFXDashboard from 'src/sections/@dashboard/NPFX_DashBoard/NPFXDashboard';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: ElementType) => (props: any) => {
@@ -117,7 +118,7 @@ export default function Router() {
       ),
       children: [
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
-        { path: 'app', element: <GeneralApp /> },
+        { path: 'app', element: <NPFXDashboard /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         { path: 'analytics', element: <GeneralAnalytics /> },
         { path: 'banking', element: <GeneralBanking /> },
