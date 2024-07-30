@@ -15,6 +15,22 @@ const dr = {
   //Dashboard: {
   //BackToList: 'لیست ته ورګرځیدل',
   // },
+  GoogleAuth: {
+    RecoveryCode: 'کد بازیابی',
+    loginGoogleAuth: 'با Google Authenticator Code وارد شوید',
+    loginRecovery: 'با ریکاوری کد وارد شوید',
+    scan: 'این کد QR را با Google Authenticator اسکن کنید',
+    enterSixDigit: 'کد 6 رقمی را وارد کنید',
+    verify: 'تأیید کنید',
+    RecoveryCodes: 'کدهای بازیابی',
+    NoCode: 'هیچ کد بازیابی موجود نیست.',
+    SharedKey: 'کلید مشترک Google Auth',
+    Enable2fa: '2FA را فعال کنید',
+    EnableTwoFactor: 'احراز هویت دو مرحله ای را فعال کنید',
+    note: 'برای ایجاد کد QR Google Authenticator خود، روی دکمه زیر کلیک کنید.',
+    Disable2fa: '2fa را غیر فعال کنید',
+  },
+  Enable2fa: `2-د فکتور تصدیق`,
   CRUD: {
     CreateTrade: `Create Trade`,
     WithdraFromAccount: `Withdraw Cash From account`,
