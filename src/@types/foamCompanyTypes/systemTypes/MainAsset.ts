@@ -22,6 +22,7 @@ export interface IDepositTo {
   toUserName?: string;
   toUserId?: number;
   branchId?: number;
+  assetTypeId?: number;
   depositAmmount?: number;
   description?: string;
   afterSubmit?: string;

@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Box, Card, Grid, Stack, InputAdornment } from '@mui/material';
+import { Box, Card, Grid, Stack, InputAdornment, Alert } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -28,7 +28,14 @@ interface Props {
 }
 export default observer(function DepositToNewEditForm({ asssetID }: Props) {
   const { MainAssetStore, commonDropdown } = useStore();
-  const { loadBranchDDL, BranchOption, loadUserDropdown, UserOption } = commonDropdown;
+  const {
+    loadBranchDDL,
+    BranchOption,
+    loadUserDropdown,
+    UserOption,
+    loadAssetTypeDDL,
+    AssetTypeOption,
+  } = commonDropdown;
   const { translate } = useLocales();
   const { deposit, editMode, selectedDepositTo } = MainAssetStore;
   const navigate = useNavigate();
@@ -38,6 +45,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
     // parentId: Yup.string().required(`${translate('Validation.parent')}`),
     toUserId: Yup.string().required(`${translate('Validation.ToUser')}`),
     branchId: Yup.number().required(`${translate('Validation.Branch')}`),
+    assetTypeId: Yup.number().required(`${translate('Validation.AccountType')}`),
     depositDate: Yup.date().required(`${translate('Validation.DepositDate')}`),
     depositAmmount: Yup.number().required(`${translate('Validation.DepositAmmount')}`),
   });
@@ -48,6 +56,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
       parentId: asssetID || selectedDepositTo?.parentId || undefined,
       toUserId: selectedDepositTo?.toUserId || undefined,
       branchId: selectedDepositTo?.branchId || undefined,
+      assetTypeId: selectedDepositTo?.assetTypeId || undefined,
       depositDate: selectedDepositTo?.depositDate,
       depositAmmount: selectedDepositTo?.depositAmmount,
       description: selectedDepositTo?.description,
@@ -115,7 +124,8 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
 
   useEffect(() => {
     loadBranchDDL();
-  }, [loadBranchDDL]);
+    loadAssetTypeDDL();
+  }, [loadBranchDDL, loadAssetTypeDDL]);
 
   useEffect(() => {
     loadUserDropdown(val.branchId);
@@ -123,6 +133,11 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      {!!errors.afterSubmit && (
+        <Alert sx={{ mb: 2 }} severity="error">
+          {errors.afterSubmit.message}
+        </Alert>
+      )}
       <Card>
         <Grid container spacing={2}>
           <Grid item xs={12} md={12}>
@@ -144,6 +159,14 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
               <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
                 <option value="" />
                 {BranchOption.map((op) => (
+                  <option key={op.value} value={op.value}>
+                    {op.text}
+                  </option>
+                ))}
+              </RHFSelect>
+              <RHFSelect name="assetTypeId" label={translate('MainAsset.AssetType')}>
+                <option value="" />
+                {AssetTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
                     {op.text}
                   </option>
