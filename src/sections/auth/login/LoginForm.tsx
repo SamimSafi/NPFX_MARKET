@@ -1,27 +1,26 @@
 import * as Yup from 'yup';
-import { useState, useMemo, useEffect } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 // form
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import {
-  Link,
   Stack,
   Alert,
   IconButton,
   InputAdornment,
   FormHelperText,
   OutlinedInput,
+  FormControlLabel,
+  Switch,
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // routes
-import { PATH_AUTH, PATH_DASHBOARD } from '../../../routes/paths';
-// hooks
-import useIsMountedRef from '../../../hooks/useIsMountedRef';
+import { PATH_DASHBOARD } from '../../../routes/paths';
 // components
 import Iconify from '../../../components/Iconify';
-import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 //import LoginStore from '../../../stores/Login/loginStore';
 import { useStore } from '../../../stores/store';
@@ -39,9 +38,8 @@ export default observer(function LoginForm() {
 
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const isMountedRef = useIsMountedRef();
   const [is2faEnable, setIs2faEnable] = useState(false);
-  const [switchToRecoveryCode, setSwitchToRecoveryCode] = useState(false);
+  const [isUsingAuthenticator, setIsUsingAuthenticator] = useState(true);
   const [error, setErrors] = useState<string | undefined>();
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required(`${translate('User.UserNameIsRequired')}`),
@@ -87,10 +85,9 @@ export default observer(function LoginForm() {
         setIs2faEnable(true);
       } else {
         reset();
+        setIs2faEnable(false);
+        setError('afterSubmit', { ...error, message: error.request.responseText });
       }
-      console.log(error);
-
-      setError('afterSubmit', { ...error, message: error.request.responseText });
     }
   };
 
@@ -149,59 +146,86 @@ export default observer(function LoginForm() {
     handleChange(event);
   };
 
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIsUsingAuthenticator(event.target.checked);
+  };
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
-      <Stack spacing={3}>
-        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+      {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+      {!is2faEnable ? (
+        <Stack spacing={3}>
+          <RHFTextField name="email" label={translate('User.Email')} autoFocus />
+          <RHFTextField
+            name="password"
+            label={translate('login.Password')}
+            type={showPassword ? 'text' : 'password'}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                    <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Stack>
+      ) : (
+        <></>
+      )}
 
-        <RHFTextField name="email" label={translate('User.Email')} autoFocus />
-        <RHFTextField
-          name="password"
-          label={translate('login.Password')}
-          type={showPassword ? 'text' : 'password'}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Stack>
       {is2faEnable ? (
         <>
-          <Stack direction="row" spacing={1} justifyContent="center" sx={{ mt: 2 }}>
-            {['code1', 'code2', 'code3', 'code4', 'code5', 'code6'].map((name, index) => (
-              <Controller
-                key={name}
-                name={`code${index + 1}` as ValueNames}
-                control={control}
-                render={({ field, fieldState: { error } }) => (
-                  <OutlinedInput
-                    {...field}
-                    error={!!error}
-                    autoFocus={index === 0}
-                    placeholder="-"
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      handleChangeWithNextField(event, field.onChange)
-                    }
-                    inputProps={{
-                      className: 'field-code',
-                      maxLength: 1,
-                      sx: {
-                        p: 0,
-                        textAlign: 'center',
-                        width: { xs: 36, sm: 56 },
-                        height: { xs: 36, sm: 56 },
-                      },
-                    }}
-                  />
-                )}
+          <FormControlLabel
+            control={
+              <Switch
+                checked={isUsingAuthenticator}
+                onChange={handleSwitchChange}
+                name="useAuthenticator"
+                color="primary"
               />
-            ))}
-          </Stack>
+            }
+            label={
+              isUsingAuthenticator
+                ? translate('GoogleAuth.loginGoogleAuth')
+                : translate('GoogleAuth.loginRecovery')
+            }
+          />
+          {isUsingAuthenticator ? (
+            <Stack direction="row" spacing={1} justifyContent="center" sx={{ mt: 2 }}>
+              {['code1', 'code2', 'code3', 'code4', 'code5', 'code6'].map((name, index) => (
+                <Controller
+                  key={name}
+                  name={`code${index + 1}` as ValueNames}
+                  control={control}
+                  render={({ field, fieldState: { error } }) => (
+                    <OutlinedInput
+                      {...field}
+                      error={!!error}
+                      autoFocus={index === 0}
+                      placeholder="-"
+                      onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                        handleChangeWithNextField(event, field.onChange)
+                      }
+                      inputProps={{
+                        className: 'field-code',
+                        maxLength: 1,
+                        sx: {
+                          p: 0,
+                          textAlign: 'center',
+                          width: { xs: 36, sm: 56 },
+                          height: { xs: 36, sm: 56 },
+                        },
+                      }}
+                    />
+                  )}
+                />
+              ))}
+            </Stack>
+          ) : (
+            <RHFTextField name="recoveryCode" label={translate('GoogleAuth.RecoveryCode')} />
+          )}
         </>
       ) : (
         <></>

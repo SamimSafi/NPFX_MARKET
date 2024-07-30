@@ -96,6 +96,13 @@ export default class LoginStore {
     });
   };
 
+  disable2fa = async () => {
+    await agent.Logins.disable2fa();
+    runInAction(() => {
+      this.googleAuthData = null;
+    });
+  };
+
   enableTwoFactorAuthentication = async (code: string) => {
     const _2faData = await agent.Logins.enableTwoFactorAuthentication(code);
     runInAction(() => {
