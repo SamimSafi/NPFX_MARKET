@@ -25,6 +25,7 @@ const en = {
     note: 'Click the button below to generate your Google Authenticator QR code.',
     Disable2fa: 'Disable 2fa',
   },
+  Enable2fa: `2-Factor Authentication`,
   CRUD: {
     Create: `Create`,
     CreateTrade: `Create Trade`,

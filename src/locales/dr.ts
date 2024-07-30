@@ -24,6 +24,7 @@ const ps = {
     note: 'برای ایجاد کد QR Google Authenticator خود، روی دکمه زیر کلیک کنید.',
     Disable2fa: '2fa را غیر فعال کنید',
   },
+  Enable2fa: `احراز هویت 2-عاملی`,
   CRUD: {
     CreateTrade: `ایجاد ترید`,
     WithdraFromAccount: `برداشت از حساب`,

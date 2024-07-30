@@ -30,6 +30,7 @@ const dr = {
     note: 'برای ایجاد کد QR Google Authenticator خود، روی دکمه زیر کلیک کنید.',
     Disable2fa: '2fa را غیر فعال کنید',
   },
+  Enable2fa: `2-د فکتور تصدیق`,
   CRUD: {
     CreateTrade: `Create Trade`,
     WithdraFromAccount: `Withdraw Cash From account`,
