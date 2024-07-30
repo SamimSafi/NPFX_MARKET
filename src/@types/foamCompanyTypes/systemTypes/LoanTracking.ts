@@ -61,3 +61,25 @@ export interface IRecieveGivenLoan {
   description?: string;
   afterSubmit?: string;
 }
+
+export interface ILoanDetails {
+  id: number;
+  currencyTypeId: number;
+  currencyType: string;
+  date: string;
+  dueDate: string;
+  description: string;
+  partnerId: number;
+  partner: string;
+  partnerPhone: string;
+  userId: string;
+  userName: string;
+  loanAmount: number;
+  paidAmount: number;
+  remainAmount: number;
+  mainAssetId: string;
+  mainAssetUserName: string;
+  createdByUserName: string;
+  createdOn: string;
+  modifiedOn: string;
+}

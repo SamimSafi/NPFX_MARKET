@@ -2,7 +2,9 @@ import { IInvestor, IInvestorParams } from './../@types/foamCompanyTypes/investo
 
 import axios, { AxiosResponse } from 'axios';
 import {
+  AuthData,
   LoginFormValue,
+  RecoveryCodes,
   ResetPassword,
   SendVerificationCode,
   User,
@@ -94,7 +96,6 @@ import { Application, ApplicationParams } from 'src/@types/application';
 
 import { IPieChartByBranch } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
 
-
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
 // axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
@@ -130,6 +131,13 @@ const requests = {
 // Login
 const Logins = {
   login: (login: LoginFormValue) => requests.post<User>('/Auth/SignIn', login),
+  loginWith2fa: (login: LoginFormValue) => requests.post<User>('/Auth/SignInWith2Fa', login),
+  disable2fa: () => requests.get<any>('/Auth/DisableTwoFactorAuthentication'),
+  generate2faQrCode: () => requests.get<AuthData>('/Auth/GenerateQrCodeData'),
+  enableTwoFactorAuthentication: (Code: string) =>
+    requests.post<RecoveryCodes>(`Auth/EnableTwoFactorAuthentication?Code=${Code}`, {}),
+  loginWith2faRecoveryCode: (login: LoginFormValue) =>
+    requests.post<User>('/Auth/SignInWithRecoveryCode', login),
   SendCode: (sendCode: SendVerificationCode) =>
     requests.post<void>('/Auth/ForgetPassword-SendVerificationCode', sendCode),
   VerifyCode: (verifyCode: VerifyVerificationCode) =>
@@ -900,7 +908,6 @@ const agent = {
   Applications,
 
   npfxDashboards,
-
 };
 
 export default agent;

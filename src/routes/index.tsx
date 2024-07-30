@@ -59,9 +59,14 @@ import ExpenseTrackingList from 'src/sections/@dashboard/ExpenseTracking/Expense
 import ExpenseTrackingCreate from 'src/sections/@dashboard/ExpenseTracking/ExpenseTrackingForm/ExpenseTrackingCreate';
 import MainAssetDetails from 'src/sections/@dashboard/MainAsset/MainAssetDetails/MainAssetDetails';
 import WithdrawalTrackingDepositCreate from 'src/sections/@dashboard/WithdrawalTracking/WithdrawalTrackingForm/WithdrawalTrackingDepositCreate';
+import GoogleAuthCreate from 'src/sections/@dashboard/user/userForm/GoogleAuthCreate';
 import ApplicationList from 'src/sections/@dashboard/applicationApi/applicationList/ApplicationList';
 import ApplicationCreate from 'src/sections/@dashboard/applicationApi/applicationForm/ApplicationCreate';
+
 import NPFXDashboard from 'src/sections/@dashboard/NPFX_DashBoard/NPFXDashboard';
+
+
+
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: ElementType) => (props: any) => {
@@ -635,6 +640,14 @@ export default function Router() {
                 <PermissionBasedGuard hasContent permissions={['User-GetAll']}>
                   <UserList />
                 </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'GoogleAuth',
+              element: (
+                // <PermissionBasedGuard hasContent permissions={['User-GetAll']}>
+                <GoogleAuthCreate />
+                // </PermissionBasedGuard>
               ),
             },
             {
