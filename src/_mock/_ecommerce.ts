@@ -52,5 +52,5 @@ export const _ecommerceNewProducts = [...Array(5)].map((_, index) => ({
     'Kyrie Flytrap 3 EP Basketball Shoe',
     'Nike Air Max Fusion Men',
   ][index],
-  image: _mock.image.product(index),
+  image: `public/slider/Designer1.jpeg`,
 }));
