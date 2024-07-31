@@ -266,7 +266,7 @@ const en = {
 
   //Login Page
   login: {
-    SignInToMinistry: 'Sign In to Afghanistan Water and Energy Enterprise System (AWEES)',
+    SignInToMinistry: 'Sign In to NPFX Market Management System',
     WelcomeBack: 'Hi, Welcome Back',
     UserName: 'User Name',
     Password: 'Password',
