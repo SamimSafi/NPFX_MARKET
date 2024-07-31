@@ -272,6 +272,29 @@ const navConfig = [
           },
         ],
       },
+      {
+        title: 'trainingVideo',
+        path: '#1',
+        icon: ICONS.news,
+        //roles: ['Employee-GetAll', 'CardDetails-GetPrintableCardList'],
+        children: [
+          {
+            title: 'addTrainingVideo',
+            path: PATH_DASHBOARD.TrainingVideo.new,
+            roles: ['TrainingVideo-Create'],
+          },
+          {
+            title: 'trainingVideolist',
+            path: PATH_DASHBOARD.TrainingVideo.list,
+            roles: ['TrainingVideo-GetList'],
+          },
+          {
+            title: 'trainingVideoPlayer',
+            path: PATH_DASHBOARD.TrainingVideo.videoPlayer,
+            //roles: ['Employee-GetAll'],
+          },
+        ],
+      },
     ],
   },
 ];
