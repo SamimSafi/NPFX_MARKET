@@ -62,11 +62,11 @@ import WithdrawalTrackingDepositCreate from 'src/sections/@dashboard/WithdrawalT
 import GoogleAuthCreate from 'src/sections/@dashboard/user/userForm/GoogleAuthCreate';
 import ApplicationList from 'src/sections/@dashboard/applicationApi/applicationList/ApplicationList';
 import ApplicationCreate from 'src/sections/@dashboard/applicationApi/applicationForm/ApplicationCreate';
-
 import NPFXDashboard from 'src/sections/@dashboard/NPFX_DashBoard/NPFXDashboard';
 import TrainingVideoList from 'src/sections/@dashboard/trainingVideo/trainingVideoList/TrainingVideoList';
 import TrainingVideoCreate from 'src/sections/@dashboard/trainingVideo/trainingVideoForm/TrainingVideoCreate';
 import TrainingVideoHeader from 'src/sections/@dashboard/trainingVideo/trainingVideoForm/TrainingVideoPlayerHeader';
+import StatisticalReportIndex from 'src/sections/@dashboard/Reports/ExpenseReports/StatisticalReport/StatisticalReportIndex';
 
 // ----------------------------------------------------------------------
 
@@ -431,6 +431,10 @@ export default function Router() {
                   <ExpenseTrackingCreate />
                 </PermissionBasedGuard>
               ),
+            },
+            {
+              path: 'report',
+              element: <StatisticalReportIndex />,
             },
           ],
         },
