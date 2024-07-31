@@ -137,6 +137,7 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/ExpenseTracking/new'),
     edit: path(ROOTS_DASHBOARD, '/ExpenseTracking/edit'),
     detail: path(ROOTS_DASHBOARD, '/ExpenseTracking/detail'),
+    report: path(ROOTS_DASHBOARD, '/ExpenseTracking/report'),
   },
 
   // LoanTracking
