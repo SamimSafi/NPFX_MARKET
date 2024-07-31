@@ -152,6 +152,10 @@ const navConfig = [
                 title: 'changePassword',
                 path: PATH_DASHBOARD.user.changePassword,
               },
+              {
+                title: 'Enable2fa',
+                path: PATH_DASHBOARD.user.googleAuth,
+              },
             ],
           },
           {

@@ -163,6 +163,7 @@ export const PATH_DASHBOARD = {
   user: {
     root: path(ROOTS_DASHBOARD, '/user'),
     new: path(ROOTS_DASHBOARD, '/user/UserCreate/new'),
+    googleAuth: path(ROOTS_DASHBOARD, '/user/GoogleAuth'),
     list: path(ROOTS_DASHBOARD, '/user/list'),
     Loglist: path(ROOTS_DASHBOARD, '/user/Loglist'),
     //detail: path(ROOTS_DASHBOARD, '/user/detail'),
