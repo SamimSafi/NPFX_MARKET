@@ -42,10 +42,10 @@ const navConfig = [
     subheader: 'general',
     items: [
       { title: 'application', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
-      { title: 'ecommerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
-      { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
-      { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
-      { title: 'booking', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking },
+      // { title: 'ecommerce', path: PATH_DASHBOARD.general.ecommerce, icon: ICONS.ecommerce },
+      // { title: 'analytics', path: PATH_DASHBOARD.general.analytics, icon: ICONS.analytics },
+      // { title: 'banking', path: PATH_DASHBOARD.general.banking, icon: ICONS.banking },
+      // { title: 'booking', path: PATH_DASHBOARD.general.booking, icon: ICONS.booking },
     ],
   },
 
@@ -232,10 +232,38 @@ const navConfig = [
             path: PATH_DASHBOARD.TradeTracking.list,
             roles: ['TradeTracking-GetList'],
           },
+
           {
             title: 'ExpenseTrackingMenu',
             path: PATH_DASHBOARD.ExpenseTracking.list,
+            icon: ICONS.hr,
             roles: ['ExpenseTracking-GetList'],
+            children: [
+              {
+                title: 'list',
+                path: PATH_DASHBOARD.ExpenseTracking.list,
+                roles: ['Employee-GetList'],
+              },
+              // {
+              //   title: 'report',
+              //   path: PATH_DASHBOARD.ExpenseTracking.report,
+              //   roles: ['Employee-GetList'],
+              // },
+              // {
+              //   title: 'cardPrint',
+              //   path: PATH_DASHBOARD.Employee.print,
+
+              //   roles: ['CardDetails-GetPrintableCardList'],
+              //   state: { EmployeeIdForPrint: undefined, from: undefined },
+              // },
+              // {
+              //   title: 'EmployeeReport',
+              //   path: PATH_DASHBOARD.Employee.accountReport,
+
+              //   // roles: ['CardDetails-GetPrintableCardList'],
+              //   // state: { EmployeeIdForPrint: undefined, from: undefined },
+              // },
+            ],
           },
           {
             title: 'WithdrawalTrackingMenu',
