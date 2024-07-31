@@ -96,9 +96,23 @@ import { Application, ApplicationParams } from 'src/@types/application';
 
 import { IPieChartByBranch } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
 import {
+
+  ExpenseStatisticalReportView,
+  IExpenseReportParam,
+} from 'src/@types/foamCompanyTypes/ExpenseReports';
+import {
+  ITradeReportParam,
+  TradeStatisticalReportView,
+} from 'src/@types/foamCompanyTypes/TradeReports';
+import {
+  ILoanReportParam,
+  LoanStatisticalReportView,
+} from 'src/@types/foamCompanyTypes/LoanReports';
+
   TrainingVideo,
   TrainingVideoParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/trainingVideo';
+
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
@@ -633,6 +647,21 @@ const npfxDashboards = {
       `UserReportsAndDashboard/DashBoard-EachAndTotalUserInBranchDashBoard`
     ),
 };
+
+const NPFXReports = {
+  GetExpenseReport: (param: IExpenseReportParam) =>
+    axios.post<ExpenseStatisticalReportView>(`DashboardAndReport/GetExpenseReport`, param, {
+      withCredentials: true,
+    }),
+  GetTradeReport: (param: ITradeReportParam) =>
+    axios.post<TradeStatisticalReportView>(`DashboardAndReport/GetTradeReport`, param, {
+      withCredentials: true,
+    }),
+  GetLoanReport: (param: ILoanReportParam) =>
+    axios.post<LoanStatisticalReportView>(`DashboardAndReport/GetLoanReport`, param, {
+      withCredentials: true,
+    }),
+};
 //  LoanTracking
 const LoanTracking = {
   create: (LoanTracking: ILoanTracking) => requests.post<void>('/LoanTracking', LoanTracking),
@@ -938,7 +967,7 @@ const agent = {
   ContractType,
 
   Applications,
-
+  NPFXReports,
   npfxDashboards,
   trainingVideoAgent,
 };

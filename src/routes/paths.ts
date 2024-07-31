@@ -88,6 +88,7 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/LoanType/new'),
     edit: path(ROOTS_DASHBOARD, '/LoanType/edit'),
     detail: path(ROOTS_DASHBOARD, '/LoanType/detail'),
+    
   },
   // PaymentType
   PaymentType: {
@@ -112,6 +113,7 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/TradeTracking/new'),
     edit: path(ROOTS_DASHBOARD, '/TradeTracking/edit'),
     detail: path(ROOTS_DASHBOARD, '/TradeTracking/detail'),
+    report: path(ROOTS_DASHBOARD, '/TradeTracking/report'),
   },
   // Partners
   Partners: {
@@ -147,6 +149,7 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/LoanTracking/new'),
     edit: path(ROOTS_DASHBOARD, '/LoanTracking/edit'),
     detail: path(ROOTS_DASHBOARD, '/LoanTracking/detail'),
+    report: path(ROOTS_DASHBOARD, '/LoanTracking/report'),
   },
 
   // WithdrawalTracking

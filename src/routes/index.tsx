@@ -68,6 +68,9 @@ import TrainingVideoCreate from 'src/sections/@dashboard/trainingVideo/trainingV
 import TrainingVideoHeader from 'src/sections/@dashboard/trainingVideo/trainingVideoForm/TrainingVideoPlayerHeader';
 import StatisticalReportIndex from 'src/sections/@dashboard/Reports/ExpenseReports/StatisticalReport/StatisticalReportIndex';
 
+import TradeStatisticalReportIndex from 'src/sections/@dashboard/Reports/TradeReports/StatisticalReport/TradeStatisticalReportIndex';
+import LoanStatisticalReportIndex from 'src/sections/@dashboard/Reports/LoanReports/StatisticalReport/LoanStatisticalReportIndex';
+
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: ElementType) => (props: any) => {
@@ -326,6 +329,14 @@ export default function Router() {
                 </PermissionBasedGuard>
               ),
             },
+            {
+              path: 'report',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['TradeTracking-Update']}>
+                  <TradeStatisticalReportIndex />
+                </PermissionBasedGuard>
+              ),
+            },
           ],
         },
         {
@@ -463,6 +474,14 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['LoanTracking-Update']}>
                   <LoanTrackingCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'report',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['TLoanTracking-Update']}>
+                  <LoanStatisticalReportIndex />
                 </PermissionBasedGuard>
               ),
             },

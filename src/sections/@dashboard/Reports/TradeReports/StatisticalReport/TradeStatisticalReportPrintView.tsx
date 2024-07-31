@@ -14,19 +14,19 @@ import {
 } from '@mui/material';
 
 import { useStore } from '../../../../../stores/store';
-import './StatisticalReport.css';
+import './TradeStatisticalReport.css';
 import EmptyContent from 'src/components/EmptyContent';
-import { ExpenseStatisticalReportView } from 'src/@types/foamCompanyTypes/ExpenseReports';
 import { DateConverter } from 'src/sections/common/DateConverter';
+import { TradeStatisticalReportView } from 'src/@types/foamCompanyTypes/TradeReports';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   filterButtonClicked: any;
-  StatisticalReportDetails: ExpenseStatisticalReportView | undefined;
+  StatisticalReportDetails: TradeStatisticalReportView | undefined;
 };
 
-export const StatisticalReportPrintView = forwardRef(
+export const TradeStatisticalReportPrintView = forwardRef(
   ({ StatisticalReportDetails, filterButtonClicked }: Props, ref: any) => {
     const { commonDropdown } = useStore();
     const { translate } = useLocales();
@@ -50,7 +50,7 @@ export const StatisticalReportPrintView = forwardRef(
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
                   {/* {translate('Expense.ExpenseReport')} */}
-                  Expense Report
+                  Trade Report
                 </Typography>
                 <TableContainer
                   component={Paper}
@@ -73,46 +73,18 @@ export const StatisticalReportPrintView = forwardRef(
                     </TableHead>
                     <TableBody>
                       {StatisticalReportDetails.report!.map((item, index) => (
-                        <>
-                          {item.expenseTypes?.map((action, actionIndex) => (
-                            <TableRow tabIndex={-1} hover key={actionIndex}>
-                              {actionIndex === 0 && (
-                                <>
-                                  {index === 0 && (
-                                    <>
-                                      <TableCell
-                                        align="center"
-                                        rowSpan={item.expenseTypes?.reduce(
-                                          (sum, a) => sum + (a.expenseType?.length ?? 0),
-                                          0
-                                        )}
-                                      >
-                                        {index + 1}
-                                      </TableCell>
-                                      <TableCell
-                                        align="center"
-                                        rowSpan={item.expenseTypes?.reduce(
-                                          (sum, a) => sum + (a.expenseType?.length ?? 0),
-                                          0
-                                        )}
-                                      >
-                                        {item.branchName}
-                                      </TableCell>
-                                    </>
-                                  )}
-                                  <TableCell
-                                    align="center"
-                                    rowSpan={action.expenseType?.length ?? 0}
-                                  >
-                                    {action.expenseType}
-                                  </TableCell>
-                                </>
-                              )}
-                              <TableCell align="center">{action.dollor}</TableCell>
-                              <TableCell align="center">{action.afghani}</TableCell>
-                            </TableRow>
-                          ))}
-                        </>
+                        <TableRow tabIndex={-1} hover key={index}>
+                          {index === 0 && (
+                            <>
+                              <TableCell align="center">{index + 1}</TableCell>
+                              <TableCell align="center">{item.branchName}</TableCell>
+                            </>
+                          )}
+                          <TableCell align="center">{item.tradeAmount}</TableCell>
+
+                          <TableCell align="center">{item.profitAmount}</TableCell>
+                          <TableCell align="center">{item.lossAmount}</TableCell>
+                        </TableRow>
                       ))}
                     </TableBody>
                   </Table>
@@ -121,7 +93,7 @@ export const StatisticalReportPrintView = forwardRef(
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
                   {/* {translate('Expense.ExpenseReport')} */}
-                  Expense Transaction
+                  Trade Transaction
                 </Typography>
                 <TableContainer
                   component={Paper}
@@ -138,23 +110,23 @@ export const StatisticalReportPrintView = forwardRef(
                         <TableCell align="center">No</TableCell>
                         <TableCell align="center">Branch</TableCell>
                         <TableCell align="center">Main Asset Code</TableCell>
-                        <TableCell align="center">Currency Type</TableCell>
-                        <TableCell align="center">Amount</TableCell>
+                        <TableCell align="center">Profit Amount</TableCell>
+                        <TableCell align="center">Loss Amount</TableCell>
                         <TableCell align="center">User Name</TableCell>
                         <TableCell align="center">Date</TableCell>
                         <TableCell align="center">Description</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {StatisticalReportDetails.transactions?.map((data, index) =>(
+                      {StatisticalReportDetails.transactions?.map((data, index) => (
                         <TableRow key={index}>
                           <TableCell align="center">{index + 1}</TableCell>
                           <TableCell align="center">{data.branch}</TableCell>
                           <TableCell align="center">{data.mainAssetCode}</TableCell>
-                          <TableCell align="center">{data.currencyType}</TableCell>
-                          <TableCell align="center">{data.amount}</TableCell>
+                          <TableCell align="center">{data.tradeAmount}</TableCell>
+                          <TableCell align="center">{data.profitAmount}</TableCell>
                           <TableCell align="center">{data.userName}</TableCell>
-                          <TableCell align="center">{ <DateConverter date={data.date} />}</TableCell>
+                          <TableCell align="center">{<DateConverter date={data.date} />}</TableCell>
                           <TableCell align="center">{data.description}</TableCell>
                         </TableRow>
                       ))}

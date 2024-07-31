@@ -316,7 +316,7 @@ export default observer(function UserNewEditForm() {
                   value={empEmail}
                   label={translate('User.email')}
                   showAsterisk={true}
-                  disabled
+                  // disabled
                 />
                 <CustomRHFAutocomplete
                   value={selectedRolesName || []}
