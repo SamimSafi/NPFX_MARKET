@@ -222,15 +222,43 @@ const navConfig = [
             path: PATH_DASHBOARD.MainAsset.list,
             roles: ['MainAsset-GetList'],
           },
+
           {
             title: 'LoanTrackingMenu',
             path: PATH_DASHBOARD.LoanTracking.list,
+            icon: ICONS.hr,
             roles: ['LoanTracking-GetList'],
+            children: [
+              {
+                title: 'list',
+                path: PATH_DASHBOARD.LoanTracking.list,
+                roles: ['Employee-GetList'],
+              },
+              {
+                title: 'report',
+                path: PATH_DASHBOARD.LoanTracking.report,
+                roles: ['Employee-GetList'],
+              },
+            ],
           },
+
           {
             title: 'TradeTrackingMenu',
             path: PATH_DASHBOARD.TradeTracking.list,
+            icon: ICONS.hr,
             roles: ['TradeTracking-GetList'],
+            children: [
+              {
+                title: 'list',
+                path: PATH_DASHBOARD.TradeTracking.list,
+                roles: ['Employee-GetList'],
+              },
+              {
+                title: 'report',
+                path: PATH_DASHBOARD.TradeTracking.report,
+                roles: ['Employee-GetList'],
+              },
+            ],
           },
 
           {
@@ -244,25 +272,11 @@ const navConfig = [
                 path: PATH_DASHBOARD.ExpenseTracking.list,
                 roles: ['Employee-GetList'],
               },
-              // {
-              //   title: 'report',
-              //   path: PATH_DASHBOARD.ExpenseTracking.report,
-              //   roles: ['Employee-GetList'],
-              // },
-              // {
-              //   title: 'cardPrint',
-              //   path: PATH_DASHBOARD.Employee.print,
-
-              //   roles: ['CardDetails-GetPrintableCardList'],
-              //   state: { EmployeeIdForPrint: undefined, from: undefined },
-              // },
-              // {
-              //   title: 'EmployeeReport',
-              //   path: PATH_DASHBOARD.Employee.accountReport,
-
-              //   // roles: ['CardDetails-GetPrintableCardList'],
-              //   // state: { EmployeeIdForPrint: undefined, from: undefined },
-              // },
+              {
+                title: 'report',
+                path: PATH_DASHBOARD.ExpenseTracking.report,
+                roles: ['Employee-GetList'],
+              },
             ],
           },
           {

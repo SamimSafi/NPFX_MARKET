@@ -1,19 +1,25 @@
-export interface IExpenseReportParam {
+export interface ILoanReportParam {
   branchIds?: number[];
-  expenseTypeIds?: number[];
   fromDate: Date;
   toDate: Date;
 }
 
-interface ExpenseTypes {
-  expenseType?: string;
-  dollor?: string;
-  afghani?: number;
+interface CurrencyTypeModels {
+  currencyType?: string;
+  loanAmount?: number;
+  paidAmount?: number;
+  remainAmount?: number;
+}
+
+interface LoanGivenType {
+  isGiven?: boolean;
+  currencyTypeModels?:CurrencyTypeModels[];
 }
 interface report {
   branchName?: string;
-  expenseTypes?: ExpenseTypes[];
+  loanGivenType?: LoanGivenType[];
 }
+
 interface Transactions {
   branch?: string;
   mainAssetCode?: Date;
@@ -24,8 +30,7 @@ interface Transactions {
   description?: string;
   userName?: string;
 }
-
-export interface ExpenseStatisticalReportView {
+export interface LoanStatisticalReportView {
   report?: report[];
   transactions?: Transactions[];
 }

@@ -14,19 +14,19 @@ import {
 } from '@mui/material';
 
 import { useStore } from '../../../../../stores/store';
-import './StatisticalReport.css';
+import './LoanStatisticalReport.css';
 import EmptyContent from 'src/components/EmptyContent';
-import { ExpenseStatisticalReportView } from 'src/@types/foamCompanyTypes/ExpenseReports';
 import { DateConverter } from 'src/sections/common/DateConverter';
+import { LoanStatisticalReportView } from 'src/@types/foamCompanyTypes/LoanReports';
 
 // ----------------------------------------------------------------------
 
 type Props = {
   filterButtonClicked: any;
-  StatisticalReportDetails: ExpenseStatisticalReportView | undefined;
+  StatisticalReportDetails: LoanStatisticalReportView | undefined;
 };
 
-export const StatisticalReportPrintView = forwardRef(
+export const LoanStatisticalReportPrintView = forwardRef(
   ({ StatisticalReportDetails, filterButtonClicked }: Props, ref: any) => {
     const { commonDropdown } = useStore();
     const { translate } = useLocales();
@@ -61,57 +61,65 @@ export const StatisticalReportPrintView = forwardRef(
                     '&::-webkit-scrollbar-thumb': { backgroundColor: '#555', borderRadius: 2 },
                   }}
                 >
-                  <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
+                   <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
                     <TableHead>
                       <TableRow>
-                        <TableCell align="center">{translate('No')}</TableCell>
+                        <TableCell align="center">No</TableCell>
                         <TableCell align="center">Branch</TableCell>
-                        <TableCell align="center">ExpenseType</TableCell>
-                        <TableCell align="center">{translate('Dollor')}</TableCell>
-                        <TableCell align="center">{translate('Afghani')}</TableCell>
+                        <TableCell align="center">Loan Type</TableCell>
+                        <TableCell align="center">Currency Type</TableCell>
+                        <TableCell align="center">Amount</TableCell>
+                        <TableCell align="center">Paid</TableCell>
+                        <TableCell align="center">Remain</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
                       {StatisticalReportDetails.report!.map((item, index) => (
                         <>
-                          {item.expenseTypes?.map((action, actionIndex) => (
-                            <TableRow tabIndex={-1} hover key={actionIndex}>
-                              {actionIndex === 0 && (
-                                <>
-                                  {index === 0 && (
-                                    <>
-                                      <TableCell
-                                        align="center"
-                                        rowSpan={item.expenseTypes?.reduce(
-                                          (sum, a) => sum + (a.expenseType?.length ?? 0),
-                                          0
-                                        )}
-                                      >
-                                        {index + 1}
-                                      </TableCell>
-                                      <TableCell
-                                        align="center"
-                                        rowSpan={item.expenseTypes?.reduce(
-                                          (sum, a) => sum + (a.expenseType?.length ?? 0),
-                                          0
-                                        )}
-                                      >
-                                        {item.branchName}
-                                      </TableCell>
-                                    </>
-                                  )}
+                          {item.loanGivenType!.map((loanType, loanIndex) =>
+                            loanType.currencyTypeModels!.map((currency, currencyIndex) => (
+                              <TableRow
+                                tabIndex={-1}
+                                hover
+                                key={`${index}-${loanIndex}-${currencyIndex}`}
+                              >
+                                {loanIndex === 0 && currencyIndex === 0 && (
+                                  <>
+                                    <TableCell
+                                      align="center"
+                                      rowSpan={item.loanGivenType!.reduce(
+                                        (sum, loan) => sum + loan.currencyTypeModels!.length,
+                                        0
+                                      )}
+                                    >
+                                      {index + 1}
+                                    </TableCell>
+                                    <TableCell
+                                      align="center"
+                                      rowSpan={item.loanGivenType!.reduce(
+                                        (sum, loan) => sum + loan.currencyTypeModels!.length,
+                                        0
+                                      )}
+                                    >
+                                      {item.branchName}
+                                    </TableCell>
+                                  </>
+                                )}
+                                {currencyIndex === 0 && (
                                   <TableCell
                                     align="center"
-                                    rowSpan={action.expenseType?.length ?? 0}
+                                    rowSpan={loanType.currencyTypeModels!.length}
                                   >
-                                    {action.expenseType}
+                                    {loanType.isGiven ? 'Given' : 'Taken'}
                                   </TableCell>
-                                </>
-                              )}
-                              <TableCell align="center">{action.dollor}</TableCell>
-                              <TableCell align="center">{action.afghani}</TableCell>
-                            </TableRow>
-                          ))}
+                                )}
+                                <TableCell align="center">{currency.currencyType}</TableCell>
+                                <TableCell align="center">{currency.loanAmount}</TableCell>
+                                <TableCell align="center">{currency.paidAmount}</TableCell>
+                                <TableCell align="center">{currency.remainAmount}</TableCell>
+                              </TableRow>
+                            ))
+                          )}
                         </>
                       ))}
                     </TableBody>
@@ -146,7 +154,7 @@ export const StatisticalReportPrintView = forwardRef(
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {StatisticalReportDetails.transactions?.map((data, index) =>(
+                      {StatisticalReportDetails.transactions?.map((data, index) => (
                         <TableRow key={index}>
                           <TableCell align="center">{index + 1}</TableCell>
                           <TableCell align="center">{data.branch}</TableCell>
@@ -154,7 +162,7 @@ export const StatisticalReportPrintView = forwardRef(
                           <TableCell align="center">{data.currencyType}</TableCell>
                           <TableCell align="center">{data.amount}</TableCell>
                           <TableCell align="center">{data.userName}</TableCell>
-                          <TableCell align="center">{ <DateConverter date={data.date} />}</TableCell>
+                          <TableCell align="center">{<DateConverter date={data.date} />}</TableCell>
                           <TableCell align="center">{data.description}</TableCell>
                         </TableRow>
                       ))}

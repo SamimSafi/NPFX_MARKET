@@ -29,38 +29,26 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ReactToPrint from 'react-to-print';
 import Loader from 'src/components/loader/Loader';
-import { StatisticalReportPrintView } from './StatisticalReportPrintView';
+import { LoanStatisticalReportPrintView } from './LoanStatisticalReportPrintView';
 import { IExpenseReportParam } from 'src/@types/foamCompanyTypes/ExpenseReports';
 
 // ----------------------------------------------------------------------
 
 export default observer(function StatisticalReportIndex() {
-  const { commonDropdown, ExpenseReportsStore } = useStore();
+  const { commonDropdown, LoanReportsStore } = useStore();
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const [filterButtonClicked, setFilterButtonClicked] = useState(false);
   const [isloading, setIsloading] = useState(false);
   const [branch, setBranch] = useState<any>([]);
-  const [expenseType, setExpenseType] = useState<any>([]);
   const { themeStretch } = useSettings();
   const { translate } = useLocales();
 
-  const { loadExpenseStatisticalReport, ExpenseStatisticalReportDetails } = ExpenseReportsStore;
-  const {
-    loadUserDropdown,
-    loadBranchDDL,
-    BranchOption,
-    loadExpenseTypeDropdown,
-    ExpenseTypeOption,
-  } = commonDropdown;
+  const { loadLoanStatisticalReport, LoanStatisticalReportDetails } = LoanReportsStore;
+  const { loadUserDropdown, loadBranchDDL, BranchOption } = commonDropdown;
   const handleChangeBranch = (event: any, newValue: any[]) => {
     const selectedOptionValues = newValue.map((value) => value.value);
     setBranch(selectedOptionValues);
-  };
-
-  const handleChangeExpenseType = (event: any, newValue: any[]) => {
-    const selectedOptionValues = newValue.map((value) => value.value);
-    setExpenseType(selectedOptionValues);
   };
 
   let componentRef = useRef<any>(null);
@@ -82,20 +70,18 @@ export default observer(function StatisticalReportIndex() {
 
   useEffect(() => {
     loadBranchDDL();
-    loadExpenseTypeDropdown();
     reset(defaultValues);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, defaultValues, loadUserDropdown]);
 
-  useEffect(() => {}, [ExpenseStatisticalReportDetails]);
+  useEffect(() => {}, [LoanStatisticalReportDetails]);
 
   const Search = (e: any) => {
     e.preventDefault();
     setFilterButtonClicked(!filterButtonClicked);
     setIsloading(true);
-    loadExpenseStatisticalReport({
+    loadLoanStatisticalReport({
       branchIds: branch,
-      expenseTypeIds: expenseType,
       fromDate: val.fromDate,
       toDate: val.toDate,
     }).then((rest) => {
@@ -106,15 +92,15 @@ export default observer(function StatisticalReportIndex() {
   };
 
   return (
-    <Page title={translate('Expense.ReportTitle')}>
+    <Page title={translate('Loan.ReportTitle')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.ExepnseReport')}
+          heading={translate('Loan.LoanReport')}
           links={[
-            { name: `${translate('npfx.Dashboard')}`, href: PATH_DASHBOARD.root },
+            { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
 
             {
-              name: `${translate('Expense.StatisticalReport')}`,
+              name: `${translate('ApplicantRequest.StatisticalReport')}`,
               href: PATH_DASHBOARD.general.app,
             },
           ]}
@@ -169,56 +155,6 @@ export default observer(function StatisticalReportIndex() {
                           sx={{ marginBottom: '20px' }}
                           size="small"
                           label={translate('branch')}
-                          error={!!error}
-                          helperText={error?.message}
-                        />
-                      )}
-                    />
-                  )}
-                />
-                <Controller
-                  name="expenseTypeIds"
-                  control={control}
-                  render={({ field, fieldState: { error } }) => (
-                    <Autocomplete
-                      disableCloseOnSelect
-                      multiple
-                      fullWidth
-                      freeSolo
-                      options={ExpenseTypeOption.map((option: any) => option)}
-                      value={field.value}
-                      getOptionLabel={(option) => option.text}
-                      onChange={(event, newValue) => {
-                        handleChangeExpenseType(event, newValue);
-                        field.onChange(newValue);
-                      }}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip
-                            {...getTagProps({ index })}
-                            key={option.value}
-                            size="small"
-                            label={option.text}
-                          />
-                        ))
-                      }
-                      renderOption={(props, option, { selected }) => (
-                        <li {...props}>
-                          <Checkbox
-                            icon={icon}
-                            checkedIcon={checkedIcon}
-                            style={{ marginRight: 8 }}
-                            checked={selected}
-                          />
-                          {option.text}
-                        </li>
-                      )}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          sx={{ marginBottom: '20px' }}
-                          size="small"
-                          label={translate('expenseType')}
                           error={!!error}
                           helperText={error?.message}
                         />
@@ -319,7 +255,7 @@ export default observer(function StatisticalReportIndex() {
                     color="error"
                     startIcon={<Iconify icon="eva:refresh-outline" />}
                     onClick={() => {
-                      ExpenseStatisticalReportDetails!.report!.length = 0;
+                      LoanStatisticalReportDetails!.report!.length = 0;
                       setFilterButtonClicked(!filterButtonClicked);
 
                       // setDepartment([]);
@@ -337,11 +273,11 @@ export default observer(function StatisticalReportIndex() {
             {isloading ? (
               <Loader />
             ) : (
-              <StatisticalReportPrintView
+              <LoanStatisticalReportPrintView
                 ref={componentRef}
                 // bothSide={bothSide}
                 filterButtonClicked={filterButtonClicked}
-                StatisticalReportDetails={ExpenseStatisticalReportDetails}
+                StatisticalReportDetails={LoanStatisticalReportDetails}
               />
             )}
           </Grid>
