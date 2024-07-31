@@ -64,9 +64,7 @@ import ApplicationList from 'src/sections/@dashboard/applicationApi/applicationL
 import ApplicationCreate from 'src/sections/@dashboard/applicationApi/applicationForm/ApplicationCreate';
 
 import NPFXDashboard from 'src/sections/@dashboard/NPFX_DashBoard/NPFXDashboard';
-
-
-
+import StatisticalReportIndex from 'src/sections/@dashboard/Reports/ExpenseReports/StatisticalReport/StatisticalReportIndex';
 // ----------------------------------------------------------------------
 
 const Loadable = (Component: ElementType) => (props: any) => {
@@ -430,6 +428,10 @@ export default function Router() {
                   <ExpenseTrackingCreate />
                 </PermissionBasedGuard>
               ),
+            },
+            {
+              path: 'report',
+              element: <StatisticalReportIndex />,
             },
           ],
         },
