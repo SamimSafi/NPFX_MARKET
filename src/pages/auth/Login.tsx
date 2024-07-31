@@ -126,17 +126,17 @@ export default function Login() {
               </Stack>
 
               <Alert severity="info" sx={{ mb: 3, textAlign: 'center' }}>
-                <Typography variant="h6">Sign In To NPFX Market</Typography>
+                <Typography variant="h6">{translate('login.SignInToMinistry')}</Typography>
               </Alert>
 
               <LoginForm />
 
-              <Typography variant="body2" align="center" sx={{ mt: 3 }}>
+              {/* <Typography variant="body2" align="center" sx={{ mt: 3 }}>
                 Don’t have an account?{' '}
                 <Link variant="subtitle2" component={RouterLink} to={PATH_AUTH.register}>
                   Get started
                 </Link>
-              </Typography>
+              </Typography> */}
             </GlassCard>
           </ContentStyle>
         </Container>
