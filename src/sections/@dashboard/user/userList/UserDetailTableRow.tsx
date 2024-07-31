@@ -62,7 +62,7 @@ export default function UserDetailTableRow({ row, clearUser, clearUserDetail }: 
     email,
     isActive,
     userRoles,
-    alloweddepartmentlevelModels,
+    allowedBranchs,
     alloweddocumentLevelModels,
     alloweddocumenttypeModels,
     language,
@@ -288,7 +288,7 @@ export default function UserDetailTableRow({ row, clearUser, clearUserDetail }: 
 
                     <Stack spacing={4} sx={{ p: 1 }}>
                       <Grid item container direction="row" xs={12} sm={12}>
-                        {alloweddepartmentlevelModels.map((sec) => (
+                        {allowedBranchs.map((sec) => (
                           <Grid key={sec.id} item xs={6}>
                             <RoleCard
                               nameLabel={`${translate('User.EnglishName')}:`}

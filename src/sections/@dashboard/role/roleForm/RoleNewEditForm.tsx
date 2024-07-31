@@ -157,6 +157,7 @@ export default observer(function RoleNewEditForm() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicationName]);
+
   useEffect(() => {
     //if(editMode)
     setValue('applicationName', applicationName);

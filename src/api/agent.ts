@@ -96,7 +96,6 @@ import { Application, ApplicationParams } from 'src/@types/application';
 
 import { IPieChartByBranch } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
 import {
-
   ExpenseStatisticalReportView,
   IExpenseReportParam,
 } from 'src/@types/foamCompanyTypes/ExpenseReports';
@@ -108,12 +107,10 @@ import {
   ILoanReportParam,
   LoanStatisticalReportView,
 } from 'src/@types/foamCompanyTypes/LoanReports';
-
+import {
   TrainingVideo,
   TrainingVideoParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/trainingVideo';
-
-
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
 // axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
@@ -153,7 +150,7 @@ const Logins = {
   disable2fa: () => requests.get<any>('/Auth/DisableTwoFactorAuthentication'),
   generate2faQrCode: () => requests.get<AuthData>('/Auth/GenerateQrCodeData'),
   enableTwoFactorAuthentication: (Code: string) =>
-    requests.post<RecoveryCodes>(`Auth/EnableTwoFactorAuthentication?Code=${Code}`, {}),
+    requests.get<RecoveryCodes>(`Auth/EnableTwoFactorAuthentication?Code=${Code}`),
   loginWith2faRecoveryCode: (login: LoginFormValue) =>
     requests.post<User>('/Auth/SignInWithRecoveryCode', login),
   SendCode: (sendCode: SendVerificationCode) =>
@@ -249,6 +246,7 @@ const Employees = {
     formData.append('emergencyPhoneNumber', data.emergencyPhoneNumber!);
     formData.append('joinDate', data.joinDate!.toDateString());
     formData.append('profilePhoto', file);
+    formData.append('isActive', data.isActive!.toString());
     return axios.post<IEmployee, any>('/EmployeeProfile', formData, {
       headers: { 'Content-type': 'multipart/form-data' },
     });
@@ -282,6 +280,7 @@ const Employees = {
     formData.append('personalEmail', data.personalEmail!);
     formData.append('joinDate', data.joinDate!.toDateString());
     formData.append('profilePhoto', file);
+    formData.append('isActive', data.isActive!.toString());
     // formData.append('isCurrent', data.isCurrent!.toString());
     if (file) {
       formData.append('profilePhoto', file);

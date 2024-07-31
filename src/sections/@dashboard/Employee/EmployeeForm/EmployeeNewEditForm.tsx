@@ -60,7 +60,7 @@ export default observer(function EmployeeNewEditForm() {
 
   const { createEmployee, updateEmployee, editMode, clearSelectedEmployee, employeeForEdit } =
     EmployeeStore;
-  const {} = commonDropdown;
+  const { loadBranchDDL, BranchOption } = commonDropdown;
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -135,10 +135,10 @@ export default observer(function EmployeeNewEditForm() {
     formState: { errors, isSubmitting },
   } = methods;
   const val = watch();
-console.log(val.isActive)
   const onSubmit = (data: IEmployee) => {
     data.phoneNumber = muiPhone.replace(/\s+/g, '');
     data.emergencyPhoneNumber = muiEmergencyPhone.replace(/\s+/g, '');
+    data.isActive = val.isActive;
 
     if (data.id! === undefined) {
       ///create
@@ -165,6 +165,8 @@ console.log(val.isActive)
             setError('afterSubmit', { ...err, message: json.error.AttendanceId });
           } else if (json.error.TazkiraTypeId != null) {
             setError('afterSubmit', { ...err, message: json.error.TazkiraTypeId });
+          } else if (json.error.IsActive != null) {
+            setError('afterSubmit', { ...err, message: json.error.IsActive });
           } else {
             setError('afterSubmit', { ...err, message: json.error });
           }
@@ -203,6 +205,8 @@ console.log(val.isActive)
             setError('afterSubmit', { ...err, message: json.error.AttendanceId });
           } else if (json.error.TazkiraTypeId != null) {
             setError('afterSubmit', { ...err, message: json.error.TazkiraTypeId });
+          } else if (json.error.IsActive != null) {
+            setError('afterSubmit', { ...err, message: json.error.IsActive });
           } else {
             setError('afterSubmit', { ...err, message: json.error });
           }
@@ -225,12 +229,14 @@ console.log(val.isActive)
       reset(defaultValues);
       setMuiPhone(defaultValues.phoneNumber!);
       setMuiEmergencyPhone(defaultValues.emergencyPhoneNumber!);
+      setValue('gender', defaultValues.gender);
     }
     if (!editMode) {
       reset(defaultValues);
     }
+    loadBranchDDL();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reset, editMode, defaultValues]);
+  }, [reset, editMode, defaultValues, loadBranchDDL]);
 
   // useEffect(() => {
   //   if (editMode) {
@@ -287,6 +293,16 @@ console.log(val.isActive)
     }
   }, [editMode, setValue]);
 
+  const gender = [
+    { title: 'Male', value: 'Male' },
+    { title: 'Female', value: 'Female' },
+  ];
+
+  const TazkiraType = [
+    { title: 1, value: `${translate('Employee.ETazkira')}` },
+    { title: 2, value: `${translate('Employee.PaperBaseTazkira')}` },
+  ];
+
   const bloodGroup = [
     { title: 'A+', value: 'A+' },
     { title: 'A-', value: 'A-' },
@@ -296,11 +312,6 @@ console.log(val.isActive)
     { title: 'O-', value: 'O-' },
     { title: 'AB+', value: 'AB+' },
     { title: 'AB-', value: 'AB-' },
-  ];
-
-  const TazkiraType = [
-    { title: 1, value: `${translate('Employee.ETazkira')}` },
-    { title: 2, value: `${translate('Employee.PaperBaseTazkira')}` },
   ];
 
   return (
@@ -454,12 +465,14 @@ console.log(val.isActive)
                   gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(3, 1fr)' },
                 }}
               >
-                <RHFTextField
-                  name="gender"
-                  label={translate('Employee.gender')}
-                  showAsterisk={true}
-                />
-
+                <RHFSelect name="gender" label={translate('Employee.Gender')}>
+                  <option value="" />
+                  {gender.map((op) => (
+                    <option key={op.title} value={op.title}>
+                      {op.title}
+                    </option>
+                  ))}
+                </RHFSelect>
                 <RHFSelect
                   name="tazkiraTypeId"
                   label={translate('Employee.TazkiraType')}
@@ -504,12 +517,18 @@ console.log(val.isActive)
                   label={translate('Employee.permanentAddress')}
                   showAsterisk={true}
                 />
-                <RHFTextField
-                  name="branchId"
-                  label={translate('Employee.branch')}
-                  showAsterisk={true}
-                />
-
+                {!editMode ? (
+                  <RHFSelect name="branchId" label={translate('Branch.Branch')}>
+                    <option value="" />
+                    {BranchOption.map((op) => (
+                      <option key={op.value} value={op.value}>
+                        {op.text}
+                      </option>
+                    ))}
+                  </RHFSelect>
+                ) : (
+                  <></>
+                )}
                 <RHFSelect name="bloodGroup" label={translate('Employee.BloodGroup')}>
                   <option value="" />
                   {bloodGroup.map((op) => (

@@ -50,7 +50,7 @@ export const LoanStatisticalReportPrintView = forwardRef(
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
                   {/* {translate('Expense.ExpenseReport')} */}
-                  Expense Report
+                  Loan Report
                 </Typography>
                 <TableContainer
                   component={Paper}
@@ -61,7 +61,7 @@ export const LoanStatisticalReportPrintView = forwardRef(
                     '&::-webkit-scrollbar-thumb': { backgroundColor: '#555', borderRadius: 2 },
                   }}
                 >
-                   <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
+                  <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
                     <TableHead>
                       <TableRow>
                         <TableCell align="center">No</TableCell>
@@ -129,7 +129,7 @@ export const LoanStatisticalReportPrintView = forwardRef(
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
                   {/* {translate('Expense.ExpenseReport')} */}
-                  Expense Transaction
+                  Loan Transaction
                 </Typography>
                 <TableContainer
                   component={Paper}
