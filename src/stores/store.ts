@@ -47,7 +47,7 @@ import MainAssetDetailsStore from './foamCompanyStores/MainAssetDetailsStore';
 import ApplicationStore from './applicationStore';
 
 import npfxDashboardStore from './npfxDashboardStores/npfxDashboardStore';
-
+import TrainingVideoStore from './foamCompanyStores/TrainingVideoStore';
 
 interface Store {
   LoginStore: LoginStore;
@@ -111,7 +111,7 @@ interface Store {
   ApplicationStore: ApplicationStore;
 
   npfxDashboardStore: npfxDashboardStore;
-
+  TrainingVideoStore: TrainingVideoStore;
 }
 //Include All store below
 export const store: Store = {
@@ -166,7 +166,7 @@ export const store: Store = {
   ApplicationStore: new ApplicationStore(),
 
   npfxDashboardStore: new npfxDashboardStore(),
-
+  TrainingVideoStore: new TrainingVideoStore(),
 };
 
 export const StoreContext = createContext(store);

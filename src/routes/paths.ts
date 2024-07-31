@@ -248,6 +248,12 @@ export const PATH_DASHBOARD = {
     detail: path(ROOTS_DASHBOARD, '/Supplier/detail'),
   },
 
+  TrainingVideo: {
+    list: path(ROOTS_DASHBOARD, '/TrainingVideo/list'),
+    new: path(ROOTS_DASHBOARD, '/TrainingVideo/new'),
+    videoPlayer: path(ROOTS_DASHBOARD, '/TrainingVideo/play'),
+    edit: path(ROOTS_DASHBOARD, '/TrainingVideo/edit'),
+  },
   // Expense
   Expense: {
     root: path(ROOTS_DASHBOARD, '/Expense'),
