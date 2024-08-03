@@ -96,6 +96,7 @@ import { Application, ApplicationParams } from 'src/@types/application';
 
 import { IPieChartByBranch } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
 import {
+
   ExpenseStatisticalReportView,
   IExpenseReportParam,
 } from 'src/@types/foamCompanyTypes/ExpenseReports';
@@ -107,6 +108,11 @@ import {
   ILoanReportParam,
   LoanStatisticalReportView,
 } from 'src/@types/foamCompanyTypes/LoanReports';
+
+  TrainingVideo,
+  TrainingVideoParams,
+} from 'src/@types/foamCompanyTypes/systemTypes/trainingVideo';
+
 
 //axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
@@ -891,6 +897,34 @@ const Supplier = {
     axios.get<any>(`/Supplier/GetDropDownList/${departmentId}`, { withCredentials: true }),
 };
 
+const trainingVideoAgent = {
+  create: (data: TrainingVideo, poster: Blob, dariVideo: Blob, pashtoVideo: Blob) => {
+    const formData: FormData = new FormData();
+    formData.append('dariVideoPath', dariVideo);
+    formData.append('pashtoVideoPath', pashtoVideo);
+    formData.append('poster', poster);
+    formData.append('dariTitle', data.dariTitle!);
+    formData.append('pashtoTitle', data.pashtoTitle!);
+    formData.append('application', data.application!);
+
+    return requests.post<TrainingVideo>('/TrainingVideo', formData);
+  },
+  update: (data: TrainingVideo, poster: Blob, dariVideo: Blob, pashtoVideo: Blob) => {
+    const formData: FormData = new FormData();
+    formData.append('dariVideoPath', dariVideo);
+    formData.append('pashtoVideoPath', pashtoVideo);
+    formData.append('poster', poster);
+    formData.append('dariTitle', data.dariTitle!);
+    formData.append('pashtoTitle', data.pashtoTitle!);
+    formData.append('application', data.application!);
+
+    return requests.put<TrainingVideo>(`/TrainingVideo/${data.id}`, formData);
+  },
+  getList: (params: TrainingVideoParams) => axios.post<any>(`/TrainingVideo/GetList`, params),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/TrainingVideo/${id}`, { data: remark }),
+};
+
 const agent = {
   Logins,
   Permissions,
@@ -935,6 +969,7 @@ const agent = {
   Applications,
   NPFXReports,
   npfxDashboards,
+  trainingVideoAgent,
 };
 
 export default agent;

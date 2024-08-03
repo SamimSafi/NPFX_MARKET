@@ -46,3 +46,8 @@ export const currency = {
   USD: 1,
   AFN: 2,
 };
+
+export const throthleDelaySeconds = {
+  delay: 2000,
+  deBounce: 1000,
+};
