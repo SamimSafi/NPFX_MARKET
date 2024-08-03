@@ -137,7 +137,7 @@ const navConfig = [
           'Permission-GetList',
           'Role-GetList',
           'Role-Create',
-          'Application-GetList',
+          // 'Application-GetList',
         ],
         children: [
           {
@@ -168,6 +168,7 @@ const navConfig = [
             ],
           },
 
+
           {
             title: 'Application',
             path: '#5',
@@ -180,6 +181,7 @@ const navConfig = [
               },
             ],
           },
+
         ],
       },
       // Human resource

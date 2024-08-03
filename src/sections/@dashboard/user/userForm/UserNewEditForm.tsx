@@ -96,6 +96,7 @@ export default observer(function UserNewEditForm() {
   });
 
   const rolesId = SelecteduserDetail?.userRoles.map((m) => m.id);
+  const branchesId = SelecteduserDetail?.allowedBranchs.map((m) => m.id);
 
   const defaultValues = useMemo<CreateUser>(
     () => ({
@@ -185,6 +186,19 @@ export default observer(function UserNewEditForm() {
     setFullName(nameWithOutSpaces);
   };
 
+  const loadRoles = () => {
+    loadRoleDropdown().then((res) => {
+      if (editMode) {
+        const selectedRoles = RolesOption.filter((e) => rolesId!.includes(Number(e.value)));
+        setTimeout(() => {
+          const roleNames = selectedRoles.map((role) => role.text);
+          setSelectedRolesName(roleNames);
+        }, 500);
+        setRolesOptions(RolesOption.map((i) => i.text));
+      }
+    });
+  };
+
   useEffect(() => {
     if (editMode) {
       setValue('userName', defaultValues.userName);
@@ -199,6 +213,22 @@ export default observer(function UserNewEditForm() {
   useEffect(() => {
     if (editMode) {
       setRoleId(rolesId);
+      setBranchID(branchesId);
+      loadRoles();
+      loadBranchDDL()
+        .then((res) => {
+          const selectedBranches = BranchOption.filter((e) =>
+            branchesId!.includes(Number(e.value))
+          );
+          setTimeout(() => {
+            const branchsNames = selectedBranches.map((branches) => branches.text);
+            setSelectedBranch(branchsNames);
+          }, 500);
+          setbranchOption(BranchOption.map((i) => i.text));
+        })
+        .finally(() => {
+          setbranchOption(BranchOption.map((i) => i.text));
+        });
 
       setValue('userName', defaultValues.userName);
       setFullName(defaultValues.userName);
@@ -221,7 +251,6 @@ export default observer(function UserNewEditForm() {
   useEffect(() => {
     loadEmployeeDropdown(true);
     loadBranchDDL();
-    loadRoleDropdown();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
