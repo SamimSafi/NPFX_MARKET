@@ -412,6 +412,7 @@ const en = {
     OneDollor: '1 USD =',
     AFN: 'AFN',
     USD: 'USD',
+     SelectAll:'Select All'
   },
 
   Tostar: {
@@ -458,6 +459,8 @@ const en = {
     App: 'Application',
     AppList: 'Application List',
     Placeholder: 'Search Application...',
+    Id: 'ID',
+    Action: 'Action',
     Title: 'Title',
     Abbrevation: 'Abbrivation',
     IconClass: 'Icon Class',
@@ -488,6 +491,7 @@ const en = {
     EmployeeType: 'Employee Type',
     Department: 'Directorate',
     Position: 'Position',
+    Action: 'Action',
     Email: 'Email',
     PhoneNumber: 'Phone Number',
     Placeholder: 'Search Employee by Name, Directorate or Phone Number...',
@@ -675,6 +679,7 @@ const en = {
     userName: 'User Name',
     fullUserName: 'Full User Name',
     email: 'Email',
+    Branch: 'Branch',
     isActive: 'Is Active',
     unActive: 'UnActive',
     Active: 'Active',
@@ -1064,6 +1069,17 @@ const en = {
     Title: 'Welcome to Afghanistan Water and Energy Enterprise System (AWEES)',
     Text: 'Afghanistan Ministry for Energy and Water (MEW) is responsible for all policies, regulations, development projects and Coordination for water and energy sector in the Islamic Emirate of Afghanistan.',
   },
+  Report: {
+    FromDate: 'From Date',
+    ToDate: 'To Date',
+    ExpenseReport:'',
+    ExpenseTransaction:'',
+    LoanReport:'',
+    LoanTransaction:'',
+    TradeReport:'',
+    TradeTransaction:'',
+
+  },
 
   app: `app`,
   user: `user`,
@@ -1099,6 +1115,9 @@ const en = {
   other_cases: `other cases`,
   item_by_roles: `item by roles`,
   only_admin_can_see_this_item: `Only admin can see this item`,
+  report:'Report',
+  NoRecordFound:'No Record Found'
+
 };
 
 export default en;

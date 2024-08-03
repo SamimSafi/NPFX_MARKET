@@ -169,7 +169,7 @@ const navConfig = [
           },
 
           {
-            title: 'apps',
+            title: 'Application',
             path: '#5',
             roles: ['Application-GetList'],
             children: [

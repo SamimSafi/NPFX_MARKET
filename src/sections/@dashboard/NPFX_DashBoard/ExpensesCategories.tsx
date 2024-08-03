@@ -30,7 +30,7 @@ const RootStyle = styled(Card)(({ theme }) => ({
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  chartColors: string[];
+  // chartColors: string[];
   chartData: {
     label: string;
     value: number;
@@ -40,7 +40,7 @@ interface Props extends CardProps {
 export default function ExpensesCategories({
   title,
   subheader,
-  chartColors,
+  // chartColors,
   chartData,
   ...other
 }: Props) {
@@ -54,7 +54,7 @@ export default function ExpensesCategories({
 
   const chartOptions = merge(BaseOptionChart(), {
     labels: chartLabels,
-    colors: chartColors,
+    // colors: chartColors,
     stroke: {
       colors: [theme.palette.background.paper],
     },
