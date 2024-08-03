@@ -421,12 +421,12 @@ export default observer(function UserNewEditForm() {
                     }
                   }}
                   name="allowedBranchs"
-                  label={translate('User.AllowBranch')}
+                  label={translate('User.Branch')}
                   placeholder="Branch"
-                  options={['Select All', ...branchOption]}
+                  options={[translate('GeneralFields.SelectAll'), ...branchOption]}
                   getOptionLabel={(option: any) => `${option}`}
                   onChange={(event, newValue: any) => {
-                    if (newValue.includes('Select All')) {
+                    if (newValue.includes(translate('GeneralFields.SelectAll'))) {
                       setSelectedBranch(branchOption);
                       setBranchID(BranchOption.map((d) => d.value));
                     } else {

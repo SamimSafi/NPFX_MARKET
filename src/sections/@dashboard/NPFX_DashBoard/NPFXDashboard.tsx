@@ -133,67 +133,72 @@ export default function NPFXDashboard() {
               <NPFXYearlySales
                 title="Expense"
                 subheader="(+43%) than last year"
-                chartLabels={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']}
+                chartLabels={{
+                  Day: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                  Week: [
+                    'Week 1',
+                    'Week 2',
+                    'Week 3',
+                    'Week 4',
+                    'Week 5',
+                    'Week 6',
+                    'Week 7',
+                    'Week 8',
+                    'Week 9',
+                  ],
+                  Month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+                  Year: ['2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+                }}
                 chartData={[
                   {
-                    year: '2019',
-                    branches: [
+                    year: 'Day',
+                    data: [
                       {
-                        name: 'Branch A',
-                        categories: [
-                          {
-                            name: 'Total Income',
-                            data: [10, 41, 35, 151, 49, 62, 69, 91, 48],
-                          },
-                          {
-                            name: 'Total Expenses',
-                            data: [10, 34, 13, 56, 77, 88, 99, 77, 45],
-                          },
-                        ],
+                        name: 'Income',
+                        data: [5, 10, 7, 13, 8, 6, 12],
                       },
                       {
-                        name: 'Branch B',
-                        categories: [
-                          {
-                            name: 'Total Income',
-                            data: [5, 30, 25, 120, 40, 50, 60, 80, 40],
-                          },
-                          {
-                            name: 'Total Expenses',
-                            data: [5, 20, 10, 50, 70, 80, 90, 70, 40],
-                          },
-                        ],
+                        name: 'Expenses',
+                        data: [3, 6, 5, 8, 5, 7, 9],
                       },
                     ],
                   },
                   {
-                    year: '2020',
-                    branches: [
+                    year: 'Week',
+                    data: [
                       {
-                        name: 'Branch A',
-                        categories: [
-                          {
-                            name: 'Total Income',
-                            data: [148, 91, 69, 62, 49, 51, 35, 41, 10],
-                          },
-                          {
-                            name: 'Total Expenses',
-                            data: [45, 77, 99, 88, 77, 56, 13, 34, 10],
-                          },
-                        ],
+                        name: 'Income',
+                        data: [10, 41, 35, 151, 49, 62, 69, 91, 48],
                       },
                       {
-                        name: 'Branch B',
-                        categories: [
-                          {
-                            name: 'Total Income',
-                            data: [100, 80, 60, 50, 40, 30, 20, 10, 5],
-                          },
-                          {
-                            name: 'Total Expenses',
-                            data: [50, 60, 70, 80, 90, 100, 110, 120, 130],
-                          },
-                        ],
+                        name: 'Expenses',
+                        data: [10, 34, 13, 56, 77, 88, 99, 77, 45],
+                      },
+                    ],
+                  },
+                  {
+                    year: 'Month',
+                    data: [
+                      {
+                        name: 'Income',
+                        data: [148, 91, 69, 62, 49, 51, 35, 41, 10],
+                      },
+                      {
+                        name: 'Expenses',
+                        data: [45, 77, 99, 88, 77, 56, 13, 34, 10],
+                      },
+                    ],
+                  },
+                  {
+                    year: 'Year',
+                    data: [
+                      {
+                        name: 'Income',
+                        data: [76, 42, 29, 41, 27, 138, 117, 86, 63],
+                      },
+                      {
+                        name: 'Expenses',
+                        data: [80, 55, 34, 114, 80, 130, 15, 28, 55],
                       },
                     ],
                   },
@@ -202,27 +207,27 @@ export default function NPFXDashboard() {
               <ExpensesCategories
                 title="Expenses By Categories"
                 chartData={[
-                  { label: 'Category 1', value: 14 },
-                  { label: 'Category 2', value: 23 },
-                  { label: 'Category 3', value: 21 },
-                  { label: 'Category 4', value: 17 },
-                  { label: 'Category 5', value: 15 },
-                  { label: 'Category 6', value: 10 },
-                  { label: 'Category 7', value: 12 },
-                  { label: 'Category 8', value: 17 },
-                  { label: 'Category 9', value: 21 },
+                  { label: 'Expense Type 1', value: 14 },
+                  { label: 'Expense Type 2', value: 23 },
+                  { label: 'Expense Type 3', value: 21 },
+                  { label: 'Expense Type 4', value: 17 },
+                  { label: 'Expense Type 5', value: 15 },
+                  { label: 'Expense Type 6', value: 10 },
+                  { label: 'Expense Type 7', value: 12 },
+                  { label: 'Expense Type 8', value: 17 },
+                  { label: 'Expense Type 9', value: 21 },
                 ]}
-                chartColors={[
-                  theme.palette.primary.main,
-                  theme.palette.info.darker,
-                  theme.palette.chart.yellow[0],
-                  theme.palette.chart.blue[0],
-                  theme.palette.chart.red[0],
-                  theme.palette.chart.violet[2],
-                  theme.palette.chart.violet[0],
-                  theme.palette.success.darker,
-                  theme.palette.chart.green[0],
-                ]}
+                // chartColors={[
+                //   theme.palette.primary.main,
+                //   theme.palette.info.darker,
+                //   theme.palette.chart.yellow[0],
+                //   theme.palette.chart.blue[0],
+                //   theme.palette.chart.red[0],
+                //   theme.palette.chart.violet[2],
+                //   theme.palette.chart.violet[0],
+                //   theme.palette.success.darker,
+                //   theme.palette.chart.green[0],
+                // ]}
               />
 
               <TradeStatistics

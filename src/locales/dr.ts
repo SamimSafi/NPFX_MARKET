@@ -401,6 +401,7 @@ const ps = {
     Remarks: 'جزئیات',
     Description: 'توضیحات',
     Date: 'تاریخ',
+    SelectAll: 'انتخاب همه',
   },
 
   Tostar: {
@@ -454,6 +455,7 @@ const ps = {
     EmployeeType: 'نوع کارمند',
     Department: 'ریاست',
     Position: 'بست',
+    Action: 'عملیات',
     Email: 'ایمیل آدرس',
     PhoneNumber: 'شماره  تماس',
     Placeholder: 'کارمند را به اساس نام، ریاست یا شماره تماس جستجو نمائید ...',
@@ -626,6 +628,8 @@ const ps = {
     AppList: 'لیست سیستم ها',
     Placeholder: 'سیستم را جستجو نمایید',
     Title: 'عنوان',
+    Id: 'آی دی',
+    Action: 'عملیات',
     Abbrevation: 'اختصاریه',
     IconClass: 'آیکن کلاس',
     DefaultRoute: 'دیفالت روت',
@@ -690,6 +694,7 @@ const ps = {
     email: 'ایمیل آدرس',
     isActive: 'فعال است',
     Active: 'فعال است',
+    Branch: 'نماینده گی',
     unActive: 'غیر فعال است',
     Banned: 'غیر فعال است',
     createUser: 'کاربر جدید را اضافه نمائید',
@@ -1017,6 +1022,10 @@ const ps = {
     Title: 'به سیستم مدیریتی آب و انرژی افغانستان (AWEES) خوش آمدید',
     Text: 'وزارت انرژی و آب افغانستان  مسئول تمام پالیسی ها، مقررات، پروژه های انکشافی و هماهنگی بخش آب و انرژی در امارت اسلامی افغانستان است.',
   },
+  Report: {
+    FromDate: 'از تاریخ',
+    ToDate: 'تا تاریخ',
+  },
 
   apps: 'اپلیکیشن ها',
   Application: `اپلیکیشن`,
@@ -1058,6 +1067,8 @@ const ps = {
   emp: 'کارمند',
   employeeDegree: 'درجه تحصیلی کارمند',
   employeePosition: 'بست کارمند',
+  report:'گزارشات',
+  NoRecordFound:'هیچ ریکارد ای یافت نشد'
 };
 
 export default ps;

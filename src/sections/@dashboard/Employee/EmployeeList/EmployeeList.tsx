@@ -97,7 +97,7 @@ export default observer(function EmployeeList() {
     { id: 'personalEmail', label: `${translate('Employee.Email')}`, align: 'left' },
     { id: 'phoneNumber', label: `${translate('Employee.PhoneNumber')}`, align: 'left' },
 
-    { id: '', label: `${translate('Department.Action')}` },
+    { id: '', label: `${translate('Employee.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
     setFilterName(filterName);

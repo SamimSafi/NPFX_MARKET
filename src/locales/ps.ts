@@ -420,6 +420,7 @@ const dr = {
     Remarks: 'جزئیات',
     Description: 'توضیحات',
     Date: 'نیټه',
+    SelectAll: 'تول',
   },
 
   Tostar: {
@@ -471,6 +472,8 @@ const dr = {
     AppList: 'د سیستمونو لیست',
     Placeholder: 'سیستم ولټوی...',
     Title: 'عنوان',
+    Id: 'آی دی',
+    Action: 'عملیات',
     Abbrevation: 'مخفف',
     IconClass: 'آیکن کلاس ',
     DefaultRoute: 'ډیفالټ روټ',
@@ -502,6 +505,7 @@ const dr = {
     Department: 'ریاست',
     Position: 'بست',
     Email: 'بریښنالیک',
+    Action: 'عملیات',
     PhoneNumber: 'د اړیکې شمیره',
     Placeholder: 'کارکوونکی د نوم، ریاست یا د اړیکې شمیرې په اساس ولټوۍ ...',
     CreateTitle: 'کارکوونکی: د نوي کارکوونکي اضافه کول',
@@ -625,6 +629,7 @@ const dr = {
     email: 'بریښنا لیک',
     isActive: 'فعال دې',
     Active: 'فعال دی',
+    Branch: 'نماینده گی',
     unActive: 'غیر فعال دی',
     Banned: 'غیر فعال دی',
     createUser: 'نوی کاروونکې اضافه کړۍ',
@@ -1015,7 +1020,10 @@ const dr = {
     Title: 'د افغانستان د اوبو او انرژۍ مدیریتي سیسټم (AWEES) ته ښه راغلاست',
     Text: 'د افغانستان د انرژۍ او اوبو وزارت  د افغانستان په اسلامي امارت کې د ټولو پالیسیو، مقرراتو، پراختیایي پروژو او د اوبو او انرژۍ د سکتور د همغږۍ مسوولیت په غاړه لري.',
   },
-
+  Report: {
+    FromDate: '',
+    ToDate: '',
+  },
   dmtsLookuptable: 'د اسنادو د تعقیب او مدیریت سیسټم',
   department: 'ریاست',
   depLevel: 'ریاست درجه',
@@ -1144,6 +1152,8 @@ const dr = {
   other_cases: `حالات اخرى`,
   item_by_roles: `عنصر حسب الأدوار`,
   only_admin_can_see_this_item: `يمكن للمسؤول فقط رؤية هذا العنصر`,
+  report: 'گزارشونه',
+  NoRecordFound:'هیڅ ریکارډ ونه موندل شو'
 };
 
 export default dr;

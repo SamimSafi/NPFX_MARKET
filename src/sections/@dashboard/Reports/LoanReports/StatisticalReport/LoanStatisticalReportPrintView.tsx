@@ -175,7 +175,7 @@ export const LoanStatisticalReportPrintView = forwardRef(
           {!StatisticalReportDetails && filterButtonClicked === false && (
             <>
               <EmptyContent
-                title={translate('Expese.NoRecordFound')}
+                title={translate('NoRecordFound')}
                 sx={{
                   '& span.MuiBox-root': { height: 160 },
                 }}
