@@ -168,18 +168,20 @@ const navConfig = [
             ],
           },
 
-          // {
-          //   title: 'apps',
-          //   path: '#5',
-          //   roles: ['Application-GetList'],
-          //   children: [
-          //     {
-          //       title: 'list',
-          //       path: PATH_DASHBOARD.Application.list,
-          //       roles: ['Application-GetList'],
-          //     },
-          //   ],
-          // },
+
+          {
+            title: 'Application',
+            path: '#5',
+            roles: ['Application-GetList'],
+            children: [
+              {
+                title: 'list',
+                path: PATH_DASHBOARD.Application.list,
+                roles: ['Application-GetList'],
+              },
+            ],
+          },
+
         ],
       },
       // Human resource
