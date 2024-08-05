@@ -96,15 +96,15 @@ export default observer(function UserNewEditForm() {
   });
 
   const rolesId = SelecteduserDetail?.userRoles.map((m) => m.id);
-  const branchesId = SelecteduserDetail?.allowedBranchs.map((m) => m.id);
+  const branchesId = SelecteduserDetail?.allowedbranchlevelModels.map((m) => m.id);
 
   const defaultValues = useMemo<CreateUser>(
     () => ({
       id: selectedUser?.id || undefined,
       userName: selectedUser?.userName || '',
       userRoles: selectedUser?.userRoles || undefined,
-      email: selectedUser?.email || '',
-      allowedBranchs: selectedUser?.allowedBranchs || undefined,
+      email: SelecteduserDetail?.email || '',
+      allowedbranchlevelModels: selectedUser?.allowedbranchlevelModels || undefined,
       employeeId: SelecteduserDetail?.employeeId || selectedEmployee?.id || undefined,
     }),
     [selectedUser, SelecteduserDetail, selectedEmployee]
@@ -133,7 +133,7 @@ export default observer(function UserNewEditForm() {
     const newData = {
       ...data,
       userRoles: roleid.toString(),
-      allowedBranchs: branchID.toString(),
+      allowedbranchlevelModels: branchID.toString(),
     };
     if (newData.id === undefined) {
       ///create
@@ -342,7 +342,7 @@ export default observer(function UserNewEditForm() {
 
                 <RHFTextField
                   name="email"
-                  value={empEmail}
+                  value={empEmail || watch('email')}
                   label={translate('User.email')}
                   showAsterisk={true}
                   // disabled
@@ -420,7 +420,7 @@ export default observer(function UserNewEditForm() {
                         });
                     }
                   }}
-                  name="allowedBranchs"
+                  name="allowedbranchlevelModels"
                   label={translate('User.AllowBranch')}
                   placeholder="Branch"
                   options={['Select All', ...branchOption]}

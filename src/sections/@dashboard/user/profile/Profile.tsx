@@ -20,8 +20,12 @@ let Url = baseUrl;
 export default function Profile({ myProfile }: Props) {
   const { translate } = useLocales();
   const [value, setValue] = useState('1');
-  const { userRoles, allowedBranchs, alloweddocumentLevelModels, alloweddocumenttypeModels } =
-    myProfile;
+  const {
+    userRoles,
+    allowedbranchlevelModels,
+    alloweddocumentLevelModels,
+    alloweddocumenttypeModels,
+  } = myProfile;
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} md={4}>
@@ -122,7 +126,7 @@ export default function Profile({ myProfile }: Props) {
                   <Scrollbar sx={{ height: { xs: 340, sm: 'auto', lg: 500 }, mt: 2, mb: 2 }}>
                     <Stack spacing={4} sx={{ p: 1 }}>
                       <Grid item container direction="row" xs={12} sm={12}>
-                        {allowedBranchs.map((sec) => (
+                        {allowedbranchlevelModels.map((sec) => (
                           <Grid key={sec.id} item xs={6}>
                             <RoleCard
                               nameLabel={`${translate('User.EnglishName')}:`}
