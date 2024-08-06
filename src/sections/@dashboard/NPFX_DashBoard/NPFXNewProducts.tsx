@@ -22,16 +22,44 @@ const OverlayStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 type ItemProps = {
-  id: string;
+  id: number;
   image: string;
-  name: string;
+  Title: string;
+  Description: string;
 };
 
 interface Props extends CardProps {
   list: ItemProps[];
 }
 
-export default function NPFX_NewProducts({ list, ...other }: Props) {
+const listItem = [
+  {
+    id: 1,
+    Title: 'NPFX Market',
+    Description: 'Welcome to NPFX Company Management System',
+    image: `/slider/Designer (1).jpeg`,
+  },
+  // {
+  //   id: 2,
+  //   Title: 'Title2',
+  //   Description: 'test',
+  //   image: `/slider/Designer (1).jpeg`,
+  // },
+  // {
+  //   id: 3,
+  //   Title: 'Title3',
+  //   Description: 'test',
+  //   image: `/slider/Designer (3).jpeg`,
+  // },
+  // {
+  //   id: 4,
+  //   Title: 'Title',
+  //   Description: 'test',
+  //   image: `/slider/Designer (6).jpeg`,
+  // },
+];
+
+export default function NPFX_NewProducts() {
   const theme = useTheme();
 
   const settings = {
@@ -46,9 +74,9 @@ export default function NPFX_NewProducts({ list, ...other }: Props) {
   };
 
   return (
-    <Card {...other}>
+    <Card>
       <Slider {...settings}>
-        {list.map((item) => (
+        {listItem.map((item) => (
           <CarouselItem key={item.id} item={item} />
         ))}
       </Slider>
@@ -63,7 +91,7 @@ type CarouselItemProps = {
 };
 
 function CarouselItem({ item }: CarouselItemProps) {
-  const { image, name } = item;
+  const { image, Title, Description } = item;
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -78,17 +106,17 @@ function CarouselItem({ item }: CarouselItemProps) {
         }}
       >
         <Typography variant="overline" sx={{ opacity: 0.48 }}>
-          New
+         {Description}
         </Typography>
 
         <Typography noWrap variant="h5" sx={{ mt: 1, mb: 3 }}>
-          {name}
+          {Title}
         </Typography>
 
-        <Button variant="contained">Buy Now</Button>
+        {/* <Button variant="contained">Buy Now</Button> */}
       </CardContent>
       <OverlayStyle />
-      <Image alt={name} src="/slider/Designer.jpeg" sx={{ height: { xs: 280, xl: 320 } }} />
+      <Image alt={Title} src={image} sx={{ height: { xs: 280, xl: 320 } }} />
     </Box>
   );
 }

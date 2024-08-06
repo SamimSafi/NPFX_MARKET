@@ -347,6 +347,65 @@ export default observer(function UserNewEditForm() {
                   showAsterisk={true}
                   // disabled
                 />
+
+                {/* <CustomRHFAutocomplete
+                  value={selectedRolesName || []}
+                  loading={rolesOptions.length > 0 ? false : true}
+                  multiple
+                  name="rolesName"
+                  label={translate('User.userRoles')}
+                  placeholder="UserRoles"
+                  // value={watch("rolesName") || []}
+                  options={['Select All', ...rolesOptions]}
+                  onFocus={() => {
+                    if (!editMode) {
+                      loadRoleDropdown()
+                        .then((res) => {
+                          setTimeout(() => {
+                            setRolesOptions(RolesOption.map((i) => i.text));
+                          }, 1000);
+                        })
+                        .finally(() => {
+                          setRolesOptions(RolesOption.map((i) => i.text));
+                        });
+                    }
+                  }}
+                  getOptionLabel={(option: any) => `${option}`}
+                  onChange={(event, newValue: any) => {
+                    console.log(newValue);
+                    if (newValue.includes('Select All')) {
+                      setSelectedRolesName(rolesOptions);
+                      setRoleId(RolesOption.map((d) => d.value));
+                    } else {
+                      setSelectedRolesName(newValue);
+                      const selectedRoles = newValue
+                        .map((res: any) => {
+                          const find = RolesOption.find((item) => item.text === res);
+                          if (find) {
+                            return find.value.toString();
+                          } else {
+                            return null;
+                          }
+                        })
+                        .filter((role: any) => role !== null);
+
+                      setRoleId(selectedRoles);
+                    }
+
+                    // setValue('rolesName',selectedRoles)
+                  }}
+                  freeSolo
+                  fullWidth
+                  // eslint-disable-next-line arrow-body-style
+                  renderOption={(props, option: any) => {
+                    return (
+                      <li {...props} key={option + '-' + uuid()}>
+                        {option}
+                      </li>
+                    );
+                  }}
+                /> */}
+
                 <CustomRHFAutocomplete
                   value={selectedRolesName || []}
                   loading={rolesOptions.length > 0 ? false : true}

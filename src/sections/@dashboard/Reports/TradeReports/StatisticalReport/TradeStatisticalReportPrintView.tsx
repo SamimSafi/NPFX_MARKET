@@ -8,6 +8,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TableRow,
   Typography,
@@ -41,6 +42,25 @@ export const TradeStatisticalReportPrintView = forwardRef(
     }, []);
     useEffect(() => {}, [filterButtonClicked]);
     useEffect(() => {}, [StatisticalReportDetails]);
+    const calculateTotals = (): {
+      totalTradeAmount: number;
+      totalProfitAmount: number;
+      totalLossAmount: number;
+    } => {
+      let totalTradeAmount = 0;
+      let totalProfitAmount = 0;
+      let totalLossAmount = 0;
+
+      StatisticalReportDetails?.report!.map((item) => {
+        totalTradeAmount += item.tradeAmount! | 0;
+        totalProfitAmount += item.profitAmount! | 0;
+        totalLossAmount += item.lossAmount! | 0;
+      });
+
+      return { totalTradeAmount, totalProfitAmount, totalLossAmount };
+    };
+
+    const { totalTradeAmount, totalProfitAmount, totalLossAmount } = calculateTotals();
 
     return (
       <Card sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}>
@@ -74,19 +94,24 @@ export const TradeStatisticalReportPrintView = forwardRef(
                     <TableBody>
                       {StatisticalReportDetails.report!.map((item, index) => (
                         <TableRow tabIndex={-1} hover key={index}>
-                          {index === 0 && (
-                            <>
-                              <TableCell align="center">{index + 1}</TableCell>
-                              <TableCell align="center">{item.branchName}</TableCell>
-                            </>
-                          )}
+                          <TableCell align="center">{index + 1}</TableCell>
+                          <TableCell align="center">{item.branchName}</TableCell>
                           <TableCell align="center">{item.tradeAmount}</TableCell>
-
                           <TableCell align="center">{item.profitAmount}</TableCell>
                           <TableCell align="center">{item.lossAmount}</TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
+                    <TableFooter>
+                      <TableRow>
+                        <TableCell colSpan={2} align="center">
+                          Grand Total
+                        </TableCell>
+                        <TableCell align="center">{totalTradeAmount}</TableCell>
+                        <TableCell align="center">{totalProfitAmount}</TableCell>
+                        <TableCell align="center">{totalLossAmount}</TableCell>
+                      </TableRow>
+                    </TableFooter>
                   </Table>
                 </TableContainer>
               </Paper>

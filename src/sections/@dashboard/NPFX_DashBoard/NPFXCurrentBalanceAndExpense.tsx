@@ -2,7 +2,7 @@ import merge from 'lodash/merge';
 import ReactApexChart from 'react-apexcharts';
 // @mui
 import { styled, useTheme } from '@mui/material/styles';
-import { Card, Typography, Stack, Divider, CardProps,CardHeader } from '@mui/material';
+import { Card, Typography, Stack, Divider, CardProps, CardHeader } from '@mui/material';
 // hooks
 import useResponsive from '../../../hooks/useResponsive';
 // utils
@@ -36,13 +36,12 @@ const ChartWrapperStyle = styled('div')(({ theme }) => ({
 
 interface Props extends CardProps {
   title?: string;
-  subheader:string;
+  subheader: string;
   CurrentBalance: number;
   chartData: {
     label: string;
     expense: number;
     CurrentBalance: number;
-    
   }[];
   chartColors: string[][];
 }
@@ -101,7 +100,6 @@ export default function NPFXCurrentBalanceAndExpense({
         }
       >
         {chartData.map((item, index) => (
-          
           <Stack
             key={item.label}
             direction="row"
@@ -110,7 +108,6 @@ export default function NPFXCurrentBalanceAndExpense({
             spacing={3}
             sx={{ width: 1 }}
           >
-            
             {/* <ReactApexChart
               type="radialBar"
               series={[item.percent]}

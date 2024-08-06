@@ -8,6 +8,7 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TableRow,
   Typography,
@@ -25,6 +26,20 @@ type Props = {
   filterButtonClicked: any;
   StatisticalReportDetails: ExpenseStatisticalReportView | undefined;
 };
+type ExpenseType = {
+  expenseType: string;
+  dollor: number;
+  afghani: number;
+};
+
+type ReportItem = {
+  branchName: string;
+  expenseTypes: ExpenseType[];
+};
+
+type StatisticalReportDetailsType = {
+  report: ReportItem[];
+};
 
 export const StatisticalReportPrintView = forwardRef(
   ({ StatisticalReportDetails, filterButtonClicked }: Props, ref: any) => {
@@ -41,6 +56,30 @@ export const StatisticalReportPrintView = forwardRef(
     }, []);
     useEffect(() => {}, [filterButtonClicked]);
     useEffect(() => {}, [StatisticalReportDetails]);
+
+    // Loan Report Grand Total
+    const calculateTotals = (): { totalDollor: number; totalAfghani: number } => {
+      let totalDollor = 0;
+      let totalAfghani = 0;
+
+      StatisticalReportDetails?.report!.map((data) =>
+        data.expenseTypes!.map((action) => {
+          totalDollor += action.dollor! | 0;
+          totalAfghani += action.afghani! | 0;
+        })
+      );
+      // StatisticalReportDetails!.report!.map((item) =>
+      //   // eslint-disable-next-line array-callback-return
+      //   item.expenseTypes!.map((action) => {
+      //     totalDollor += action.dollor ?? 0;
+      //     totalAfghani += action.afghani ?? 0;
+      //   })
+      // );
+
+      return { totalDollor, totalAfghani };
+    };
+
+    const { totalDollor, totalAfghani } = calculateTotals();
 
     return (
       <Card sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}>
@@ -115,6 +154,15 @@ export const StatisticalReportPrintView = forwardRef(
                         </>
                       ))}
                     </TableBody>
+                    <TableFooter>
+                      <TableRow>
+                        <TableCell colSpan={3} align="center">
+                          Grand Total
+                        </TableCell>
+                        <TableCell align="center">{totalDollor}</TableCell>
+                        <TableCell align="center">{totalAfghani}</TableCell>
+                      </TableRow>
+                    </TableFooter>
                   </Table>
                 </TableContainer>
               </Paper>
@@ -146,7 +194,7 @@ export const StatisticalReportPrintView = forwardRef(
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {StatisticalReportDetails.transactions?.map((data, index) =>(
+                      {StatisticalReportDetails.transactions?.map((data, index) => (
                         <TableRow key={index}>
                           <TableCell align="center">{index + 1}</TableCell>
                           <TableCell align="center">{data.branch}</TableCell>
@@ -154,7 +202,7 @@ export const StatisticalReportPrintView = forwardRef(
                           <TableCell align="center">{data.currencyType}</TableCell>
                           <TableCell align="center">{data.amount}</TableCell>
                           <TableCell align="center">{data.userName}</TableCell>
-                          <TableCell align="center">{ <DateConverter date={data.date} />}</TableCell>
+                          <TableCell align="center">{<DateConverter date={data.date} />}</TableCell>
                           <TableCell align="center">{data.description}</TableCell>
                         </TableRow>
                       ))}

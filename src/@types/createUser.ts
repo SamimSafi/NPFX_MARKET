@@ -53,7 +53,9 @@ export interface userDetail {
   isManager?: boolean | null;
   profilePhoto: Blob | null;
   userRoles: userRoles[];
-  allowedbranchlevelModels: departments[];
+
+  allowedbranchlevelModels: branches[];
+
   alloweddocumentLevelModels: DocumentsLevel[];
   alloweddocumenttypeModels: documentType[];
   organizationId: string;
@@ -89,7 +91,7 @@ export interface DocumentsLevel {
   code: string;
 }
 
-export interface departments {
+export interface branches {
   id: number;
   englishName: string;
   dariName: string;

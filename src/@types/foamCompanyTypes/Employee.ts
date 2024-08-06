@@ -101,6 +101,11 @@ export interface IEmployeeDetails {
     name: string;
     code: string;
   };
+  branch: {
+    id: number;
+    name: string;
+    code: string;
+  };
   department: {
     id: number;
     name: string;

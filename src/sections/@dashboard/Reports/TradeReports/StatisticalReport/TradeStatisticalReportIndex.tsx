@@ -93,15 +93,15 @@ export default observer(function TradeStatisticalReportIndex() {
   };
 
   return (
-    <Page title={translate('Expense.ReportTitle')}>
+    <Page title={translate('Trade.ReportTitle')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.ExpenseReport')}
+          heading={translate('Trade.Report')}
           links={[
-            { name: `${translate('Expense.Dashboard')}`, href: PATH_DASHBOARD.root },
+            { name: `${translate('Trade.Dashboard')}`, href: PATH_DASHBOARD.root },
 
             {
-              name: `${translate('Expense.StatisticalReport')}`,
+              name: `${translate('Trade.StatisticalReport')}`,
               href: PATH_DASHBOARD.general.app,
             },
           ]}
