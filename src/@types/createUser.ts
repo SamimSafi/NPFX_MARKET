@@ -4,7 +4,7 @@ export interface CreateUser {
   userName: string;
   email?: string;
   userRoles: string[] | any;
-  allowedBranchs: string[] | any;
+  allowedbranchlevelModels: string[] | any;
   employeeName?: string;
   password?: string;
   isActive?: boolean;
@@ -53,7 +53,9 @@ export interface userDetail {
   isManager?: boolean | null;
   profilePhoto: Blob | null;
   userRoles: userRoles[];
+
   allowedbranchlevelModels: branches[];
+
   alloweddocumentLevelModels: DocumentsLevel[];
   alloweddocumenttypeModels: documentType[];
   organizationId: string;

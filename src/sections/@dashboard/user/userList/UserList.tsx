@@ -48,7 +48,7 @@ import { table } from 'console';
 
 export default observer(function UserList() {
   const { translate } = useLocales();
-  const { UserStore } = useStore();
+  const { UserStore, commonDropdown } = useStore();
   const {
     loadUser,
     loadUserDetail,
@@ -62,6 +62,7 @@ export default observer(function UserList() {
     setOpenCloseDialog,
     openDialog,
   } = UserStore;
+  const { loadRoleDropdown, loadBranchDDL } = commonDropdown;
   const {
     dense,
     page,
@@ -112,6 +113,8 @@ export default observer(function UserList() {
     setOpenCloseDialog();
   };
   const handleEditRow = (id: string) => {
+    loadRoleDropdown();
+    loadBranchDDL();
     getUserFromRegistry(id);
     loadUserDetail(id).then((res) => {
       navigate(PATH_DASHBOARD.user.edit);

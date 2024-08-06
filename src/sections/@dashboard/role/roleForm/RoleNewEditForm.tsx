@@ -109,9 +109,8 @@ export default observer(function RoleNewEditForm() {
 
   useEffect(() => {
     loadApplicationDropdown();
-    loadPermissionDropdown(val.applicationId!);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [val.applicationId]);
+  }, []);
 
   useEffect(() => {
     if (editMode) {
@@ -124,26 +123,6 @@ export default observer(function RoleNewEditForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, editMode, defaultValues]);
 
-  //new code added
-  const loadPermissions = () => {
-    loadPermissionDropdown(val.applicationId!).then((res) => {
-      if (editMode) {
-        const selectedPermissions = PermissionOption.filter((e) =>
-          // actionRequestIds!.includes(e.value.toString())
-          ids!.includes(Number(e.value))
-        );
-        setTimeout(() => {
-          const permissionNames = selectedPermissions.map((actionrequest) => actionrequest.text);
-          console.log(permissionNames + 'test');
-          setSelectedPermission(permissionNames);
-        }, 500);
-        setNewPermissionOptions(PermissionOption.map((i) => i.text));
-
-        //setValue('actionRequestNames', actionRequestNames);
-      }
-    });
-  };
-
   useEffect(() => {
     if (editMode) {
       if (defaultValues.applicationId) {
@@ -152,7 +131,19 @@ export default observer(function RoleNewEditForm() {
             ApplicationOption.find((e) => e.value === defaultValues.applicationId)?.text
           );
         });
-        loadPermissions();
+        loadPermissionDropdown(defaultValues.applicationId).then((res) => {
+          const selectedPermissions = PermissionOption.filter((e) =>
+            // actionRequestIds!.includes(e.value.toString())
+            ids!.includes(Number(e.value))
+          );
+          setTimeout(() => {
+            const permissionNames = selectedPermissions.map((actionrequest) => actionrequest.text);
+            setSelectedPermission(permissionNames);
+          }, 500);
+          setNewPermissionOptions(PermissionOption.map((i) => i.text));
+
+          //setValue('actionRequestNames', actionRequestNames);
+        });
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -192,20 +183,10 @@ export default observer(function RoleNewEditForm() {
                   label={translate('userRole.Application')}
                   placeholder="application type"
                   value={watch('applicationName') || ''}
-                  options={
-                    !editMode
-                      ? ApplicationOption.filter((item) => item.hasAccount !== true).map(
-                          (i) => i.text
-                        )
-                      : ApplicationOption.map((i) => i.text)
-                  }
+                  options={ApplicationOption.map((i) => i.text)}
                   getOptionLabel={(option: any) => `${option}`}
                   onChange={(event, newValue: any) => {
-                    const find = !editMode
-                      ? ApplicationOption.filter(
-                          (item) => item.text === newValue && item.hasAccount !== true
-                        )[0]
-                      : ApplicationOption.filter((item) => item.text === newValue)[0];
+                    const find = ApplicationOption.filter((item) => item.text === newValue)[0];
 
                     if (find) {
                       const id = find?.value;
@@ -238,17 +219,13 @@ export default observer(function RoleNewEditForm() {
                   multiple
                   loading={PermissionOption.length > 0 ? false : true}
                   onFocus={() => {
-                    if (!editMode) {
-                      loadPermissionDropdown(val.applicationId!)
-                        .then((res) => {
-                          setTimeout(() => {
-                            setNewPermissionOptions(PermissionOption.map((i) => i.text));
-                          }, 1000);
-                        })
-                        .finally(() => {
-                          setNewPermissionOptions(PermissionOption.map((i) => i.text));
-                        });
-                    }
+                    loadPermissionDropdown(val.applicationId!)
+                      .then((res) => {
+                        setNewPermissionOptions(PermissionOption.map((i) => i.text));
+                      })
+                      .finally(() => {
+                        setNewPermissionOptions(PermissionOption.map((i) => i.text));
+                      });
                   }}
                   name="permissionNames"
                   label={translate('userRole.Permission')}
