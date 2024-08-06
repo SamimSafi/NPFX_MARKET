@@ -233,7 +233,8 @@ const Employees = {
     formData.append('pashtoGrandFatherName', data.pashtoGrandFatherName!);
     formData.append('tazkiraNo', data.tazkiraNo!);
     formData.append('branchId', data.branchId!.toString());
-    formData.append('gender', data.gender!);
+    formData.append('gender', data.gender!.toString());
+    formData.append('bloodGroup', data.bloodGroup!.toString());
     formData.append('tazkiraTypeId', data.tazkiraTypeId!.toString());
     formData.append('dateOfBirth', data.dateOfBirth!.toDateString());
     formData.append('joldNo', data.joldNo!);
@@ -266,8 +267,8 @@ const Employees = {
     formData.append('englishGrandFatherName', data.englishGrandFatherName!);
     formData.append('pashtoGrandFatherName', data.pashtoGrandFatherName!);
     formData.append('tazkiraNo', data.tazkiraNo!);
-    formData.append('branchId', data.branchId!.toString());
-    formData.append('gender', data.gender!);
+    formData.append('gender', data.gender!.toString());
+    formData.append('bloodGroup', data.bloodGroup!.toString());
     formData.append('tazkiraTypeId', data.tazkiraTypeId!.toString());
     formData.append('dateOfBirth', data.dateOfBirth!.toDateString());
     formData.append('joldNo', data.joldNo!);

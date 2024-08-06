@@ -5,6 +5,7 @@ export interface ILoanReportParam {
 }
 
 interface CurrencyTypeModels {
+  currencyTypeId?:number;
   currencyType?: string;
   loanAmount?: number;
   paidAmount?: number;

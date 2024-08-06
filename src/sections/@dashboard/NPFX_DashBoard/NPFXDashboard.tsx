@@ -37,7 +37,7 @@ export default function NPFXDashboard() {
 
   return (
     <Page title="General: E-commerce">
-      <Container maxWidth={themeStretch ? false : 'sm'}>
+      <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           {/* <Grid item xs={12} md={12}>
             <AppWelcome
@@ -57,7 +57,25 @@ export default function NPFXDashboard() {
           </Grid> */}
 
           <Grid item xs={12} md={12}>
-            <NPFXNewProducts list={_ecommerceNewProducts} />
+            <NPFXNewProducts />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <NPFXWidgetSummary
+              title="Current Balance"
+              percent={0.6}
+              total={4876}
+              chartColor={theme.palette.chart.red[0]}
+              chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <NPFXWidgetSummary
+              title="Today Total Expense"
+              percent={0.6}
+              total={4876}
+              chartColor={theme.palette.chart.red[0]}
+              chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
+            />
           </Grid>
 
           <Grid item xs={12} md={4}>
@@ -89,7 +107,8 @@ export default function NPFXDashboard() {
               chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
             />
           </Grid>
-          <Grid item xs={12} md={12}>
+
+          {/* <Grid item xs={12} md={12}>
             <NPFXCurrentBalanceAndExpense
               // chartData={[
               //   { label: 'Check In', percent: 72, total: 38566 },
@@ -103,11 +122,11 @@ export default function NPFXDashboard() {
                 { label: 'Current', expense: 75, CurrentBalance: 18472 },
               ]}
               chartColors={[
-                [theme.palette.primary.light, theme.palette.primary.main],
-                [theme.palette.warning.light, theme.palette.warning.main],
+                [theme.palette.primary.light, theme.palette.info.main],
+                [theme.palette.warning.light, theme.palette.info.main],
               ]}
             />
-          </Grid>
+          </Grid> */}
           {/* <Grid item xs={12} md={6} lg={8}>
             <NPFXSalesOverview title="Current Balance" data={_ecommerceSalesOverview} />
           </Grid>

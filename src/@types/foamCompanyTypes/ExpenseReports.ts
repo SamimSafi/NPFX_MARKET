@@ -7,7 +7,7 @@ export interface IExpenseReportParam {
 
 interface ExpenseTypes {
   expenseType?: string;
-  dollor?: string;
+  dollor?: number;
   afghani?: number;
 }
 interface report {

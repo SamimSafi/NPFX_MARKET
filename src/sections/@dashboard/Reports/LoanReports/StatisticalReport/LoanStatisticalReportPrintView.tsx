@@ -1,4 +1,4 @@
-import { forwardRef, useEffect } from 'react';
+import { forwardRef, Fragment, useEffect } from 'react';
 import useLocales from 'src/hooks/useLocales';
 // @mui
 import {
@@ -43,7 +43,10 @@ export const LoanStatisticalReportPrintView = forwardRef(
     useEffect(() => {}, [StatisticalReportDetails]);
 
     return (
-      <Card sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}>
+      <Card
+        sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}
+        ref={ref}
+      >
         <>
           {StatisticalReportDetails && filterButtonClicked === true && (
             <>
@@ -126,7 +129,7 @@ export const LoanStatisticalReportPrintView = forwardRef(
                   </Table>
                 </TableContainer>
               </Paper>
-              <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
+              <Paper sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
                   {/* {translate('Expense.ExpenseReport')} */}
                   Loan Transaction
