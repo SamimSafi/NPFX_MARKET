@@ -646,6 +646,14 @@ const npfxDashboards = {
     axios.get<IPieChartByBranch[]>(
       `UserReportsAndDashboard/DashBoard-EachAndTotalUserInBranchDashBoard`
     ),
+
+  RealTimeDashboard: () =>
+    axios.get(`DashboardAndReport/RealTimeDashboard`, { withCredentials: true }),
+  TradeTrackingChart: () =>
+    axios.get(`DashboardAndReport/TradeTrackingChart`, { withCredentials: true }),
+  ExpenseChart: () => axios.get(`DashboardAndReport/ExpenseChart`, { withCredentials: true }),
+  DashboardOfBranchsMainAsset: () =>
+    axios.get(`DashboardAndReport/DashboardOfBranchsMainAsset`, { withCredentials: true }),
 };
 
 const NPFXReports = {

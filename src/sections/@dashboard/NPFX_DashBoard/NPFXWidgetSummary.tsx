@@ -8,6 +8,8 @@ import { fNumber, fPercent } from '../../../utils/formatNumber';
 // components
 import Iconify from '../../../components/Iconify';
 import { BaseOptionChart } from '../../../components/chart';
+import { useStore } from 'src/stores/store';
+import { useEffect } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -27,7 +29,7 @@ const IconWrapperStyle = styled('div')(({ theme }) => ({
 
 interface Props extends CardProps {
   title: string;
-  total: number;
+  total?: number;
   percent: number;
   chartColor: string;
   chartData: number[];
@@ -58,6 +60,29 @@ export default function NPFX_WidgetSummary({
     },
   });
 
+  const { npfxDashboardStore } = useStore();
+  const {
+    LoadTradeTrackingChart,
+    LoadExpenseChart,
+    LoadRealTimeDashboard,
+    realTimeDashboardData,
+    tradeTrackingChartData,
+    expenseChartData,
+  } = npfxDashboardStore;
+
+  useEffect(() => {
+    LoadTradeTrackingChart();
+    LoadExpenseChart();
+    LoadRealTimeDashboard();
+  }, [
+    realTimeDashboardData,
+    tradeTrackingChartData,
+    expenseChartData,
+    LoadTradeTrackingChart,
+    LoadExpenseChart,
+    LoadRealTimeDashboard,
+  ]);
+
   return (
     <Card sx={{ display: 'flex', alignItems: 'center', p: 3, ...sx }} {...other}>
       <Box sx={{ flexGrow: 1 }}>
@@ -65,11 +90,11 @@ export default function NPFX_WidgetSummary({
           {title}
         </Typography>
         <Typography variant="h3" gutterBottom>
-          {fNumber(total)}
+          {fNumber(total!)}
         </Typography>
 
         <Stack direction="row" alignItems="center">
-          <IconWrapperStyle
+          {/* <IconWrapperStyle
             sx={{
               ...(percent < 0 && {
                 color: 'error.main',
@@ -82,15 +107,15 @@ export default function NPFX_WidgetSummary({
               height={16}
               icon={percent >= 0 ? 'eva:trending-up-fill' : 'eva:trending-down-fill'}
             />
-          </IconWrapperStyle>
+          </IconWrapperStyle> */}
 
-          <Typography variant="subtitle2" component="span">
+          {/* <Typography variant="subtitle2" component="span">
             {percent > 0 && '+'}
             {fPercent(percent)}
           </Typography>
           <Typography variant="body2" component="span" noWrap sx={{ color: 'text.secondary' }}>
             &nbsp;than last week
-          </Typography>
+          </Typography> */}
         </Stack>
       </Box>
 

@@ -234,12 +234,12 @@ const navConfig = [
               {
                 title: 'list',
                 path: PATH_DASHBOARD.LoanTracking.list,
-                roles: ['Employee-GetList'],
+                // roles: ['Employee-GetList'],
               },
               {
                 title: 'report',
                 path: PATH_DASHBOARD.LoanTracking.report,
-                roles: ['Employee-GetList'],
+                // roles: ['Employee-GetList'],
               },
             ],
           },
@@ -248,17 +248,17 @@ const navConfig = [
             title: 'TradeTrackingMenu',
             path: PATH_DASHBOARD.TradeTracking.list,
             icon: ICONS.hr,
-            roles: ['TradeTracking-GetList'],
+            // roles: ['TradeTracking-GetList'],
             children: [
               {
                 title: 'list',
                 path: PATH_DASHBOARD.TradeTracking.list,
-                roles: ['Employee-GetList'],
+                // roles: ['Employee-GetList'],
               },
               {
                 title: 'report',
                 path: PATH_DASHBOARD.TradeTracking.report,
-                roles: ['Employee-GetList'],
+                // roles: ['Employee-GetList'],
               },
             ],
           },

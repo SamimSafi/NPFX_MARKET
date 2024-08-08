@@ -1,74 +1,45 @@
-// @mui
-import {
-  Box,
-  Card,
-  Stack,
-  Button,
-  Avatar,
-  Tooltip,
-  CardProps,
-  Typography,
-  CardHeader,
-  IconButton,
-} from '@mui/material';
-// components
-import Iconify from '../../../components/Iconify';
+import React from 'react';
+import { Box, Card, Stack, Avatar, Typography, CardHeader, CardProps } from '@mui/material';
+import { DashboardOfBranchsMainAsset } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
 
-// ----------------------------------------------------------------------
 
+
+// Define the Props interface
 interface Props extends CardProps {
   title?: string;
   subheader?: string;
-  list: {
-    id: string;
-    name: string;
-    email: string;
-    avatar: string;
-  }[];
+  list: DashboardOfBranchsMainAsset[] | undefined;
 }
 
+// Your updated component
 export default function MemberBalance({ title, subheader, list, ...other }: Props) {
   return (
     <Card {...other}>
       <CardHeader
         title={title}
         subheader={subheader}
-        // action={
-        //   <Tooltip title="Add Contact">
-        //     <IconButton color="primary" size="large">
-        //       <Iconify icon={'eva:plus-fill'} width={20} height={20} />
-        //     </IconButton>
-        //   </Tooltip>
-        // }
       />
 
       <Stack spacing={3} sx={{ p: 3 }}>
-        {list.map((contact) => (
+        {list!.map((contact) => (
           <Stack direction="row" alignItems="center" key={contact.id}>
-            <Avatar src={contact.avatar} sx={{ width: 48, height: 48 }} />
+            <Avatar src={contact.ownerPhotoPath} sx={{ width: 48, height: 48 }} />
 
             <Box sx={{ flexGrow: 1, ml: 2, minWidth: 100 }}>
               <Typography variant="subtitle2" sx={{ mb: 0.5 }} noWrap>
-                {contact.name}
+                {contact.ownerUserName}
               </Typography>
 
               <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                {contact.email}
+                {contact.assetType}
               </Typography>
             </Box>
 
-            {/* <Tooltip title="Quick Transfer">
-              <IconButton size="small">
-                <Iconify icon={'eva:flash-fill'} width={22} height={22} />
-              </IconButton>
-            </Tooltip> */}
-             <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                $300
-              </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              ${contact.balanceAmount!.toFixed(2)}
+            </Typography>
           </Stack>
         ))}
-
-      
       </Stack>
     </Card>
   );
