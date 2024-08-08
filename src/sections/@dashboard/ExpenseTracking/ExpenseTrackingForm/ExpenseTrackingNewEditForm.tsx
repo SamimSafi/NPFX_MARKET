@@ -50,7 +50,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
     mainAssetId: !editMode
       ? Yup.string().required(`${translate('Validation.Account')}`)
       : Yup.string(),
-    branchId: Yup.number().required(`${translate('Validation.Branch')}`),
+    // branchId: Yup.number().required(`${translate('Validation.Branch')}`),
     userId: Yup.string().required(`${translate('Validation.User')}`),
     date: Yup.date().required(`${translate('Validation.Date')}`),
     amount: Yup.number().required(`${translate('Validation.Amount')}`),
@@ -61,7 +61,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
       id: selectedExpenseTracking?.id,
       expenseTypeId: selectedExpenseTracking?.expenseTypeId || undefined,
       mainAssetId: selectedExpenseTracking?.mainAssetId || undefined,
-      branchId: selectedExpenseTracking?.branchId || undefined,
+      // branchId: selectedExpenseTracking?.branchId || undefined,
       userId: selectedExpenseTracking?.userId || '',
       date: selectedExpenseTracking?.date || new Date().toDateString(),
       amount: selectedExpenseTracking?.amount || undefined,
@@ -177,14 +177,14 @@ export default observer(function ExpenseTrackingNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="branchId" label={translate('Branch.Branch')}>
+              {/* <RHFSelect name="branchId" label={translate('Branch.Branch')}>
                 <option value="" />
                 {BranchOption.map((op) => (
                   <option key={op.value} value={op.value}>
                     {op.text}
                   </option>
                 ))}
-              </RHFSelect>
+              </RHFSelect> */}
 
               <RHFSelect name="userId" label={translate('User.user')}>
                 <option value="" />
