@@ -19,6 +19,7 @@ import useResponsive from '../../../hooks/useResponsive';
 import { BaseOptionChart } from '../../../components/chart';
 import { ExpenseChart } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
 import { useStore } from 'src/stores/store';
+import useLocales from 'src/hooks/useLocales';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   '& .apexcharts-legend': {
@@ -49,7 +50,7 @@ interface Props extends CardProps {
 export default function ExpensesCategories({ title, subheader, chartData, ...other }: Props) {
   const theme = useTheme();
   const isDesktop = useResponsive('up', 'sm');
-
+  const { translate } = useLocales();
   const [period, setPeriod] = useState<keyof ExpenseChart>('day');
   const selectedData = chartData ? chartData[period] : [];
 
@@ -120,7 +121,7 @@ export default function ExpensesCategories({ title, subheader, chartData, ...oth
 
       <Box sx={{ width: 150, margin: 'auto', mb: 2 }}>
         <FormControl fullWidth>
-          <InputLabel id="select-period-label">Period</InputLabel>
+          <InputLabel id="select-period-label">{translate('Npfx.Period')}</InputLabel>
           <Select
             labelId="select-period-label"
             id="select-period"
@@ -128,10 +129,10 @@ export default function ExpensesCategories({ title, subheader, chartData, ...oth
             label="Period"
             onChange={(e) => setPeriod(e.target.value as keyof ExpenseChart)}
           >
-            <MenuItem value="day">Day</MenuItem>
-            <MenuItem value="week">Week</MenuItem>
-            <MenuItem value="month">Month</MenuItem>
-            <MenuItem value="year">Year</MenuItem>
+            <MenuItem value="day">{translate('Npfx.Day')}</MenuItem>
+            <MenuItem value="week">{translate('Npfx.Week')}</MenuItem>
+            <MenuItem value="month">{translate('Npfx.Month')}</MenuItem>
+            <MenuItem value="year">{translate('Npfx.Year')}</MenuItem>
           </Select>
         </FormControl>
       </Box>
@@ -150,14 +151,14 @@ export default function ExpensesCategories({ title, subheader, chartData, ...oth
       <Stack direction="row" divider={<Divider orientation="vertical" flexItem />}>
         <Box sx={{ py: 2, width: 1, textAlign: 'center' }}>
           <Typography sx={{ mb: 1, typography: 'body2', color: 'text.secondary' }}>
-            Categories
+            {translate('Npfx.Categories')}
           </Typography>
           <Typography sx={{ typography: 'h4' }}>{count}</Typography>
         </Box>
 
         <Box sx={{ py: 2, width: 1, textAlign: 'center' }}>
           <Typography sx={{ mb: 1, typography: 'body2', color: 'text.secondary' }}>
-            Total Amount
+            {translate('Npfx.TotalAmount')}
           </Typography>
           <Typography sx={{ typography: 'h4' }}>${sum}</Typography>
         </Box>

@@ -89,7 +89,7 @@ export const StatisticalReportPrintView = forwardRef(
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
                   {/* {translate('Expense.ExpenseReport')} */}
-                  Expense Report
+                  {translate('Report.ExpenseReport')}
                 </Typography>
                 <TableContainer
                   component={Paper}
@@ -104,10 +104,10 @@ export const StatisticalReportPrintView = forwardRef(
                     <TableHead>
                       <TableRow>
                         <TableCell align="center">{translate('No')}</TableCell>
-                        <TableCell align="center">Branch</TableCell>
-                        <TableCell align="center">ExpenseType</TableCell>
-                        <TableCell align="center">{translate('Dollor')}</TableCell>
-                        <TableCell align="center">{translate('Afghani')}</TableCell>
+                        <TableCell align="center"> {translate('Report.Branch')}</TableCell>
+                        <TableCell align="center"> {translate('Report.ExpenseType')}</TableCell>
+                        <TableCell align="center">{translate('Report.Dollor')}</TableCell>
+                        <TableCell align="center">{translate('Report.Afghani')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -157,7 +157,7 @@ export const StatisticalReportPrintView = forwardRef(
                     <TableFooter>
                       <TableRow>
                         <TableCell colSpan={3} align="center">
-                          Grand Total
+                          {translate('Report.GrandTotal')}
                         </TableCell>
                         <TableCell align="center">{totalDollor}</TableCell>
                         <TableCell align="center">{totalAfghani}</TableCell>
@@ -168,8 +168,7 @@ export const StatisticalReportPrintView = forwardRef(
               </Paper>
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
-                  {/* {translate('Expense.ExpenseReport')} */}
-                  Expense Transaction
+                  {translate('Report.ExpenseReport')}
                 </Typography>
                 <TableContainer
                   component={Paper}
@@ -183,14 +182,14 @@ export const StatisticalReportPrintView = forwardRef(
                   <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
                     <TableHead>
                       <TableRow>
-                        <TableCell align="center">No</TableCell>
-                        <TableCell align="center">Branch</TableCell>
-                        <TableCell align="center">Main Asset Code</TableCell>
-                        <TableCell align="center">Currency Type</TableCell>
-                        <TableCell align="center">Amount</TableCell>
-                        <TableCell align="center">User Name</TableCell>
-                        <TableCell align="center">Date</TableCell>
-                        <TableCell align="center">Description</TableCell>
+                        <TableCell align="center">{translate('Report.No')}</TableCell>
+                        <TableCell align="center"> {translate('Report.Branch')}</TableCell>
+                        <TableCell align="center"> {translate('Report.MainAssetCode')}</TableCell>
+                        <TableCell align="center">{translate('Report.CurrencyType')}</TableCell>
+                        <TableCell align="center">{translate('Report.Amount')}</TableCell>
+                        <TableCell align="center">{translate('Report.UserName')}</TableCell>
+                        <TableCell align="center">{translate('Report.Date')}</TableCell>
+                        <TableCell align="center">{translate('Report.Description')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>

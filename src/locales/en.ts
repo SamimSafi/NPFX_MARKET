@@ -412,7 +412,7 @@ const en = {
     OneDollor: '1 USD =',
     AFN: 'AFN',
     USD: 'USD',
-     SelectAll:'Select All'
+    SelectAll: 'Select All',
   },
 
   Tostar: {
@@ -582,6 +582,10 @@ const en = {
     Active: 'Active',
     ContractWarning:
       'Warning: Save Button is disabled because the employee current contract is not ended/expired, Please update employee current contract.',
+    BranchName: 'Branch Name',
+    SalaryPerHour: 'Salary Per Hour',
+    Action: 'Action',
+    BackToEmployee: 'Back To Employee',
   },
   //Employee Degree
   EmployeeDegree: {
@@ -840,6 +844,28 @@ const en = {
     ITSMSDashboard: 'IT-SMS Dashboard',
     UserSummaryDashboard: 'User Summary Dashboard',
   },
+  Npfx: {
+    NpfxWellcome: 'WELCOME TO NPFX COMPANY MANAGEMENT SYSTEM',
+    NPFXMarket: 'NPFX Market',
+    TodayTotalExpense: 'Today Total Expense',
+    CurrentBalance: 'Current Balance',
+    TodayTotalLoss: 'Today Total Loss',
+    TodayTotalProfit: 'Today Total Profit',
+    TodayTotalTrade: 'Today Total Trade',
+    TradeChart: 'Trade Chart',
+    Profit: 'Profit',
+    Loss: 'Loss',
+    Day: 'Day',
+    Week: 'Week',
+    Month: 'Month',
+    Year: 'Year',
+    Period: 'Period',
+    DataPoints: 'Data Points',
+    Categories: 'Categories',
+    TotalAmount: 'Total Amount',
+    ExpensesByCategories: 'Expenses By Categories',
+    MemberBalance: 'Member Balance',
+  },
   ProcessName: {
     All: 'All',
     Completed: 'Completed',
@@ -1072,13 +1098,35 @@ const en = {
   Report: {
     FromDate: 'From Date',
     ToDate: 'To Date',
-    ExpenseReport:'',
-    ExpenseTransaction:'',
-    LoanReport:'',
-    LoanTransaction:'',
-    TradeReport:'',
-    TradeTransaction:'',
-
+    Dashboard: 'Dashboard',
+    ExpenseReport: 'Expense Report',
+    ExpenseTransaction: 'Expense Transaction',
+    LoanReport: 'Loan Report',
+    LoanTransaction: 'Loan Transaction',
+    TradeReport: 'Trade Report',
+    TradeTransaction: 'Trade Transaction',
+    Filter: 'Filter',
+    Print: 'Print',
+    Reset: 'Reset',
+    GrandTotal: 'Grand Total',
+    No: 'No',
+    Branch: 'Branch',
+    LoanType: 'Loan Type',
+    CurrencyType: 'Currency Type',
+    Amount: 'Amount',
+    Paid: 'Paid',
+    Remain: 'Remain',
+    Taken: 'Taken',
+    Given: 'Given',
+    MainAssetCode: 'Main Asset Code',
+    UserName: 'User Name',
+    Date: 'Date',
+    Description: 'Description',
+    ExpenseType: 'Expense Type',
+    Dollor: 'Dollor',
+    Afghani: 'Afghani',
+    ProfitAmount: 'Profit Amount',
+    LossAmount: 'Loss Amount',
   },
 
   app: `app`,
@@ -1115,9 +1163,8 @@ const en = {
   other_cases: `other cases`,
   item_by_roles: `item by roles`,
   only_admin_can_see_this_item: `Only admin can see this item`,
-  report:'Report',
-  NoRecordFound:'No Record Found'
-
+  report: 'Report',
+  NoRecordFound: 'No Record Found',
 };
 
 export default en;

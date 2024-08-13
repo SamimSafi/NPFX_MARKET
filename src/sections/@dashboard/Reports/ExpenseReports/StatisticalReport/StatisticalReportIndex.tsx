@@ -106,17 +106,14 @@ export default observer(function StatisticalReportIndex() {
   };
 
   return (
-    <Page title={translate('Expense.ReportTitle')}>
+    <Page title={translate('Report.ReportTitle')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Expense.ExepnseReport')}
+          heading={translate('Report.ExpenseReport')}
           links={[
-            { name: `${translate('npfx.Dashboard')}`, href: PATH_DASHBOARD.root },
+            { name: `${translate('Report.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            {
-              name: `${translate('Expense.StatisticalReport')}`,
-              href: PATH_DASHBOARD.general.app,
-            },
+          
           ]}
         />
 
@@ -168,7 +165,7 @@ export default observer(function StatisticalReportIndex() {
                           {...params}
                           sx={{ marginBottom: '20px' }}
                           size="small"
-                          label={translate('branch')}
+                          label={translate('Report.Branch')}
                           error={!!error}
                           helperText={error?.message}
                         />
@@ -218,7 +215,7 @@ export default observer(function StatisticalReportIndex() {
                           {...params}
                           sx={{ marginBottom: '20px' }}
                           size="small"
-                          label={translate('expenseType')}
+                          label={translate('Report.ExpenseType')}
                           error={!!error}
                           helperText={error?.message}
                         />
@@ -232,7 +229,7 @@ export default observer(function StatisticalReportIndex() {
                   control={control}
                   render={({ field, fieldState: { error } }) => (
                     <DatePicker
-                      label={translate('Expense.FromDate')}
+                      label={translate('Report.FromDate')}
                       // disablePast
                       value={field.value}
                       onChange={(newValue) => {
@@ -258,7 +255,7 @@ export default observer(function StatisticalReportIndex() {
                   control={control}
                   render={({ field, fieldState: { error } }) => (
                     <DatePicker
-                      label={translate('Expense.ToDate')}
+                      label={translate('Report.ToDate')}
                       // disablePast
                       value={field.value}
                       onChange={(newValue) => {
@@ -288,7 +285,7 @@ export default observer(function StatisticalReportIndex() {
                     startIcon={<Iconify icon="eva:search-fill" />}
                   >
                     {/* {translate('Expense.Filter')} */}
-                    filter
+                    {translate('Report.Filter')}
                   </LoadingButton>
 
                   <ReactToPrint
@@ -301,8 +298,8 @@ export default observer(function StatisticalReportIndex() {
                         startIcon={<Iconify icon="eva:printer-outline" />}
                         // disabled={StatisticalReportDetails.length === 0 ? true : false}
                       >
-                        {/* {translate('EmployeeCard.Print')} */}
-                        print
+                        {translate('Report.Print')}
+                    
                       </Button>
                     )}
                     content={() => componentRef.current}
@@ -325,8 +322,8 @@ export default observer(function StatisticalReportIndex() {
                       // setDepartment([]);
                     }}
                   >
-                    {/* {translate('EmployeeCard.Reset')} */}
-                    reset
+                    {translate('Report.Reset')}
+                  
                   </Button>
                 </Stack>
               </>

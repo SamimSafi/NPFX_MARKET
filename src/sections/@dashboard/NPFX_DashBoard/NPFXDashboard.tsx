@@ -11,12 +11,13 @@ import MemberBalance from './MemberBalance';
 import { useStore } from 'src/stores/store';
 import { useEffect, useState } from 'react';
 import Loader from 'src/components/loader/Loader';
+import useLocales from 'src/hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
 export default function NPFXDashboard() {
   const theme = useTheme();
-
+  const { translate } = useLocales();
   const { npfxDashboardStore } = useStore();
   const {
     LoadTradeTrackingChart,
@@ -75,7 +76,7 @@ export default function NPFXDashboard() {
                 {realTimeDashboardData?.totalMainAssetsCurrentBalance!.map((data, index) => (
                   <Grid item xs={12} md={CurrentBalancegridSize} key={data.currencyType}>
                     <NPFXWidgetSummary
-                      title={`Current Balance ${data.currencyType}`}
+                      title={`${translate('Npfx.CurrentBalance')} ${data.currencyType}`}
                       percent={0.6}
                       total={data.value}
                       chartColor={theme.palette.chart.red[0]}
@@ -93,7 +94,7 @@ export default function NPFXDashboard() {
                     data.value !== 0 && (
                       <Grid item xs={12} md={ExpensegridSize} key={data.currencyType}>
                         <NPFXWidgetSummary
-                          title={`Today Total Expense ${data.currencyType}`}
+                          title={`${translate('Npfx.TodayTotalExpense')} ${data.currencyType}`}
                           percent={0.6}
                           total={data.value}
                           chartColor={theme.palette.chart.red[0]}
@@ -104,7 +105,7 @@ export default function NPFXDashboard() {
                 ) && (
                   <Grid item xs={12} md={12}>
                     <NPFXWidgetSummary
-                      title={`Today Total Expense`}
+                      title={`${translate('Npfx.TodayTotalExpense')}`}
                       percent={0.6}
                       total={0}
                       chartColor={theme.palette.chart.red[0]}
@@ -117,7 +118,7 @@ export default function NPFXDashboard() {
 
             <Grid item xs={12} md={4}>
               <NPFXWidgetSummary
-                title="Today Total Trade"
+                title={translate('Npfx.TodayTotalTrade')}
                 percent={2.6}
                 total={realTimeDashboardData?.totalTodaysTrade?.[0]?.tradeAmount ?? 0}
                 chartColor={theme.palette.primary.main}
@@ -127,7 +128,7 @@ export default function NPFXDashboard() {
 
             <Grid item xs={12} md={4}>
               <NPFXWidgetSummary
-                title="Today Total Profit"
+                title={translate('Npfx.TodayTotalProfit')}
                 percent={-0.1}
                 total={realTimeDashboardData?.totalTodaysTrade?.[0]?.profitAmount ?? 0}
                 chartColor={theme.palette.chart.green[0]}
@@ -137,7 +138,7 @@ export default function NPFXDashboard() {
 
             <Grid item xs={12} md={4}>
               <NPFXWidgetSummary
-                title="Today Total Loss"
+                title={translate('Npfx.TodayTotalLoss')}
                 percent={0.6}
                 total={realTimeDashboardData?.totalTodaysTrade?.[0]?.lossAmount ?? 0}
                 chartColor={theme.palette.chart.red[0]}
@@ -147,7 +148,7 @@ export default function NPFXDashboard() {
 
             <Grid item xs={12} md={6} lg={4}>
               <MemberBalance
-                title="Member Balance"
+                title={translate('Npfx.MemberBalance')}
                 subheader=""
                 list={dashboardOfBranchsMainAsset || []}
               />
@@ -156,13 +157,13 @@ export default function NPFXDashboard() {
             <Grid item xs={12} md={12} lg={8}>
               <Stack spacing={3}>
                 <NPFXYearlySales
-                  title="Trade Chart"
+                  title={translate('Npfx.TradeChart')}
                   subheader=""
                   chartLabels={tradeTrackingChartData?.chartLabels! || []}
                   chartData={tradeTrackingChartData?.chartData! || []}
                 />
                 <ExpensesCategories
-                  title="Expenses By Categories"
+                  title={translate('Npfx.ExpensesByCategories')}
                   chartData={expenseChartData! || []}
                 />
               </Stack>

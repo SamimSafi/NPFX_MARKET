@@ -6,6 +6,7 @@ import { Box, Card, Button, CardContent, Typography, CardProps } from '@mui/mate
 // components
 import Image from '../../../components/Image';
 import { CarouselDots } from '../../../components/carousel';
+import useLocales from 'src/hooks/useLocales';
 
 // ----------------------------------------------------------------------
 
@@ -32,36 +33,17 @@ interface Props extends CardProps {
   list: ItemProps[];
 }
 
-const listItem = [
-  {
-    id: 1,
-    Title: 'NPFX Market',
-    Description: 'Welcome to NPFX Company Management System',
-    image: `/slider/Designer (1).jpeg`,
-  },
-  // {
-  //   id: 2,
-  //   Title: 'Title2',
-  //   Description: 'test',
-  //   image: `/slider/Designer (1).jpeg`,
-  // },
-  // {
-  //   id: 3,
-  //   Title: 'Title3',
-  //   Description: 'test',
-  //   image: `/slider/Designer (3).jpeg`,
-  // },
-  // {
-  //   id: 4,
-  //   Title: 'Title',
-  //   Description: 'test',
-  //   image: `/slider/Designer (6).jpeg`,
-  // },
-];
-
 export default function NPFX_NewProducts() {
   const theme = useTheme();
-
+  const { translate } = useLocales();
+  const listItem = [
+    {
+      id: 1,
+      Title: `${translate('Npfx.NpfxWellcome')}`,
+      Description: `${translate('Npfx.NPFXMarket')}`,
+      image: `/slider/Designer (1).jpeg`,
+    },
+  ];
   const settings = {
     speed: 1000,
     dots: true,
@@ -106,7 +88,7 @@ function CarouselItem({ item }: CarouselItemProps) {
         }}
       >
         <Typography variant="overline" sx={{ opacity: 0.48 }}>
-         {Description}
+          {Description}
         </Typography>
 
         <Typography noWrap variant="h5" sx={{ mt: 1, mb: 3 }}>

@@ -85,10 +85,10 @@ export const TradeStatisticalReportPrintView = forwardRef(
                     <TableHead>
                       <TableRow>
                         <TableCell align="center">{translate('No')}</TableCell>
-                        <TableCell align="center">Branch</TableCell>
-                        <TableCell align="center">ExpenseType</TableCell>
-                        <TableCell align="center">{translate('Dollor')}</TableCell>
-                        <TableCell align="center">{translate('Afghani')}</TableCell>
+                        <TableCell align="center"> {translate('Report.Branch')}</TableCell>
+                        <TableCell align="center"> {translate('Report.ExpenseType')}</TableCell>
+                        <TableCell align="center">{translate('Report.Dollor')}</TableCell>
+                        <TableCell align="center">{translate('Report.Afghani')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -105,7 +105,7 @@ export const TradeStatisticalReportPrintView = forwardRef(
                     <TableFooter>
                       <TableRow>
                         <TableCell colSpan={2} align="center">
-                          Grand Total
+                          {translate('Report.GrandTotal')}
                         </TableCell>
                         <TableCell align="center">{totalTradeAmount}</TableCell>
                         <TableCell align="center">{totalProfitAmount}</TableCell>
@@ -117,8 +117,8 @@ export const TradeStatisticalReportPrintView = forwardRef(
               </Paper>
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
-                  {/* {translate('Expense.ExpenseReport')} */}
-                  Trade Transaction
+                  {translate('Report.TradeTransaction')}
+                  
                 </Typography>
                 <TableContainer
                   component={Paper}
@@ -132,14 +132,14 @@ export const TradeStatisticalReportPrintView = forwardRef(
                   <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
                     <TableHead>
                       <TableRow>
-                        <TableCell align="center">No</TableCell>
-                        <TableCell align="center">Branch</TableCell>
-                        <TableCell align="center">Main Asset Code</TableCell>
-                        <TableCell align="center">Profit Amount</TableCell>
-                        <TableCell align="center">Loss Amount</TableCell>
-                        <TableCell align="center">User Name</TableCell>
-                        <TableCell align="center">Date</TableCell>
-                        <TableCell align="center">Description</TableCell>
+                        <TableCell align="center"> {translate('Report.No')}</TableCell>
+                        <TableCell align="center"> {translate('Report.Branch')}</TableCell>
+                        <TableCell align="center"> {translate('Report.MainAssetCode')}</TableCell>
+                        <TableCell align="center">{translate('Report.ProfitAmount')}</TableCell>
+                        <TableCell align="center">{translate('Report.LossAmount')}</TableCell>
+                        <TableCell align="center">{translate('Report.UserName')}</TableCell>
+                        <TableCell align="center">{translate('Report.Date')}</TableCell>
+                        <TableCell align="center">{translate('Report.Description')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
