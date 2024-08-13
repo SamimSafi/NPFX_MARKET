@@ -93,17 +93,14 @@ export default observer(function TradeStatisticalReportIndex() {
   };
 
   return (
-    <Page title={translate('Trade.ReportTitle')}>
+    <Page title={translate('Report.TradeReport')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Trade.Report')}
+          heading={translate('Report.TradeReport')}
           links={[
-            { name: `${translate('Trade.Dashboard')}`, href: PATH_DASHBOARD.root },
+            { name: `${translate('Report.Dashboard')}`, href: PATH_DASHBOARD.root },
 
-            {
-              name: `${translate('Trade.StatisticalReport')}`,
-              href: PATH_DASHBOARD.general.app,
-            },
+           
           ]}
         />
 
@@ -155,7 +152,7 @@ export default observer(function TradeStatisticalReportIndex() {
                           {...params}
                           sx={{ marginBottom: '20px' }}
                           size="small"
-                          label={translate('branch')}
+                          label={translate('Report.Branch')}
                           error={!!error}
                           helperText={error?.message}
                         />
@@ -169,7 +166,7 @@ export default observer(function TradeStatisticalReportIndex() {
                   control={control}
                   render={({ field, fieldState: { error } }) => (
                     <DatePicker
-                      label={translate('Expense.FromDate')}
+                      label={translate('Report.FromDate')}
                       // disablePast
                       value={field.value}
                       onChange={(newValue) => {
@@ -195,7 +192,7 @@ export default observer(function TradeStatisticalReportIndex() {
                   control={control}
                   render={({ field, fieldState: { error } }) => (
                     <DatePicker
-                      label={translate('Expense.ToDate')}
+                      label={translate('Report.ToDate')}
                       // disablePast
                       value={field.value}
                       onChange={(newValue) => {
@@ -224,8 +221,8 @@ export default observer(function TradeStatisticalReportIndex() {
                     onClick={Search}
                     startIcon={<Iconify icon="eva:search-fill" />}
                   >
-                    {/* {translate('Expense.Filter')} */}
-                    filter
+                    {translate('Report.Filter')}
+                
                   </LoadingButton>
 
                   <ReactToPrint
@@ -238,7 +235,7 @@ export default observer(function TradeStatisticalReportIndex() {
                         startIcon={<Iconify icon="eva:printer-outline" />}
                         // disabled={StatisticalReportDetails.length === 0 ? true : false}
                       >
-                        {/* {translate('EmployeeCard.Print')} */}
+                        {translate('Report.Print')}
                         print
                       </Button>
                     )}
@@ -262,7 +259,7 @@ export default observer(function TradeStatisticalReportIndex() {
                       // setDepartment([]);
                     }}
                   >
-                    {/* {translate('EmployeeCard.Reset')} */}
+                    {translate('Report.Reset')}
                     reset
                   </Button>
                 </Stack>

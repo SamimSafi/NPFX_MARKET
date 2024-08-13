@@ -20,6 +20,7 @@ import useResponsive from '../../../hooks/useResponsive';
 import { BaseOptionChart } from '../../../components/chart';
 import { ChartData, ChartLabels } from 'src/@types/foamCompanyTypes/systemTypes/npfxDashboard';
 import { useStore } from 'src/stores/store';
+import useLocales from 'src/hooks/useLocales';
 
 const RootStyle = styled(Card)(({ theme }) => ({
   '& .apexcharts-legend': {
@@ -61,8 +62,7 @@ export default function ExpensesCategories({
     expenseChartData,
   } = npfxDashboardStore;
 
-  
-
+  const { translate } = useLocales();
   useEffect(() => {
     LoadTradeTrackingChart();
     LoadExpenseChart();
@@ -78,7 +78,9 @@ export default function ExpensesCategories({
   const [selectedPeriod, setSelectedPeriod] = useState<string>('day');
   const [selectedDataPoints, setSelectedDataPoints] = useState<string[]>(() => {
     // Initialize with both profit and loss if available
-    const initialDataPoints = (chartData[0]?.data || []).map(dp => dp.name).filter((name): name is string => name !== undefined);
+    const initialDataPoints = (chartData[0]?.data || [])
+      .map((dp) => dp.name)
+      .filter((name): name is string => name !== undefined);
     return initialDataPoints.length >= 2 ? initialDataPoints.slice(0, 2) : initialDataPoints;
   });
 
@@ -87,7 +89,10 @@ export default function ExpensesCategories({
     const selectedPeriodData = chartData.find((item) => item.groupName?.toLowerCase() === period);
     if (selectedPeriodData) {
       setSelectedPeriod(period);
-      const dataPoints = selectedPeriodData.data?.map(dp => dp.name).filter((name): name is string => name !== undefined) || [];
+      const dataPoints =
+        selectedPeriodData.data
+          ?.map((dp) => dp.name)
+          .filter((name): name is string => name !== undefined) || [];
       setSelectedDataPoints(dataPoints.length >= 2 ? dataPoints.slice(0, 2) : dataPoints);
     }
   };
@@ -97,9 +102,11 @@ export default function ExpensesCategories({
     setSelectedDataPoints(value);
   };
 
-  const selectedPeriodData = chartData.find((item) => item.groupName?.toLowerCase() === selectedPeriod);
+  const selectedPeriodData = chartData.find(
+    (item) => item.groupName?.toLowerCase() === selectedPeriod
+  );
 
-  const seriesData = selectedDataPoints.map(dataPointName => {
+  const seriesData = selectedDataPoints.map((dataPointName) => {
     const data = selectedPeriodData?.data?.find((dp) => dp.name === dataPointName)?.data || [];
     return {
       name: dataPointName,
@@ -129,11 +136,15 @@ export default function ExpensesCategories({
     stroke: {
       width: 3,
       curve: 'smooth',
-      colors: selectedDataPoints.map(dpName => dpName === 'Loss' ? 'yellow' : theme.palette.primary.main),
+      colors: selectedDataPoints.map((dpName) =>
+        dpName === 'Loss' ? 'yellow' : theme.palette.primary.main
+      ),
     },
     markers: {
       size: 5,
-      colors: selectedDataPoints.map(dpName => dpName === 'Loss' ? 'yellow' : theme.palette.primary.main),
+      colors: selectedDataPoints.map((dpName) =>
+        dpName === 'Loss' ? 'yellow' : theme.palette.primary.main
+      ),
       strokeColors: theme.palette.background.paper,
       strokeWidth: 2,
     },
@@ -169,7 +180,7 @@ export default function ExpensesCategories({
   });
 
   // Calculate count and sum of the filtered data
-  const allDataPoints = selectedDataPoints.flatMap(dataPointName => {
+  const allDataPoints = selectedDataPoints.flatMap((dataPointName) => {
     return selectedPeriodData?.data?.find((dp) => dp.name === dataPointName)?.data || [];
   });
   const count = allDataPoints.length;
@@ -189,17 +200,17 @@ export default function ExpensesCategories({
                 id="select-period"
                 value={selectedPeriod}
                 onChange={handlePeriodChange}
-                label="Period"
+                label={translate('Npfx.Period')}
                 sx={{ minWidth: 120 }}
               >
-                <MenuItem value="day">Day</MenuItem>
-                <MenuItem value="week">Week</MenuItem>
-                <MenuItem value="month">Month</MenuItem>
-                <MenuItem value="year">Year</MenuItem>
+                <MenuItem value="day">{translate('Npfx.Day')}</MenuItem>
+                <MenuItem value="week">{translate('Npfx.Week')}</MenuItem>
+                <MenuItem value="month">{translate('Npfx.Month')}</MenuItem>
+                <MenuItem value="year">{translate('Npfx.Year')}</MenuItem>
               </Select>
             </FormControl>
             <FormControl variant="outlined" size="small">
-              <InputLabel id="select-data-points-label">Data Points</InputLabel>
+              <InputLabel id="select-data-points-label">{translate('Npfx.DataPoints')}</InputLabel>
               <Select
                 labelId="select-data-points-label"
                 id="select-data-points"
@@ -207,7 +218,7 @@ export default function ExpensesCategories({
                 value={selectedDataPoints}
                 onChange={handleDataPointChange}
                 renderValue={(selected) => selected.join(', ')}
-                label="Data Points"
+                label={translate('Npfx.DataPoints')}
                 sx={{ minWidth: 180 }}
               >
                 {selectedPeriodData?.data?.map((dataPoint) => (
@@ -221,7 +232,7 @@ export default function ExpensesCategories({
         }
       />
 
-      <Box sx={{  width: '100%' }} dir="ltr">
+      <Box sx={{ width: '100%' }} dir="ltr">
         <ReactApexChart
           type="line"
           series={seriesData}
@@ -231,8 +242,6 @@ export default function ExpensesCategories({
       </Box>
 
       <Divider />
-
-     
     </RootStyle>
   );
 }
