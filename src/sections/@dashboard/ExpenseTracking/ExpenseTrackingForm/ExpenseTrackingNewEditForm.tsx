@@ -70,11 +70,11 @@ export default observer(function ExpenseTrackingNewEditForm() {
   const {
     reset,
     handleSubmit,
-    watch,
+    // watch,
     setError,
     formState: { isSubmitting, errors },
   } = methods;
-  const val = watch();
+  // const val = watch();
   const onSubmit = (data: IExpenseTracking) => {
     if (data.id! === undefined) {
       ///create
@@ -178,14 +178,14 @@ export default observer(function ExpenseTrackingNewEditForm() {
                 ))}
               </RHFSelect> */}
 
-              <RHFSelect name="userId" label={translate('User.user')}>
+              {/* <RHFSelect name="userId" label={translate('User.user')}>
                 <option value="" />
                 {UserOption.map((op) => (
                   <option key={op.value} value={op.value}>
                     {op.text}
                   </option>
                 ))}
-              </RHFSelect>
+              </RHFSelect> */}
               <RHFTextField
                 name="amount"
                 label={translate('ExpenseTracking.ExpenseAmount')}
