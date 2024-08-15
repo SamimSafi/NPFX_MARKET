@@ -87,13 +87,13 @@ export default observer(function ContractDetailsList() {
     { id: 'ID', label: `${translate('Employee.Id')}`, align: 'left' },
     { id: 'employeeName', label: `${translate('Employee.Name')}`, align: 'left' },
     { id: 'contractType', label: `${translate('ContractType.ContractType')}`, align: 'left' },
-    { id: 'branchName', label: `${translate('branch.branchName')}`, align: 'left' },
+    { id: 'branchName', label: `${translate('ContractDetails.BranchName')}`, align: 'left' },
     { id: 'positionTitle', label: `${translate('PositionTitle.PositionTitle')}`, align: 'left' },
-    { id: 'salaryPerHour', label: `${translate('ContractType.salaryPerHour')}`, align: 'left' },
+    { id: 'salaryPerHour', label: `${translate('ContractDetails.SalaryPerHour')}`, align: 'left' },
     { id: 'startDate', label: `${translate('GeneralFields.StartDate')}`, align: 'left' },
     { id: 'endDate', label: `${translate('GeneralFields.EndDate')}`, align: 'left' },
     { id: 'isCurrent', label: `${translate('ContractType.ContractStatus')}`, align: 'left' },
-    { id: '', label: `${translate('Department.Action')}`, align: 'left' },
+    { id: '', label: `${translate('ContractDetails.Action')}`, align: 'left' },
   ];
   const handleFilterName = (filterName: string) => {
     setFilterName(filterName);
@@ -195,7 +195,7 @@ export default observer(function ContractDetailsList() {
                   clearSelectedContractDetails();
                 }}
               >
-                {translate('CRUD.BackToEmployee')}
+                {translate('ContractDetails.BackToEmployee')}
               </Button>
               <PermissionBasedGuard permissions={['ContractDetails-Create']}>
                 <Button

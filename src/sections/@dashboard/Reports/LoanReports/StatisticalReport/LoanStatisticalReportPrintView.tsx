@@ -67,13 +67,13 @@ export const LoanStatisticalReportPrintView = forwardRef(
                   <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
                     <TableHead>
                       <TableRow>
-                        <TableCell align="center">No</TableCell>
-                        <TableCell align="center">Branch</TableCell>
-                        <TableCell align="center">Loan Type</TableCell>
-                        <TableCell align="center">Currency Type</TableCell>
-                        <TableCell align="center">Amount</TableCell>
-                        <TableCell align="center">Paid</TableCell>
-                        <TableCell align="center">Remain</TableCell>
+                        <TableCell align="center">{translate('Report.No')}</TableCell>
+                        <TableCell align="center">{translate('Report.Branch')}</TableCell>
+                        <TableCell align="center">{translate('Report.LoanType')}</TableCell>
+                        <TableCell align="center">{translate('Report.CurrencyType')}</TableCell>
+                        <TableCell align="center">{translate('Report.Amount')}</TableCell>
+                        <TableCell align="center">{translate('Report.Paid')}</TableCell>
+                        <TableCell align="center">{translate('Report.Remain')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -113,7 +113,7 @@ export const LoanStatisticalReportPrintView = forwardRef(
                                     align="center"
                                     rowSpan={loanType.currencyTypeModels!.length}
                                   >
-                                    {loanType.isGiven ? 'Given' : 'Taken'}
+                                    {loanType.isGiven ? `${translate('Report.Given')}` : `${translate('Report.Taken')}`}
                                   </TableCell>
                                 )}
                                 <TableCell align="center">{currency.currencyType}</TableCell>
@@ -146,14 +146,14 @@ export const LoanStatisticalReportPrintView = forwardRef(
                   <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
                     <TableHead>
                       <TableRow>
-                        <TableCell align="center">No</TableCell>
-                        <TableCell align="center">Branch</TableCell>
-                        <TableCell align="center">Main Asset Code</TableCell>
-                        <TableCell align="center">Currency Type</TableCell>
-                        <TableCell align="center">Amount</TableCell>
-                        <TableCell align="center">User Name</TableCell>
-                        <TableCell align="center">Date</TableCell>
-                        <TableCell align="center">Description</TableCell>
+                        <TableCell align="center">{translate('Report.No')}</TableCell>
+                        <TableCell align="center">{translate('Report.Branch')}</TableCell>
+                        <TableCell align="center">{translate('Report.MainAssetCode')}</TableCell>
+                        <TableCell align="center">{translate('Report.CurrencyType')}</TableCell>
+                        <TableCell align="center">{translate('Report.Amount')}</TableCell>
+                        <TableCell align="center">{translate('Report.UserName')}</TableCell>
+                        <TableCell align="center">{translate('Report.Date')}</TableCell>
+                        <TableCell align="center">{translate('Report.Description')}</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
