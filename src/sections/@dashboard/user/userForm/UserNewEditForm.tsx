@@ -103,7 +103,7 @@ export default observer(function UserNewEditForm() {
       id: selectedUser?.id || undefined,
       userName: selectedUser?.userName || '',
       userRoles: selectedUser?.userRoles || undefined,
-      email: SelecteduserDetail?.email || '',
+      email: SelecteduserDetail?.email || empEmail || '',
       allowedbranchlevelModels: selectedUser?.allowedbranchlevelModels || undefined,
       employeeId: SelecteduserDetail?.employeeId || selectedEmployee?.id || undefined,
     }),
