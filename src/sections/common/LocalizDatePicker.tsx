@@ -2,8 +2,10 @@ import { TextField, Typography } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+
 import { useState } from 'react';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
+
 
 interface Props {
   control: any;
@@ -24,13 +26,15 @@ export default function LocalizDatePicker({
   showAsterisk,
   views,
 }: Props) {
-  // const getlanguageFromLocalStorage = localStorage.getItem('i18nextLng');
+
 
   const [open, setOpen] = useState(false);
 
   return (
     <>
+
       <LocalizationProvider dateAdapter={AdapterDateFns}>
+
         <Controller
           name={name}
           control={control}

@@ -40,7 +40,6 @@ export default observer(function MainAssetNewEditForm() {
     MainAssetStore;
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const [selectedCurrencyType, setSelectedCurrencyType] = useState<number>();
   const NewMainAssetSchema = Yup.object().shape({
     currencyTypeId: Yup.number().required(`${translate('Validation.CurrencyType')}`),
     branchId: Yup.number().required(`${translate('Validation.Branch')}`),
@@ -132,7 +131,7 @@ export default observer(function MainAssetNewEditForm() {
   }, [loadBranchDDL, loadCurrencyTypeDDL, loadAssetTypeDDL]);
 
   useEffect(() => {
-    loadUserDropdown(val.branchId);
+    loadUserDropdown(val.branchId, true);
   }, [loadUserDropdown, val.branchId]);
 
   return (

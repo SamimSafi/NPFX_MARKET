@@ -31,16 +31,8 @@ export default observer(function ExpenseTrackingNewEditForm() {
     selectedExpenseTracking,
     clearSelectedExpenseTracking,
   } = ExpenseTrackingStore;
-  const {
-    loadBranchDDL,
-    BranchOption,
-    loadUserDropdown,
-    UserOption,
-    loadExpenseTypeDropdown,
-    ExpenseTypeOption,
-    loadMainAssetDDL,
-    MainAssetOption,
-  } = commonDropdown;
+  const { loadExpenseTypeDropdown, ExpenseTypeOption, loadMainAssetDDL, MainAssetOption } =
+    commonDropdown;
   const navigate = useNavigate();
 
   const { enqueueSnackbar } = useSnackbar();
@@ -51,7 +43,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
       ? Yup.string().required(`${translate('Validation.Account')}`)
       : Yup.string(),
     // branchId: Yup.number().required(`${translate('Validation.Branch')}`),
-    userId: Yup.string().required(`${translate('Validation.User')}`),
+    // userId: Yup.string().required(`${translate('Validation.User')}`),
     date: Yup.date().required(`${translate('Validation.Date')}`),
     amount: Yup.number().required(`${translate('Validation.Amount')}`),
   });
@@ -62,7 +54,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
       expenseTypeId: selectedExpenseTracking?.expenseTypeId || undefined,
       mainAssetId: selectedExpenseTracking?.mainAssetId || undefined,
       // branchId: selectedExpenseTracking?.branchId || undefined,
-      userId: selectedExpenseTracking?.userId || '',
+      // userId: selectedExpenseTracking?.userId || '',
       date: selectedExpenseTracking?.date || new Date().toDateString(),
       amount: selectedExpenseTracking?.amount || undefined,
       description: selectedExpenseTracking?.description || '',
@@ -78,11 +70,11 @@ export default observer(function ExpenseTrackingNewEditForm() {
   const {
     reset,
     handleSubmit,
-    watch,
+    // watch,
     setError,
     formState: { isSubmitting, errors },
   } = methods;
-  const val = watch();
+  // const val = watch();
   const onSubmit = (data: IExpenseTracking) => {
     if (data.id! === undefined) {
       ///create
@@ -126,13 +118,13 @@ export default observer(function ExpenseTrackingNewEditForm() {
   }, [reset, editMode, defaultValues]);
 
   useEffect(() => {
-    loadBranchDDL();
+    // loadBranchDDL();
     loadMainAssetDDL();
-  }, [loadBranchDDL, loadMainAssetDDL]);
+  }, [loadMainAssetDDL]);
 
-  useEffect(() => {
-    loadUserDropdown(val.branchId);
-  }, [loadUserDropdown, val.branchId]);
+  // useEffect(() => {
+  //   loadUserDropdown(val.branchId);
+  // }, [loadUserDropdown, val.branchId]);
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -186,14 +178,14 @@ export default observer(function ExpenseTrackingNewEditForm() {
                 ))}
               </RHFSelect> */}
 
-              <RHFSelect name="userId" label={translate('User.user')}>
+              {/* <RHFSelect name="userId" label={translate('User.user')}>
                 <option value="" />
                 {UserOption.map((op) => (
                   <option key={op.value} value={op.value}>
                     {op.text}
                   </option>
                 ))}
-              </RHFSelect>
+              </RHFSelect> */}
               <RHFTextField
                 name="amount"
                 label={translate('ExpenseTracking.ExpenseAmount')}

@@ -83,7 +83,7 @@ export default function ProfileCover({ myProfile }: Props) {
       </InfoStyle>
       <Image
         alt="profile cover"
-        src={require('src/assets/images/dam.jpg')}
+        src={require('src/assets/images/Forex.png')}
         sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
       />
     </RootStyle>
