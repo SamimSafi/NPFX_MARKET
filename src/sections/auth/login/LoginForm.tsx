@@ -155,7 +155,7 @@ export default observer(function LoginForm() {
       {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
       {!is2faEnable ? (
         <Stack spacing={3}>
-          <RHFTextField name="email" label={translate('User.Email')} autoFocus />
+          <RHFTextField name="email" label={translate('User.email')} autoFocus />
           <RHFTextField
             name="password"
             label={translate('login.Password')}

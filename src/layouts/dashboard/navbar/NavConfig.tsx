@@ -112,7 +112,7 @@ const navConfig = [
               {
                 title: 'contractType',
                 path: PATH_DASHBOARD.ContractType.list,
-                // roles: ['ExpenseType-GetList'],
+                roles: ['ContractType-GetList'],
               },
               {
                 title: 'positionTitle',
@@ -168,49 +168,32 @@ const navConfig = [
             ],
           },
 
-
-          {
-            title: 'Application',
-            path: '#5',
-            roles: ['Application-GetList'],
-            children: [
-              {
-                title: 'list',
-                path: PATH_DASHBOARD.Application.list,
-                roles: ['Application-GetList'],
-              },
-            ],
-          },
-
+          // {
+          //   title: 'Application',
+          //   path: '#5',
+          //   roles: ['Application-GetList'],
+          //   children: [
+          //     {
+          //       title: 'list',
+          //       path: PATH_DASHBOARD.Application.list,
+          //       roles: ['Application-GetList'],
+          //     },
+          //   ],
+          // },
         ],
       },
-      // Human resource
-      // Human resource
+      
       {
         title: 'hr',
         path: '#1',
         icon: ICONS.hr,
-        roles: ['Employee-GetList', 'CardDetails-GetPrintableCardList'],
+        roles: ['Employee-GetList'],
         children: [
           {
             title: 'emp',
             path: PATH_DASHBOARD.Employee.list,
             roles: ['Employee-GetList'],
           },
-          // {
-          //   title: 'cardPrint',
-          //   path: PATH_DASHBOARD.Employee.print,
-
-          //   roles: ['CardDetails-GetPrintableCardList'],
-          //   state: { EmployeeIdForPrint: undefined, from: undefined },
-          // },
-          // {
-          //   title: 'EmployeeReport',
-          //   path: PATH_DASHBOARD.Employee.accountReport,
-
-          //   // roles: ['CardDetails-GetPrintableCardList'],
-          //   // state: { EmployeeIdForPrint: undefined, from: undefined },
-          // },
         ],
       },
       {
@@ -234,12 +217,12 @@ const navConfig = [
               {
                 title: 'list',
                 path: PATH_DASHBOARD.LoanTracking.list,
-                // roles: ['Employee-GetList'],
+                roles: ['LoanTracking-GetList'],
               },
               {
                 title: 'report',
                 path: PATH_DASHBOARD.LoanTracking.report,
-                // roles: ['Employee-GetList'],
+                roles: ['DashboardAndReport-GetLoanReport'],
               },
             ],
           },
@@ -248,17 +231,17 @@ const navConfig = [
             title: 'TradeTrackingMenu',
             path: PATH_DASHBOARD.TradeTracking.list,
             icon: ICONS.hr,
-            // roles: ['TradeTracking-GetList'],
+            roles: ['TradeTracking-GetList'],
             children: [
               {
                 title: 'list',
                 path: PATH_DASHBOARD.TradeTracking.list,
-                // roles: ['Employee-GetList'],
+                roles: ['TradeTracking-GetList'],
               },
               {
                 title: 'report',
                 path: PATH_DASHBOARD.TradeTracking.report,
-                // roles: ['Employee-GetList'],
+                roles: ['DashboardAndReport-GetTradeReport'],
               },
             ],
           },
@@ -272,12 +255,12 @@ const navConfig = [
               {
                 title: 'list',
                 path: PATH_DASHBOARD.ExpenseTracking.list,
-                roles: ['Employee-GetList'],
+                roles: ['ExpenseTracking-GetList'],
               },
               {
                 title: 'report',
                 path: PATH_DASHBOARD.ExpenseTracking.report,
-                roles: ['Employee-GetList'],
+                roles: ['DashboardAndReport-GetExpenseReport'],
               },
             ],
           },

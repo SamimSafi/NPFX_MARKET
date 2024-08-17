@@ -256,7 +256,7 @@ export default observer(function ContractDetailsNewEditForm() {
                 // onChange={(e) => handleDocumentType(parseInt(e.target.value))}
               >
                 <option value="" />
-                {ContractTypeOption.map((op) => (
+                {CurrencyTypeOption.map((op) => (
                   <option key={op.value} value={op.value}>
                     {op.text}
                   </option>
@@ -264,20 +264,7 @@ export default observer(function ContractDetailsNewEditForm() {
               </RHFSelect>
 
               <RHFTextField name="salaryAmount" label={translate('ContractDetails.salaryAmount')} />
-              {/* <RHFSelect
-                name="branchId"
-                label={translate('JobPosition.Branch')}
-                showAsterisk={true}
-              >
-                <option value="" />
-                {JobPositionOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect> */}
-              {/* <RHFTextField name="salaryPerHour" label={translate('GeneralFields.Remarks')} /> */}
-
+              
               <LocalizDatePicker
                 name="startDate"
                 label={translate('GeneralFields.StartDate')}
