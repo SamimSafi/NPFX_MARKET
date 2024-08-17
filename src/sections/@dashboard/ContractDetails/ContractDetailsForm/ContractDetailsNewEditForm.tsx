@@ -219,7 +219,7 @@ export default observer(function ContractDetailsNewEditForm() {
               </RHFSelect>
               <RHFSelect
                 name="branchId"
-                label={`${translate('PositionTitle.branchId')}` + ' ' + '*'}
+                label={`${translate('ContractDetails.Branch')}` + ' ' + '*'}
                 onChange={(e) => {
                   setBranch(parseInt(e.target.value));
                   setValue('branchId', parseInt(e.target.value));
@@ -235,7 +235,7 @@ export default observer(function ContractDetailsNewEditForm() {
 
               <RHFSelect
                 name="positionTitleId"
-                label={translate('ContractType.positionTitleId')}
+                label={translate('ContractDetails.positionTitle')}
                 showAsterisk={true}
                 // onChange={(e) => {
                 //   setContractType(parseInt(e.target.value));
@@ -252,7 +252,7 @@ export default observer(function ContractDetailsNewEditForm() {
 
               <RHFSelect
                 name="currencyTypeId"
-                label={`${translate('PositionTitle.currencyTypeId')}` + ' ' + '*'}
+                label={`${translate('ContractDetails.currencyType')}` + ' ' + '*'}
                 // onChange={(e) => handleDocumentType(parseInt(e.target.value))}
               >
                 <option value="" />
@@ -263,7 +263,7 @@ export default observer(function ContractDetailsNewEditForm() {
                 ))}
               </RHFSelect>
 
-              <RHFTextField name="salaryAmount" label={translate('GeneralFields.salaryAmount')} />
+              <RHFTextField name="salaryAmount" label={translate('ContractDetails.salaryAmount')} />
               {/* <RHFSelect
                 name="branchId"
                 label={translate('JobPosition.Branch')}

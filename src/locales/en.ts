@@ -586,6 +586,10 @@ const en = {
     SalaryPerHour: 'Salary Per Hour',
     Action: 'Action',
     BackToEmployee: 'Back To Employee',
+    Branch:'Branch',
+    currencyType:'currency Type',
+    salaryAmount:'Salary Amount',
+    positionTitle:'Position Title',
   },
   //Employee Degree
   EmployeeDegree: {

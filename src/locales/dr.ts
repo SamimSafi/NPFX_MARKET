@@ -560,6 +560,10 @@ const ps = {
     New: 'اضافه نمودن جزئیات کارت',
     Update: 'تغیر نمودن جزئیات کارت',
     IsPreviosCardReturned: 'آیا کارت قبلی برگردانده شده است',
+    Branch: ' شعبه',
+    currencyType: ' نوعیت پول',
+    salaryAmount: ' مقدار معاش',
+    positionTitle: ' عنوان وظیفه',
   },
 
   //Employee Degree
