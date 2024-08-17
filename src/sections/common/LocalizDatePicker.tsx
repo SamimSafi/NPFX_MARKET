@@ -6,7 +6,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useState } from 'react';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
-
 interface Props {
   control: any;
   label: any;
@@ -26,15 +25,11 @@ export default function LocalizDatePicker({
   showAsterisk,
   views,
 }: Props) {
-
-
   const [open, setOpen] = useState(false);
 
   return (
     <>
-
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-
         <Controller
           name={name}
           control={control}
@@ -52,7 +47,7 @@ export default function LocalizDatePicker({
               }
               value={field.value}
               disableHighlightToday={true}
-              disablePast={isDisablePast != undefined || isDisablePast == true ? true : false}
+              disablePast={isDisablePast !== undefined || isDisablePast === true ? true : false}
               onChange={(newValue) => {
                 field.onChange(newValue);
               }}
