@@ -2,10 +2,10 @@ import { TextField, Typography } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import AdapterJalali from '@date-io/date-fns-jalali';
 
 import { useState } from 'react';
-import { enUS } from 'date-fns-jalali/esm/locale';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+
 
 interface Props {
   control: any;
@@ -26,11 +26,15 @@ export default function LocalizDatePicker({
   showAsterisk,
   views,
 }: Props) {
+
+
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <LocalizationProvider dateAdapter={AdapterJalali} adapterLocale={enUS}>
+
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+
         <Controller
           name={name}
           control={control}
