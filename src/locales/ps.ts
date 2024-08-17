@@ -596,6 +596,10 @@ const dr = {
     Active: 'برحال',
     ContractWarning:
       'خبرداری: د ذخیره کولو تڼۍ غیر فعاله ده ځکه چې د کارکوونکي اوسنی قرارداد پای ته نه دی رسیدلی، مهرباني وکړۍ د کارکوونکي اوسنی قرارداد تازه کړۍ.',
+    Branch: ' څانګه',
+    currencyType: ' د اسعارو ډول',
+    salaryAmount: 'د معاش اندازه',
+    positionTitle: ' د دندې سرلیک',
   },
   //Employee Degree
   EmployeeDegree: {
