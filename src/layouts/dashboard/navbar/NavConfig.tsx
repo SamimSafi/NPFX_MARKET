@@ -62,11 +62,13 @@ const navConfig = [
         roles: [
           'Branch-GetList',
           'ExpenseType-GetList',
-          'assetType-GetList',
+          'AssetType-GetList',
           'LoanType-GetList',
-          'PaymentType-GetList',
+          'PayType-GetList',
           'CurrencyType-GetList',
-          'Partners-GetList',
+          'Partners-GetAll',
+          'ContractType-GetAll',
+          'PositionTitle-GetAll',
         ],
         children: [
           {
@@ -97,7 +99,7 @@ const navConfig = [
               {
                 title: 'PaymentTypeMenu',
                 path: PATH_DASHBOARD.PaymentType.list,
-                roles: ['PaymentType-GetList'],
+                roles: ['PayType-GetList'],
               },
               {
                 title: 'CurrencyTypeMenu',
@@ -107,17 +109,17 @@ const navConfig = [
               {
                 title: 'PartnersMenu',
                 path: PATH_DASHBOARD.Partners.list,
-                roles: ['Partners-GetList'],
+                roles: ['Partners-GetAll'],
               },
               {
                 title: 'contractType',
                 path: PATH_DASHBOARD.ContractType.list,
-                roles: ['ContractType-GetList'],
+                roles: ['ContractType-GetAll'],
               },
               {
                 title: 'positionTitle',
                 path: PATH_DASHBOARD.PositionTitle.list,
-                roles: ['PositionTitle-GetList'],
+                roles: ['PositionTitle-GetAll'],
               },
             ],
           },
@@ -132,21 +134,21 @@ const navConfig = [
         icon: ICONS.ums,
         roles: [
           'User-Create',
-          'User-GetList',
-          'Profile-ChangePassword',
-          'Permission-GetList',
-          'Role-GetList',
+          'User-GetAll',
+          'User-PasswordReset',
+          'Permission-GetAll',
+          'Role-GetAll',
           'Role-Create',
-          // 'Application-GetList',
+          // 'Application-GetAll',
         ],
         children: [
           {
             title: 'UserManagement',
             path: '#2',
-            roles: ['User-Create', 'User-GetList', 'User-UserLog', 'Profile-ChangePassword'],
+            roles: ['User-Create', 'User-GetAll', 'User-UserLog', 'User-PasswordReset'],
             children: [
               { title: 'createUser', path: PATH_DASHBOARD.user.new, roles: ['User-Create'] },
-              { title: 'Userlist', path: PATH_DASHBOARD.user.list, roles: ['User-GetList'] },
+              { title: 'Userlist', path: PATH_DASHBOARD.user.list, roles: ['User-GetAll'] },
               { title: 'UserLogList', path: PATH_DASHBOARD.user.Loglist, roles: ['User-UserLog'] },
               {
                 title: 'changePassword',
@@ -161,9 +163,9 @@ const navConfig = [
           {
             title: 'Role',
             path: '#4',
-            roles: ['Role-GetList', 'Role-Create'],
+            roles: ['Role-GetAll', 'Role-Create'],
             children: [
-              { title: 'list', path: PATH_DASHBOARD.Role.list, roles: ['Role-GetList'] },
+              { title: 'list', path: PATH_DASHBOARD.Role.list, roles: ['Role-GetAll'] },
               { title: 'create', path: PATH_DASHBOARD.Role.new, roles: ['Role-Create'] },
             ],
           },
@@ -171,28 +173,28 @@ const navConfig = [
           // {
           //   title: 'Application',
           //   path: '#5',
-          //   roles: ['Application-GetList'],
+          //   roles: ['Application-GetAll'],
           //   children: [
           //     {
           //       title: 'list',
           //       path: PATH_DASHBOARD.Application.list,
-          //       roles: ['Application-GetList'],
+          //       roles: ['Application-GetAll'],
           //     },
           //   ],
           // },
         ],
       },
-      
+
       {
         title: 'hr',
         path: '#1',
         icon: ICONS.hr,
-        roles: ['Employee-GetList'],
+        roles: ['EmployeeProfile-GetAll'],
         children: [
           {
             title: 'emp',
             path: PATH_DASHBOARD.Employee.list,
-            roles: ['Employee-GetList'],
+            roles: ['EmployeeProfile-GetAll'],
           },
         ],
       },
@@ -200,7 +202,7 @@ const navConfig = [
         title: 'NPFX System',
         path: '#1',
         icon: ICONS.analytics,
-        roles: ['MainAsset-GetList', 'CardDetails-GetPrintableCardList'],
+        roles: ['MainAsset-GetList'],
         children: [
           {
             title: 'AssetManagementMenu',
@@ -285,7 +287,6 @@ const navConfig = [
           {
             title: 'trainingVideolist',
             path: PATH_DASHBOARD.TrainingVideo.list,
-            roles: ['TrainingVideo-GetList'],
           },
           {
             title: 'trainingVideoPlayer',

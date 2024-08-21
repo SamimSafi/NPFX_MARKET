@@ -154,7 +154,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['Branch-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['Branch-GetList']}>
                   <BranchList />
                 </PermissionBasedGuard>
               ),
@@ -188,7 +188,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['AssetType-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['AssetType-GetList']}>
                   <AssetTypeList />
                 </PermissionBasedGuard>
               ),
@@ -218,7 +218,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['LoanType-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['LoanType-GetList']}>
                   <LoanTypeList />
                 </PermissionBasedGuard>
               ),
@@ -248,7 +248,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['PaymentType-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['PayType-GetList']}>
                   <PaymentTypeList />
                 </PermissionBasedGuard>
               ),
@@ -256,7 +256,7 @@ export default function Router() {
             {
               path: 'new',
               element: (
-                <PermissionBasedGuard hasContent permissions={['PaymentType-Create']}>
+                <PermissionBasedGuard hasContent permissions={['PayType-Create']}>
                   <PaymentTypeCreate />
                 </PermissionBasedGuard>
               ),
@@ -264,7 +264,7 @@ export default function Router() {
             {
               path: 'edit',
               element: (
-                <PermissionBasedGuard hasContent permissions={['PaymentType-Update']}>
+                <PermissionBasedGuard hasContent permissions={['PayType-Update']}>
                   <PaymentTypeCreate />
                 </PermissionBasedGuard>
               ),
@@ -278,7 +278,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['CurrencyType-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['CurrencyType-GetList']}>
                   <CurrencyTypeList />
                 </PermissionBasedGuard>
               ),
@@ -308,7 +308,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['TradeTracking-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['TradeTracking-GetList']}>
                   <TradeTrackingList />
                 </PermissionBasedGuard>
               ),
@@ -376,7 +376,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['MainAsset-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['MainAsset-GetList']}>
                   <MainAssetList />
                 </PermissionBasedGuard>
               ),
@@ -392,7 +392,7 @@ export default function Router() {
             {
               path: 'edit',
               element: (
-                <PermissionBasedGuard hasContent permissions={['MainAsset-Update']}>
+                <PermissionBasedGuard hasContent permissions={['MainAsset-Create']}>
                   <MainAssetCreate />
                 </PermissionBasedGuard>
               ),
@@ -408,9 +408,9 @@ export default function Router() {
             {
               path: 'Details',
               element: (
-                // <PermissionBasedGuard hasContent permissions={['MainAsset-Update']}>
-                <MainAssetDetails />
-                // </PermissionBasedGuard>
+                <PermissionBasedGuard hasContent permissions={['MainAsset-GetDetail']}>
+                  <MainAssetDetails />
+                </PermissionBasedGuard>
               ),
             },
           ],
@@ -422,7 +422,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['ExpenseTracking-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['ExpenseTracking-GetList']}>
                   <ExpenseTrackingList />
                 </PermissionBasedGuard>
               ),
@@ -456,7 +456,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['LoanTracking-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['LoanTracking-GetList']}>
                   <LoanTrackingList />
                 </PermissionBasedGuard>
               ),
@@ -480,7 +480,7 @@ export default function Router() {
             {
               path: 'report',
               element: (
-                <PermissionBasedGuard hasContent permissions={['TLoanTracking-Update']}>
+                <PermissionBasedGuard hasContent permissions={['DashboardAndReport-GetLoanReport']}>
                   <LoanStatisticalReportIndex />
                 </PermissionBasedGuard>
               ),
@@ -494,7 +494,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-GetList']}>
                   <WithdrawalTrackingList />
                 </PermissionBasedGuard>
               ),
@@ -526,7 +526,7 @@ export default function Router() {
             {
               path: 'depositEdit',
               element: (
-                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-Deposit']}>
+                <PermissionBasedGuard hasContent permissions={['WithdrawalTracking-UpdateDeposit']}>
                   <WithdrawalTrackingDepositCreate />
                 </PermissionBasedGuard>
               ),
@@ -734,11 +734,7 @@ export default function Router() {
             { element: <Navigate to="/dashboard/TrainingVideo/list" replace />, index: true },
             {
               path: 'list',
-              element: (
-                <PermissionBasedGuard hasContent permissions={['TrainingVideo-GetList']}>
-                  <TrainingVideoList />
-                </PermissionBasedGuard>
-              ),
+              element: <TrainingVideoList />,
             },
             {
               path: 'new',
@@ -750,11 +746,7 @@ export default function Router() {
             },
             {
               path: 'play',
-              element: (
-                <PermissionBasedGuard hasContent permissions={['TrainingVideo-GetList']}>
-                  <TrainingVideoHeader />
-                </PermissionBasedGuard>
-              ),
+              element: <TrainingVideoHeader />,
             },
             {
               path: 'edit',
@@ -808,7 +800,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['Employee-GetAll']}>
+                <PermissionBasedGuard hasContent permissions={['EmployeeProfile-GetAll']}>
                   <EmployeeList />
                 </PermissionBasedGuard>
               ),
@@ -816,7 +808,7 @@ export default function Router() {
             {
               path: 'new',
               element: (
-                <PermissionBasedGuard hasContent permissions={['Employee-Create']}>
+                <PermissionBasedGuard hasContent permissions={['EmployeeProfile-Create']}>
                   <EmployeeCreate />
                 </PermissionBasedGuard>
               ),
@@ -824,7 +816,7 @@ export default function Router() {
             {
               path: 'edit',
               element: (
-                <PermissionBasedGuard hasContent permissions={['Employee-Update']}>
+                <PermissionBasedGuard hasContent permissions={['EmployeeProfile-Update']}>
                   <EmployeeCreate />
                 </PermissionBasedGuard>
               ),
@@ -974,7 +966,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['ExpenseTypes-GetList']}>
+                <PermissionBasedGuard hasContent permissions={['ExpenseType-GetList']}>
                   <ExpenseTypeList />
                 </PermissionBasedGuard>
               ),
@@ -982,7 +974,7 @@ export default function Router() {
             {
               path: 'new',
               element: (
-                <PermissionBasedGuard hasContent permissions={['ExpenseTypes-Create']}>
+                <PermissionBasedGuard hasContent permissions={['ExpenseType-Create']}>
                   <ExpenseTypeCreate />
                 </PermissionBasedGuard>
               ),
@@ -990,7 +982,7 @@ export default function Router() {
             {
               path: 'edit',
               element: (
-                <PermissionBasedGuard hasContent permissions={['ExpenseTypes-Update']}>
+                <PermissionBasedGuard hasContent permissions={['ExpenseType-Update']}>
                   <ExpenseTypeCreate />
                 </PermissionBasedGuard>
               ),
@@ -1110,7 +1102,7 @@ export default function Router() {
             {
               path: 'list',
               element: (
-                <PermissionBasedGuard hasContent permissions={['Application-GetList']}>
+                <PermissionBasedGuard hasContent permissions={['Application-GetAll']}>
                   <ApplicationList />
                 </PermissionBasedGuard>
               ),

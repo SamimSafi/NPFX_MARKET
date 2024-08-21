@@ -147,25 +147,32 @@ export default function NPFXDashboard() {
             </Grid>
 
             <Grid item xs={12} md={6} lg={4}>
-              <MemberBalance
-                title={translate('Npfx.MemberBalance')}
-                subheader=""
-                list={dashboardOfBranchsMainAsset || []}
-              />
+              {dashboardOfBranchsMainAsset && (
+                <MemberBalance
+                  title={translate('Npfx.MemberBalance')}
+                  subheader=""
+                  list={dashboardOfBranchsMainAsset || []}
+                />
+              )}
             </Grid>
 
             <Grid item xs={12} md={12} lg={8}>
               <Stack spacing={3}>
-                <NPFXYearlySales
-                  title={translate('Npfx.TradeChart')}
-                  subheader=""
-                  chartLabels={tradeTrackingChartData?.chartLabels! || []}
-                  chartData={tradeTrackingChartData?.chartData! || []}
-                />
-                <ExpensesCategories
-                  title={translate('Npfx.ExpensesByCategories')}
-                  chartData={expenseChartData! || []}
-                />
+                {tradeTrackingChartData && (
+                  <NPFXYearlySales
+                    title={translate('Npfx.TradeChart')}
+                    subheader=""
+                    chartLabels={tradeTrackingChartData?.chartLabels! || []}
+                    chartData={tradeTrackingChartData?.chartData! || []}
+                  />
+                )}
+
+                {expenseChartData && (
+                  <ExpensesCategories
+                    title={translate('Npfx.ExpensesByCategories')}
+                    chartData={expenseChartData! || []}
+                  />
+                )}
               </Stack>
             </Grid>
           </Grid>
