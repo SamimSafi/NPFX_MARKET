@@ -111,8 +111,8 @@ import {
   TrainingVideo,
   TrainingVideoParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/trainingVideo';
-// axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-axios.defaults.baseURL = 'http://localhost:9090/api/';
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+// axios.defaults.baseURL = 'http://localhost:9090/api/';
 // axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
 
 axios.interceptors.request.use(
