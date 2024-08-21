@@ -259,11 +259,7 @@ export default function EmployeeDetailTableRow({ row, clearEmployee }: Props) {
                     >
                       {translate('Employee.Gender')}
                     </TableCell>
-                    <TableCell align="left">
-                      {gender === true
-                        ? `${translate('Employee.Male')}`
-                        : `${translate('Employee.Female')}`}
-                    </TableCell>
+                    <TableCell align="left">{gender}</TableCell>
                   </TableRow>
 
                   <TableRow sx={{ borderBottom: '1px solid rgba(60,60,60,.9)' }}>
