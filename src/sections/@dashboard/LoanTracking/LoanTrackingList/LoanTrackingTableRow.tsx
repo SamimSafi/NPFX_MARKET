@@ -8,6 +8,7 @@ import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
 import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
+import { DateConverter } from 'src/sections/common/DateConverter';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -58,8 +59,12 @@ export default function LoanTrackingTableRow({
       <TableCell align="left">{index + 1}</TableCell>
       <TableCell align="left">{currencyType}</TableCell>
       {/* <TableCell align="left">{asset}</TableCell> */}
-      <TableCell align="left">{date}</TableCell>
-      <TableCell align="left">{dueDate}</TableCell>
+      <TableCell align="left">
+        {date !== undefined ? <DateConverter date={date} /> : <></>}
+      </TableCell>
+      <TableCell align="left">
+        {dueDate !== undefined ? <DateConverter date={dueDate} /> : <></>}
+      </TableCell>
       <TableCell align="left">{partner}</TableCell>
       <TableCell align="left">{partnerPhone}</TableCell>
       <TableCell align="left">{userName}</TableCell>
