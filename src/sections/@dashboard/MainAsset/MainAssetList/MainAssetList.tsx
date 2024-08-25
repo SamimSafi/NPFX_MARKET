@@ -42,6 +42,7 @@ export default observer(function MainAssetList() {
     MainAssetDetailsStore: { loadMainAssetDetail },
   } = useStore();
   const { translate } = useLocales();
+  const { tablePagination, onChangePagination } = useSettings();
   const {
     loadMainAsset,
     MainAssetList,
@@ -99,12 +100,12 @@ export default observer(function MainAssetList() {
     if (filterName.length > 1) {
       MainAssetearch({
         pageIndex: 0,
-        pageSize: rowsPerPage,
+        pageSize: tablePagination,
         name: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      MainAssetearch({ pageIndex: 0, pageSize: rowsPerPage });
+      MainAssetearch({ pageIndex: 0, pageSize: tablePagination });
     }
   };
 
@@ -192,14 +193,22 @@ export default observer(function MainAssetList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    loadMainAsset({ pageIndex: newPage, pageSize: rowsPerPage });
+    loadMainAsset({ pageIndex: newPage, pageSize: tablePagination });
   };
 
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeRowsPerPage(event);
+    onChangePagination(event.target.value);
+    onChangeRowsPerPage(event.target.value);
     let pageZize = parseInt(event.target.value);
     loadMainAsset({ pageIndex: 0, pageSize: pageZize });
   };
+
+  useEffect(() => {
+    onChangeRowsPerPage(tablePagination);
+    loadMainAsset({ pageIndex: 0, pageSize: tablePagination });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tablePagination]);
+
   useEffect(() => {
     if (MainAssetRegistry.size <= 1) {
       loadMainAsset({ pageIndex: 0, pageSize: rowsPerPage });
@@ -334,7 +343,7 @@ export default observer(function MainAssetList() {
               labelDisplayedRows={({ from, to, count }) =>
                 `${from}-${to} ${translate('Pagination.Of')} ${count}`
               }
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={tablePagination}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handlePageSizeChange}

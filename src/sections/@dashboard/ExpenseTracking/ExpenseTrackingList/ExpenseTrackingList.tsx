@@ -32,6 +32,7 @@ import { IExpenseTracking } from 'src/@types/foamCompanyTypes/systemTypes/Expens
 
 export default observer(function ExpenseTrackinggList() {
   const { ExpenseTrackingStore } = useStore();
+  const { tablePagination, onChangePagination } = useSettings();
   const { translate } = useLocales();
   const {
     loadExpenseTracking,
@@ -78,12 +79,12 @@ export default observer(function ExpenseTrackinggList() {
     if (filterName.length > 1) {
       ExpenseTrackingearch({
         pageIndex: 0,
-        pageSize: rowsPerPage,
+        pageSize: tablePagination,
         name: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      ExpenseTrackingearch({ pageIndex: 0, pageSize: rowsPerPage });
+      ExpenseTrackingearch({ pageIndex: 0, pageSize: tablePagination });
     }
   };
 
@@ -119,16 +120,24 @@ export default observer(function ExpenseTrackinggList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    loadExpenseTracking({ pageIndex: newPage, pageSize: rowsPerPage });
+    loadExpenseTracking({ pageIndex: newPage, pageSize: tablePagination });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeRowsPerPage(event);
+    onChangePagination(event.target.value);
+    onChangeRowsPerPage(event.target.value);
     let pageZize = parseInt(event.target.value);
     loadExpenseTracking({ pageIndex: 0, pageSize: pageZize });
   };
+
+  useEffect(() => {
+    onChangeRowsPerPage(tablePagination);
+    loadExpenseTracking({ pageIndex: 0, pageSize: tablePagination });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tablePagination]);
+
   useEffect(() => {
     if (ExpenseTrackingRegistry.size <= 1) {
-      loadExpenseTracking({ pageIndex: 0, pageSize: rowsPerPage });
+      loadExpenseTracking({ pageIndex: 0, pageSize: tablePagination });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -212,7 +221,7 @@ export default observer(function ExpenseTrackinggList() {
               labelDisplayedRows={({ from, to, count }) =>
                 `${from}-${to} ${translate('Pagination.Of')} ${count}`
               }
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={tablePagination}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handlePageSizeChange}

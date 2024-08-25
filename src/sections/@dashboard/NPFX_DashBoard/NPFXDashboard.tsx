@@ -12,6 +12,7 @@ import { useStore } from 'src/stores/store';
 import { useEffect, useState } from 'react';
 import Loader from 'src/components/loader/Loader';
 import useLocales from 'src/hooks/useLocales';
+import PermissionBasedGuard from 'src/guards/PermissionBasedGuard';
 
 // ----------------------------------------------------------------------
 
@@ -71,108 +72,114 @@ export default function NPFXDashboard() {
             <Grid item xs={12} md={12}>
               <NPFXNewProducts />
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Grid container spacing={3}>
-                {realTimeDashboardData?.totalMainAssetsCurrentBalance!.map((data, index) => (
-                  <Grid item xs={12} md={CurrentBalancegridSize} key={data.currencyType}>
-                    <NPFXWidgetSummary
-                      title={`${translate('Npfx.CurrentBalance')} ${data.currencyType}`}
-                      percent={0.6}
-                      total={data.value}
-                      chartColor={theme.palette.chart.red[0]}
-                      chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
-                    />
-                  </Grid>
-                ))}
+            <PermissionBasedGuard permissions={['DashboardAndReport-RealTimeDashboard']}>
+              <Grid item xs={12} md={6}>
+                <Grid container spacing={3}>
+                  {realTimeDashboardData?.totalMainAssetsCurrentBalance!.map((data, index) => (
+                    <Grid item xs={12} md={CurrentBalancegridSize} key={data.currencyType}>
+                      <NPFXWidgetSummary
+                        title={`${translate('Npfx.CurrentBalance')} ${data.currencyType}`}
+                        percent={0.6}
+                        total={data.value}
+                        chartColor={theme.palette.chart.red[0]}
+                        chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
               </Grid>
-            </Grid>
 
-            <Grid item xs={12} md={6}>
-              <Grid container spacing={3}>
-                {realTimeDashboardData?.todayTotalExpense!.map(
-                  (data, index) =>
-                    data.value !== 0 && (
-                      <Grid item xs={12} md={ExpensegridSize} key={data.currencyType}>
-                        <NPFXWidgetSummary
-                          title={`${translate('Npfx.TodayTotalExpense')} ${data.currencyType}`}
-                          percent={0.6}
-                          total={data.value}
-                          chartColor={theme.palette.chart.red[0]}
-                          chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
-                        />
-                      </Grid>
-                    )
-                ) && (
-                  <Grid item xs={12} md={12}>
-                    <NPFXWidgetSummary
-                      title={`${translate('Npfx.TodayTotalExpense')}`}
-                      percent={0.6}
-                      total={0}
-                      chartColor={theme.palette.chart.red[0]}
-                      chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
-                    />
-                  </Grid>
+              <Grid item xs={12} md={6}>
+                <Grid container spacing={3}>
+                  {realTimeDashboardData?.todayTotalExpense!.map(
+                    (data, index) =>
+                      data.value !== 0 && (
+                        <Grid item xs={12} md={ExpensegridSize} key={data.currencyType}>
+                          <NPFXWidgetSummary
+                            title={`${translate('Npfx.TodayTotalExpense')} ${data.currencyType}`}
+                            percent={0.6}
+                            total={data.value}
+                            chartColor={theme.palette.chart.red[0]}
+                            chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
+                          />
+                        </Grid>
+                      )
+                  ) && (
+                    <Grid item xs={12} md={12}>
+                      <NPFXWidgetSummary
+                        title={`${translate('Npfx.TodayTotalExpense')}`}
+                        percent={0.6}
+                        total={0}
+                        chartColor={theme.palette.chart.red[0]}
+                        chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
+                      />
+                    </Grid>
+                  )}
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <NPFXWidgetSummary
+                  title={translate('Npfx.TodayTotalTrade')}
+                  percent={2.6}
+                  total={realTimeDashboardData?.totalTodaysTrade?.[0]?.tradeAmount ?? 0}
+                  chartColor={theme.palette.primary.main}
+                  chartData={[22, 8, 35, 50, 82, 84, 77, 12, 87, 43]}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <NPFXWidgetSummary
+                  title={translate('Npfx.TodayTotalProfit')}
+                  percent={-0.1}
+                  total={realTimeDashboardData?.totalTodaysTrade?.[0]?.profitAmount ?? 0}
+                  chartColor={theme.palette.chart.green[0]}
+                  chartData={[56, 47, 40, 62, 73, 30, 23, 54, 67, 68]}
+                />
+              </Grid>
+
+              <Grid item xs={12} md={4}>
+                <NPFXWidgetSummary
+                  title={translate('Npfx.TodayTotalLoss')}
+                  percent={0.6}
+                  total={realTimeDashboardData?.totalTodaysTrade?.[0]?.lossAmount ?? 0}
+                  chartColor={theme.palette.chart.red[0]}
+                  chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
+                />
+              </Grid>
+            </PermissionBasedGuard>
+            <PermissionBasedGuard permissions={['DashboardAndReport-DashboardOfBranchsMainAsset']}>
+              <Grid item xs={12} md={6} lg={4}>
+                {dashboardOfBranchsMainAsset && (
+                  <MemberBalance
+                    title={translate('Npfx.MemberBalance')}
+                    subheader=""
+                    list={dashboardOfBranchsMainAsset || []}
+                  />
                 )}
               </Grid>
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <NPFXWidgetSummary
-                title={translate('Npfx.TodayTotalTrade')}
-                percent={2.6}
-                total={realTimeDashboardData?.totalTodaysTrade?.[0]?.tradeAmount ?? 0}
-                chartColor={theme.palette.primary.main}
-                chartData={[22, 8, 35, 50, 82, 84, 77, 12, 87, 43]}
-              />
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <NPFXWidgetSummary
-                title={translate('Npfx.TodayTotalProfit')}
-                percent={-0.1}
-                total={realTimeDashboardData?.totalTodaysTrade?.[0]?.profitAmount ?? 0}
-                chartColor={theme.palette.chart.green[0]}
-                chartData={[56, 47, 40, 62, 73, 30, 23, 54, 67, 68]}
-              />
-            </Grid>
-
-            <Grid item xs={12} md={4}>
-              <NPFXWidgetSummary
-                title={translate('Npfx.TodayTotalLoss')}
-                percent={0.6}
-                total={realTimeDashboardData?.totalTodaysTrade?.[0]?.lossAmount ?? 0}
-                chartColor={theme.palette.chart.red[0]}
-                chartData={[40, 70, 75, 70, 50, 28, 7, 64, 38, 27]}
-              />
-            </Grid>
-
-            <Grid item xs={12} md={6} lg={4}>
-              {dashboardOfBranchsMainAsset && (
-                <MemberBalance
-                  title={translate('Npfx.MemberBalance')}
-                  subheader=""
-                  list={dashboardOfBranchsMainAsset || []}
-                />
-              )}
-            </Grid>
+            </PermissionBasedGuard>
 
             <Grid item xs={12} md={12} lg={8}>
               <Stack spacing={3}>
-                {tradeTrackingChartData && (
-                  <NPFXYearlySales
-                    title={translate('Npfx.TradeChart')}
-                    subheader=""
-                    chartLabels={tradeTrackingChartData?.chartLabels! || []}
-                    chartData={tradeTrackingChartData?.chartData! || []}
-                  />
-                )}
-
-                {expenseChartData && (
-                  <ExpensesCategories
-                    title={translate('Npfx.ExpensesByCategories')}
-                    chartData={expenseChartData! || []}
-                  />
-                )}
+                <PermissionBasedGuard permissions={['DashboardAndReport-TradeTrackingChart']}>
+                  {tradeTrackingChartData && (
+                    <NPFXYearlySales
+                      title={translate('Npfx.TradeChart')}
+                      subheader=""
+                      chartLabels={tradeTrackingChartData?.chartLabels! || []}
+                      chartData={tradeTrackingChartData?.chartData! || []}
+                    />
+                  )}
+                </PermissionBasedGuard>
+                <PermissionBasedGuard permissions={['DashboardAndReport-ExpenseChart']}>
+                  {expenseChartData && (
+                    <ExpensesCategories
+                      title={translate('Npfx.ExpensesByCategories')}
+                      chartData={expenseChartData! || []}
+                    />
+                  )}
+                </PermissionBasedGuard>
               </Stack>
             </Grid>
           </Grid>

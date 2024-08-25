@@ -202,24 +202,8 @@ export default function UserDetailTableRow({ row, clearUser, clearUserDetail }: 
               <Box sx={{ px: 3, bgcolor: 'background.neutral' }}>
                 <TabList onChange={(e, value) => setValue(value)}>
                   <Tab disableRipple value="1" label={translate('User.userRoles')} />
-                  <Tab
-                    disableRipple
-                    value="2"
-                    label={translate('User.SecurityLevel')}
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
-                  />
-                  <Tab
-                    disableRipple
-                    value="3"
-                    label={translate('Department.Department')}
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
-                  />
-                  <Tab
-                    disableRipple
-                    value="4"
-                    label={translate('DocumentType.DocType')}
-                    sx={{ '& .MuiTab-wrapper': { whiteSpace: 'nowrap' } }}
-                  />
+                 
+                 
                 </TabList>
               </Box>
 
@@ -251,88 +235,7 @@ export default function UserDetailTableRow({ row, clearUser, clearUserDetail }: 
                   </Card>
                 </Box>
               </TabPanel>
-              <TabPanel value="2">
-                <Box sx={{ p: 3 }}>
-                  <Card variant="outlined" sx={{ minWidth: 100 }}>
-                    <CardHeader title={translate('User.SecurityLevel')} />
-
-                    <Stack spacing={4} sx={{ p: 1 }}>
-                      <Grid item container direction="row" xs={12} sm={12}>
-                        {/* {alloweddocumentLevelModels.map((docLev) => (
-                          <Grid key={docLev.id} item xs={6}>
-                            <RoleCard
-                              nameLabel={`${translate('User.EnglishName')}:`}
-                              name={docLev.englishName}
-                              descLabel={`${translate('User.PashtoName')}:`}
-                              description={docLev.pashtoName}
-                              permLabel={`${translate('User.DariName')}:`}
-                              totalpermissions={docLev.dariName}
-                              appLabel={`${translate('User.Code')}:`}
-                              application={docLev.code}
-                            />
-                          </Grid>
-                        ))} */}
-                      </Grid>
-                    </Stack>
-                  </Card>
-                </Box>
-              </TabPanel>
-
-              {/* User Role Tab */}
-              <TabPanel value="3">
-                <Box sx={{ p: 3 }}>
-                  <Card variant="outlined" sx={{ minWidth: 100 }}>
-                    <CardHeader title={translate('Department.Department')} />
-
-                    <Stack spacing={4} sx={{ p: 1 }}>
-                      <Grid item container direction="row" xs={12} sm={12}>
-                        {allowedbranchlevelModels.map((sec) => (
-                          <Grid key={sec.id} item xs={6}>
-                            <RoleCard
-                              nameLabel={`${translate('User.EnglishName')}:`}
-                              name={sec.englishName}
-                              appLabel={`${translate('User.Code')}:`}
-                              application={sec.code}
-                              descLabel={`${translate('User.PashtoName')}:`}
-                              description={sec.pashtoName}
-                              permLabel={`${translate('User.DariName')}:`}
-                              totalpermissions={sec.dariName}
-                            />
-                          </Grid>
-                        ))}
-                      </Grid>
-                    </Stack>
-                  </Card>
-                </Box>
-              </TabPanel>
-
-              {/* User Role Tab */}
-              <TabPanel value="4">
-                <Box sx={{ p: 3 }}>
-                  <Card variant="outlined" sx={{ minWidth: 100 }}>
-                    <CardHeader title={translate('DocumentType.DocType')} />
-
-                    <Stack spacing={4} sx={{ p: 1 }}>
-                      <Grid item container xs={12} sm={12}>
-                        {/* {alloweddocumenttypeModels.map((docTy) => (
-                          <Grid key={docTy.id} item xs={6}>
-                            <RoleCard
-                              nameLabel={`${translate('User.EnglishName')}:`}
-                              name={docTy.englishName}
-                              appLabel={`${translate('User.Code')}:`}
-                              application={docTy.code}
-                              descLabel={`${translate('User.PashtoName')}:`}
-                              description={docTy.pashtoName}
-                              permLabel={`${translate('User.DariName')}:`}
-                              totalpermissions={docTy.dariName}
-                            />
-                          </Grid>
-                        ))} */}
-                      </Grid>
-                    </Stack>
-                  </Card>
-                </Box>
-              </TabPanel>
+            
             </TabContext>
           </Card>
         </Grid>

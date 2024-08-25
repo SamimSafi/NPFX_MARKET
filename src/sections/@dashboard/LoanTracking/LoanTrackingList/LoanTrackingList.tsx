@@ -41,6 +41,7 @@ import useTabs from 'src/hooks/useTabs';
 export default observer(function LoanTrackingList() {
   const { LoanTrackingStore } = useStore();
   const { translate } = useLocales();
+  const { tablePagination, onChangePagination } = useSettings();
   const {
     loadLoanTracking,
     LoanTrackingList,
@@ -124,12 +125,12 @@ export default observer(function LoanTrackingList() {
     if (filterName.length > 1) {
       LoanTrackingearch({
         pageIndex: 0,
-        pageSize: rowsPerPage,
+        pageSize: tablePagination,
         name: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      LoanTrackingearch({ pageIndex: 0, pageSize: rowsPerPage });
+      LoanTrackingearch({ pageIndex: 0, pageSize: tablePagination });
     }
   };
 
@@ -193,13 +194,14 @@ export default observer(function LoanTrackingList() {
     loadLoanTracking({ pageIndex: newPage, pageSize: rowsPerPage });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeRowsPerPage(event);
+    onChangePagination(event.target.value);
+    onChangeRowsPerPage(event.target.value);
     let pageZize = parseInt(event.target.value);
     loadLoanTracking({ pageIndex: 0, pageSize: pageZize });
   };
   useEffect(() => {
     if (LoanTrackingRegistry.size <= 1) {
-      loadLoanTracking({ pageIndex: 0, pageSize: rowsPerPage });
+      loadLoanTracking({ pageIndex: 0, pageSize: tablePagination });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -314,7 +316,7 @@ export default observer(function LoanTrackingList() {
               labelDisplayedRows={({ from, to, count }) =>
                 `${from}-${to} ${translate('Pagination.Of')} ${count}`
               }
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={tablePagination}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handlePageSizeChange}
