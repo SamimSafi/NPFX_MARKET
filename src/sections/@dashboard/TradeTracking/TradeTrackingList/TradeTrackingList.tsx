@@ -33,6 +33,7 @@ import { ITradeTracking } from 'src/@types/foamCompanyTypes/systemTypes/TradeTra
 
 export default observer(function TradeTrackingList() {
   const { TradeTrackingStore } = useStore();
+  const { tablePagination, onChangePagination } = useSettings();
   const { translate } = useLocales();
   const {
     loadTradeTracking,
@@ -81,12 +82,12 @@ export default observer(function TradeTrackingList() {
     if (filterName.length > 1) {
       TradeTrackingearch({
         pageIndex: 0,
-        pageSize: rowsPerPage,
+        pageSize: tablePagination,
         searchBy: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      TradeTrackingearch({ pageIndex: 0, pageSize: rowsPerPage });
+      TradeTrackingearch({ pageIndex: 0, pageSize: tablePagination });
     }
   };
 
@@ -122,16 +123,24 @@ export default observer(function TradeTrackingList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    loadTradeTracking({ pageIndex: newPage, pageSize: rowsPerPage });
+    loadTradeTracking({ pageIndex: newPage, pageSize: tablePagination });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeRowsPerPage(event);
+    onChangePagination(event.target.value);
+    onChangeRowsPerPage(event.target.value);
     let pageZize = parseInt(event.target.value);
     loadTradeTracking({ pageIndex: 0, pageSize: pageZize });
   };
+
+  useEffect(() => {
+    onChangeRowsPerPage(tablePagination);
+    loadTradeTracking({ pageIndex: 0, pageSize: tablePagination });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tablePagination]);
+
   useEffect(() => {
     if (TradeTrackingRegistry.size <= 1) {
-      loadTradeTracking({ pageIndex: 0, pageSize: rowsPerPage });
+      loadTradeTracking({ pageIndex: 0, pageSize: tablePagination });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -215,7 +224,7 @@ export default observer(function TradeTrackingList() {
               labelDisplayedRows={({ from, to, count }) =>
                 `${from}-${to} ${translate('Pagination.Of')} ${count}`
               }
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={tablePagination}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handlePageSizeChange}

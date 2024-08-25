@@ -33,6 +33,7 @@ import { IWithdrawalTracking } from 'src/@types/foamCompanyTypes/systemTypes/Wit
 
 export default observer(function WithdrawalTrackingList() {
   const { WithdrawalTrackingStore } = useStore();
+  const { tablePagination, onChangePagination } = useSettings();
   const { translate } = useLocales();
   const {
     loadWithdrawalTracking,
@@ -83,12 +84,12 @@ export default observer(function WithdrawalTrackingList() {
     if (filterName.length > 1) {
       WithdrawalTrackingearch({
         pageIndex: 0,
-        pageSize: rowsPerPage,
+        pageSize: tablePagination,
         name: filterName,
         //dariName: filterName,
       });
     } else if (filterName === '') {
-      WithdrawalTrackingearch({ pageIndex: 0, pageSize: rowsPerPage });
+      WithdrawalTrackingearch({ pageIndex: 0, pageSize: tablePagination });
     }
   };
 
@@ -124,19 +125,28 @@ export default observer(function WithdrawalTrackingList() {
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
-    loadWithdrawalTracking({ pageIndex: newPage, pageSize: rowsPerPage });
+    loadWithdrawalTracking({ pageIndex: newPage, pageSize: tablePagination });
   };
   const handlePageSizeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeRowsPerPage(event);
+    onChangePagination(event.target.value);
+    onChangeRowsPerPage(event.target.value);
     let pageZize = parseInt(event.target.value);
     loadWithdrawalTracking({ pageIndex: 0, pageSize: pageZize });
   };
+
   useEffect(() => {
+    onChangeRowsPerPage(tablePagination);
+    loadWithdrawalTracking({ pageIndex: 0, pageSize: tablePagination });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tablePagination]);
+
+  useEffect(() => {
+    onChangeRowsPerPage(tablePagination);
     if (WithdrawalTrackingRegistry.size <= 1) {
-      loadWithdrawalTracking({ pageIndex: 0, pageSize: rowsPerPage });
+      loadWithdrawalTracking({ pageIndex: 0, pageSize: tablePagination });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [tablePagination]);
 
   const dataFiltered = applySortFilter({
     tableData: WithdrawalTrackingList,
@@ -230,7 +240,7 @@ export default observer(function WithdrawalTrackingList() {
               labelDisplayedRows={({ from, to, count }) =>
                 `${from}-${to} ${translate('Pagination.Of')} ${count}`
               }
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={tablePagination}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handlePageSizeChange}
