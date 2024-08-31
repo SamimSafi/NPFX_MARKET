@@ -26,20 +26,6 @@ type Props = {
   filterButtonClicked: any;
   StatisticalReportDetails: ExpenseStatisticalReportView | undefined;
 };
-type ExpenseType = {
-  expenseType: string;
-  dollor: number;
-  afghani: number;
-};
-
-type ReportItem = {
-  branchName: string;
-  expenseTypes: ExpenseType[];
-};
-
-type StatisticalReportDetailsType = {
-  report: ReportItem[];
-};
 
 export const StatisticalReportPrintView = forwardRef(
   ({ StatisticalReportDetails, filterButtonClicked }: Props, ref: any) => {
@@ -62,12 +48,12 @@ export const StatisticalReportPrintView = forwardRef(
       let totalDollor = 0;
       let totalAfghani = 0;
 
-      StatisticalReportDetails?.report!.map((data) =>
-        data.expenseTypes!.map((action) => {
+      StatisticalReportDetails?.report!.forEach((data) => {
+        data.expenseTypes!.forEach((action) => {
           totalDollor += action.dollor! | 0;
           totalAfghani += action.afghani! | 0;
-        })
-      );
+        });
+      });
       // StatisticalReportDetails!.report!.map((item) =>
       //   // eslint-disable-next-line array-callback-return
       //   item.expenseTypes!.map((action) => {
@@ -84,7 +70,7 @@ export const StatisticalReportPrintView = forwardRef(
     return (
       <Card sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}>
         <>
-          {StatisticalReportDetails && filterButtonClicked === true && (
+          {StatisticalReportDetails && (
             <>
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>

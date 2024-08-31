@@ -87,8 +87,6 @@ export default observer(function StatisticalReportIndex() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, defaultValues, loadUserDropdown]);
 
-  useEffect(() => {}, [ExpenseStatisticalReportDetails]);
-
   const Search = (e: any) => {
     e.preventDefault();
     setFilterButtonClicked(!filterButtonClicked);
@@ -104,17 +102,14 @@ export default observer(function StatisticalReportIndex() {
       }, 500);
     });
   };
+  useEffect(() => {}, [ExpenseStatisticalReportDetails, isloading]);
 
   return (
     <Page title={translate('Report.ReportTitle')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={translate('Report.ExpenseReport')}
-          links={[
-            { name: `${translate('Report.Dashboard')}`, href: PATH_DASHBOARD.root },
-
-          
-          ]}
+          links={[{ name: `${translate('Report.Dashboard')}`, href: PATH_DASHBOARD.root }]}
         />
 
         <Grid container>
@@ -299,7 +294,6 @@ export default observer(function StatisticalReportIndex() {
                         // disabled={StatisticalReportDetails.length === 0 ? true : false}
                       >
                         {translate('Report.Print')}
-                    
                       </Button>
                     )}
                     content={() => componentRef.current}
@@ -323,7 +317,6 @@ export default observer(function StatisticalReportIndex() {
                     }}
                   >
                     {translate('Report.Reset')}
-                  
                   </Button>
                 </Stack>
               </>

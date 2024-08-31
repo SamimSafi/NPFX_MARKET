@@ -48,7 +48,7 @@ export const LoanStatisticalReportPrintView = forwardRef(
         ref={ref}
       >
         <>
-          {StatisticalReportDetails && filterButtonClicked === true && (
+          {StatisticalReportDetails && (
             <>
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
@@ -113,7 +113,9 @@ export const LoanStatisticalReportPrintView = forwardRef(
                                     align="center"
                                     rowSpan={loanType.currencyTypeModels!.length}
                                   >
-                                    {loanType.isGiven ? `${translate('Report.Given')}` : `${translate('Report.Taken')}`}
+                                    {loanType.isGiven
+                                      ? `${translate('Report.Given')}`
+                                      : `${translate('Report.Taken')}`}
                                   </TableCell>
                                 )}
                                 <TableCell align="center">{currency.currencyType}</TableCell>
@@ -175,7 +177,7 @@ export const LoanStatisticalReportPrintView = forwardRef(
               </Paper>
             </>
           )}
-          {!StatisticalReportDetails && filterButtonClicked === false && (
+          {!StatisticalReportDetails && (
             <>
               <EmptyContent
                 title={translate('NoRecordFound')}
