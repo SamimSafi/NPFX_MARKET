@@ -152,11 +152,11 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
             >
               <LocalizDatePicker
                 name="depositDate"
-                label={translate('MainAsset.depositDate')}
+                label={translate('MainAsset.DepositDate')}
                 control={control}
                 showAsterisk={true}
               />
-              <RHFSelect name="branchId" label={translate('MainAsset.branch')}>
+              <RHFSelect name="branchId" label={translate('Branch.Branch')}>
                 <option value="" />
                 {BranchOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -172,7 +172,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="toUserId" label={translate('MainAsset.ToUser')}>
+              <RHFSelect name="toUserId" label={translate('User.user')}>
                 <option value="" />
                 {UserOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -183,7 +183,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
 
               <RHFTextField
                 name="depositAmmount"
-                label={translate('MainAsset.depositAmmount')}
+                label={translate('CRUD.DepositCash')}
                 type={'number'}
                 showAsterisk={true}
                 InputProps={{
@@ -193,7 +193,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
               />
               <RHFTextField
                 name="description"
-                label={translate('MainAsset.description')}
+                label={translate('GeneralFields.Description')}
                 showAsterisk={true}
                 autoFocus
               />
@@ -216,7 +216,7 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
                   loading={isSubmitting}
                   startIcon={<AttachMoneyIcon />}
                 >
-                  {translate('CRUD.Deposit')}
+                  {translate('CRUD.DepositCash')}
                 </LoadingButton>
 
                 <LoadingButton
