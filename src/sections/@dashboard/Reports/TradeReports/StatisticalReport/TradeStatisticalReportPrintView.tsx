@@ -51,7 +51,7 @@ export const TradeStatisticalReportPrintView = forwardRef(
       let totalProfitAmount = 0;
       let totalLossAmount = 0;
 
-      StatisticalReportDetails?.report!.map((item) => {
+      StatisticalReportDetails?.report!.forEach((item) => {
         totalTradeAmount += item.tradeAmount! | 0;
         totalProfitAmount += item.profitAmount! | 0;
         totalLossAmount += item.lossAmount! | 0;
@@ -65,7 +65,7 @@ export const TradeStatisticalReportPrintView = forwardRef(
     return (
       <Card sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}>
         <>
-          {StatisticalReportDetails && filterButtonClicked === true && (
+          {StatisticalReportDetails && (
             <>
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
@@ -118,7 +118,6 @@ export const TradeStatisticalReportPrintView = forwardRef(
               <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
                 <Typography variant="h6" align="center" gutterBottom>
                   {translate('Report.TradeTransaction')}
-                  
                 </Typography>
                 <TableContainer
                   component={Paper}
@@ -161,7 +160,7 @@ export const TradeStatisticalReportPrintView = forwardRef(
               </Paper>
             </>
           )}
-          {!StatisticalReportDetails && filterButtonClicked === false && (
+          {!StatisticalReportDetails && (
             <>
               <EmptyContent
                 title={translate('Expese.NoRecordFound')}

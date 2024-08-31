@@ -20,11 +20,11 @@ export default class ExpenseReportsStore {
   }
 
   loadExpenseStatisticalReport = async (params: IExpenseReportParam) => {
-    console.log(params);
+ 
     try {
       const result = await agent.NPFXReports.GetExpenseReport(params);
-      console.log(result);
       this.ExpenseStatisticalReportDetails = result.data;
+    
     } catch (error) {
       console.log(error);
     }
