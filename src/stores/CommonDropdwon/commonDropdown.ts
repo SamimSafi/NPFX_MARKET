@@ -26,6 +26,10 @@ export default class commonDroptdown {
 
   LoanTypeOption: SelectControl[] = []; // for Department Type dropdown
 
+  CategorysOption: SelectControl[] = []; // for Department Type dropdown
+
+  PropertyConditionsOption: SelectControl[] = []; // for Department Type dropdown
+
   PayTypeOption: SelectControl[] = []; // for Department Type dropdown
 
   MainAssetOption: SelectControl[] = []; // for Department Type dropdown
@@ -622,6 +626,50 @@ export default class commonDroptdown {
       return optRow;
     });
     this.LoanTypeOption = op;
+  };
+
+  // loadLoanTypeDDL
+  loadCategorysDDL = async () => {
+    try {
+      const result = await agent.Categorys.DDl();
+
+      this.setCategorysDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setCategorysDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.CategorysOption = op;
+  };
+
+  // loadPropertyConditionsDDL
+  loadPropertyConditionsDDL = async () => {
+    try {
+      const result = await agent.PropertyConditions.DDl();
+
+      this.setPropertyConditionsDDL(result.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  setPropertyConditionsDDL = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.PropertyConditionsOption = op;
   };
 
   // loadPayTypeDDL
