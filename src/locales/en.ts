@@ -1194,6 +1194,9 @@ const en = {
   only_admin_can_see_this_item: `Only admin can see this item`,
   report: 'Report',
   NoRecordFound: 'No Record Found',
+  categorys:'Categorys',
+  propertyConditions:'property Conditions'
+
 };
 
 export default en;

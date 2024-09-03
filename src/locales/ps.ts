@@ -743,6 +743,8 @@ const dr = {
     Update: 'د ملک شرایط تازه کړئ',
     AddTitle: 'د ملک شرایط اضافه کړئ',
     UpdateTitle: 'د ملک شرایط تازه کړئ',
+    categorys: 'کتګورۍ',
+    propertyConditions: 'د ملک شرایط',
   },
   //Role
   userRole: {

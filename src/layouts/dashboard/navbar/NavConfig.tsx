@@ -122,12 +122,12 @@ const navConfig = [
                 roles: ['PositionTitle-GetAll'],
               },
               {
-                title: 'Categorys',
+                title: 'categorys',
                 path: PATH_DASHBOARD.Categorys.list,
                 roles: ['Categorys-GetAll'],
               },
               {
-                title: 'PropertyConditions',
+                title: 'propertyConditions',
                 path: PATH_DASHBOARD.PropertyConditions.list,
                 roles: ['PropertyConditions-GetAll'],
               },

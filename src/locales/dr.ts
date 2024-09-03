@@ -1149,6 +1149,8 @@ const ps = {
   employeePosition: 'بست کارمند',
   report: 'گزارشات',
   NoRecordFound: 'هیچ ریکارد ای یافت نشد',
+  categorys: 'دسته‌ها',
+  propertyConditions: 'شرایط ملک',
 };
 
 export default ps;
