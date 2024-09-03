@@ -90,7 +90,11 @@ import {
   IWithdrawalTracking,
   IWithdrawalTrackingParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
-import { IContractType, IContractTypeParams } from 'src/@types/foamCompanyTypes/CategoryType';
+import {
+  ICategoryType,
+  IContractType,
+  IContractTypeParams,
+} from 'src/@types/foamCompanyTypes/CategoryType';
 
 import { Application, ApplicationParams } from 'src/@types/application';
 
@@ -111,6 +115,11 @@ import {
   TrainingVideo,
   TrainingVideoParams,
 } from 'src/@types/foamCompanyTypes/systemTypes/trainingVideo';
+import { ICategorys, ICategorysParams } from 'src/@types/foamCompanyTypes/looks/Categorys';
+import {
+  IPropertyConditions,
+  IPropertyConditionsParams,
+} from 'src/@types/foamCompanyTypes/looks/PropertyConditions';
 // axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
 // axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
@@ -537,6 +546,39 @@ const LoanType = {
   delete: (id: number, remark: string) => axios.delete<void>(`/LoanType/${id}`, { data: remark }),
   DDl: () =>
     axios.get<any>('/LoanType/GetLoanTypeDDL', {
+      withCredentials: true,
+    }),
+};
+
+// CategoryType
+const Categorys = {
+  create: (Categorys: ICategorys) => requests.post<void>('/Categorys', Categorys),
+  getList: (param: ICategorysParams) =>
+    axios.post<any>(`/Categorys/GetList`, param, { withCredentials: true }),
+  update: (Categorys: ICategorys) => requests.put<void>(`/Categorys/${Categorys.id}`, Categorys),
+  // detail: (CategorysId: any) =>
+  //   requests.get<void>(`/Categorys/GetDetail/${CategorysId}`),
+  delete: (id: number, remark: string) => axios.delete<void>(`/Categorys/${id}`, { data: remark }),
+  DDl: () =>
+    axios.get<any>('/Categorys/GetCategorysDDL', {
+      withCredentials: true,
+    }),
+};
+
+// PropertyConditions
+const PropertyConditions = {
+  create: (PropertyConditions: IPropertyConditions) =>
+    requests.post<void>('/PropertyConditions', PropertyConditions),
+  getList: (param: IPropertyConditionsParams) =>
+    axios.post<any>(`/PropertyConditions/GetList`, param, { withCredentials: true }),
+  update: (PropertyConditions: IPropertyConditions) =>
+    requests.put<void>(`/PropertyConditions/${PropertyConditions.id}`, PropertyConditions),
+  // detail: (PropertyConditionsId: any) =>
+  //   requests.get<void>(`/PropertyConditions/GetDetail/${PropertyConditionsId}`),
+  delete: (id: number, remark: string) =>
+    axios.delete<void>(`/PropertyConditions/${id}`, { data: remark }),
+  DDl: () =>
+    axios.get<any>('/PropertyConditions/GetPropertyConditionsDDL', {
       withCredentials: true,
     }),
 };
@@ -978,6 +1020,8 @@ const agent = {
   NPFXReports,
   npfxDashboards,
   trainingVideoAgent,
+  PropertyConditions,
+  Categorys
 };
 
 export default agent;

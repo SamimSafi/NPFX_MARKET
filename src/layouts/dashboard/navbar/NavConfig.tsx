@@ -121,6 +121,16 @@ const navConfig = [
                 path: PATH_DASHBOARD.PositionTitle.list,
                 roles: ['PositionTitle-GetAll'],
               },
+              {
+                title: 'Categorys',
+                path: PATH_DASHBOARD.Categorys.list,
+                roles: ['Categorys-GetAll'],
+              },
+              {
+                title: 'PropertyConditions',
+                path: PATH_DASHBOARD.PropertyConditions.list,
+                roles: ['PropertyConditions-GetAll'],
+              },
             ],
           },
           //HR lookups Table

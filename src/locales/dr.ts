@@ -565,6 +565,30 @@ const ps = {
     salaryAmount: ' مقدار معاش',
     positionTitle: ' عنوان وظیفه',
   },
+  Categorys: {
+    Categorys: 'دسته‌ها',
+    Title: 'دسته‌ها',
+    CategorysList: 'فهرست انواع دسته‌ها',
+    Placeholder: 'در اینجا دسته‌ها را جستجو کنید',
+    CreateCategorys: 'ایجاد دسته‌ها',
+    EditCategorys: 'ویرایش دسته‌ها',
+    New: 'دسته‌های جدید',
+    Update: 'بروزرسانی دسته‌ها',
+    AddTitle: 'اضافه کردن دسته‌ها',
+    UpdateTitle: 'بروزرسانی دسته‌ها',
+  },
+  PropertyConditions: {
+    PropertyConditions: 'شرایط ملک',
+    Title: 'شرایط ملک',
+    PropertyConditionsList: 'فهرست انواع شرایط ملک',
+    Placeholder: 'در اینجا شرایط ملک را جستجو کنید',
+    CreatePropertyConditions: 'ایجاد شرایط ملک',
+    EditPropertyConditions: 'ویرایش شرایط ملک',
+    New: 'شرایط ملک جدید',
+    Update: 'بروزرسانی شرایط ملک',
+    AddTitle: 'اضافه کردن شرایط ملک',
+    UpdateTitle: 'بروزرسانی شرایط ملک',
+  },
 
   //Employee Degree
   EmployeeDegree: {
