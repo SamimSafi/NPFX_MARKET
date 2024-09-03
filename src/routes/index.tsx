@@ -70,6 +70,10 @@ import StatisticalReportIndex from 'src/sections/@dashboard/Reports/ExpenseRepor
 
 import TradeStatisticalReportIndex from 'src/sections/@dashboard/Reports/TradeReports/StatisticalReport/TradeStatisticalReportIndex';
 import LoanStatisticalReportIndex from 'src/sections/@dashboard/Reports/LoanReports/StatisticalReport/LoanStatisticalReportIndex';
+import CategorysCreate from 'src/sections/@dashboard/Categorys/CategorysForm/CategorysCreate';
+import CategorysList from 'src/sections/@dashboard/Categorys/CategorysList/CategorysList';
+import PropertyConditionsList from 'src/sections/@dashboard/PropertyConditions/PropertyConditionsList/PropertyConditionsList';
+import PropertyConditionsCreate from 'src/sections/@dashboard/PropertyConditions/PropertyConditionsForm/PropertyConditionsCreate';
 
 // ----------------------------------------------------------------------
 
@@ -296,6 +300,67 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['CurrencyType-Update']}>
                   <CurrencyTypeCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        
+        {
+          path: 'Categorys',
+          children: [
+            { element: <Navigate to="/dashboard/Categorys/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Categorys-GetList']}>
+                  <CategorysList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Categorys-Create']}>
+                  <CategorysCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Categorys-Update']}>
+                  <CategorysCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+        {
+          path: 'PropertyConditions',
+          children: [
+            { element: <Navigate to="/dashboard/PropertyConditions/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['PropertyConditions-GetList']}>
+                  <PropertyConditionsList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['PropertyConditions-Create']}>
+                  <PropertyConditionsCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['PropertyConditions-Update']}>
+                  <PropertyConditionsCreate />
                 </PermissionBasedGuard>
               ),
             },

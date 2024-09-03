@@ -88,7 +88,6 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/LoanType/new'),
     edit: path(ROOTS_DASHBOARD, '/LoanType/edit'),
     detail: path(ROOTS_DASHBOARD, '/LoanType/detail'),
-    
   },
   // PaymentType
   PaymentType: {
@@ -150,6 +149,26 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/LoanTracking/edit'),
     detail: path(ROOTS_DASHBOARD, '/LoanTracking/detail'),
     report: path(ROOTS_DASHBOARD, '/LoanTracking/report'),
+  },
+
+  // Categorys
+  Categorys: {
+    root: path(ROOTS_DASHBOARD, '/Categorys'),
+    list: path(ROOTS_DASHBOARD, '/Categorys/list'),
+    new: path(ROOTS_DASHBOARD, '/Categorys/new'),
+    edit: path(ROOTS_DASHBOARD, '/Categorys/edit'),
+    detail: path(ROOTS_DASHBOARD, '/Categorys/detail'),
+    report: path(ROOTS_DASHBOARD, '/Categorys/report'),
+  },
+
+  // PropertyConditions
+  PropertyConditions: {
+    root: path(ROOTS_DASHBOARD, '/PropertyConditions'),
+    list: path(ROOTS_DASHBOARD, '/PropertyConditions/list'),
+    new: path(ROOTS_DASHBOARD, '/PropertyConditions/new'),
+    edit: path(ROOTS_DASHBOARD, '/PropertyConditions/edit'),
+    detail: path(ROOTS_DASHBOARD, '/PropertyConditions/detail'),
+    report: path(ROOTS_DASHBOARD, '/PropertyConditions/report'),
   },
 
   // WithdrawalTracking

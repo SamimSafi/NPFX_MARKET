@@ -53,6 +53,8 @@ import TradeReportsStore from './NPFXReports/TradeReportsStore';
 import LoanReportsStore from './NPFXReports/LoanReportsStore';
 
 import TrainingVideoStore from './foamCompanyStores/TrainingVideoStore';
+import CategorysStore from './foamCompanyStores/CategorysStore';
+import PropertyConditionsStore from './foamCompanyStores/PropertyConditionsStore';
 
 
 interface Store {
@@ -121,6 +123,8 @@ interface Store {
   ExpenseReportsStore: ExpenseReportsStore;
   TradeReportsStore: TradeReportsStore;
   LoanReportsStore: LoanReportsStore;
+  CategorysStore: CategorysStore;
+  PropertyConditionsStore: PropertyConditionsStore;
 
   TrainingVideoStore: TrainingVideoStore;
 
@@ -182,6 +186,8 @@ export const store: Store = {
   ExpenseReportsStore: new ExpenseReportsStore(),
   TradeReportsStore: new TradeReportsStore(),
   LoanReportsStore: new LoanReportsStore(),
+  CategorysStore: new CategorysStore(),
+  PropertyConditionsStore: new PropertyConditionsStore(),
 
   TrainingVideoStore: new TrainingVideoStore(),
 
