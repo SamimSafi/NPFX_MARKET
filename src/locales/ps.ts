@@ -1083,6 +1083,11 @@ const dr = {
     Afghani: 'افغانۍ',
     ProfitAmount: 'د ګټې مقدار',
     LossAmount: 'د زیان مقدار',
+    debitAmount: 'د پور ورکولو اندازه',
+    creditAmount: 'د اعتبار اندازه',
+    balanceAmount: 'د توازن اندازه',
+    transactionDate: 'د معامله نیټه',
+    MainAssetReport: 'د اصلي شتمنۍ راپور',
   },
   Npfx: {
     NpfxWellcome: 'د NPFX شرکت د مدیریت سیسټم ته ښه راغلاست',
