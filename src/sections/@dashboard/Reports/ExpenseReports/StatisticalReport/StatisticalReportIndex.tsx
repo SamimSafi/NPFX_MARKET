@@ -109,227 +109,219 @@ export default observer(function StatisticalReportIndex() {
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
           heading={translate('Report.ExpenseReport')}
-          links={[{ name: `${translate('Report.Dashboard')}`, href: PATH_DASHBOARD.root }]}
+          links={[{ name: translate('Report.Dashboard'), href: PATH_DASHBOARD.root }]}
         />
 
-        <Grid container>
-          <Grid item xs={3} md={4} sx={{}}>
-            {/*  */}
-            <Card sx={{ height: '600px', padding: '30px' }}>
-              <>
-                <Controller
-                  name="branchIds"
-                  control={control}
-                  render={({ field, fieldState: { error } }) => (
-                    <Autocomplete
-                      disableCloseOnSelect
-                      multiple
-                      fullWidth
-                      freeSolo
-                      options={BranchOption.map((option: any) => option)}
-                      value={field.value}
-                      // value={field.value}
-                      getOptionLabel={(option) => option.text}
-                      onChange={(event, newValue) => {
-                        handleChangeBranch(event, newValue);
-                        field.onChange(newValue);
-                      }}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip
-                            {...getTagProps({ index })}
-                            key={option.value}
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={12}>
+            <Card sx={{ padding: '30px' }}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={3}>
+                  <Controller
+                    name="branchIds"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                      <Autocomplete
+                        disableCloseOnSelect
+                        multiple
+                        freeSolo
+                        options={BranchOption.map((option: any) => option)}
+                        value={field.value}
+                        getOptionLabel={(option) => option.text}
+                        onChange={(event, newValue) => {
+                          handleChangeBranch(event, newValue);
+                          field.onChange(newValue);
+                        }}
+                        renderTags={(value, getTagProps) =>
+                          value.map((option, index) => (
+                            <Chip
+                              {...getTagProps({ index })}
+                              key={option.value}
+                              size="small"
+                              label={option.text}
+                            />
+                          ))
+                        }
+                        renderOption={(props, option, { selected }) => (
+                          <li {...props}>
+                            <Checkbox
+                              icon={icon}
+                              checkedIcon={checkedIcon}
+                              style={{ marginRight: 8 }}
+                              checked={selected}
+                            />
+                            {option.text}
+                          </li>
+                        )}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            sx={{ marginBottom: '20px' }}
                             size="small"
-                            label={option.text}
+                            label={translate('Report.Branch')}
+                            error={!!error}
+                            helperText={error?.message}
                           />
-                        ))
-                      }
-                      renderOption={(props, option, { selected }) => (
-                        <li {...props}>
-                          <Checkbox
-                            icon={icon}
-                            checkedIcon={checkedIcon}
-                            style={{ marginRight: 8 }}
-                            checked={selected}
-                          />
-                          {option.text}
-                        </li>
-                      )}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          sx={{ marginBottom: '20px' }}
-                          size="small"
-                          label={translate('Report.Branch')}
-                          error={!!error}
-                          helperText={error?.message}
-                        />
-                      )}
-                    />
-                  )}
-                />
-                <Controller
-                  name="expenseTypeIds"
-                  control={control}
-                  render={({ field, fieldState: { error } }) => (
-                    <Autocomplete
-                      disableCloseOnSelect
-                      multiple
-                      fullWidth
-                      freeSolo
-                      options={ExpenseTypeOption.map((option: any) => option)}
-                      value={field.value}
-                      getOptionLabel={(option) => option.text}
-                      onChange={(event, newValue) => {
-                        handleChangeExpenseType(event, newValue);
-                        field.onChange(newValue);
-                      }}
-                      renderTags={(value, getTagProps) =>
-                        value.map((option, index) => (
-                          <Chip
-                            {...getTagProps({ index })}
-                            key={option.value}
-                            size="small"
-                            label={option.text}
-                          />
-                        ))
-                      }
-                      renderOption={(props, option, { selected }) => (
-                        <li {...props}>
-                          <Checkbox
-                            icon={icon}
-                            checkedIcon={checkedIcon}
-                            style={{ marginRight: 8 }}
-                            checked={selected}
-                          />
-                          {option.text}
-                        </li>
-                      )}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          sx={{ marginBottom: '20px' }}
-                          size="small"
-                          label={translate('Report.ExpenseType')}
-                          error={!!error}
-                          helperText={error?.message}
-                        />
-                      )}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="fromDate"
-                  control={control}
-                  render={({ field, fieldState: { error } }) => (
-                    <DatePicker
-                      label={translate('Report.FromDate')}
-                      // disablePast
-                      value={field.value}
-                      onChange={(newValue) => {
-                        setValue<any>('fromDate', newValue);
-                        field.onChange(newValue);
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          sx={{ marginBottom: '20px' }}
-                          size="small"
-                          fullWidth
-                          error={!!error}
-                          helperText={error?.message}
-                        />
-                      )}
-                    />
-                  )}
-                />
-
-                <Controller
-                  name="toDate"
-                  control={control}
-                  render={({ field, fieldState: { error } }) => (
-                    <DatePicker
-                      label={translate('Report.ToDate')}
-                      // disablePast
-                      value={field.value}
-                      onChange={(newValue) => {
-                        setValue<any>('toDate', newValue);
-                        field.onChange(newValue);
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          sx={{ marginBottom: '20px' }}
-                          size="small"
-                          fullWidth
-                          error={!!error}
-                          helperText={error?.message}
-                        />
-                      )}
-                    />
-                  )}
-                />
-                <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
-                  <LoadingButton
-                    // fullWidth
-                    size="small"
-                    variant="contained"
-                    //loading={isSubmitting}
-                    onClick={Search}
-                    startIcon={<Iconify icon="eva:search-fill" />}
-                  >
-                    {/* {translate('Expense.Filter')} */}
-                    {translate('Report.Filter')}
-                  </LoadingButton>
-
-                  <ReactToPrint
-                    trigger={() => (
-                      <Button
-                        // fullWidth
-                        size="small"
-                        variant="contained"
-                        color="warning"
-                        startIcon={<Iconify icon="eva:printer-outline" />}
-                        // disabled={StatisticalReportDetails.length === 0 ? true : false}
-                      >
-                        {translate('Report.Print')}
-                      </Button>
+                        )}
+                      />
                     )}
-                    content={() => componentRef.current}
-                    onAfterPrint={() => {
-                      // alert('this is done');
-                    }}
-                    pageStyle="print"
                   />
+                </Grid>
 
-                  <Button
-                    // fullWidth
-                    size="small"
-                    variant="contained"
-                    color="error"
-                    startIcon={<Iconify icon="eva:refresh-outline" />}
-                    onClick={() => {
-                      ExpenseStatisticalReportDetails!.report!.length = 0;
-                      setFilterButtonClicked(!filterButtonClicked);
+                <Grid item xs={12} md={3}>
+                  <Controller
+                    name="expenseTypeIds"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                      <Autocomplete
+                        disableCloseOnSelect
+                        multiple
+                        freeSolo
+                        options={ExpenseTypeOption.map((option: any) => option)}
+                        value={field.value}
+                        getOptionLabel={(option) => option.text}
+                        onChange={(event, newValue) => {
+                          handleChangeExpenseType(event, newValue);
+                          field.onChange(newValue);
+                        }}
+                        renderTags={(value, getTagProps) =>
+                          value.map((option, index) => (
+                            <Chip
+                              {...getTagProps({ index })}
+                              key={option.value}
+                              size="small"
+                              label={option.text}
+                            />
+                          ))
+                        }
+                        renderOption={(props, option, { selected }) => (
+                          <li {...props}>
+                            <Checkbox
+                              icon={icon}
+                              checkedIcon={checkedIcon}
+                              style={{ marginRight: 8 }}
+                              checked={selected}
+                            />
+                            {option.text}
+                          </li>
+                        )}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            sx={{ marginBottom: '20px' }}
+                            size="small"
+                            label={translate('Report.ExpenseType')}
+                            error={!!error}
+                            helperText={error?.message}
+                          />
+                        )}
+                      />
+                    )}
+                  />
+                </Grid>
 
-                      // setDepartment([]);
-                    }}
-                  >
-                    {translate('Report.Reset')}
-                  </Button>
-                </Stack>
-              </>
+                <Grid item xs={12} md={3}>
+                  <Controller
+                    name="fromDate"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                      <DatePicker
+                        label={translate('Report.FromDate')}
+                        value={field.value}
+                        onChange={(newValue) => {
+                          setValue<any>('fromDate', newValue);
+                          field.onChange(newValue);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            fullWidth
+                            {...params}
+                            sx={{ marginBottom: '20px' }}
+                            size="small"
+                            error={!!error}
+                            helperText={error?.message}
+                          />
+                        )}
+                      />
+                    )}
+                  />
+                </Grid>
+
+                <Grid item xs={12} md={3}>
+                  <Controller
+                    name="toDate"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                      <DatePicker
+                        label={translate('Report.ToDate')}
+                        value={field.value}
+                        onChange={(newValue) => {
+                          setValue<any>('toDate', newValue);
+                          field.onChange(newValue);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            fullWidth
+                            {...params}
+                            sx={{ marginBottom: '20px' }}
+                            size="small"
+                            error={!!error}
+                            helperText={error?.message}
+                          />
+                        )}
+                      />
+                    )}
+                  />
+                </Grid>
+              </Grid>
+
+              <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
+                <LoadingButton
+                  size="small"
+                  variant="contained"
+                  onClick={Search}
+                  startIcon={<Iconify icon="eva:search-fill" />}
+                >
+                  {translate('Report.Filter')}
+                </LoadingButton>
+
+                <ReactToPrint
+                  trigger={() => (
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="warning"
+                      startIcon={<Iconify icon="eva:printer-outline" />}
+                    >
+                      {translate('Report.Print')}
+                    </Button>
+                  )}
+                  content={() => componentRef.current}
+                  pageStyle="print"
+                />
+
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="error"
+                  startIcon={<Iconify icon="eva:refresh-outline" />}
+                  onClick={() => {
+                    ExpenseStatisticalReportDetails!.report!.length = 0;
+                    setFilterButtonClicked(!filterButtonClicked);
+                  }}
+                >
+                  {translate('Report.Reset')}
+                </Button>
+              </Stack>
             </Card>
           </Grid>
 
-          <Grid item xs={9} md={8} sx={{}}>
+          <Grid item xs={12} md={12}>
             {isloading ? (
               <Loader />
             ) : (
               <StatisticalReportPrintView
                 ref={componentRef}
-                // bothSide={bothSide}
                 filterButtonClicked={filterButtonClicked}
                 StatisticalReportDetails={ExpenseStatisticalReportDetails}
               />
