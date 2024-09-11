@@ -120,6 +120,7 @@ import {
   IPropertyConditions,
   IPropertyConditionsParams,
 } from 'src/@types/foamCompanyTypes/looks/PropertyConditions';
+import { MainAssetReportView } from 'src/@types/foamCompanyTypes/MainAssetReports';
 // axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
 // axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
@@ -711,6 +712,10 @@ const NPFXReports = {
     axios.post<LoanStatisticalReportView>(`DashboardAndReport/GetLoanReport`, param, {
       withCredentials: true,
     }),
+    GetMainAssetReport: (param: ILoanReportParam) =>
+    axios.post<MainAssetReportView>(`DashboardAndReport/GetTransactionReport`, param, {
+      withCredentials: true,
+    }),
 };
 //  LoanTracking
 const LoanTracking = {
@@ -1021,7 +1026,7 @@ const agent = {
   npfxDashboards,
   trainingVideoAgent,
   PropertyConditions,
-  Categorys
+  Categorys,
 };
 
 export default agent;

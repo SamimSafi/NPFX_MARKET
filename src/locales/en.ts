@@ -1156,6 +1156,13 @@ const en = {
     Afghani: 'Afghani',
     ProfitAmount: 'Profit Amount',
     LossAmount: 'Loss Amount',
+    debitAmount: 'Debit Amount',
+    creditAmount: 'Credit Amount',
+    balanceAmount: 'Balance Amount',
+    transactionDate: 'Transaction Date',
+    MainAssetReport: 'MainAsset Report',
+
+
   },
 
   app: `app`,
