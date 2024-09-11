@@ -1,24 +1,15 @@
 import { forwardRef, useEffect } from 'react';
 import useLocales from 'src/hooks/useLocales';
 // @mui
-import {
-  Card,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableFooter,
-  TableHead,
-  TableRow,
-  Typography,
-} from '@mui/material';
+import { Card, Paper, Stack, Typography } from '@mui/material';
 
 import { useStore } from '../../../../../stores/store';
 import './TradeStatisticalReport.css';
 import EmptyContent from 'src/components/EmptyContent';
 import { DateConverter } from 'src/sections/common/DateConverter';
 import { TradeStatisticalReportView } from 'src/@types/foamCompanyTypes/TradeReports';
+import Scrollbar from 'src/components/Scrollbar';
+import A4Wrapper from '../../Report/A4Wrapper';
 
 // ----------------------------------------------------------------------
 
@@ -64,113 +55,184 @@ export const TradeStatisticalReportPrintView = forwardRef(
 
     return (
       <Card sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}>
-        <>
-          {StatisticalReportDetails && (
-            <>
-              <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
-                <Typography variant="h6" align="center" gutterBottom>
-                  {/* {translate('Expense.ExpenseReport')} */}
-                  Trade Report
-                </Typography>
-                <TableContainer
-                  component={Paper}
+        <A4Wrapper>
+          <Scrollbar sx={{ height: { xs: 340, sm: 'auto', lg: 550 } }}>
+            {StatisticalReportDetails ? (
+              <div ref={ref}>
+                {/* گزارش تجارت */}
+                <Paper
                   sx={{
-                    // maxHeight: 550,
-                    '&::-webkit-scrollbar': { width: 5 },
-                    '&::-webkit-scrollbar-track': { backgroundColor: '999' },
-                    '&::-webkit-scrollbar-thumb': { backgroundColor: '#555', borderRadius: 2 },
+                    width: '100%',
+                    overflow: 'hidden',
+                    height: 'auto',
+                    backgroundColor: 'white',
+                    padding: '10px',
+                    color: 'black', // تنظیم رنگ متن
                   }}
                 >
-                  <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center">{translate('No')}</TableCell>
-                        <TableCell align="center"> {translate('Report.Branch')}</TableCell>
-                        <TableCell align="center"> {translate('Report.ExpenseType')}</TableCell>
-                        <TableCell align="center">{translate('Report.Dollor')}</TableCell>
-                        <TableCell align="center">{translate('Report.Afghani')}</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {StatisticalReportDetails.report!.map((item, index) => (
-                        <TableRow tabIndex={-1} hover key={index}>
-                          <TableCell align="center">{index + 1}</TableCell>
-                          <TableCell align="center">{item.branchName}</TableCell>
-                          <TableCell align="center">{item.tradeAmount}</TableCell>
-                          <TableCell align="center">{item.profitAmount}</TableCell>
-                          <TableCell align="center">{item.lossAmount}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TableCell colSpan={2} align="center">
-                          {translate('Report.GrandTotal')}
-                        </TableCell>
-                        <TableCell align="center">{totalTradeAmount}</TableCell>
-                        <TableCell align="center">{totalProfitAmount}</TableCell>
-                        <TableCell align="center">{totalLossAmount}</TableCell>
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                </TableContainer>
-              </Paper>
-              <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
-                <Typography variant="h6" align="center" gutterBottom>
-                  {translate('Report.TradeTransaction')}
-                </Typography>
-                <TableContainer
-                  component={Paper}
+                  <Stack>
+                    <Typography variant="h6" align="center" gutterBottom sx={{ color: 'black' }}>
+                      {translate('Trade Report')}
+                    </Typography>
+                    <table
+                      className="tg"
+                      style={{
+                        width: '100%',
+                        color: 'black',
+                        borderCollapse: 'collapse', // برای حذف فاصله بین حاشیه‌ها
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('No')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Branch')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Amount')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.ProfitAmount')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.LossAmount')}
+                          </td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {StatisticalReportDetails.report!.map((item, index) => (
+                          <tr key={index} className="report-row">
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {index + 1}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {item.branchName}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {item.tradeAmount}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {item.profitAmount}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {item.lossAmount}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td colSpan={2} style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.GrandTotal')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {totalTradeAmount}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {totalProfitAmount}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {totalLossAmount}
+                          </td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </Stack>
+                </Paper>
+
+                {/* تراکنش‌های تجارت */}
+                <Paper
                   sx={{
-                    // maxHeight: 550,
-                    '&::-webkit-scrollbar': { width: 5 },
-                    '&::-webkit-scrollbar-track': { backgroundColor: '999' },
-                    '&::-webkit-scrollbar-thumb': { backgroundColor: '#555', borderRadius: 2 },
+                    width: '100%',
+                    overflow: 'hidden',
+                    height: 'auto',
+                    backgroundColor: 'white',
+                    padding: '10px',
+                    mt: 2,
+                    color: 'black', // تنظیم رنگ متن
                   }}
                 >
-                  <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center"> {translate('Report.No')}</TableCell>
-                        <TableCell align="center"> {translate('Report.Branch')}</TableCell>
-                        <TableCell align="center"> {translate('Report.MainAssetCode')}</TableCell>
-                        <TableCell align="center">{translate('Report.ProfitAmount')}</TableCell>
-                        <TableCell align="center">{translate('Report.LossAmount')}</TableCell>
-                        <TableCell align="center">{translate('Report.UserName')}</TableCell>
-                        <TableCell align="center">{translate('Report.Date')}</TableCell>
-                        <TableCell align="center">{translate('Report.Description')}</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {StatisticalReportDetails.transactions?.map((data, index) => (
-                        <TableRow key={index}>
-                          <TableCell align="center">{index + 1}</TableCell>
-                          <TableCell align="center">{data.branch}</TableCell>
-                          <TableCell align="center">{data.mainAssetCode}</TableCell>
-                          <TableCell align="center">{data.tradeAmount}</TableCell>
-                          <TableCell align="center">{data.profitAmount}</TableCell>
-                          <TableCell align="center">{data.userName}</TableCell>
-                          <TableCell align="center">{<DateConverter date={data.date} />}</TableCell>
-                          <TableCell align="center">{data.description}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-            </>
-          )}
-          {!StatisticalReportDetails && (
-            <>
-              <EmptyContent
-                title={translate('Expese.NoRecordFound')}
-                sx={{
-                  '& span.MuiBox-root': { height: 160 },
-                }}
-              />
-            </>
-          )}
-        </>
+                  <Stack>
+                    <Typography variant="h6" align="center" gutterBottom sx={{ color: 'black' }}>
+                      {translate('Report.TradeTransaction')}
+                    </Typography>
+                    <table
+                      className="tg"
+                      style={{
+                        width: '100%',
+                        color: 'black',
+                        borderCollapse: 'collapse', // برای حذف فاصله بین حاشیه‌ها
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.No')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Branch')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.MainAssetCode')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.ProfitAmount')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.LossAmount')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.UserName')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Date')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Description')}
+                          </td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {StatisticalReportDetails.transactions?.map((data, index) => (
+                          <tr key={index} className="report-row">
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {index + 1}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.branch}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.mainAssetCode}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.tradeAmount}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.profitAmount}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.userName}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {<DateConverter date={data.date} />}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.description}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </Stack>
+                </Paper>
+              </div>
+            ) : (
+              ''
+            )}
+          </Scrollbar>
+        </A4Wrapper>
       </Card>
     );
   }
