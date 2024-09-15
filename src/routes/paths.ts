@@ -270,6 +270,14 @@ export const PATH_DASHBOARD = {
     edit: path(ROOTS_DASHBOARD, '/Supplier/edit'),
     detail: path(ROOTS_DASHBOARD, '/Supplier/detail'),
   },
+  Property: {
+    root: path(ROOTS_DASHBOARD, '/Property'),
+    list: path(ROOTS_DASHBOARD, '/Property/list'),
+    new: path(ROOTS_DASHBOARD, '/Property/new'),
+    edit: path(ROOTS_DASHBOARD, '/Property/edit'),
+    // detail: path(ROOTS_DASHBOARD, '/Property/detail'),
+    detail: (id: any) => path(ROOTS_DASHBOARD, `/Property/detail/${id}`),
+  },
 
   TrainingVideo: {
     list: path(ROOTS_DASHBOARD, '/TrainingVideo/list'),

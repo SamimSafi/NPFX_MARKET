@@ -120,6 +120,13 @@ import {
   IPropertyConditions,
   IPropertyConditionsParams,
 } from 'src/@types/foamCompanyTypes/looks/PropertyConditions';
+import {
+  IPropertyParams,
+  IPropertyType,
+  Payment,
+  PropertyDetails,
+  PropertyRental,
+} from 'src/@types/foamCompanyTypes/systemTypes/PropertyType';
 // axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 axios.defaults.baseURL = 'http://localhost:9090/api/';
 // axios.defaults.baseURL = 'http://192.168.70.7:9090/api/';
@@ -305,8 +312,7 @@ const Employees = {
     axios.delete<void>(`/EmployeeProfile/${id}`, { data: remark }),
   employeeDetail: (id: number) =>
     requests.get<IEmployeeDetails>(`/EmployeeProfile/GetDetail/${id}`),
-  EmpDDLByDepartment: (empId: number) =>
-    axios.get<any>(`/EmployeeProfile/GetEmployeeProfileDDLByDepartmentId/${empId}`),
+  EmpDDLByCurrentBranch: () => axios.get<any>(`/EmployeeProfile/GetEmplyeeDDLOfCurrentBranch`),
   EmpDDL: (empStatus: any) =>
     axios.get<any>(`/EmployeeProfile/GetEmployeeProfileDDL/${empStatus}`, {
       withCredentials: true,
@@ -560,7 +566,7 @@ const Categorys = {
   //   requests.get<void>(`/Categorys/GetDetail/${CategorysId}`),
   delete: (id: number, remark: string) => axios.delete<void>(`/Categorys/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/Categorys/GetCategorysDDL', {
+    axios.get<any>('/Categorys/GetDropDownList', {
       withCredentials: true,
     }),
 };
@@ -578,7 +584,7 @@ const PropertyConditions = {
   delete: (id: number, remark: string) =>
     axios.delete<void>(`/PropertyConditions/${id}`, { data: remark }),
   DDl: () =>
-    axios.get<any>('/PropertyConditions/GetPropertyConditionsDDL', {
+    axios.get<any>('/PropertyConditions/GetDropDownList', {
       withCredentials: true,
     }),
 };
@@ -975,6 +981,29 @@ const trainingVideoAgent = {
     axios.delete<void>(`/TrainingVideo/${id}`, { data: remark }),
 };
 
+//  Property
+const Property = {
+  create: (Property: IPropertyType) => requests.post<void>('/Propertys', Property),
+  AssignProperty: (PropertyAssign: PropertyRental) =>
+    requests.post<void>('/Propertys/CreateAssignment', PropertyAssign),
+  PayPropertyPayment: (PropertyPayment: Payment) =>
+    requests.post<void>('/Propertys/CreatePropertyPayment', PropertyPayment),
+  getList: (param: IPropertyParams) =>
+    axios.post<any>(`/Propertys/GetList`, param, { withCredentials: true }),
+  updateProperty: (Property: IPropertyType) =>
+    requests.put<void>(`/Propertys/${Property.id}`, Property),
+  updateAssignment: (Property: PropertyRental) =>
+    requests.put<void>(`/Propertys/UpdateAssignment/${Property.propertyId}`, Property),
+  updatePropertyPayment: (Property: Payment) =>
+    requests.put<void>(`/Propertys/UpdatePropertyPayment/${Property.propertyId}`, Property),
+  delete: (id: number, remark: string) => axios.delete<void>(`/Propertys/${id}`, { data: remark }),
+  DDl: () => axios.get<any>(`/Propertys/GetDropDownList`, { withCredentials: true }),
+  PropertyDetails: (id: any) =>
+    axios.get<PropertyDetails>(`/Propertys/GetDetail/${id}`, {
+      withCredentials: true,
+    }),
+};
+
 const agent = {
   Logins,
   Permissions,
@@ -1021,7 +1050,8 @@ const agent = {
   npfxDashboards,
   trainingVideoAgent,
   PropertyConditions,
-  Categorys
+  Categorys,
+  Property,
 };
 
 export default agent;
