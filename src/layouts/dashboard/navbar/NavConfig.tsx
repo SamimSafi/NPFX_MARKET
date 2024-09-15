@@ -122,12 +122,12 @@ const navConfig = [
                 roles: ['PositionTitle-GetAll'],
               },
               {
-                title: 'Categorys',
+                title: 'categorys',
                 path: PATH_DASHBOARD.Categorys.list,
                 roles: ['Categorys-GetAll'],
               },
               {
-                title: 'PropertyConditions',
+                title: 'propertyConditions',
                 path: PATH_DASHBOARD.PropertyConditions.list,
                 roles: ['PropertyConditions-GetAll'],
               },
@@ -214,10 +214,29 @@ const navConfig = [
         icon: ICONS.analytics,
         roles: ['MainAsset-GetList'],
         children: [
+          // {
+          //   title: 'AssetManagementMenu',
+          //   path: PATH_DASHBOARD.MainAsset.list,
+          //   roles: ['MainAsset-GetList'],
+          // },
+
           {
             title: 'AssetManagementMenu',
             path: PATH_DASHBOARD.MainAsset.list,
+            icon: ICONS.hr,
             roles: ['MainAsset-GetList'],
+            children: [
+              {
+                title: 'list',
+                path: PATH_DASHBOARD.MainAsset.list,
+                roles: ['MainAsset-GetList'],
+              },
+              {
+                title: 'report',
+                path: PATH_DASHBOARD.MainAsset.report,
+                roles: ['DashboardAndReport-GetTransactionReport'],
+              },
+            ],
           },
 
           {

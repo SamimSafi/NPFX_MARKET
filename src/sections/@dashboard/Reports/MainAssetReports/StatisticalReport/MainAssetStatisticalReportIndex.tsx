@@ -29,42 +29,42 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import ReactToPrint from 'react-to-print';
 import Loader from 'src/components/loader/Loader';
-import { StatisticalReportPrintView } from './StatisticalReportPrintView';
-import { IExpenseReportParam } from 'src/@types/foamCompanyTypes/ExpenseReports';
+import { MainAssetStatisticalReportPrintView } from './MainAssetStatisticalReportPrintView';
+import { IMainAssetReportParam } from 'src/@types/foamCompanyTypes/MainAssetReports';
 
 // ----------------------------------------------------------------------
 
-export default observer(function StatisticalReportIndex() {
-  const { commonDropdown, ExpenseReportsStore } = useStore();
+export default observer(function MainAssetStatisticalReportIndex() {
+  const { commonDropdown, MainAssetReportsStore } = useStore();
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const [filterButtonClicked, setFilterButtonClicked] = useState(false);
   const [isloading, setIsloading] = useState(false);
   const [branch, setBranch] = useState<any>([]);
-  const [expenseType, setExpenseType] = useState<any>([]);
+  const [MainAssetType, setMainAssetType] = useState<any>([]);
   const { themeStretch } = useSettings();
   const { translate } = useLocales();
 
-  const { loadExpenseStatisticalReport, ExpenseStatisticalReportDetails } = ExpenseReportsStore;
+  const { loadMainAssetStatisticalReport, MainAssetStatisticalReportDetails } = MainAssetReportsStore;
   const {
     loadUserDropdown,
     loadBranchDDL,
     BranchOption,
-    loadExpenseTypeDropdown,
-    ExpenseTypeOption,
+    loadMainAssetDDL,
+    MainAssetOption,
   } = commonDropdown;
   const handleChangeBranch = (event: any, newValue: any[]) => {
     const selectedOptionValues = newValue.map((value) => value.value);
     setBranch(selectedOptionValues);
   };
 
-  const handleChangeExpenseType = (event: any, newValue: any[]) => {
+  const handleChangeMainAssetType = (event: any, newValue: any[]) => {
     const selectedOptionValues = newValue.map((value) => value.value);
-    setExpenseType(selectedOptionValues);
+    setMainAssetType(selectedOptionValues);
   };
 
   let componentRef = useRef<any>(null);
-  const methods = useForm<IExpenseReportParam>({
+  const methods = useForm<IMainAssetReportParam>({
     // defaultValues,
   });
 
@@ -72,7 +72,7 @@ export default observer(function StatisticalReportIndex() {
 
   const val = watch();
 
-  const defaultValues = useMemo<IExpenseReportParam>(
+  const defaultValues = useMemo<IMainAssetReportParam>(
     () => ({
       fromDate: new Date(),
       toDate: new Date(),
@@ -82,7 +82,7 @@ export default observer(function StatisticalReportIndex() {
 
   useEffect(() => {
     loadBranchDDL();
-    loadExpenseTypeDropdown();
+    loadMainAssetDDL();
     reset(defaultValues);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, defaultValues, loadUserDropdown]);
@@ -91,9 +91,8 @@ export default observer(function StatisticalReportIndex() {
     e.preventDefault();
     setFilterButtonClicked(!filterButtonClicked);
     setIsloading(true);
-    loadExpenseStatisticalReport({
-      branchIds: branch,
-      expenseTypeIds: expenseType,
+    loadMainAssetStatisticalReport({
+      mainAssetIds: branch,
       fromDate: val.fromDate,
       toDate: val.toDate,
     }).then((rest) => {
@@ -102,13 +101,13 @@ export default observer(function StatisticalReportIndex() {
       }, 500);
     });
   };
-  useEffect(() => {}, [ExpenseStatisticalReportDetails, isloading]);
+  useEffect(() => {}, [MainAssetStatisticalReportDetails, isloading]);
 
   return (
     <Page title={translate('Report.ReportTitle')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Report.ExpenseReport')}
+          heading={translate('Report.MainAssetReport')}
           links={[{ name: translate('Report.Dashboard'), href: PATH_DASHBOARD.root }]}
         />
 
@@ -118,14 +117,14 @@ export default observer(function StatisticalReportIndex() {
               <Grid container spacing={2}>
                 <Grid item xs={12} md={3}>
                   <Controller
-                    name="branchIds"
+                    name="mainAssetIds"
                     control={control}
                     render={({ field, fieldState: { error } }) => (
                       <Autocomplete
                         disableCloseOnSelect
                         multiple
                         freeSolo
-                        options={BranchOption.map((option: any) => option)}
+                        options={MainAssetOption.map((option: any) => option)}
                         value={field.value}
                         getOptionLabel={(option) => option.text}
                         onChange={(event, newValue) => {
@@ -158,7 +157,7 @@ export default observer(function StatisticalReportIndex() {
                             {...params}
                             sx={{ marginBottom: '20px' }}
                             size="small"
-                            label={translate('Report.Branch')}
+                            label={translate('Report.MainAsset')}
                             error={!!error}
                             helperText={error?.message}
                           />
@@ -168,58 +167,7 @@ export default observer(function StatisticalReportIndex() {
                   />
                 </Grid>
 
-                <Grid item xs={12} md={3}>
-                  <Controller
-                    name="expenseTypeIds"
-                    control={control}
-                    render={({ field, fieldState: { error } }) => (
-                      <Autocomplete
-                        disableCloseOnSelect
-                        multiple
-                        freeSolo
-                        options={ExpenseTypeOption.map((option: any) => option)}
-                        value={field.value}
-                        getOptionLabel={(option) => option.text}
-                        onChange={(event, newValue) => {
-                          handleChangeExpenseType(event, newValue);
-                          field.onChange(newValue);
-                        }}
-                        renderTags={(value, getTagProps) =>
-                          value.map((option, index) => (
-                            <Chip
-                              {...getTagProps({ index })}
-                              key={option.value}
-                              size="small"
-                              label={option.text}
-                            />
-                          ))
-                        }
-                        renderOption={(props, option, { selected }) => (
-                          <li {...props}>
-                            <Checkbox
-                              icon={icon}
-                              checkedIcon={checkedIcon}
-                              style={{ marginRight: 8 }}
-                              checked={selected}
-                            />
-                            {option.text}
-                          </li>
-                        )}
-                        renderInput={(params) => (
-                          <TextField
-                            {...params}
-                            sx={{ marginBottom: '20px' }}
-                            size="small"
-                            label={translate('Report.ExpenseType')}
-                            error={!!error}
-                            helperText={error?.message}
-                          />
-                        )}
-                      />
-                    )}
-                  />
-                </Grid>
-
+               
                 <Grid item xs={12} md={3}>
                   <Controller
                     name="fromDate"
@@ -306,7 +254,7 @@ export default observer(function StatisticalReportIndex() {
                   color="error"
                   startIcon={<Iconify icon="eva:refresh-outline" />}
                   onClick={() => {
-                    ExpenseStatisticalReportDetails!.report!.length = 0;
+                    MainAssetStatisticalReportDetails!.report!.length = 0;
                     setFilterButtonClicked(!filterButtonClicked);
                   }}
                 >
@@ -320,10 +268,10 @@ export default observer(function StatisticalReportIndex() {
             {isloading ? (
               <Loader />
             ) : (
-              <StatisticalReportPrintView
+              <MainAssetStatisticalReportPrintView
                 ref={componentRef}
                 filterButtonClicked={filterButtonClicked}
-                StatisticalReportDetails={ExpenseStatisticalReportDetails}
+                StatisticalReportDetails={MainAssetStatisticalReportDetails}
               />
             )}
           </Grid>

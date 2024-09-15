@@ -77,6 +77,7 @@ import PropertyConditionsCreate from 'src/sections/@dashboard/PropertyConditions
 import PropertyList from 'src/sections/@dashboard/Property/PropertyList/PropertyList';
 import PropertyCreate from 'src/sections/@dashboard/Property/PropertyForm/PropertyCreate';
 import PropertyDetailsHeader from 'src/sections/@dashboard/Property/PropertyForm/PropertyDetailsHeader';
+import MainAssetStatisticalReportIndex from 'src/sections/@dashboard/Reports/MainAssetReports/StatisticalReport/MainAssetStatisticalReportIndex';
 
 // ----------------------------------------------------------------------
 
@@ -462,6 +463,17 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['MainAsset-Create']}>
                   <MainAssetCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'report',
+              element: (
+                <PermissionBasedGuard
+                  hasContent
+                  permissions={['DashboardAndReport-GetTransactionReport']}
+                >
+                  <MainAssetStatisticalReportIndex />
                 </PermissionBasedGuard>
               ),
             },

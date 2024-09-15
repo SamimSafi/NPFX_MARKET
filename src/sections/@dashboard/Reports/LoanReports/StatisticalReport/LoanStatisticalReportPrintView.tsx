@@ -4,6 +4,7 @@ import useLocales from 'src/hooks/useLocales';
 import {
   Card,
   Paper,
+  Stack,
   Table,
   TableBody,
   TableCell,
@@ -18,6 +19,8 @@ import './LoanStatisticalReport.css';
 import EmptyContent from 'src/components/EmptyContent';
 import { DateConverter } from 'src/sections/common/DateConverter';
 import { LoanStatisticalReportView } from 'src/@types/foamCompanyTypes/LoanReports';
+import Scrollbar from 'src/components/Scrollbar';
+import A4Wrapper from '../../Report/A4Wrapper';
 
 // ----------------------------------------------------------------------
 
@@ -43,151 +46,213 @@ export const LoanStatisticalReportPrintView = forwardRef(
     useEffect(() => {}, [StatisticalReportDetails]);
 
     return (
-      <Card
-        sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}
-        ref={ref}
-      >
-        <>
-          {StatisticalReportDetails && (
-            <>
-              <Paper ref={ref} sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
-                <Typography variant="h6" align="center" gutterBottom>
-                  {/* {translate('Expense.ExpenseReport')} */}
-                  Loan Report
-                </Typography>
-                <TableContainer
-                  component={Paper}
+      <Card sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}>
+        <A4Wrapper>
+          <Scrollbar sx={{ height: { xs: 340, sm: 'auto', lg: 550 } }}>
+            {StatisticalReportDetails ? (
+              <div ref={ref}>
+                {/* First Report */}
+                <Paper
                   sx={{
-                    // maxHeight: 550,
-                    '&::-webkit-scrollbar': { width: 5 },
-                    '&::-webkit-scrollbar-track': { backgroundColor: '999' },
-                    '&::-webkit-scrollbar-thumb': { backgroundColor: '#555', borderRadius: 2 },
+                    width: '100%',
+                    overflow: 'hidden',
+                    height: 'auto',
+                    backgroundColor: 'white',
+                    padding: '10px',
+                    color: 'black',
                   }}
                 >
-                  <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center">{translate('Report.No')}</TableCell>
-                        <TableCell align="center">{translate('Report.Branch')}</TableCell>
-                        <TableCell align="center">{translate('Report.LoanType')}</TableCell>
-                        <TableCell align="center">{translate('Report.CurrencyType')}</TableCell>
-                        <TableCell align="center">{translate('Report.Amount')}</TableCell>
-                        <TableCell align="center">{translate('Report.Paid')}</TableCell>
-                        <TableCell align="center">{translate('Report.Remain')}</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {StatisticalReportDetails.report!.map((item, index) => (
-                        <>
-                          {item.loanGivenType!.map((loanType, loanIndex) =>
-                            loanType.currencyTypeModels!.map((currency, currencyIndex) => (
-                              <TableRow
-                                tabIndex={-1}
-                                hover
-                                key={`${index}-${loanIndex}-${currencyIndex}`}
-                              >
-                                {loanIndex === 0 && currencyIndex === 0 && (
-                                  <>
-                                    <TableCell
-                                      align="center"
-                                      rowSpan={item.loanGivenType!.reduce(
-                                        (sum, loan) => sum + loan.currencyTypeModels!.length,
-                                        0
-                                      )}
+                  <Stack>
+                    <Typography variant="h6" align="center" gutterBottom sx={{ color: 'black' }}>
+                      Loan Report
+                    </Typography>
+                    <table
+                      className="tg"
+                      style={{
+                        width: '100%',
+                        color: 'black',
+                        borderCollapse: 'collapse',
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.No')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Branch')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.LoanType')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.CurrencyType')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Amount')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Paid')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Remain')}
+                          </td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {StatisticalReportDetails.report!.map((item, index) => (
+                          <>
+                            {item.loanGivenType!.map((loanType, loanIndex) =>
+                              loanType.currencyTypeModels!.map((currency, currencyIndex) => (
+                                <tr
+                                  key={`${index}-${loanIndex}-${currencyIndex}`}
+                                  className="report-row"
+                                >
+                                  {loanIndex === 0 && currencyIndex === 0 && (
+                                    <>
+                                      <td
+                                        rowSpan={item.loanGivenType!.reduce(
+                                          (sum, loan) => sum + loan.currencyTypeModels!.length,
+                                          0
+                                        )}
+                                        style={{ border: '1px solid black', padding: '5px' }}
+                                      >
+                                        {index + 1}
+                                      </td>
+                                      <td
+                                        rowSpan={item.loanGivenType!.reduce(
+                                          (sum, loan) => sum + loan.currencyTypeModels!.length,
+                                          0
+                                        )}
+                                        style={{ border: '1px solid black', padding: '5px' }}
+                                      >
+                                        {item.branchName}
+                                      </td>
+                                    </>
+                                  )}
+                                  {currencyIndex === 0 && (
+                                    <td
+                                      rowSpan={loanType.currencyTypeModels!.length}
+                                      style={{ border: '1px solid black', padding: '5px' }}
                                     >
-                                      {index + 1}
-                                    </TableCell>
-                                    <TableCell
-                                      align="center"
-                                      rowSpan={item.loanGivenType!.reduce(
-                                        (sum, loan) => sum + loan.currencyTypeModels!.length,
-                                        0
-                                      )}
-                                    >
-                                      {item.branchName}
-                                    </TableCell>
-                                  </>
-                                )}
-                                {currencyIndex === 0 && (
-                                  <TableCell
-                                    align="center"
-                                    rowSpan={loanType.currencyTypeModels!.length}
-                                  >
-                                    {loanType.isGiven
-                                      ? `${translate('Report.Given')}`
-                                      : `${translate('Report.Taken')}`}
-                                  </TableCell>
-                                )}
-                                <TableCell align="center">{currency.currencyType}</TableCell>
-                                <TableCell align="center">{currency.loanAmount}</TableCell>
-                                <TableCell align="center">{currency.paidAmount}</TableCell>
-                                <TableCell align="center">{currency.remainAmount}</TableCell>
-                              </TableRow>
-                            ))
-                          )}
-                        </>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-              <Paper sx={{ width: '100%', overflow: 'hidden', height: 'auto' }}>
-                <Typography variant="h6" align="center" gutterBottom>
-                  {/* {translate('Expense.ExpenseReport')} */}
-                  Loan Transaction
-                </Typography>
-                <TableContainer
-                  component={Paper}
+                                      {loanType.isGiven
+                                        ? `${translate('Report.Given')}`
+                                        : `${translate('Report.Taken')}`}
+                                    </td>
+                                  )}
+                                  <td style={{ border: '1px solid black', padding: '5px' }}>
+                                    {currency.currencyType}
+                                  </td>
+                                  <td style={{ border: '1px solid black', padding: '5px' }}>
+                                    {currency.loanAmount}
+                                  </td>
+                                  <td style={{ border: '1px solid black', padding: '5px' }}>
+                                    {currency.paidAmount}
+                                  </td>
+                                  <td style={{ border: '1px solid black', padding: '5px' }}>
+                                    {currency.remainAmount}
+                                  </td>
+                                </tr>
+                              ))
+                            )}
+                          </>
+                        ))}
+                      </tbody>
+                    </table>
+                  </Stack>
+                </Paper>
+
+                {/* Second Report */}
+                <Paper
                   sx={{
-                    // maxHeight: 550,
-                    '&::-webkit-scrollbar': { width: 5 },
-                    '&::-webkit-scrollbar-track': { backgroundColor: '999' },
-                    '&::-webkit-scrollbar-thumb': { backgroundColor: '#555', borderRadius: 2 },
+                    width: '100%',
+                    overflow: 'hidden',
+                    height: 'auto',
+                    backgroundColor: 'white',
+                    padding: '10px',
+                    mt: 2,
+                    color: 'black',
                   }}
                 >
-                  <Table stickyHeader aria-label="simple table" size="small" className="blueTable">
-                    <TableHead>
-                      <TableRow>
-                        <TableCell align="center">{translate('Report.No')}</TableCell>
-                        <TableCell align="center">{translate('Report.Branch')}</TableCell>
-                        <TableCell align="center">{translate('Report.MainAssetCode')}</TableCell>
-                        <TableCell align="center">{translate('Report.CurrencyType')}</TableCell>
-                        <TableCell align="center">{translate('Report.Amount')}</TableCell>
-                        <TableCell align="center">{translate('Report.UserName')}</TableCell>
-                        <TableCell align="center">{translate('Report.Date')}</TableCell>
-                        <TableCell align="center">{translate('Report.Description')}</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {StatisticalReportDetails.transactions?.map((data, index) => (
-                        <TableRow key={index}>
-                          <TableCell align="center">{index + 1}</TableCell>
-                          <TableCell align="center">{data.branch}</TableCell>
-                          <TableCell align="center">{data.mainAssetCode}</TableCell>
-                          <TableCell align="center">{data.currencyType}</TableCell>
-                          <TableCell align="center">{data.amount}</TableCell>
-                          <TableCell align="center">{data.userName}</TableCell>
-                          <TableCell align="center">{<DateConverter date={data.date} />}</TableCell>
-                          <TableCell align="center">{data.description}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Paper>
-            </>
-          )}
-          {!StatisticalReportDetails && (
-            <>
-              <EmptyContent
-                title={translate('NoRecordFound')}
-                sx={{
-                  '& span.MuiBox-root': { height: 160 },
-                }}
-              />
-            </>
-          )}
-        </>
+                  <Stack>
+                    <Typography variant="h6" align="center" gutterBottom sx={{ color: 'black' }}>
+                      Loan Transaction
+                    </Typography>
+                    <table
+                      className="tg"
+                      style={{
+                        width: '100%',
+                        color: 'black',
+                        borderCollapse: 'collapse',
+                      }}
+                    >
+                      <thead>
+                        <tr>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.No')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Branch')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.MainAssetCode')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.CurrencyType')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Amount')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.UserName')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Date')}
+                          </td>
+                          <td style={{ border: '1px solid black', padding: '5px' }}>
+                            {translate('Report.Description')}
+                          </td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {StatisticalReportDetails.transactions?.map((data, index) => (
+                          <tr key={index} className="report-row">
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {index + 1}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.branch}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.mainAssetCode}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.currencyType}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.amount}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.userName}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {<DateConverter date={data.date} />}
+                            </td>
+                            <td style={{ border: '1px solid black', padding: '5px' }}>
+                              {data.description}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </Stack>
+                </Paper>
+              </div>
+            ) : (
+              ''
+            )}
+          </Scrollbar>
+        </A4Wrapper>
       </Card>
     );
   }

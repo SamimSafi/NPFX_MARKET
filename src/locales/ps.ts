@@ -743,6 +743,8 @@ const dr = {
     Update: 'د ملک شرایط تازه کړئ',
     AddTitle: 'د ملک شرایط اضافه کړئ',
     UpdateTitle: 'د ملک شرایط تازه کړئ',
+    categorys: 'کتګورۍ',
+    propertyConditions: 'د ملک شرایط',
   },
   //Role
   userRole: {
@@ -1081,6 +1083,11 @@ const dr = {
     Afghani: 'افغانۍ',
     ProfitAmount: 'د ګټې مقدار',
     LossAmount: 'د زیان مقدار',
+    debitAmount: 'د پور ورکولو اندازه',
+    creditAmount: 'د اعتبار اندازه',
+    balanceAmount: 'د توازن اندازه',
+    transactionDate: 'د معامله نیټه',
+    MainAssetReport: 'د اصلي شتمنۍ راپور',
   },
   Npfx: {
     NpfxWellcome: 'د NPFX شرکت د مدیریت سیسټم ته ښه راغلاست',

@@ -1156,6 +1156,13 @@ const en = {
     Afghani: 'Afghani',
     ProfitAmount: 'Profit Amount',
     LossAmount: 'Loss Amount',
+    debitAmount: 'Debit Amount',
+    creditAmount: 'Credit Amount',
+    balanceAmount: 'Balance Amount',
+    transactionDate: 'Transaction Date',
+    MainAssetReport: 'MainAsset Report',
+
+
   },
 
   app: `app`,
@@ -1194,6 +1201,9 @@ const en = {
   only_admin_can_see_this_item: `Only admin can see this item`,
   report: 'Report',
   NoRecordFound: 'No Record Found',
+  categorys:'Categorys',
+  propertyConditions:'property Conditions'
+
 };
 
 export default en;

@@ -1105,6 +1105,11 @@ const ps = {
     Afghani: 'افغانی',
     ProfitAmount: 'مقدار سود',
     LossAmount: 'مقدار ضرر',
+    debitAmount: 'مقدار بدهی',
+    creditAmount: 'مقدار اعتبار',
+    balanceAmount: 'مقدار توازن',
+    transactionDate: 'تاریخ معامله',
+    MainAssetReport: 'گزارش دارایی اصلی',
   },
 
   apps: 'اپلیکیشن ها',
@@ -1149,6 +1154,8 @@ const ps = {
   employeePosition: 'بست کارمند',
   report: 'گزارشات',
   NoRecordFound: 'هیچ ریکارد ای یافت نشد',
+  categorys: 'دسته‌ها',
+  propertyConditions: 'شرایط ملک',
 };
 
 export default ps;
