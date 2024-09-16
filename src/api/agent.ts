@@ -121,6 +121,7 @@ import {
   IPropertyConditionsParams,
 } from 'src/@types/foamCompanyTypes/looks/PropertyConditions';
 import {
+  IChangePropertyCondition,
   IPropertyParams,
   IPropertyType,
   Payment,
@@ -993,6 +994,8 @@ const Property = {
     requests.post<void>('/Propertys/CreateAssignment', PropertyAssign),
   PayPropertyPayment: (PropertyPayment: Payment) =>
     requests.post<void>('/Propertys/CreatePropertyPayment', PropertyPayment),
+  ChangePropertyCondition: (PropertyCondition: IChangePropertyCondition) =>
+    requests.post<void>('/Propertys/ChangeCondition', PropertyCondition),
   getList: (param: IPropertyParams) =>
     axios.post<any>(`/Propertys/GetList`, param, { withCredentials: true }),
   updateProperty: (Property: IPropertyType) =>

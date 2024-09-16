@@ -74,10 +74,10 @@ export default observer(function PropertyNewEditForm() {
     formState: { isSubmitting, errors },
     control,
   } = methods;
-  const onSubmit = (data: IPropertyType) => {
+  const onSubmit = async (data: IPropertyType) => {
     if (data.id! === undefined) {
       ///create
-      createProperty(data)
+      await createProperty(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);

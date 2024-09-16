@@ -18,6 +18,12 @@ export interface IPropertyType {
   afterSubmit?: string;
 }
 
+export interface IChangePropertyCondition {
+  id?: number;
+  conditionId?: number;
+  afterSubmit?: string;
+}
+
 export interface PropertyRental {
   id?: number;
   propertyId?: number;

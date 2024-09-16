@@ -8,6 +8,7 @@ import {
   Payment,
   PropertyDetails,
   Assignment,
+  IChangePropertyCondition,
 } from 'src/@types/foamCompanyTypes/systemTypes/PropertyType';
 export default class PropertyStore {
   openDialog = false;
@@ -15,6 +16,8 @@ export default class PropertyStore {
   openAssignDialog = false;
 
   openPaymentDialog = false;
+
+  openChangeStatusDialog = false;
 
   PropertyRegistry = new Map<number, IPropertyType>();
 
@@ -122,6 +125,9 @@ export default class PropertyStore {
 
   setOpenClosePaymentDialog = () => (this.openPaymentDialog = !this.openPaymentDialog);
 
+  setOpenCloseChangeStatusDialog = () =>
+    (this.openChangeStatusDialog = !this.openChangeStatusDialog);
+
   createProperty = async (Property: IPropertyType) => {
     await agentProperty.Property.create(Property);
     runInAction(() => {
@@ -147,6 +153,13 @@ export default class PropertyStore {
     await agentProperty.Property.PayPropertyPayment(Property);
     runInAction(() => {
       this.loadPropertyDetails(Property.propertyId!);
+    });
+  };
+
+  ChangeCondition = async (PropertyCondition: IChangePropertyCondition) => {
+    await agentProperty.Property.ChangePropertyCondition(PropertyCondition);
+    runInAction(() => {
+      this.loadProperty({ pageIndex: 0, pageSize: 5 });
     });
   };
 

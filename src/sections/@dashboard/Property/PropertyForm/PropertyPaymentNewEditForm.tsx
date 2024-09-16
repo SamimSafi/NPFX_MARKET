@@ -65,10 +65,10 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
     formState: { isSubmitting, errors },
     control,
   } = methods;
-  const onSubmit = (data: Payment) => {
+  const onSubmit = async (data: Payment) => {
     ///create
     if (data.id === undefined) {
-      propertyPayment(data)
+      await propertyPayment(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -95,7 +95,7 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
           }
         });
     } else {
-      UpdatePropertyPayment(data)
+      await UpdatePropertyPayment(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);

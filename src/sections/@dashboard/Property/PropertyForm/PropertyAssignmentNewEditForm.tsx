@@ -66,10 +66,10 @@ export default observer(function PropertyAssignmentNewEditForm({ id, Assignment 
     formState: { isSubmitting, errors },
     control,
   } = methods;
-  const onSubmit = (data: PropertyRental) => {
+  const onSubmit = async (data: PropertyRental) => {
     ///create
     if (data.id === undefined) {
-      assignProperty(data)
+      await assignProperty(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);

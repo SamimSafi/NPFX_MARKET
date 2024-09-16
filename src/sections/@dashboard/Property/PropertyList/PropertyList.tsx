@@ -30,6 +30,7 @@ import { IPropertyType } from 'src/@types/foamCompanyTypes/systemTypes/PropertyT
 import PropertyTableToolbar from './PropertyTableToolbar';
 import PropertyAssignmentNewEditForm from '../PropertyForm/PropertyAssignmentNewEditForm';
 import PropertyPaymentNewEditForm from '../PropertyForm/PropertyPaymentNewEditForm';
+import PropertyChangeStatus from '../PropertyForm/PropertyChangeStatus';
 
 // ----------------------------------------------------------------------
 
@@ -50,6 +51,8 @@ export default observer(function PropertyList() {
     openAssignDialog,
     setOpenClosePaymentDialog,
     openPaymentDialog,
+    setOpenCloseChangeStatusDialog,
+    openChangeStatusDialog,
   } = PropertyStore;
   const {
     dense,
@@ -101,6 +104,15 @@ export default observer(function PropertyList() {
 
   const handleCloseConfirm = () => {
     setOpenCloseDialog();
+  };
+
+  const handleOpenChangeStatusConfirm = (id: number) => {
+    setPropertyId(id);
+    setOpenCloseChangeStatusDialog();
+  };
+
+  const handleCloseChangeStatusConfirm = () => {
+    setOpenCloseChangeStatusDialog();
   };
 
   const handleCloseConfirmAssign = () => {
@@ -204,46 +216,6 @@ export default observer(function PropertyList() {
               >
                 {translate('CRUD.Create')}
               </Button>
-              {/* <Button
-                variant="contained"
-                startIcon={<Iconify icon="eva:plus-fill" />}
-                component={RouterLink}
-                to={PATH_DASHBOARD.Property.detail}
-              >
-                {translate('CRUD.Details')}
-              </Button> */}
-              {/* <Button
-                variant="contained"
-                startIcon={<Iconify icon="eva:plus-fill" />}
-                component={RouterLink}
-                to={PATH_DASHBOARD.general.ecommerce}
-              >
-                {translate('CRUD.one')}
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<Iconify icon="eva:plus-fill" />}
-                component={RouterLink}
-                to={PATH_DASHBOARD.general.banking}
-              >
-                {translate('CRUD.two')}
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<Iconify icon="eva:plus-fill" />}
-                component={RouterLink}
-                to={PATH_DASHBOARD.general.booking}
-              >
-                {translate('CRUD.three')}
-              </Button>
-              <Button
-                variant="contained"
-                startIcon={<Iconify icon="eva:plus-fill" />}
-                component={RouterLink}
-                to={PATH_DASHBOARD.general.analytics}
-              >
-                {translate('CRUD.four')}
-              </Button> */}
             </>
           }
         />
@@ -275,6 +247,7 @@ export default observer(function PropertyList() {
                         onDetailsRow={() => handleDetail(row.id!)}
                         handleAssignProperty={() => handleAssignProperty(row.id!)}
                         handlePaymentProperty={() => handlePaymentProperty(row.id!)}
+                        handleOpenChangeStatusConfirm={() => handleOpenChangeStatusConfirm(row.id!)}
                       />
                     ))}
 
@@ -328,6 +301,15 @@ export default observer(function PropertyList() {
               size="md"
             >
               <PropertyPaymentNewEditForm id={PropertyId!} />
+            </MyDialog>
+
+            <MyDialog
+              open={openChangeStatusDialog}
+              onClose={handleCloseChangeStatusConfirm}
+              title={translate('CRUD.ChangeStatus')}
+              size="md"
+            >
+              <PropertyChangeStatus id={PropertyId!} />
             </MyDialog>
             <FormControlLabel
               control={<Switch checked={dense} onChange={onChangeDense} />}

@@ -78,10 +78,10 @@ export default observer(function DepositToNewEditForm({ asssetID }: Props) {
     watch,
   } = methods;
   const val = watch();
-  const onSubmit = (data: IDepositTo) => {
+  const onSubmit = async (data: IDepositTo) => {
     if (data.id! === undefined) {
       ///create
-      deposit(data)
+      await deposit(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
