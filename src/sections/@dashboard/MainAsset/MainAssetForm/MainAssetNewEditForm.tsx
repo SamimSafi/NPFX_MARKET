@@ -76,10 +76,10 @@ export default observer(function MainAssetNewEditForm() {
     watch,
   } = methods;
   const val = watch();
-  const onSubmit = (data: IMainAsset) => {
+  const onSubmit = async (data: IMainAsset) => {
     if (data.id! === undefined) {
       ///create
-      createMainAsset(data)
+      await createMainAsset(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -107,7 +107,7 @@ export default observer(function MainAssetNewEditForm() {
         });
     } else {
       ///update
-      updateMainAsset(data).then(() => {
+      await updateMainAsset(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.MainAsset.list);

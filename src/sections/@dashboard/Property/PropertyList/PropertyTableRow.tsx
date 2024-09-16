@@ -19,6 +19,7 @@ type Props = {
   onDetailsRow: VoidFunction;
   handleAssignProperty: VoidFunction;
   handlePaymentProperty: VoidFunction;
+  handleOpenChangeStatusConfirm: VoidFunction;
   index: any;
 };
 
@@ -29,6 +30,7 @@ export default function PropertyTableRow({
   onDetailsRow,
   handleAssignProperty,
   handlePaymentProperty,
+  handleOpenChangeStatusConfirm,
   index,
 }: Props) {
   const { name, model, details, price, category } = row;
@@ -95,7 +97,7 @@ export default function PropertyTableRow({
                   handleAssignProperty();
                 }}
               >
-                <Iconify sx={{ color: 'success.main' }} icon={'eva:clipboard-outline'} />
+                <Iconify sx={{ color: 'success.main' }} icon={'ic:round-assignment-turned-in'} />
                 {translate('CRUD.Assign')}
               </MenuItem>
               <MenuItem
@@ -103,8 +105,19 @@ export default function PropertyTableRow({
                   handlePaymentProperty();
                 }}
               >
-                <Iconify sx={{ color: 'success.main' }} icon={'eva:clipboard-outline'} />
+                <Iconify
+                  sx={{ color: 'success.main' }}
+                  icon={'material-symbols:payments-outline-rounded'}
+                />
                 {translate('CRUD.Payment')}
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  handleOpenChangeStatusConfirm();
+                }}
+              >
+                <Iconify sx={{ color: 'success.main' }} icon={'tabler:status-change'} />
+                {translate('CRUD.Change Status')}
               </MenuItem>
             </>
           }
