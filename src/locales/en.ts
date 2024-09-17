@@ -629,6 +629,17 @@ const en = {
     FullName: 'Full Name',
     Account: 'Account',
   },
+  EmployeeProperty:{
+    PopertyDetails:'Property Details',
+    EmployeePropertyDetails:'Employee Property Details',
+    Name:'Name',
+    Category:'Category',
+    Model:'Model',
+    Price:'Price',
+    Details:'Details',
+   
+  },
+
   //ContractDetails
   ContractDetails: {
     Title: 'Contract Details: List',

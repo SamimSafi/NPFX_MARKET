@@ -1118,6 +1118,15 @@ const dr = {
     transactionDate: 'د معامله نیټه',
     MainAssetReport: 'د اصلي شتمنۍ راپور',
   },
+  EmployeeProperty: {
+    PopertyDetails: 'د ملکیت جزئیات',
+    EmployeePropertyDetails: 'د کارمند ملکیت جزئیات',
+    Name: 'نوم',
+    Category: 'کټګوري',
+    Model: 'ماډل',
+    Price: 'بیه',
+    Details: 'تفصیل',
+  },
   Npfx: {
     NpfxWellcome: 'د NPFX شرکت د مدیریت سیسټم ته ښه راغلاست',
     NPFXMarket: 'NPFX مارکیت',

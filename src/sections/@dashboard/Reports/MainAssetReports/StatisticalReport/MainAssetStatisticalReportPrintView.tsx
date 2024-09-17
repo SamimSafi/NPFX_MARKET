@@ -1,12 +1,7 @@
 import { forwardRef, useEffect } from 'react';
 import useLocales from 'src/hooks/useLocales';
 // @mui
-import {
-  Card,
-  Paper,
-  Stack,
-  Typography,
-} from '@mui/material';
+import { Card, Paper, Stack, Typography } from '@mui/material';
 import { useStore } from '../../../../../stores/store';
 import './MainAssetStatisticalReport.css';
 import EmptyContent from 'src/components/EmptyContent';
@@ -38,15 +33,18 @@ export const MainAssetStatisticalReportPrintView = forwardRef(
     useEffect(() => {}, [StatisticalReportDetails]);
 
     // Group transactions by mainAssetCode
-    const groupedTransactions = (StatisticalReportDetails?.report ?? []).reduce((acc: any, item: any) => {
-      (item.transactionModel ?? []).forEach((transaction: any) => {
-        if (!acc[item.mainAssetCode]) {
-          acc[item.mainAssetCode] = [];
-        }
-        acc[item.mainAssetCode].push(transaction);
-      });
-      return acc;
-    }, {});
+    const groupedTransactions = (StatisticalReportDetails?.report ?? []).reduce(
+      (acc: any, item: any) => {
+        (item.transactionModel ?? []).forEach((transaction: any) => {
+          if (!acc[item.mainAssetCode]) {
+            acc[item.mainAssetCode] = [];
+          }
+          acc[item.mainAssetCode].push(transaction);
+        });
+        return acc;
+      },
+      {}
+    );
 
     return (
       <Card sx={{ padding: '10px', height: 'auto', marginLeft: '10px', paddingTop: '30px' }}>
@@ -112,23 +110,31 @@ export const MainAssetStatisticalReportPrintView = forwardRef(
                       <tbody>
                         {Object.keys(groupedTransactions).map((assetCode, index) => {
                           const transactions = groupedTransactions[assetCode];
-                          return transactions.map((transaction:any, transactionIndex:any) => (
+                          return transactions.map((transaction: any, transactionIndex: any) => (
                             <tr key={`${index}-${transactionIndex}`} className="report-row">
-                              
                               {transactionIndex === 0 && (
-                                <td  rowSpan={transactions.length} style={{ border: '1px solid black', padding: '5px' }}>
-                                {index + 1}
-                              </td>
+                                <td
+                                  rowSpan={transactions.length}
+                                  style={{ border: '1px solid black', padding: '5px' }}
+                                >
+                                  {index + 1}
+                                </td>
                               )}
                               {transactionIndex === 0 && (
                                 <td
                                   rowSpan={transactions.length}
-                                  style={{ border: '1px solid black', padding: '5px', backgroundColor: '#f5f5f5' }}
+                                  style={{
+                                    border: '1px solid black',
+                                    padding: '5px',
+                                    backgroundColor: '#f5f5f5',
+                                    textAlign: 'center',
+                                    transform: 'rotate(180deg)',
+                                  }}
                                 >
                                   {assetCode}
                                 </td>
                               )}
-                             
+
                               <td style={{ border: '1px solid black', padding: '5px' }}>
                                 {transaction.currencyType}
                               </td>
@@ -159,7 +165,7 @@ export const MainAssetStatisticalReportPrintView = forwardRef(
                 </Paper>
               </div>
             ) : (
-              ""
+              ''
             )}
           </Scrollbar>
         </A4Wrapper>

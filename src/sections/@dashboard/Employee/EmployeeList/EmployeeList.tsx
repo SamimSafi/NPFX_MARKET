@@ -49,8 +49,7 @@ import EmployeeDetails from '../../employeeAttendance/EmployeeDetails';
 // ----------------------------------------------------------------------
 
 export default observer(function EmployeeList() {
-  const { EmployeeStore, ContractDetailsStore } =
-    useStore();
+  const { EmployeeStore, ContractDetailsStore, PropertyStore } = useStore();
   const { translate } = useLocales();
   const {
     loadEmployee,
@@ -58,17 +57,15 @@ export default observer(function EmployeeList() {
     EmployeeRegistry,
     totalRecord,
     EmployeeSearch,
-    deleteEmployee,
     getEmployeeFromRegistry,
     setOpenCloseDialog,
     openDialog,
     getEmpForEdit,
-    clearSelectedEmployee,
     loadEmployeeDetail,
-    selectedEmployee,
   } = EmployeeStore;
-  const { loadContractDetails, getEmpCurrentContract,ContractDetailsRegistry } = ContractDetailsStore;
-
+  const { loadContractDetails, getEmpCurrentContract, ContractDetailsRegistry } =
+    ContractDetailsStore;
+  const { GetPropertiesByEmp } = PropertyStore;
   const {
     dense,
     page,
@@ -136,7 +133,13 @@ export default observer(function EmployeeList() {
 
   const handleDetail = (id: number) => {
     loadEmployeeDetail(id).then(() => {
+      GetPropertiesByEmp(id);
       navigate(PATH_DASHBOARD.Employee.detail);
+    });
+  }; 
+  const handlePropertyDetail = (id: number) => {
+    GetPropertiesByEmp(id).then(() => {
+      navigate(PATH_DASHBOARD.Employee.EmpProperty);
     });
   };
 
@@ -261,6 +264,7 @@ export default observer(function EmployeeList() {
                         onContractDetails={() => handleContractDetails(row.id!)}
                         onEducationalLevelDetails={() => handleEducationalLevelDetails(row.id!)}
                         handleDetail={() => handleDetail(row.id!)}
+                        handlePropertyDetail={() => handlePropertyDetail(row.id!)}
                         doubleClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                           if (e.detail == 2) {
                             employeeDetails(row.id!);

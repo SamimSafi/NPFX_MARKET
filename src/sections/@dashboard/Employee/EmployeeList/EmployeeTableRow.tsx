@@ -25,6 +25,7 @@ type Props = {
   onContractDetails: VoidFunction;
   onEducationalLevelDetails: VoidFunction;
   handleDetail: VoidFunction;
+  handlePropertyDetail: VoidFunction;
   doubleClick: any;
 };
 
@@ -37,6 +38,7 @@ export default function EmployeeTableRow({
   onContractDetails,
   onEducationalLevelDetails,
   handleDetail,
+  handlePropertyDetail,
   index,
   doubleClick,
 }: Props) {
@@ -143,15 +145,7 @@ export default function EmployeeTableRow({
                   {translate('Employee.ContractDetails')}
                 </MenuItem>
 
-                {/* <MenuItem
-                  onClick={() => {
-                    onCardDetails();
-                    handleCloseMenu();
-                  }}
-                >
-                  <Iconify sx={{ color: 'success.main' }} icon={'entypo:v-card'} />
-                  {translate('Employee.CardDetails')}
-                </MenuItem> */}
+              
                 {/* <MenuItem
                   onClick={() => {
                     onEducationalLevelDetails();
@@ -172,6 +166,18 @@ export default function EmployeeTableRow({
                     {translate('Employee.Details')}
                   </MenuItem>
                 </PermissionBasedGuard>
+
+                {/* <PermissionBasedGuard permissions={['Employee-GetDetail']}> */}
+                  <MenuItem
+                    onClick={() => {
+                      handlePropertyDetail();
+                      // handleCloseMenu();
+                    }}
+                  >
+                    <Iconify sx={{ color: 'info.main' }} icon={'mdi:account-details'} />
+                    {translate('EmployeeProperty.PopertyDetails')}
+                  </MenuItem>
+                {/* </PermissionBasedGuard> */}
               </>
             }
           />

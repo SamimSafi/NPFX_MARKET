@@ -17,10 +17,11 @@ export default observer(function EmployeeDetailHeader() {
   const { translate } = useLocales();
   const {
     EmployeeStore: { SelectedEmployeeDetail, clearSelectedEmployee },
+    PropertyStore: { GetPropertiesByEmpId },
   } = useStore();
 
   const { themeStretch } = useSettings();
-
+  console.log(GetPropertiesByEmpId);
   return (
     <Page title={translate('Employee.DetailsTitle')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>

@@ -1140,6 +1140,15 @@ const ps = {
     transactionDate: 'تاریخ معامله',
     MainAssetReport: 'گزارش دارایی اصلی',
   },
+  EmployeeProperty: {
+    PopertyDetails: 'جزئیات ملکیت',
+    EmployeePropertyDetails: 'جزئیات ملکیت کارمند',
+    Name: 'نام',
+    Category: 'کتگوری',
+    Model: 'مودل',
+    Price: 'قیمت',
+    Details: 'جزئیات',
+  },
 
   apps: 'اپلیکیشن ها',
   Application: `اپلیکیشن`,
