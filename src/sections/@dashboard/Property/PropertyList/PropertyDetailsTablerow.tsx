@@ -88,7 +88,7 @@ export default function PropertyDetailsTablerow({ row }: Props) {
               </Box>
               <Box>
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                  {translate('Category.Category')}:
+                  {translate('Categorys.Categorys')}:
                 </Typography>
                 <Typography variant="body2">{row.category}</Typography>
               </Box>

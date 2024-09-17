@@ -160,7 +160,7 @@ export default observer(function PropertyNewEditForm() {
                 showAsterisk={true}
                 autoFocus
               />
-              <RHFSelect name="categoryId" label={translate('Category.Category')}>
+              <RHFSelect name="categoryId" label={translate('Categorys.Categorys')}>
                 <option value="" />
                 {CategorysOption.map((op) => (
                   <option key={op.value} value={op.value}>

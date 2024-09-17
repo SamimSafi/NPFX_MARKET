@@ -79,7 +79,7 @@ export default observer(function PropertyList() {
     { id: 'model', label: `${translate('Property.Model')}`, align: 'left' },
     { id: 'details', label: `${translate('Employee.Details')}`, align: 'left' },
     { id: 'price', label: `${translate('Property.Price')}`, align: 'left' },
-    { id: 'ُCategory', label: `${translate('Category.Category')}`, align: 'left' },
+    { id: 'ُCategory', label: `${translate('Categorys.Categorys')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {
