@@ -65,6 +65,12 @@ const en = {
     SearchButton: 'Search',
     SearchPlaceholder: 'Search...',
     Close: 'Close',
+    // propery
+    ChangeStatus: 'Change Status',
+    Assign: 'Assign',
+    Pay: 'Pay',
+    Assignment: 'Assign To',
+    Payment: 'Due Payment',
   },
 
   docs: {
@@ -194,6 +200,29 @@ const en = {
     AddTitle: 'Add Property Conditions',
     UpdateTitle: 'Update Property Conditions',
   },
+  Property: {
+    AddTitle: 'Property Create',
+    PropertyList: 'Property List',
+    UpdateTitle: 'Update Property',
+    DetailsTitle: 'Property Details',
+    New: 'New Property',
+    Update: 'Update Property',
+    Employee: 'Employee Name',
+    PropertyConditions: `Property Conditions`,
+    Model: `Model`,
+    PaymentDate: `Payment Date`,
+    Payments: `Payments`,
+    Payment: `Payment`,
+    Price: `Price`,
+    Assignments: `Assignments`,
+    Assignment: `Assignment`,
+    AmountPaid: `Amount Paid`,
+    PayableAmount: `Payable Amount Paid`,
+    RemainingBalance: `Remaining Balance`,
+    MaintenanceHistory: `Maintenance History`,
+    Placeholder: `Search here ....`,
+  },
+
   Partner: {
     Partner: `Partner `,
     PartnerPhone: `Partner Phone `,
@@ -416,6 +445,13 @@ const en = {
     ToUser: 'To User is Required',
     TradeAmount: 'Trade Amount is Required',
     WithdrawalAmount: 'Withdrawal Amount is Required',
+    // Property Validation
+    PropertyIsRequired: 'Property is Required',
+    ConditionId: 'Condition is Required',
+    Category: 'Category is Required',
+    Price: 'Price is Required',
+    AmountPaid: 'AmountPaid is Required',
+    PaymentDate: 'Payment Date is Required',
   },
 
   // Fields names which repeadedly uses in tables
@@ -1161,8 +1197,6 @@ const en = {
     balanceAmount: 'Balance Amount',
     transactionDate: 'Transaction Date',
     MainAssetReport: 'MainAsset Report',
-
-
   },
 
   app: `app`,
@@ -1201,9 +1235,8 @@ const en = {
   only_admin_can_see_this_item: `Only admin can see this item`,
   report: 'Report',
   NoRecordFound: 'No Record Found',
-  categorys:'Categorys',
-  propertyConditions:'property Conditions'
-
+  categorys: 'Categorys',
+  propertyConditions: 'property Conditions',
 };
 
 export default en;

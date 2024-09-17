@@ -53,10 +53,10 @@ export default observer(function PropertyDetailsHeader() {
     <Page title={translate('Property.DetailsTitle')}>
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
-          heading={translate('Property.PropertyDetails')}
+          heading={translate('Property.DetailsTitle')}
           links={[
             { name: `${translate('Department.Dashboard')}`, href: PATH_DASHBOARD.root },
-            { name: `${translate('Property.Property')}`, href: PATH_DASHBOARD.Property.list },
+            { name: `${translate('Property.PropertyList')}`, href: PATH_DASHBOARD.Property.list },
           ]}
         />
         {isloading ? <Loader /> : <PropertyDetailsTablerow row={PropertyDetails!} />}

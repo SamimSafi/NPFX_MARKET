@@ -75,11 +75,11 @@ export default observer(function PropertyList() {
   const [PropertyId, setPropertyId] = useState<number>();
   const TABLE_HEAD = [
     { id: 'ID', label: `${translate('GeneralFields.Id')}`, align: 'left' },
-    { id: 'Name', label: `${translate('Property.Name')}`, align: 'left' },
-    { id: 'model', label: `${translate('Property.model')}`, align: 'left' },
-    { id: 'details', label: `${translate('Property.details')}`, align: 'left' },
-    { id: 'price', label: `${translate('Property.price')}`, align: 'left' },
-    { id: 'ُCategory', label: `${translate('Property.Category')}`, align: 'left' },
+    { id: 'Name', label: `${translate('GeneralFields.Name')}`, align: 'left' },
+    { id: 'model', label: `${translate('Property.Model')}`, align: 'left' },
+    { id: 'details', label: `${translate('Employee.Details')}`, align: 'left' },
+    { id: 'price', label: `${translate('Property.Price')}`, align: 'left' },
+    { id: 'ُCategory', label: `${translate('Category.Category')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
   const handleFilterName = (filterName: string) => {

@@ -8,11 +8,14 @@ import {
   Divider,
   TableBody,
   TableHead,
-  Button,
+  // Button,
 } from '@mui/material';
 import { PropertyDetails } from 'src/@types/foamCompanyTypes/systemTypes/PropertyType';
 import Label from 'src/components/Label';
 import { useStore } from 'src/stores/store';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import useLocales from 'src/hooks/useLocales';
 interface Props {
   row: PropertyDetails; // PropertyDetails passed as a prop
 }
@@ -21,6 +24,8 @@ export default function PropertyDetailsTablerow({ row }: Props) {
   const { PropertyStore } = useStore();
   const { setOpenClosePaymentDialog, setOpenCloseAssignDialog, setPayment, setAssignment } =
     PropertyStore;
+
+  const { translate } = useLocales();
 
   return (
     <>
@@ -70,26 +75,26 @@ export default function PropertyDetailsTablerow({ row }: Props) {
               </Label>
             </Typography>
             <Typography variant="h6" sx={{ textAlign: 'center', fontSize: 16, mb: 2 }}>
-              Model: {row.model}
+              {translate('Property.Model')}: {row.model}
             </Typography>
 
             {/* Displaying Details, Price, Category, Condition */}
             <Box sx={{ display: 'flex', justifyContent: 'space-around', mb: 2 }}>
               <Box>
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                  Price:
+                  {translate('Property.Price')}:
                 </Typography>
-                <Typography variant="body2">${row.price}</Typography>
+                <Typography variant="body2">{row.price}</Typography>
               </Box>
               <Box>
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                  Category:
+                  {translate('Category.Category')}:
                 </Typography>
                 <Typography variant="body2">{row.category}</Typography>
               </Box>
               <Box>
                 <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                  Condition:
+                  {translate('Property.PropertyConditions')}:
                 </Typography>
                 <Typography variant="body2">{row.condition}</Typography>
               </Box>
@@ -98,7 +103,7 @@ export default function PropertyDetailsTablerow({ row }: Props) {
             {/* Displaying Details */}
             <Box sx={{ mb: 3 }}>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold' }}>
-                Details:
+                {translate('Employee.Details')}:
               </Typography>
               <Typography variant="body2">{row.details}</Typography>
             </Box>
@@ -113,33 +118,37 @@ export default function PropertyDetailsTablerow({ row }: Props) {
             {row.assignments.length > 0 && (
               <Box sx={{ mb: 2 }}>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                  Assignments
+                  {translate('Property.Assignments')}
                 </Typography>
                 <Table size="small" sx={{ minWidth: '100%' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Assignment #</TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Employee Name</TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Action</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>
+                        {translate('ProcessStatus.Id')}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>
+                        {translate('EducationLevelDetails.Id')}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>{translate('edit')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {row.assignments.map((assignment, index) => (
                       <>
                         <TableRow key={index}>
-                          <TableCell>Assignment {index + 1}</TableCell>
+                          <TableCell># {index + 1}</TableCell>
                           <TableCell>{assignment.employeeName || 'Not Assigned'}</TableCell>
                           <TableCell>
-                            <Button
-                              variant="contained"
-                              size="small"
+                            <IconButton
                               onClick={() => {
                                 setOpenCloseAssignDialog();
                                 setAssignment(row.assignments[index]);
                               }}
+                              size="small"
+                              aria-label="edit"
                             >
-                              Update
-                            </Button>
+                              <EditIcon />
+                            </IconButton>
                           </TableCell>
                         </TableRow>
                       </>
@@ -153,35 +162,39 @@ export default function PropertyDetailsTablerow({ row }: Props) {
             {row.payments.length > 0 && (
               <Box>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                  Payments
+                  {translate('Property.Payments')}
                 </Typography>
                 <Table size="small" sx={{ minWidth: '100%' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Payment #</TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Amount Paid (USD)</TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Remaining Balance (USD)</TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}> Action</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>#</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>
+                        {translate('Property.AmountPaid')}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>
+                        {translate('Property.RemainingBalance')}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}> {translate('edit')}</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {row.payments.map((payment, index) => (
                       <>
                         <TableRow key={index}>
-                          <TableCell>Payment {index + 1}</TableCell>
-                          <TableCell>${payment.amountPaid! + payment.employeeId!}</TableCell>
-                          <TableCell>${payment.remainingBalance}</TableCell>
+                          <TableCell>{index + 1}</TableCell>
+                          <TableCell>{payment.amountPaid!}</TableCell>
+                          <TableCell>{payment.remainingBalance}</TableCell>
                           <TableCell>
-                            <Button
-                              variant="contained"
-                              size="small"
+                            <IconButton
                               onClick={() => {
                                 setOpenClosePaymentDialog();
                                 setPayment(row.payments[index]);
                               }}
+                              size="small"
+                              aria-label="edit"
                             >
-                              Update
-                            </Button>
+                              <EditIcon />
+                            </IconButton>
                           </TableCell>
                         </TableRow>
                       </>
@@ -195,28 +208,32 @@ export default function PropertyDetailsTablerow({ row }: Props) {
             {row.maintenances.length > 0 && (
               <Box sx={{ mb: 2 }}>
                 <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
-                  Maintenance History
+                  {translate('Property.MaintenanceHistory')}
                 </Typography>
                 <Table size="small" sx={{ minWidth: '100%' }}>
                   <TableHead>
                     <TableRow>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Maintenance #</TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Paid Amount (USD)</TableCell>
-                      <TableCell sx={{ fontWeight: 'bold' }}>Action</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>#</TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>
+                        {translate('GeneralFields.Description')}
+                      </TableCell>
+                      <TableCell sx={{ fontWeight: 'bold' }}>
+                        {translate('Property.AmountPaid')}
+                      </TableCell>
+                      {/* <TableCell sx={{ fontWeight: 'bold' }}>{translate('edit')}</TableCell> */}
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {row.maintenances.map((maintenance, index) => (
                       <TableRow key={index}>
-                        <TableCell>Maintenance {index + 1}</TableCell>
+                        <TableCell>{index + 1}</TableCell>
                         <TableCell>{maintenance.description || 'No Description'}</TableCell>
-                        <TableCell>${maintenance.payedAmountInUSD}</TableCell>
-                        <TableCell>
+                        <TableCell>{maintenance.payedAmountInUSD}</TableCell>
+                        {/* <TableCell>
                           <Button variant="contained" size="small">
                             Update
                           </Button>
-                        </TableCell>
+                        </TableCell> */}
                       </TableRow>
                     ))}
                   </TableBody>

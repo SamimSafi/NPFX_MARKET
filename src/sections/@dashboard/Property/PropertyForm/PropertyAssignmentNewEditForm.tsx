@@ -36,10 +36,10 @@ export default observer(function PropertyAssignmentNewEditForm({ id, Assignment 
   } = PropertyStore;
   const { enqueueSnackbar } = useSnackbar();
   const NewPropertySchema = Yup.object().shape({
-    propertyId: Yup.number().required(`${translate('Validation.categoryId')}`),
-    employeeId: Yup.number().required(`${translate('Validation.conditionId')}`),
-    startDate: Yup.date().required(`${translate('Validation.DariName')}`),
-    endDate: Yup.date().required(`${translate('Validation.DariName')}`),
+    propertyId: Yup.number().required(`${translate('Validation.PropertyIsRequired')}`),
+    employeeId: Yup.number().required(`${translate('Validation.EmployeeIsRequired')}`),
+    startDate: Yup.date().required(`${translate('Validation.StartDate')}`),
+    endDate: Yup.date().required(`${translate('Validation.EndDate')}`),
   });
 
   const defaultValues = useMemo<PropertyRental>(
@@ -158,7 +158,7 @@ export default observer(function PropertyAssignmentNewEditForm({ id, Assignment 
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="employeeId" label={translate('Property.employee')}>
+              <RHFSelect name="employeeId" label={translate('Property.Employee')}>
                 <option value="" />
                 {EmployeeByCurrentBranch.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -169,13 +169,13 @@ export default observer(function PropertyAssignmentNewEditForm({ id, Assignment 
 
               <LocalizDatePicker
                 name="startDate"
-                label={translate('Property.startDate')}
+                label={translate('GeneralFields.StartDate')}
                 control={control}
                 showAsterisk={true}
               />
               <LocalizDatePicker
                 name="endDate"
-                label={translate('Property.endDate')}
+                label={translate('GeneralFields.EndDate')}
                 control={control}
                 showAsterisk={true}
               />
@@ -184,7 +184,7 @@ export default observer(function PropertyAssignmentNewEditForm({ id, Assignment 
               name="remarks"
               fullWidth
               multiline
-              label={translate('Property.remarks')}
+              label={translate('GeneralFields.Remarks')}
               showAsterisk={true}
               autoFocus
               maxRows={8}

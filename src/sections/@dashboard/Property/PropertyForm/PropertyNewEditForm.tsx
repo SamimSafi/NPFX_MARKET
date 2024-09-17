@@ -38,11 +38,11 @@ export default observer(function PropertyNewEditForm() {
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
   const NewPropertySchema = Yup.object().shape({
-    categoryId: Yup.number().required(`${translate('Validation.categoryId')}`),
-    conditionId: Yup.number().required(`${translate('Validation.conditionId')}`),
-    price: Yup.number().required(`${translate('Validation.price')}`),
-    userId: Yup.string().required(`${translate('Validation.userId')}`),
-    usageStartDate: Yup.date().required(`${translate('Validation.DariName')}`),
+    categoryId: Yup.number().required(`${translate('Validation.Category')}`),
+    conditionId: Yup.number().required(`${translate('Validation.ConditionId')}`),
+    price: Yup.number().required(`${translate('Validation.Price')}`),
+    userId: Yup.string().required(`${translate('Validation.User')}`),
+    usageStartDate: Yup.date().required(`${translate('Validation.StartDate')}`),
   });
 
   const defaultValues = useMemo<IPropertyType>(
@@ -150,17 +150,17 @@ export default observer(function PropertyNewEditForm() {
             >
               <RHFTextField
                 name="name"
-                label={translate('Property.name')}
+                label={translate('GeneralFields.Name')}
                 showAsterisk={true}
                 autoFocus
               />
               <RHFTextField
                 name="model"
-                label={translate('Property.model')}
+                label={translate('Property.Model')}
                 showAsterisk={true}
                 autoFocus
               />
-              <RHFSelect name="categoryId" label={translate('Property.category')}>
+              <RHFSelect name="categoryId" label={translate('Category.Category')}>
                 <option value="" />
                 {CategorysOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -168,7 +168,7 @@ export default observer(function PropertyNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="conditionId" label={translate('CurrencyType.condition')}>
+              <RHFSelect name="conditionId" label={translate('Property.PropertyConditions')}>
                 <option value="" />
                 {PropertyConditionsOption.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -176,7 +176,7 @@ export default observer(function PropertyNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              <RHFSelect name="userId" label={translate('Property.user')}>
+              <RHFSelect name="userId" label={translate('GeneralFields.User')}>
                 <option value="" />
                 {EmployeeByCurrentBranch.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -187,27 +187,27 @@ export default observer(function PropertyNewEditForm() {
 
               <LocalizDatePicker
                 name="usageStartDate"
-                label={translate('Property.usageStartDate')}
+                label={translate('GeneralFields.StartDate')}
                 control={control}
                 showAsterisk={true}
               />
               <LocalizDatePicker
                 name="paymentDate"
-                label={translate('Property.paymentDate')}
+                label={translate('Property.PaymentDate')}
                 control={control}
                 showAsterisk={true}
               />
 
               <RHFTextField
                 name="price"
-                label={translate('Property.price')}
+                label={translate('Property.Price')}
                 type={'number'}
                 showAsterisk={true}
                 autoFocus
               />
               <RHFTextField
                 name="amountPaid"
-                label={translate('Property.amountPaid')}
+                label={translate('Property.AmountPaid')}
                 type={'number'}
                 showAsterisk={true}
                 autoFocus
@@ -217,7 +217,7 @@ export default observer(function PropertyNewEditForm() {
               name="details"
               fullWidth
               multiline
-              label={translate('Property.details')}
+              label={translate('Employee.Details')}
               showAsterisk={true}
               autoFocus
               maxRows={8}

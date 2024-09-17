@@ -35,7 +35,7 @@ export default observer(function PropertyChangeStatus({ id }: Props) {
   } = PropertyStore;
   const { enqueueSnackbar } = useSnackbar();
   const NewPropertySchema = Yup.object().shape({
-    conditionId: Yup.number().required(`${translate('Validation.conditionId')}`),
+    conditionId: Yup.number().required(`${translate('Validation.ConditionId')}`),
   });
 
   const defaultValues = useMemo<IChangePropertyCondition>(
@@ -98,7 +98,7 @@ export default observer(function PropertyChangeStatus({ id }: Props) {
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(1, 1fr)' },
               }}
             >
-              <RHFSelect name="conditionId" label={translate('Property.Condition')}>
+              <RHFSelect name="conditionId" label={translate('Property.PropertyConditions')}>
                 <option value="" />
                 {PropertyConditionsOption.map((op) => (
                   <option key={op.value} value={op.value}>
