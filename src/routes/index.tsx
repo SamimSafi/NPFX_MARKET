@@ -74,6 +74,9 @@ import CategorysCreate from 'src/sections/@dashboard/Categorys/CategorysForm/Cat
 import CategorysList from 'src/sections/@dashboard/Categorys/CategorysList/CategorysList';
 import PropertyConditionsList from 'src/sections/@dashboard/PropertyConditions/PropertyConditionsList/PropertyConditionsList';
 import PropertyConditionsCreate from 'src/sections/@dashboard/PropertyConditions/PropertyConditionsForm/PropertyConditionsCreate';
+import PropertyList from 'src/sections/@dashboard/Property/PropertyList/PropertyList';
+import PropertyCreate from 'src/sections/@dashboard/Property/PropertyForm/PropertyCreate';
+import PropertyDetailsHeader from 'src/sections/@dashboard/Property/PropertyForm/PropertyDetailsHeader';
 import MainAssetStatisticalReportIndex from 'src/sections/@dashboard/Reports/MainAssetReports/StatisticalReport/MainAssetStatisticalReportIndex';
 
 // ----------------------------------------------------------------------
@@ -306,7 +309,7 @@ export default function Router() {
             },
           ],
         },
-        
+
         {
           path: 'Categorys',
           children: [
@@ -466,7 +469,10 @@ export default function Router() {
             {
               path: 'report',
               element: (
-                <PermissionBasedGuard hasContent permissions={['DashboardAndReport-GetTransactionReport']}>
+                <PermissionBasedGuard
+                  hasContent
+                  permissions={['DashboardAndReport-GetTransactionReport']}
+                >
                   <MainAssetStatisticalReportIndex />
                 </PermissionBasedGuard>
               ),
@@ -1027,6 +1033,46 @@ export default function Router() {
               element: (
                 <PermissionBasedGuard hasContent permissions={['Suppliers-Update']}>
                   <SupplierCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+          ],
+        },
+
+        // Property Routs
+        {
+          path: 'Property',
+          children: [
+            { element: <Navigate to="/dashboard/Property/list" replace />, index: true },
+            {
+              path: 'list',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Property-GetList']}>
+                  <PropertyList />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'new',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Property-Create']}>
+                  <PropertyCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'edit',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Property-Update']}>
+                  <PropertyCreate />
+                </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'detail/:id',
+              element: (
+                <PermissionBasedGuard hasContent permissions={['Property-Detail']}>
+                  <PropertyDetailsHeader />
                 </PermissionBasedGuard>
               ),
             },

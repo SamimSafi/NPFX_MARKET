@@ -300,6 +300,24 @@ const navConfig = [
             path: PATH_DASHBOARD.WithdrawalTracking.list,
             roles: ['WithdrawalTracking-GetList'],
           },
+          {
+            title: 'PropertyMenu',
+            path: PATH_DASHBOARD.Property.list,
+            icon: ICONS.booking,
+            roles: ['Propertys-GetList'],
+            children: [
+              {
+                title: 'list',
+                path: PATH_DASHBOARD.Property.list,
+                roles: ['Propertys-GetList'],
+              },
+              // {
+              //   title: 'report',
+              //   path: PATH_DASHBOARD.ExpenseTracking.report,
+              //   roles: ['Propertys-GetExpenseReport'],
+              // },
+            ],
+          },
         ],
       },
       {

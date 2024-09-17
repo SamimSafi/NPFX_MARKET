@@ -56,6 +56,8 @@ export default class commonDroptdown {
 
   UserOption: SelectControl6[] = []; // for Create User dropdown
 
+  EmployeeByCurrentBranch: SelectControl6[] = []; // for Create User dropdown
+
   OraganizationUserOption: SelectControl[] = []; // for Create User dropdown
 
   ChildUserOption: SelectControl[] = []; // for Create User dropdown
@@ -286,22 +288,26 @@ export default class commonDroptdown {
   };
 
   // Employee Dropdown
-  loadEmployeeDropdownByDepartment = async (EmpStatus: number): Promise<SelectControl[]> => {
+  loadEmployeeByCurrentBranchDropdown = async () => {
     try {
-      const result = await agent.Employees.EmpDDLByDepartment(EmpStatus);
-      const employeeOptions = this.setEmployeeOptionsByDepartment(result.data);
-      return employeeOptions;
+      const result = await agent.Employees.EmpDDLByCurrentBranch();
+      this.setEmployeeByCurrentBranchOptions(result.data);
     } catch (error) {
       console.log(error);
       return [];
     }
   };
 
-  setEmployeeOptionsByDepartment = (data: EmployeeDropDown[]): SelectControl[] =>
-    data.map((op) => ({
-      text: op.name + ('(' + op.fatherName + ')'),
-      value: op.id,
-    }));
+  setEmployeeByCurrentBranchOptions = (data: IDDL[]) => {
+    const op = data.map((op) => {
+      const optRow = {
+        text: op.name,
+        value: op.id,
+      };
+      return optRow;
+    });
+    this.EmployeeByCurrentBranch = op;
+  };
 
   // Province Dropdown
   loadProvinceDropdown = async () => {

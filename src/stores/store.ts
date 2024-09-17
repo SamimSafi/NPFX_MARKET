@@ -1,3 +1,4 @@
+/* eslint-disable import/no-duplicates */
 import { createContext, useContext } from 'react';
 import LoginStore from './Login/loginStore';
 import CommonStore from './commonStore';
@@ -56,6 +57,7 @@ import TrainingVideoStore from './foamCompanyStores/TrainingVideoStore';
 import CategorysStore from './foamCompanyStores/CategorysStore';
 import PropertyConditionsStore from './foamCompanyStores/PropertyConditionsStore';
 import MainAssetReportsStore from './NPFXReports/MainAssetReportsStore';
+import PropertyStore from './foamCompanyStores/PropertyStore';
 
 interface Store {
   LoginStore: LoginStore;
@@ -128,6 +130,7 @@ interface Store {
   MainAssetReportsStore: MainAssetReportsStore;
 
   TrainingVideoStore: TrainingVideoStore;
+  PropertyStore: PropertyStore;
 }
 //Include All store below
 export const store: Store = {
@@ -191,6 +194,7 @@ export const store: Store = {
   MainAssetReportsStore: new MainAssetReportsStore(),
 
   TrainingVideoStore: new TrainingVideoStore(),
+  PropertyStore: new PropertyStore(),
 };
 
 export const StoreContext = createContext(store);

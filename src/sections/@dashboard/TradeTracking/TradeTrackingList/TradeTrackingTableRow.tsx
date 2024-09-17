@@ -8,6 +8,7 @@ import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
 import { ITradeTracking } from 'src/@types/foamCompanyTypes/systemTypes/TradeTracking';
+import { DateConverter } from 'src/sections/common/DateConverter';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -46,7 +47,10 @@ export default function TradeTrackingTableRow({ row, onEditRow, onDeleteRow, ind
       <TableCell align="left">{index + 1}</TableCell>
       <TableCell align="left">{currencyType}</TableCell>
       <TableCell align="left">{branch}</TableCell>
-      <TableCell align="left">{date}</TableCell>
+      <TableCell align="left">
+        {' '}
+        {date !== undefined ? <DateConverter date={date} /> : <></>}
+      </TableCell>
       <TableCell align="left">{description}</TableCell>
       <TableCell align="left">{userName}</TableCell>
       <TableCell align="left">{tradeAmount}</TableCell>

@@ -8,6 +8,7 @@ import Iconify from '../../../../components/Iconify';
 import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
 import { IWithdrawalTracking } from 'src/@types/foamCompanyTypes/systemTypes/WithdrawalTracking';
+import { DateConverter } from 'src/sections/common/DateConverter';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -36,7 +37,7 @@ export default function WithdrawalTrackingTableRow({ row, onEditRow, onDeleteRow
     <TableRow hover>
       <TableCell align="left">{index + 1}</TableCell>
       <TableCell align="left">{currencyType}</TableCell>
-      <TableCell align="left">{date}</TableCell>
+      <TableCell align="left">  {date !== undefined ? <DateConverter date={date} /> : <></>}</TableCell>
       <TableCell align="left">{description}</TableCell>
       <TableCell align="left">{branch}</TableCell>
       <TableCell align="left">{userName}</TableCell>
