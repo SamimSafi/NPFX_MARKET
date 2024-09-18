@@ -39,7 +39,8 @@ import WithdrawalTrackingNewEditForm from '../../WithdrawalTracking/WithdrawalTr
 export default observer(function MainAssetList() {
   const {
     MainAssetStore,
-    MainAssetDetailsStore: { loadMainAssetDetail },
+
+    MainAssetDetailsStore,
   } = useStore();
   const { translate } = useLocales();
   const { tablePagination, onChangePagination } = useSettings();
@@ -63,6 +64,16 @@ export default observer(function MainAssetList() {
     setOpenCloseDialogWithdrawCash,
     openDialogWithdrawCash,
   } = MainAssetStore;
+
+  const {
+    GetMainAssetTracking,
+    GetLoanTracking,
+    loadExpenseTracking,
+    loadTradeTracking,
+    loadWithdrawalTracking,
+    loadMainAssetChildAsset,
+    loadMainAssetDetail,
+  } = MainAssetDetailsStore;
   const {
     dense,
     page,
@@ -170,7 +181,34 @@ export default observer(function MainAssetList() {
 
   const handleDetail = (id: string) => {
     loadMainAssetDetail(id).then(() => {
-      navigate(PATH_DASHBOARD.MainAsset.detail);
+    
+      GetMainAssetTracking({
+        pageIndex: 0,
+        pageSize: 10000,
+        mainAssetId: id,
+      });
+      GetLoanTracking({
+        pageIndex: 0,
+        pageSize: 10000,
+        mainAssetId: id,
+      });
+      loadExpenseTracking({
+        pageIndex: 0,
+        pageSize: 10000,
+        mainAssetId: id,
+      });
+      loadTradeTracking({
+        pageIndex: 0,
+        pageSize: 10000,
+        mainAssetId: id,
+      });
+      loadWithdrawalTracking({
+        pageIndex: 0,
+        pageSize: 10000,
+        mainAssetId: id,
+      });
+      loadMainAssetChildAsset(id);
+      navigate(PATH_DASHBOARD.MainAsset.detail(id));
     });
   };
 

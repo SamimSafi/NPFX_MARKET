@@ -487,7 +487,7 @@ export default function Router() {
               ),
             },
             {
-              path: 'Details',
+              path: 'Details/:id',
               element: (
                 <PermissionBasedGuard hasContent permissions={['MainAsset-GetDetail']}>
                   <MainAssetDetails />

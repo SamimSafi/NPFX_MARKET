@@ -101,7 +101,7 @@ export default class UserStore {
   loadUserDetail = async (id: string) => {
     try {
       const axiosResponse = await agent.createUser.userDetail(id);
-      console.log(axiosResponse.userRoles);
+      
       runInAction(() => {
         this.SelecteduserDetail = axiosResponse;
       });

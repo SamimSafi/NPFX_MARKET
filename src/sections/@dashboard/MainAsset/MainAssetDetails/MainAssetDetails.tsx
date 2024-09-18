@@ -3,12 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Stack, Box, Typography, Tab, Tabs, AppBar } from '@mui/material';
 import useSettings from 'src/hooks/useSettings';
 import Page from 'src/components/Page';
-import { _bankingCreditCard, _bankingContacts } from 'src/_mock';
-import MainAssetBalanceStatistics from './MainAssetBalanceStatistics';
 import MainAssetContacts from './MainAssetContacts';
-import MainAssetCurrentBalance from './MainAssetCurrentBalance';
-import MainAssetExpensesCategories from './MainAssetExpensesCategories';
-import MainAssetQuickTransfer from './MainAssetQuickTransfer';
 import MainAssetWidgetSummary from './MainAssetWidgetSummary';
 import { useEffect, useState } from 'react';
 import SwipeableViews from 'react-swipeable-views';
@@ -18,6 +13,9 @@ import LoanTracking from './LoanTracking';
 import ExpenseTracking from './ExpenseTracking';
 import TradeTracking from './TradeTracking';
 import WidthrawalTracking from './WidthrawalTracking';
+import { useParams } from 'react-router';
+import Loader from 'src/components/loader/Loader';
+import useLocales from 'src/hooks/useLocales';
 // hooks
 
 // _mock_
@@ -64,9 +62,9 @@ function a11yProps(index: number) {
 export default function GeneralBanking() {
   const theme = useTheme();
   const [value, setValue] = useState(0);
-
+  const { translate } = useLocales();
   const { MainAssetDetailsStore } = useStore();
-
+  const [isloading, setIsloading] = useState(false);
   const {
     GetMainAssetTracking,
     LoadMainAssetTracking,
@@ -81,6 +79,7 @@ export default function GeneralBanking() {
     MainAssetDetail,
     loadMainAssetChildAsset,
     MainAssetChild,
+    loadMainAssetDetail,
   } = MainAssetDetailsStore;
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -89,50 +88,62 @@ export default function GeneralBanking() {
   const handleChangeIndex = (index: number) => {
     setValue(index);
   };
-
+  const { id } = useParams();
   const { themeStretch } = useSettings();
   useEffect(() => {
-    GetMainAssetTracking({
-      pageIndex: 0,
-      pageSize: 2,
-      mainAssetId: MainAssetDetail!.id,
-    });
-    GetLoanTracking({
-      pageIndex: 0,
-      pageSize: 2,
-      mainAssetId: MainAssetDetail!.id,
-    });
-    loadExpenseTracking({
-      pageIndex: 0,
-      pageSize: 2,
-      mainAssetId: MainAssetDetail!.id,
-    });
-    loadTradeTracking({
-      pageIndex: 0,
-      pageSize: 2,
-      mainAssetId: MainAssetDetail!.id,
-    });
-    loadWithdrawalTracking({
-      pageIndex: 0,
-      pageSize: 2,
-      mainAssetId: MainAssetDetail!.id,
-    });
-    loadMainAssetChildAsset(MainAssetDetail!.id);
+    if (id != null) {
+      loadMainAssetDetail(id).then(() => {
+        GetMainAssetTracking({
+          pageIndex: 0,
+          pageSize: 10000,
+          mainAssetId: id,
+        });
+        GetLoanTracking({
+          pageIndex: 0,
+          pageSize: 10000,
+          mainAssetId: id,
+        });
+        loadExpenseTracking({
+          pageIndex: 0,
+          pageSize: 10000,
+          mainAssetId: id,
+        });
+        loadTradeTracking({
+          pageIndex: 0,
+          pageSize: 10000,
+          mainAssetId: id,
+        });
+        loadWithdrawalTracking({
+          pageIndex: 0,
+          pageSize: 10000,
+          mainAssetId: id,
+        });
+        loadMainAssetChildAsset(id);
+
+        setIsloading(true);
+        setTimeout(() => {
+          setIsloading(true);
+        }, 1000);
+      });
+    } else {
+      setIsloading(true);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [MainAssetDetail!.id]);
+  }, []);
 
   // console.log(LoadMainAssetTracking.map((data) => data.balanceAmount));
   // console.log(LoadLoanTracking.map((data) => data.branchId));
   // console.log(MainAssetChild.map((data) => data.balanceAmount));
 
-  return (
-    <Page title="General: Banking">
+  return isloading ? (
+    <Page title={translate('AssetDetails.AccountDetails')}>
       <Container maxWidth={themeStretch ? false : 'xl'}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={12}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={3}>
               <MainAssetWidgetSummary
-                title="Total Credit Amount"
+                title={translate('AssetDetails.TotalCreditAmount')}
                 icon={'eva:diagonal-arrow-left-down-fill'}
                 percent={2.6}
                 total={MainAssetDetail!.totalCreditAmount}
@@ -140,7 +151,7 @@ export default function GeneralBanking() {
               />
 
               <MainAssetWidgetSummary
-                title="Total Debit Amount"
+                title={translate('AssetDetails.TotalDebitAmount')}
                 color="warning"
                 icon={'eva:diagonal-arrow-right-up-fill'}
                 percent={-0.5}
@@ -149,7 +160,7 @@ export default function GeneralBanking() {
               />
 
               <MainAssetWidgetSummary
-                title="Current Balance"
+                title={translate('AssetDetails.CurrentBalance')}
                 color="success"
                 icon={'eva:diagonal-arrow-right-up-fill'}
                 percent={-0.5}
@@ -176,11 +187,11 @@ export default function GeneralBanking() {
                     variant="fullWidth"
                     aria-label="full width tabs example"
                   >
-                    <Tab label="Asset Tracking" {...a11yProps(0)} />
-                    <Tab label="Loan Tracking" {...a11yProps(1)} />
-                    <Tab label="Expense Tracking" {...a11yProps(2)} />
-                    <Tab label="Trade Tracking" {...a11yProps(3)} />
-                    <Tab label="Widthrawal Tracking" {...a11yProps(4)} />
+                    <Tab label={translate('AssetDetails.AssetTracking')} {...a11yProps(0)} />
+                    <Tab label={translate('AssetDetails.LoanTracking')} {...a11yProps(1)} />
+                    <Tab label={translate('AssetDetails.ExpenseTracking')} {...a11yProps(2)} />
+                    <Tab label={translate('AssetDetails.TradeTracking')} {...a11yProps(3)} />
+                    <Tab label={translate('AssetDetails.WidthrawalTracking')} {...a11yProps(4)} />
                   </Tabs>
                 </AppBar>
                 <SwipeableViews
@@ -192,12 +203,12 @@ export default function GeneralBanking() {
                     <MainAssetTracking
                       tableData={LoadMainAssetTracking}
                       tableLabels={[
-                        { id: 'userName', label: 'User Name' },
-                        { id: 'transactionDate', label: 'Transaction Date' },
-                        { id: 'debitAmount', label: 'debit Amount' },
-                        { id: 'creditAmount', label: 'creditAmount' },
-                        { id: 'balanceAmount', label: 'balanceAmount' },
-                        { id: 'description', label: 'description' },
+                        { id: 'userName', label: translate('Report.UserName') },
+                        { id: 'transactionDate', label: translate('Report.transactionDate') },
+                        { id: 'debitAmount', label: translate('Report.debitAmount') },
+                        { id: 'creditAmount', label: translate('Report.creditAmount') },
+                        { id: 'balanceAmount', label: translate('Report.balanceAmount') },
+                        { id: 'description', label: translate('Report.Description') },
                         { id: '' },
                       ]}
                     />
@@ -206,12 +217,12 @@ export default function GeneralBanking() {
                     <LoanTracking
                       tableData={LoadLoanTracking}
                       tableLabels={[
-                        { id: 'partner', label: 'partner' },
-                        { id: 'partnerPhone', label: 'partnerPhone' },
-                        { id: 'loanAmount', label: 'loanAmount' },
-                        { id: 'paidAmount', label: 'paidAmount' },
-                        { id: 'remainAmount', label: 'remainAmount' },
-                        { id: 'description', label: 'description' },
+                        { id: 'partner', label: translate('Report.Partner') },
+                        { id: 'partnerPhone', label: translate('Report.partnerPhone') },
+                        { id: 'loanAmount', label: translate('Report.loanAmount') },
+                        { id: 'paidAmount', label: translate('Report.paidAmount') },
+                        { id: 'remainAmount', label: translate('Report.remainAmount') },
+                        { id: 'description', label: translate('Report.Description') },
                         { id: '' },
                       ]}
                     />
@@ -221,10 +232,10 @@ export default function GeneralBanking() {
                       title=""
                       tableData={LoadExpenseTracking}
                       tableLabels={[
-                        { id: 'expenseType', label: 'expenseType' },
-                        { id: 'amount', label: 'amount' },
-                        { id: 'date', label: 'date' },
-                        { id: 'description', label: 'description' },
+                        { id: 'expenseType', label: translate('Report.expenseType') },
+                        { id: 'amount', label: translate('Report.Amount') },
+                        { id: 'date', label: translate('Report.Date') },
+                        { id: 'description', label: translate('Report.Description') },
                         { id: '' },
                       ]}
                     />
@@ -234,12 +245,12 @@ export default function GeneralBanking() {
                       title=""
                       tableData={LoadTradeTracking}
                       tableLabels={[
-                        { id: 'userName', label: 'userName' },
-                        { id: 'branch', label: 'branch' },
-                        { id: 'tradeAmount', label: 'tradeAmount' },
-                        { id: 'profitAmount', label: 'profitAmount' },
-                        { id: 'lossAmount', label: 'lossAmount' },
-                        { id: 'description', label: 'description' },
+                        { id: 'userName', label: translate('Report.UserName') },
+                        { id: 'branch', label: translate('Report.Branch') },
+                        { id: 'tradeAmount', label: translate('Report.tradeAmount') },
+                        { id: 'profitAmount', label: translate('Report.profitAmount') },
+                        { id: 'lossAmount', label: translate('Report.lossAmount') },
+                        { id: 'description', label: translate('Report.Description') },
                         { id: '' },
                       ]}
                     />
@@ -249,11 +260,11 @@ export default function GeneralBanking() {
                       title=""
                       tableData={LoadWidthrawalTracking}
                       tableLabels={[
-                        { id: 'userName', label: 'userName' },
-                        { id: 'branch', label: 'branch' },
-                        { id: 'amount', label: 'Amount' },
-                        { id: 'date', label: 'date' },
-                        { id: 'description', label: 'description' },
+                        { id: 'userName', label: translate('Report.UserName') },
+                        { id: 'branch', label: translate('Report.Branch') },
+                        { id: 'amount', label: translate('Report.Amount') },
+                        { id: 'date', label: translate('Report.Date') },
+                        { id: 'description', label: translate('Report.Description') },
                         { id: '' },
                       ]}
                     />
@@ -323,8 +334,8 @@ export default function GeneralBanking() {
               {/* <MainAssetQuickTransfer title="Members balances" list={MainAssetChild} /> */}
 
               <MainAssetContacts
-                title="Members Balance"
-                subheader="You have 122 Members whe benefited"
+                title={translate('AssetDetails.MembersBalance')}
+                subheader=""
                 list={MainAssetChild}
               />
               {/*
@@ -345,5 +356,7 @@ export default function GeneralBanking() {
         </Grid>
       </Container>
     </Page>
+  ) : (
+    <Loader></Loader>
   );
 }
