@@ -629,15 +629,14 @@ const en = {
     FullName: 'Full Name',
     Account: 'Account',
   },
-  EmployeeProperty:{
-    PopertyDetails:'Property Details',
-    EmployeePropertyDetails:'Employee Property Details',
-    Name:'Name',
-    Category:'Category',
-    Model:'Model',
-    Price:'Price',
-    Details:'Details',
-   
+  EmployeeProperty: {
+    PopertyDetails: 'Property Details',
+    EmployeePropertyDetails: 'Employee Property Details',
+    Name: 'Name',
+    Category: 'Category',
+    Model: 'Model',
+    Price: 'Price',
+    Details: 'Details',
   },
 
   //ContractDetails
@@ -1210,18 +1209,15 @@ const en = {
 
     Partner: 'Partner',
     partnerPhone: 'Partner Phone',
-    loanAmount:'loan Amount',
-    paidAmount:'paid Amount',
-    remainAmount:'remain Amount',
-    expenseType:'expense Type',
-    tradeAmount:'trade Amount',
-    profitAmount:'profit Amount',
-    lossAmount:'loss Amount',
-   
-
-
+    loanAmount: 'loan Amount',
+    paidAmount: 'paid Amount',
+    remainAmount: 'remain Amount',
+    expenseType: 'expense Type',
+    tradeAmount: 'trade Amount',
+    profitAmount: 'profit Amount',
+    lossAmount: 'loss Amount',
   },
-  AssetDetails:{
+  AssetDetails: {
     MainAssetReport: 'MainAsset Report',
     AccountDetails: 'Account Details',
     TotalCreditAmount: 'Total Credit Amount',
@@ -1234,9 +1230,7 @@ const en = {
     WidthrawalTracking: 'Widthrawal Tracking',
     MembersBalance: 'Members Balance',
 
-
-    MainAssetReport: 'MainAsset Report',
-
+   
   },
 
   app: `app`,
