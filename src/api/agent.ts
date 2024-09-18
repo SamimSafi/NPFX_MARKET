@@ -673,7 +673,7 @@ const MainAsset = {
     axios.post<any>(`MainAsset/GetAssetTrackingList/${param.mainAssetId}`, param, {
       withCredentials: true,
     }),
-  detail: (MainAssetId: string) =>
+  detail: (MainAssetId?: string) =>
     requests.get<IMainAssetTrackingDetails>(`/MainAsset/GetDetail/${MainAssetId}`),
   GetChildAssetDDL: (id?: string) =>
     axios.get<any>(`MainAsset/GetChildAssetsDDL/${id}`, { withCredentials: true }),

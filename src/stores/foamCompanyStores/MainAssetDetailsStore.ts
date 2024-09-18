@@ -42,6 +42,7 @@ export default class MainAssetDetailsStore {
   }
 
   GetMainAssetTracking = async (params: IMainAssetTrackingParam) => {
+
     try {
       const result = await agentMainAsset.MainAsset.Gettracking(params);
       runInAction(() => {
@@ -96,7 +97,7 @@ export default class MainAssetDetailsStore {
     }
   };
 
-  loadMainAssetDetail = async (id: string) => {
+  loadMainAssetDetail = async (id?: string) => {
     try {
       const axiosResponse = await agentMainAsset.MainAsset.detail(id);
       runInAction(() => {

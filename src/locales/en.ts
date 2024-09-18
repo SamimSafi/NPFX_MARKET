@@ -1171,8 +1171,31 @@ const en = {
     creditAmount: 'Credit Amount',
     balanceAmount: 'Balance Amount',
     transactionDate: 'Transaction Date',
-    MainAssetReport: 'MainAsset Report',
+    Partner: 'Partner',
+    partnerPhone: 'Partner Phone',
+    loanAmount:'loan Amount',
+    paidAmount:'paid Amount',
+    remainAmount:'remain Amount',
+    expenseType:'expense Type',
+    tradeAmount:'trade Amount',
+    profitAmount:'profit Amount',
+    lossAmount:'loss Amount',
+   
 
+
+  },
+  AssetDetails:{
+    MainAssetReport: 'MainAsset Report',
+    AccountDetails: 'Account Details',
+    TotalCreditAmount: 'Total Credit Amount',
+    TotalDebitAmount: 'Total Debit Amount',
+    CurrentBalance: 'Current Balance',
+    AssetTracking: 'Asset Tracking',
+    LoanTracking: 'Loan Tracking',
+    ExpenseTracking: 'Expense Tracking',
+    TradeTracking: 'Trade Tracking',
+    WidthrawalTracking: 'Widthrawal Tracking',
+    MembersBalance: 'Members Balance',
 
   },
 
