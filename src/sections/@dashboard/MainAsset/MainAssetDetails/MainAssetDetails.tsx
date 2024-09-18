@@ -149,7 +149,7 @@ export default function GeneralBanking() {
               />
 
               <MainAssetWidgetSummary
-                title="Total Debit Amount"
+                title="Current Balance"
                 color="success"
                 icon={'eva:diagonal-arrow-right-up-fill'}
                 percent={-0.5}

@@ -1,0 +1,30 @@
+
+table.blueTable {
+  border: 1px solid gray;  
+  text-align: center;
+  border-collapse: collapse;
+}
+table.blueTable td, table.blueTable th {
+  border: 1px solid gray;
+  padding: 3px 2px;
+}
+table.blueTable tbody td {
+  font-size: 13px;
+}
+
+table.blueTable thead {
+  border-bottom: 2px solid gray;
+}
+table.blueTable thead th {
+  border-left: 2px solid gray;
+}
+table.blueTable thead th:first-child {
+  border-left: none;
+}
+
+table.blueTable tfoot td {
+  font-size: 14px;
+}
+table.blueTable tfoot .links {
+  text-align: right;
+}

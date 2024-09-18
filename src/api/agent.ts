@@ -122,6 +122,7 @@ import {
 } from 'src/@types/foamCompanyTypes/looks/PropertyConditions';
 import {
   IChangePropertyCondition,
+  IProperty,
   IPropertyParams,
   IPropertyType,
   Payment,
@@ -1010,6 +1011,10 @@ const Property = {
     axios.get<PropertyDetails>(`/Propertys/GetDetail/${id}`, {
       withCredentials: true,
     }),
+    GetPropertiesByEmp : (id: any) =>
+      axios.get<IProperty[]>(`/Propertys/GetPropertiesByEmpId/${id}`, {
+        withCredentials: true,
+      }), 
 };
 
 const agent = {

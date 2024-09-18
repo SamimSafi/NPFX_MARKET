@@ -207,6 +207,7 @@ export const PATH_DASHBOARD = {
     new: path(ROOTS_DASHBOARD, '/Employee/new'),
     edit: path(ROOTS_DASHBOARD, '/Employee/edit'),
     detail: path(ROOTS_DASHBOARD, '/Employee/detail'),
+    EmpProperty: path(ROOTS_DASHBOARD, '/Employee/property'),
     print: path(ROOTS_DASHBOARD, '/Employee/print'),
     accountReport: path(ROOTS_DASHBOARD, '/Employee/accountReport'),
   },

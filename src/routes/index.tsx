@@ -78,6 +78,7 @@ import PropertyList from 'src/sections/@dashboard/Property/PropertyList/Property
 import PropertyCreate from 'src/sections/@dashboard/Property/PropertyForm/PropertyCreate';
 import PropertyDetailsHeader from 'src/sections/@dashboard/Property/PropertyForm/PropertyDetailsHeader';
 import MainAssetStatisticalReportIndex from 'src/sections/@dashboard/Reports/MainAssetReports/StatisticalReport/MainAssetStatisticalReportIndex';
+import EmployeePropertyIndex from 'src/sections/@dashboard/Employee/EmployeePropertyDetails/EmployeePropertyIndex';
 
 // ----------------------------------------------------------------------
 
@@ -906,6 +907,14 @@ export default function Router() {
               element: (
                 // <PermissionBasedGuard hasContent permissions={['Card-Update']}>
                 <EmployeeDetailHeader />
+                // </PermissionBasedGuard>
+              ),
+            },
+            {
+              path: 'property',
+              element: (
+                // <PermissionBasedGuard hasContent permissions={['Card-Update']}>
+                <EmployeePropertyIndex />
                 // </PermissionBasedGuard>
               ),
             },

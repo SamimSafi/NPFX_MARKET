@@ -9,6 +9,7 @@ import {
   PropertyDetails,
   Assignment,
   IChangePropertyCondition,
+  IProperty,
 } from 'src/@types/foamCompanyTypes/systemTypes/PropertyType';
 export default class PropertyStore {
   openDialog = false;
@@ -34,6 +35,8 @@ export default class PropertyStore {
   PropertyTypeOption: SelectControl[] = []; // for Property Type Dropdown
 
   PropertyDetails: PropertyDetails | undefined;
+
+  GetPropertiesByEmpId: IProperty[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -77,6 +80,20 @@ export default class PropertyStore {
       runInAction(() => {
         if (result.data) {
           this.PropertyDetails = result.data;
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  GetPropertiesByEmp = async (id: number) => {
+    try {
+      const result = await agentProperty.Property.GetPropertiesByEmp(id);
+
+      runInAction(() => {
+        if (result.data) {
+          this.GetPropertiesByEmpId = result.data;
         }
       });
     } catch (error) {

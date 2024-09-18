@@ -85,3 +85,20 @@ export interface PropertyDetails {
   maintenances: Maintenance[]; // Add fields to this interface if needed
   payments: Payment[];
 }
+
+export interface IProperty {
+  id?: number;
+  categoryId?: number;
+  name?: string;
+  model?: string;
+  details?: string;
+  price?: number;
+  conditionId?: number;
+  employeeId?: number;
+  category?: string;
+  condition?: string;
+}
+
+export interface IGetPropertyeByEmpId {
+  property?: IProperty[];
+}
