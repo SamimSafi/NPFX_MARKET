@@ -43,7 +43,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
   const NewWithdrawalTrackingSchema = Yup.object().shape({
     mainAssetId: Yup.string().required(`${translate('Validation.Account')}`),
     date: Yup.date().required(`${translate('Validation.Date')}`),
-    withdrawalAmount: Yup.number().required(`${translate('Validation.WithdrawalAmount')}`),
+    depositAmount: Yup.number().required(`${translate('Validation.WithdrawalAmount')}`),
   });
 
   const defaultValues = useMemo<IWithdrawalTracking>(
@@ -52,7 +52,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
       mainAssetId: selectedWithdrawalTracking?.mainAssetId || asssetID,
       description: selectedWithdrawalTracking?.description || '',
       date: selectedWithdrawalTracking?.date || new Date().toLocaleDateString(),
-      withdrawalAmount: selectedWithdrawalTracking?.amount,
+      depositAmount: selectedWithdrawalTracking?.amount,
     }),
     [selectedWithdrawalTracking, asssetID]
   );
@@ -145,7 +145,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
               />
 
               <RHFTextField
-                name="withdrawalAmount"
+                name="depositAmount"
                 label={translate('WithdrawalTracking.WithdrawalAmount')}
                 type={'number'}
                 showAsterisk={true}

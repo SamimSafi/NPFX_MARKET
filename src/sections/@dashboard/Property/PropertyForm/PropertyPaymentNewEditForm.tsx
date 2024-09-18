@@ -36,8 +36,8 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
   } = PropertyStore;
   const { enqueueSnackbar } = useSnackbar();
   const NewPropertySchema = Yup.object().shape({
-    propertyId: Yup.number().required(`${translate('Validation.propertyId')}`),
-    amountPaid: Yup.number().required(`${translate('Validation.amountPaid')}`),
+    propertyId: Yup.number().required(`${translate('Validation.PropertyIsRequired')}`),
+    amountPaid: Yup.number().required(`${translate('Validation.AmountPaid')}`),
     paymentDate: Yup.date().required(`${translate('Validation.PaymentDate')}`),
   });
 
@@ -159,7 +159,7 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
                 gridTemplateColumns: { xs: 'repeat(1, 1fr)', sm: 'repeat(2, 1fr)' },
               }}
             >
-              <RHFSelect name="employeeId" label={translate('Property.employee')}>
+              <RHFSelect name="employeeId" label={translate('Property.Employee')}>
                 <option value="" />
                 {EmployeeByCurrentBranch.map((op) => (
                   <option key={op.value} value={op.value}>
@@ -170,7 +170,7 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
 
               <LocalizDatePicker
                 name="paymentDate"
-                label={translate('Property.paymentDate')}
+                label={translate('Property.PaymentDate')}
                 control={control}
                 showAsterisk={true}
               />
@@ -200,7 +200,7 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
                 loading={isSubmitting}
                 startIcon={<Iconify icon="eva:plus-fill" />}
               >
-                {`${translate('CRUD.Assign')}`}
+                {`${translate('CRUD.Pay')}`}
               </LoadingButton>
               <Button
                 fullWidth
