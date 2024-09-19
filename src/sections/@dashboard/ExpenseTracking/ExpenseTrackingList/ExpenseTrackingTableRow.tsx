@@ -8,6 +8,7 @@ import { TableMoreMenu } from '../../../../components/table';
 import useLocales from 'src/hooks/useLocales';
 import { IExpenseTracking } from 'src/@types/foamCompanyTypes/systemTypes/ExpenseTracking';
 import { DateConverter } from 'src/sections/common/DateConverter';
+import PermissionBasedGuard from 'src/guards/PermissionBasedGuard';
 // ----------------------------------------------------------------------
 
 type Props = {
@@ -51,17 +52,18 @@ export default function ExpenseTableRow({ row, onEditRow, onDeleteRow, index }: 
           onClose={handleCloseMenu}
           actions={
             <>
-              <MenuItem
-                onClick={() => {
-                  onDeleteRow();
-                  handleCloseMenu();
-                }}
-                sx={{ color: 'error.main' }}
-              >
-                <Iconify icon={'eva:trash-2-outline'} />
-                {translate('CRUD.Delete')}
-              </MenuItem>
-
+              <PermissionBasedGuard permissions={['ExpenseTracking-Delete']}>
+                <MenuItem
+                  onClick={() => {
+                    onDeleteRow();
+                    handleCloseMenu();
+                  }}
+                  sx={{ color: 'error.main' }}
+                >
+                  <Iconify icon={'eva:trash-2-outline'} />
+                  {translate('CRUD.Delete')}
+                </MenuItem>
+              </PermissionBasedGuard>
               <MenuItem
                 onClick={() => {
                   onEditRow();
