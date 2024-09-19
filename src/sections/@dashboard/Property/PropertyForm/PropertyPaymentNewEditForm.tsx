@@ -1,20 +1,20 @@
 import * as Yup from 'yup';
-import { useEffect, useMemo } from 'react';
+import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
 // form
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Alert, Box, Button, Card, Grid, Stack } from '@mui/material';
+import { Alert, Box, Button, Card, Grid, Stack, TextField, Typography } from '@mui/material';
 
 import useLocales from 'src/hooks/useLocales';
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/hook-form';
+import { FormProvider, RHFSelect } from '../../../../components/hook-form';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
-import { Payment, PropertyRental } from 'src/@types/foamCompanyTypes/systemTypes/PropertyType';
+import { Payment } from 'src/@types/foamCompanyTypes/systemTypes/PropertyType';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 // ----------------------------------------------------------------------
 interface Props {
@@ -41,11 +41,11 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
     paymentDate: Yup.date().required(`${translate('Validation.PaymentDate')}`),
   });
 
-  const defaultValues = useMemo<PropertyRental>(
+  const defaultValues = useMemo<Payment>(
     () => ({
       id: payment?.id,
       propertyId: id || payment?.propertyId,
-      amountPaid: selectedProperty?.amountPaid || payment?.amountPaid || undefined,
+      amountPaid: undefined,
       employeeId: selectedProperty?.employeeId || payment?.employeeId || undefined,
       paymentDate: selectedProperty?.startDate || payment?.paymentDate,
       remainingBalance: payment?.remainingBalance,
@@ -53,7 +53,12 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
     [selectedProperty, id, payment]
   );
 
-  const methods = useForm<PropertyRental>({
+  const [remainingBalance, setRemainingBalance] = useState(
+    payment?.remainingBalance || selectedProperty?.price! - selectedProperty?.amountPaid! || 0
+  );
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const methods = useForm<Payment>({
     resolver: yupResolver(NewPropertySchema),
     defaultValues,
   });
@@ -62,6 +67,7 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
     reset,
     handleSubmit,
     setError,
+    setValue,
     formState: { isSubmitting, errors },
     control,
   } = methods;
@@ -133,6 +139,21 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
     }
   }, [reset, editMode, defaultValues]);
 
+  const handleAmountPaidChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const amountPaid = parseFloat(event.target.value);
+    const totalAmount =
+      payment?.remainingBalance || selectedProperty?.price! - selectedProperty?.amountPaid! || 0;
+
+    if (amountPaid > totalAmount) {
+      setErrorMessage(`Amount paid cannot exceed the total amount: ${totalAmount}`);
+    } else {
+      setErrorMessage('');
+      const newRemainingBalance = totalAmount - amountPaid;
+      setRemainingBalance(newRemainingBalance);
+      setValue('remainingBalance', newRemainingBalance); // update the remaining balance in the form
+    }
+  };
+
   useEffect(() => {
     loadEmployeeByCurrentBranchDropdown();
   }, [loadEmployeeByCurrentBranchDropdown]);
@@ -175,22 +196,62 @@ export default observer(function PropertyPaymentNewEditForm({ id, payment }: Pro
                 showAsterisk={true}
               />
             </Box>
-            <RHFTextField
+            {/* Paid Amount Field */}
+            <Typography variant="subtitle1">
+              Total Amount:{' '}
+              {payment?.remainingBalance ||
+                selectedProperty?.price! - selectedProperty?.amountPaid! ||
+                0}
+            </Typography>
+            <Controller
               name="amountPaid"
-              fullWidth
-              label={translate('Property.PayableAmount')}
-              showAsterisk={true}
-              type="number"
-              sx={{ mt: 2 }}
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label={translate('Property.PayableAmount')}
+                  type="number"
+                  onChange={(e) => {
+                    field.onChange(e); // react-hook-form tracking
+                    handleAmountPaidChange(e); // custom calculation
+                  }}
+                  sx={{ mt: 2 }}
+                />
+              )}
             />
-            <RHFTextField
+            {/* <RHFTextField
               name="remainingBalance"
               fullWidth
               label={translate('Property.RemainingBalance')}
               showAsterisk={true}
               type="number"
               sx={{ mt: 2 }}
+            /> */}
+            {/* Remaining Balance Field */}
+            <Controller
+              name="remainingBalance"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label={translate('Property.RemainingBalance')}
+                  value={remainingBalance}
+                  InputProps={{
+                    readOnly: true, // make the remaining balance read-only
+                  }}
+                  sx={{ mt: 2 }}
+                />
+              )}
             />
+
+            {/* Display Error Message */}
+            {errorMessage && (
+              <Typography color="error" variant="body2">
+                {errorMessage}
+              </Typography>
+            )}
 
             <Stack direction="row" spacing={1.5} sx={{ mt: 3 }}>
               <LoadingButton

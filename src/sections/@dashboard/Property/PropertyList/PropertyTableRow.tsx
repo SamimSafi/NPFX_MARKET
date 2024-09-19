@@ -33,7 +33,7 @@ export default function PropertyTableRow({
   handleOpenChangeStatusConfirm,
   index,
 }: Props) {
-  const { name, model, details, price, category } = row;
+  const { name, model, details, price, category, amountPaid, condition } = row;
   const { translate } = useLocales();
   const [openMenu, setOpenMenuActions] = useState<HTMLElement | null>(null);
 
@@ -52,6 +52,8 @@ export default function PropertyTableRow({
       <TableCell align="left">{model}</TableCell>
       <TableCell align="left">{details}</TableCell>
       <TableCell align="left">{price}</TableCell>
+      <TableCell align="left">{amountPaid}</TableCell>
+      <TableCell align="left">{condition}</TableCell>
       {/* <TableCell align="left">
         <DateConverter date={depositDate} />
       </TableCell> */}

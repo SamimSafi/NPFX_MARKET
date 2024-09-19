@@ -599,6 +599,7 @@ const ps = {
   Property: {
     AddTitle: 'ایجاد ملکیت',
     PropertyList: 'فهرست ملکیت‌ها',
+    Condition: 'حالت',
     UpdateTitle: 'بروزرسانی ملکیت',
     DetailsTitle: 'جزئیات ملکیت',
     New: 'ملکیت جدید',
@@ -1216,6 +1217,7 @@ const ps = {
   NoRecordFound: 'هیچ ریکارد ای یافت نشد',
   categorys: 'دسته‌ها',
   propertyConditions: 'شرایط ملک',
+  PropertyMenu: 'مدیریت ملکیت',
 };
 
 export default ps;

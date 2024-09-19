@@ -756,6 +756,7 @@ const dr = {
   Property: {
     AddTitle: 'نوی ملکیت جوړول',
     PropertyList: 'د ملکیتونو لیست',
+    Condition: 'حالت',
     UpdateTitle: 'د ملکیت تازه کول',
     DetailsTitle: 'د ملکیت تفصیلات',
     New: 'نوی ملکیت',
@@ -1301,6 +1302,7 @@ const dr = {
   only_admin_can_see_this_item: `يمكن للمسؤول فقط رؤية هذا العنصر`,
   report: 'گزارشونه',
   NoRecordFound: 'هیڅ ریکارډ ونه موندل شو',
+  PropertyMenu: 'د ملکیت مدیریت',
 };
 
 export default dr;

@@ -5,6 +5,7 @@ export interface IPropertyType {
   name: string;
   details: string;
   model: string;
+  condition?: string;
   price?: number;
   conditionId?: number;
   employeeId?: number;
@@ -46,6 +47,7 @@ export interface Payment {
   status?: string;
   employeeId?: number;
   employeeName?: string;
+  afterSubmit?: string;
 }
 
 export interface IPropertyParams {

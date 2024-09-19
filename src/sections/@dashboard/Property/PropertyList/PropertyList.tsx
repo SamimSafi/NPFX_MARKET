@@ -79,6 +79,8 @@ export default observer(function PropertyList() {
     { id: 'model', label: `${translate('Property.Model')}`, align: 'left' },
     { id: 'details', label: `${translate('Employee.Details')}`, align: 'left' },
     { id: 'price', label: `${translate('Property.Price')}`, align: 'left' },
+    { id: 'amountPaid', label: `${translate('Property.AmountPaid')}`, align: 'left' },
+    { id: 'condition', label: `${translate('Property.Condition')}`, align: 'left' },
     { id: 'ُCategory', label: `${translate('Categorys.Categorys')}`, align: 'left' },
     { id: '', label: `${translate('GeneralFields.Action')}` },
   ];
