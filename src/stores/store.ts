@@ -31,7 +31,6 @@ import ExpenseTypeStore from './foamCompanyStores/ExpenseTypeStore';
 import investorStore from './foamCompanyStores/investorStore';
 import customerStore from './foamCompanyStores/customerStore';
 import supplierStore from './foamCompanyStores/supplierStore';
-import ExpenseStore from './foamCompanyStores/ExpenseStore';
 import ProductOrderStore from './foamCompanyStores/productOrderStore';
 import AssetTypeStore from './foamCompanyStores/AssetTypeStore';
 import PaymentTypeStore from './foamCompanyStores/PaymentTypeStore';
@@ -104,7 +103,6 @@ interface Store {
   investorStore: investorStore;
   customerStore: customerStore;
   supplierStore: supplierStore;
-  ExpenseStore: ExpenseStore;
   AssetTypeStore: AssetTypeStore;
   ProductOrderStore: ProductOrderStore;
   PaymentTypeStore: PaymentTypeStore;
@@ -168,7 +166,6 @@ export const store: Store = {
   investorStore: new investorStore(),
   customerStore: new customerStore(),
   supplierStore: new supplierStore(),
-  ExpenseStore: new ExpenseStore(),
   AssetTypeStore: new AssetTypeStore(),
   ProductOrderStore: new ProductOrderStore(),
   PaymentTypeStore: new PaymentTypeStore(),

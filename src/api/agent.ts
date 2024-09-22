@@ -1011,10 +1011,10 @@ const Property = {
     axios.get<PropertyDetails>(`/Propertys/GetDetail/${id}`, {
       withCredentials: true,
     }),
-    GetPropertiesByEmp : (id: any) =>
-      axios.get<IProperty[]>(`/Propertys/GetPropertiesByEmpId/${id}`, {
-        withCredentials: true,
-      }), 
+  GetPropertiesByEmp: (id: any) =>
+    axios.get<IProperty[]>(`/Propertys/GetPropertiesByEmpId/${id}`, {
+      withCredentials: true,
+    }),
 };
 
 const agent = {
