@@ -7,7 +7,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Alert, Box, Card, FormControlLabel, Grid, Stack, Switch } from '@mui/material';
+import { Alert, Box, Card, Grid, Stack, Switch } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -87,10 +87,10 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
   } = methods;
 
   const val = watch();
-  const onSubmit = (data: ILoanTracking) => {
+  const onSubmit = async (data: ILoanTracking) => {
     if (data.id! === undefined) {
       ///create
-      createLoanTracking(data)
+     await createLoanTracking(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -123,7 +123,7 @@ export default observer(function LoanTrackingNewEditForm({ asssetID }: Props) {
         });
     } else {
       ///update
-      updateLoanTracking(data).then(() => {
+    await  updateLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.LoanTracking.list);

@@ -3,11 +3,11 @@ import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 // form
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Alert, Box, Card, FormControlLabel, Grid, Stack, Switch } from '@mui/material';
+import { Alert, Box, Card, Grid, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -20,11 +20,10 @@ import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { ILoanTracking } from 'src/@types/foamCompanyTypes/systemTypes/LoanTracking';
 import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
-import CancelIcon from '@mui/icons-material/Cancel';
 // ----------------------------------------------------------------------
 
 export default observer(function TakeLoanCreateAssetNewEditForm() {
-  const { LoanTrackingStore, commonDropdown, MainAssetStore } = useStore();
+  const { LoanTrackingStore, commonDropdown } = useStore();
   const { translate } = useLocales();
   const {
     TakeLoanCreateAsset,
@@ -86,10 +85,10 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
   } = methods;
 
   const val = watch();
-  const onSubmit = (data: ILoanTracking) => {
+  const onSubmit = async (data: ILoanTracking) => {
     if (data.id! === undefined) {
       ///create
-      TakeLoanCreateAsset(data)
+    await  TakeLoanCreateAsset(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -120,7 +119,7 @@ export default observer(function TakeLoanCreateAssetNewEditForm() {
         });
     } else {
       ///update
-      updateLoanTracking(data).then(() => {
+    await  updateLoanTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         clearSelectedLoanTracking();

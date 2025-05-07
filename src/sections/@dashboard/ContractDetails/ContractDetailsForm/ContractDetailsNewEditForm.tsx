@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -28,7 +28,6 @@ import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
 export default observer(function ContractDetailsNewEditForm() {
   const { ContractDetailsStore, commonDropdown } = useStore();
   const [EmpData] = useLocalStorage('DetailsData', null);
-  const [checked, setChecked] = useState(false);
   const [branch, setBranch] = useState<number>();
   const { translate } = useLocales();
 
@@ -39,10 +38,7 @@ export default observer(function ContractDetailsNewEditForm() {
     selectedContractDetails,
     clearSelectedContractDetails,
     EmpCurrentContractDetails,
-
-    clearSelectedCurrentContractDetails,
   } = ContractDetailsStore;
-  const [contractType, setContractType] = useState(0);
   const {
     loadContractTypeDDL,
     ContractTypeOption,
@@ -91,6 +87,7 @@ export default observer(function ContractDetailsNewEditForm() {
       isCurrent: selectedContractDetails?.isCurrent || true,
       remarks: selectedContractDetails?.remarks || '',
     }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [selectedContractDetails, EmpData]
   );
 
@@ -114,10 +111,10 @@ export default observer(function ContractDetailsNewEditForm() {
 
   // const [contractType, setContractType] = useState(0);
 
-  const onSubmit = (data: IContractDetails) => {
+  const onSubmit = async (data: IContractDetails) => {
     if (data.id! === undefined) {
       ///create
-      createContractDetails(data)
+    await  createContractDetails(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -136,7 +133,7 @@ export default observer(function ContractDetailsNewEditForm() {
         });
     } else {
       ///update
-      updateContractDetails(data)
+     await updateContractDetails(data)
         .then(() => {
           clearSelectedContractDetails();
           reset();
@@ -179,7 +176,7 @@ export default observer(function ContractDetailsNewEditForm() {
   }, [val.contractTypeId, branch]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (val.contractTypeId == 19 && editMode !== true) {
+    if (val.contractTypeId === 19 && editMode !== true) {
       resetField('endDate');
     }
   };
@@ -206,7 +203,6 @@ export default observer(function ContractDetailsNewEditForm() {
                 label={translate('ContractType.ContractType')}
                 showAsterisk={true}
                 onChange={(e) => {
-                  setContractType(parseInt(e.target.value));
                   setValue('contractTypeId', parseInt(e.target.value));
                 }}
               >
@@ -219,6 +215,7 @@ export default observer(function ContractDetailsNewEditForm() {
               </RHFSelect>
               <RHFSelect
                 name="branchId"
+                // eslint-disable-next-line no-useless-concat
                 label={`${translate('ContractDetails.Branch')}` + ' ' + '*'}
                 onChange={(e) => {
                   setBranch(parseInt(e.target.value));
@@ -252,6 +249,7 @@ export default observer(function ContractDetailsNewEditForm() {
 
               <RHFSelect
                 name="currencyTypeId"
+                // eslint-disable-next-line no-useless-concat
                 label={`${translate('ContractDetails.currencyType')}` + ' ' + '*'}
                 // onChange={(e) => handleDocumentType(parseInt(e.target.value))}
               >

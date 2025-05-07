@@ -58,17 +58,17 @@ export default observer(function PartnersNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IPartners) => {
+  const onSubmit = async (data: IPartners) => {
     if (data.id! === undefined) {
       ///create
-      createPartners(data).then(() => {
+     await createPartners(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.Partners.list);
       });
     } else {
       ///update
-      updatePartners(data).then(() => {
+     await updatePartners(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.Partners.list);

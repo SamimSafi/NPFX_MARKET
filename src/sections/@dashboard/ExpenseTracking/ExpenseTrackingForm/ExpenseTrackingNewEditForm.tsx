@@ -75,10 +75,10 @@ export default observer(function ExpenseTrackingNewEditForm() {
     formState: { isSubmitting, errors },
   } = methods;
   // const val = watch();
-  const onSubmit = (data: IExpenseTracking) => {
+  const onSubmit = async (data: IExpenseTracking) => {
     if (data.id! === undefined) {
       ///create
-      createExpenseTracking(data)
+     await createExpenseTracking(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -98,7 +98,7 @@ export default observer(function ExpenseTrackingNewEditForm() {
         });
     } else {
       ///update
-      updateExpenseTracking(data).then(() => {
+    await  updateExpenseTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.ExpenseTracking.list);
@@ -169,23 +169,6 @@ export default observer(function ExpenseTrackingNewEditForm() {
                   </option>
                 ))}
               </RHFSelect>
-              {/* <RHFSelect name="branchId" label={translate('Branch.Branch')}>
-                <option value="" />
-                {BranchOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect> */}
-
-              {/* <RHFSelect name="userId" label={translate('User.user')}>
-                <option value="" />
-                {UserOption.map((op) => (
-                  <option key={op.value} value={op.value}>
-                    {op.text}
-                  </option>
-                ))}
-              </RHFSelect> */}
               <RHFTextField
                 name="amount"
                 label={translate('ExpenseTracking.ExpenseAmount')}

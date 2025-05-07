@@ -269,6 +269,7 @@ const en = {
     Update: 'Update Withdrawal',
     EnterWithdrawal: 'Enter Withdrawals',
     WithdrawalAmount: 'Withdrawal Amount',
+    DepositAmount: 'Deposit Amount',
     ProfitAmount: 'Profit Amount',
     LossAmount: 'Loss Amount',
     CreateWithdrawalTracking: 'Create Withdrawal',

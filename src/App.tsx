@@ -14,14 +14,11 @@ import { useEffect } from 'react';
 import LoadingScreen from './components/LoadingScreen';
 import { observer } from 'mobx-react-lite';
 import './style.css';
-import MyDialog from './components/MyDialog';
-import useLocales from './hooks/useLocales';
-import { AppWelcome } from './sections/@dashboard/general/app';
+import NetworkOverlay from './NetworkOverlay';
 // ----------------------------------------------------------------------
 
 export default observer(function App() {
-  const { CommonStore, LoginStore} = useStore();
-  const { translate } = useLocales();
+  const { CommonStore, LoginStore } = useStore();
   useEffect(() => {
     if (CommonStore.token) {
       LoginStore.getCurrentUSer().finally(() => CommonStore.setApploaded());
@@ -41,6 +38,7 @@ export default observer(function App() {
             <ChartStyle />
             <ScrollToTop />
             <Router />
+            <NetworkOverlay />
           </NotistackProvider>
         </ThemeSettings>
       </ThemeProvider>

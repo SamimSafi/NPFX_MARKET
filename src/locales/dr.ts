@@ -209,6 +209,7 @@ const ps = {
     CreateDeposit: 'ایجاد واریز',
     EditDeposit: 'تمدید واریز',
     DepositToAccount: 'واریز به حساب',
+    DepositAmount: 'مقدار واریز',
     Update: 'تمدید برداشت / واریز',
     EnterWithdrawal: 'مقدار برداش را وارد نمایید',
     WithdrawalAmount: 'مقدار برداشت',

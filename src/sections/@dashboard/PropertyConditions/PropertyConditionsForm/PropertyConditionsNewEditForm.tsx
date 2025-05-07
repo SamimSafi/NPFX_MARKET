@@ -63,17 +63,17 @@ export default observer(function PropertyConditionsNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IPropertyConditions) => {
+  const onSubmit = async (data: IPropertyConditions) => {
     if (data.id! === undefined) {
       ///create
-      createPropertyConditions(data).then(() => {
+      await createPropertyConditions(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.PropertyConditions.list);
       });
     } else {
       ///update
-      updatePropertyConditions(data).then(() => {
+      await updatePropertyConditions(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.PropertyConditions.list);

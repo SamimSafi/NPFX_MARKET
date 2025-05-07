@@ -1,26 +1,21 @@
 import * as Yup from 'yup';
 import { useCallback, useEffect, useMemo, useState, useRef } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { DatePicker, LoadingButton } from '@mui/lab';
+import { LoadingButton } from '@mui/lab';
 import {
   Box,
   Button,
   Card,
   Grid,
-  InputLabel,
   Stack,
-  TextField,
   Typography,
   Alert,
-  makeStyles,
 } from '@mui/material';
-import LocalizDatePicker from 'src/sections/common/LocalizDatePicker';
-import { convertPersianNumberToEnlgish } from 'src/utils/convertPersianNumber';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -30,7 +25,6 @@ import useLocales from 'src/hooks/useLocales';
 import Iconify from '../../../../components/Iconify';
 import {
   FormProvider,
-  RHFSelect,
   RHFTextField,
   RHFUploadAvatar,
 } from '../../../../components/hook-form';
@@ -39,20 +33,15 @@ import { useStore } from '../../../../stores/store';
 import { IEmployee } from 'src/@types/foamCompanyTypes/Employee';
 import Label from 'src/components/Label';
 import { fData } from 'src/utils/formatNumber';
-import { BasePickerProps } from '@mui/x-date-pickers/internals';
 
 import { MuiPhone } from 'src/sections/@dashboard/MuiPhone';
 import CustomFlag from '../../CustomFlags/CustomFlag';
 import Fieldset from 'src/utils/fieldSet';
-import { styled } from '@mui/material';
 
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 
-import Autocomplete from '@mui/material/Autocomplete';
-import React from 'react';
-import CustomRHFAutocomplete from 'src/components/hook-form/CustomRHFAutocomplete';
-import uuid from 'react-uuid';
+
 import { ICustomer } from 'src/@types/foamCompanyTypes/customer';
 
 // ----------------------------------------------------------------------
@@ -68,12 +57,10 @@ export default observer(function CustomerNewEditForm() {
   const [imageSrc, setImageSrc] = useState<string>('');
   const [croppedImage, setCroppedImage] = useState<string>('');
 
-  const [provinceName, setProvinceName] = useState<string | undefined>('');
-  const [districtName, setDistrictName] = useState<string | undefined>('');
 
   const { createCustomer, updateCustomer, editMode, selectedCustomer, clearSelectedCustomer } =
     customerStore;
-  const { loadProvinceDropdown, loadDistrictDropdown, ProvinceOption, DistrictOption } =
+  const { loadProvinceDropdown } =
     commonDropdown;
   const navigate = useNavigate();
 
@@ -161,20 +148,17 @@ export default observer(function CustomerNewEditForm() {
   const {
     reset,
     handleSubmit,
-    control,
-    watch,
     setValue,
     setError,
     formState: { errors, isSubmitting },
   } = methods;
-  const val = watch();
 
-  const onSubmit = (data: IEmployee) => {
+  const onSubmit = async (data: IEmployee) => {
     data.phoneNumber = muiPhone.replace(/\s+/g, '');
     if (data.id! === undefined) {
       ///create
       data.profilePhoto = methods.getValues().profilePhoto;
-      createCustomer(data)
+     await createCustomer(data)
         .then(() => {
           clearSelectedCustomer();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -209,7 +193,7 @@ export default observer(function CustomerNewEditForm() {
       } else {
         data.profilePhoto = methods.getValues().profilePhoto;
       }
-      updateCustomer(data)
+    await  updateCustomer(data)
         .then(() => {
           clearSelectedCustomer();
           enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
@@ -250,6 +234,7 @@ export default observer(function CustomerNewEditForm() {
 
       reset(defaultValues);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, editMode, defaultValues]);
 
   const handleDrop = useCallback((acceptedFiles) => {
@@ -291,22 +276,9 @@ export default observer(function CustomerNewEditForm() {
         setCroppedImage(croppedDataURL);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleCancelCrop = useCallback(() => {
-    setCroppedImage('');
-  }, []);
-
-  const bloodGroup = [
-    { title: 'A+', value: 'A+' },
-    { title: 'A-', value: 'A-' },
-    { title: 'B+', value: 'B+' },
-    { title: 'B-', value: 'B-' },
-    { title: 'O+', value: 'O+' },
-    { title: 'O-', value: 'O-' },
-    { title: 'AB+', value: 'AB+' },
-    { title: 'AB-', value: 'AB-' },
-  ];
 
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -324,7 +296,7 @@ export default observer(function CustomerNewEditForm() {
                 <Label
                   //color={values !== 'active' ? 'error' : 'success'}
                   sx={{ textTransform: 'uppercase', position: 'absolute', top: 24, right: 24 }}
-                ></Label>
+                 />
               )}
               <Box sx={{ mb: 3 }}>
                 <RHFUploadAvatar

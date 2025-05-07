@@ -58,17 +58,17 @@ export default observer(function AssetTypeNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IAssetType) => {
+  const onSubmit = async (data: IAssetType) => {
     if (data.id! === undefined) {
       ///create
-      createAssetType(data).then(() => {
+      await createAssetType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.AssetType.list);
       });
     } else {
       ///update
-      updateAssetType(data).then(() => {
+      await  updateAssetType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.AssetType.list);

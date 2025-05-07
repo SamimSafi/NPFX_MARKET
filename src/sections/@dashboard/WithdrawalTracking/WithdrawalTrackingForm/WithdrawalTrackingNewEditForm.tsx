@@ -69,10 +69,10 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
     control,
   } = methods;
   const { setOpenCloseDialogWithdrawCash } = MainAssetStore;
-  const onSubmit = (data: IWithdrawalTracking) => {
+  const onSubmit = async (data: IWithdrawalTracking) => {
     if (data.id! === undefined) {
       ///create
-      createWithdrawalTracking(data)
+      await createWithdrawalTracking(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -92,7 +92,7 @@ export default observer(function WithdrawalTrackingNewEditForm({ asssetID }: Pro
         });
     } else {
       ///update
-      updateWithdrawalTracking(data).then(() => {
+      await updateWithdrawalTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.WithdrawalTracking.list);

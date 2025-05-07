@@ -59,8 +59,6 @@ export default observer(function ProductOrderNewEditForm() {
     reset,
     control,
     handleSubmit,
-    setValue,
-    watch,
     setError,
     formState: { errors, isSubmitting },
   } = methods;
@@ -103,12 +101,11 @@ export default observer(function ProductOrderNewEditForm() {
     delete value[index];
   };
 
-  const onSubmit = (data: productOrder) => {
-    console.log(data);
+  const onSubmit = async (data: productOrder) => {
 
     if (defaultValues.id === undefined) {
       ///create
-      createProductOrder(data)
+      await createProductOrder(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);

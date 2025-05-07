@@ -64,17 +64,17 @@ export default observer(function ExpenseTypeNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IExpenseType) => {
+  const onSubmit = async (data: IExpenseType) => {
     if (data.id! === undefined) {
       ///create
-      createExpenseType(data).then(() => {
+    await  createExpenseType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.ExpenseType.list);
       });
     } else {
       ///update
-      updateExpenseType(data).then(() => {
+     await updateExpenseType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.ExpenseType.list);

@@ -77,10 +77,10 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
     // watch,
   } = methods;
   // const val = watch();
-  const onSubmit = (data: ITradeTracking) => {
+  const onSubmit = async (data: ITradeTracking) => {
     if (data.id! === undefined) {
       ///create
-      createTradeTracking(data)
+     await createTradeTracking(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -109,7 +109,7 @@ export default observer(function TradeTrackingNewEditForm({ asssetID }: Props) {
         });
     } else {
       ///update
-      updateTradeTracking(data).then(() => {
+     await updateTradeTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.TradeTracking.list);

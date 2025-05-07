@@ -70,10 +70,10 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
     control,
   } = methods;
 
-  const onSubmit = (data: IWithdrawalTracking) => {
+  const onSubmit = async (data: IWithdrawalTracking) => {
     if (data.id! === undefined) {
       ///create
-      DepositToAccount(data)
+     await DepositToAccount(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -93,7 +93,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
         });
     } else {
       ///update
-      updateWithdrawalTracking(data).then(() => {
+    await  updateWithdrawalTracking(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.WithdrawalTracking.list);
@@ -146,7 +146,7 @@ export default observer(function WithdrawalTrackingDepositNewEditForm({ asssetID
 
               <RHFTextField
                 name="depositAmount"
-                label={translate('WithdrawalTracking.WithdrawalAmount')}
+                label={translate('WithdrawalTracking.DepositAmount')}
                 type={'number'}
                 showAsterisk={true}
                 autoFocus

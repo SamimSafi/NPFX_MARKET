@@ -1,13 +1,13 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Alert, Box, Button, Card, Grid, Stack } from '@mui/material';
+import { Box, Button, Card, Grid, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
@@ -61,21 +61,20 @@ export default observer(function ContractTypeNewEditForm() {
   const {
     reset,
     handleSubmit,
-    setError,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IContractType) => {
+  const onSubmit = async (data: IContractType) => {
     if (data.id! === undefined) {
       ///create
-      createContractType(data).then(() => {
+     await createContractType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);
       });
     } else {
       ///update
-      updateContractType(data).then(() => {
+     await updateContractType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);

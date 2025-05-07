@@ -7,14 +7,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
-import { Alert, Box, Button, Card, FormControl, Grid, Stack } from '@mui/material';
+import { Alert, Box, Button, Card, Grid, Stack } from '@mui/material';
 
 // routes
 import { PATH_DASHBOARD } from '../../../../routes/paths';
 
 // components
 import Iconify from '../../../../components/Iconify';
-import { FormProvider, RHFTextField, RHFSelect } from '../../../../components/hook-form';
+import { FormProvider, RHFTextField } from '../../../../components/hook-form';
 import { useStore } from 'src/stores/store';
 import { observer } from 'mobx-react-lite';
 import useLocales from 'src/hooks/useLocales';
@@ -69,10 +69,10 @@ export default observer(function DistrictNewEditForm() {
     formState: { errors, isSubmitting },
   } = methods;
 
-  const onSubmit = (data: District) => {
+  const onSubmit = async (data: District) => {
     if (data.id! === undefined) {
       ///create
-      createDistrict(data)
+     await createDistrict(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -91,7 +91,7 @@ export default observer(function DistrictNewEditForm() {
         });
     } else {
       ///update
-      updateDistrict(data)
+    await  updateDistrict(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
@@ -121,10 +121,12 @@ export default observer(function DistrictNewEditForm() {
     if (!editMode) {
       reset(defaultValues);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, editMode, defaultValues]);
 
   useEffect(() => {
     setValue('provinceName', provinceName);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [provinceName]);
 
   return (
@@ -198,13 +200,11 @@ export default observer(function DistrictNewEditForm() {
                 }}
                 freeSolo
                 fullWidth
-                renderOption={(props, option: any) => {
-                  return (
+                renderOption={(props, option: any) => (
                     <li {...props} key={option + '-' + uuid()}>
                       {option}
                     </li>
-                  );
-                }}
+                  )}
               />
 
               <RHFTextField name="code" label={translate('District.Code')} showAsterisk={true} />

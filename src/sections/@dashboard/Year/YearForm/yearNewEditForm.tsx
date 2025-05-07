@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -69,12 +69,12 @@ export default observer(function YearNewEditForm() {
     formState: { isSubmitting, errors },
   } = methods;
 
-  const onSubmit = (data: YearInterface) => {
+  const onSubmit = async (data: YearInterface) => {
     let newData = { ...data, yearShamsi: date };
-    console.log(date);
+
     if (newData.id! === undefined) {
       //create
-      createYear(newData)
+    await  createYear(newData)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -88,7 +88,7 @@ export default observer(function YearNewEditForm() {
         });
     } else {
       ///update
-      updateYear(newData)
+     await updateYear(newData)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);

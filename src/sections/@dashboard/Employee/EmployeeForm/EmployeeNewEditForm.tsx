@@ -39,8 +39,6 @@ import CustomFlag from '../../CustomFlags/CustomFlag';
 import Fieldset from 'src/utils/fieldSet';
 import Cropper, { ReactCropperElement } from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-import CustomRHFAutocomplete from 'src/components/hook-form/CustomRHFAutocomplete';
-import uuid from 'react-uuid';
 import { IEmployee } from 'src/@types/foamCompanyTypes/Employee';
 
 // ----------------------------------------------------------------------
@@ -48,9 +46,7 @@ import { IEmployee } from 'src/@types/foamCompanyTypes/Employee';
 export default observer(function EmployeeNewEditForm() {
   const language = window.localStorage.getItem('i18nextLng');
   const { EmployeeStore, commonDropdown } = useStore();
-  const [checked, setChecked] = useState(false);
   const { translate } = useLocales();
-  const [isTrue, setIsTrue] = useState<boolean>(true);
   const [isImageUpdate, setIsImageUpdated] = useState(false);
   const [muiPhone, setMuiPhone] = useState('+93');
   const [muiEmergencyPhone, setMuiEmergencyPhone] = useState('+93');
@@ -135,7 +131,7 @@ export default observer(function EmployeeNewEditForm() {
     formState: { errors, isSubmitting },
   } = methods;
   const val = watch();
-  const onSubmit = (data: IEmployee) => {
+  const onSubmit = async (data: IEmployee) => {
     data.phoneNumber = muiPhone.replace(/\s+/g, '');
     data.emergencyPhoneNumber = muiEmergencyPhone.replace(/\s+/g, '');
     data.isActive = val.isActive;
@@ -143,7 +139,7 @@ export default observer(function EmployeeNewEditForm() {
     if (data.id! === undefined) {
       ///create
       data.profilePhoto = methods.getValues().profilePhoto;
-      createEmployee(data)
+    await  createEmployee(data)
         .then(() => {
           clearSelectedEmployee();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
@@ -182,7 +178,7 @@ export default observer(function EmployeeNewEditForm() {
       } else {
         data.profilePhoto = methods.getValues().profilePhoto;
       }
-      updateEmployee(data)
+     await updateEmployee(data)
         .then(() => {
           clearSelectedEmployee();
           enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
@@ -251,9 +247,6 @@ export default observer(function EmployeeNewEditForm() {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [departmentName]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-  };
 
   const handleDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -583,7 +576,6 @@ export default observer(function EmployeeNewEditForm() {
                             {...field}
                             onChange={(e) => {
                               field.onChange(e); // Notify React Hook Form of the value change
-                              handleChange(e); // Handle the switch state change
                             }}
                             checked={field.value}
                           />

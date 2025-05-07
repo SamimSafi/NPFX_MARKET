@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -19,12 +19,9 @@ import { FormProvider, RHFSelect, RHFTextField } from '../../../../components/ho
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../../../stores/store';
 import { IPositionTitle } from 'src/@types/foamCompanyTypes/PositionTitle';
-import CustomRHFAutocomplete from 'src/components/hook-form/CustomRHFAutocomplete';
-import uuid from 'react-uuid';
 // ----------------------------------------------------------------------
 
 export default observer(function PositionTitleNewEditForm() {
-  const [departmentName, setDepartmentName] = useState<string | undefined>('');
 
   const { PositionTitleStore, commonDropdown } = useStore();
   const { translate } = useLocales();
@@ -65,23 +62,21 @@ export default observer(function PositionTitleNewEditForm() {
   const {
     reset,
     handleSubmit,
-    watch,
-    setValue,
     control,
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IPositionTitle) => {
+  const onSubmit = async (data: IPositionTitle) => {
     if (data.id! === undefined) {
       ///create
-      createPositionTitle(data).then(() => {
+      await createPositionTitle(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.PositionTitle.list);
       });
     } else {
       ///update
-      updatePositionTitle(data).then(() => {
+      await updatePositionTitle(data).then(() => {
         clearSelectedPositionTitle();
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
@@ -91,6 +86,7 @@ export default observer(function PositionTitleNewEditForm() {
   };
   useEffect(() => {
     loadBranchDDL();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

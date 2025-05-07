@@ -226,6 +226,7 @@ const dr = {
     Update: 'برداشت تازه کړئ',
     EnterWithdrawal: 'برداشتونه داخل کړئ',
     WithdrawalAmount: 'د برداشت اندازه',
+    DepositAmount: 'جمع کول اندازه',
     ProfitAmount: 'د ګټې اندازه',
     LossAmount: 'د زیان اندازه',
     CreateWithdrawalTracking: 'برداشت جوړ کړئ',

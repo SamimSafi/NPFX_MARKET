@@ -58,17 +58,17 @@ export default observer(function LoanTypeNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: ILoanType) => {
+  const onSubmit = async (data: ILoanType) => {
     if (data.id! === undefined) {
       ///create
-      createLoanType(data).then(() => {
+    await  createLoanType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.LoanType.list);
       });
     } else {
       ///update
-      updateLoanType(data).then(() => {
+    await  updateLoanType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.LoanType.list);

@@ -60,17 +60,17 @@ export default observer(function BranchNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IBranch) => {
+  const onSubmit = async (data: IBranch) => {
     if (data.id! === undefined) {
       ///create
-      createBranch(data).then(() => {
+     await createBranch(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.Branch.list);
       });
     } else {
       ///update
-      updateBranch(data).then(() => {
+      await updateBranch(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.Branch.list);

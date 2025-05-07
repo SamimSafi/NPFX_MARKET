@@ -95,7 +95,7 @@ export default observer(function PropertyAssignmentNewEditForm({ id, Assignment 
           }
         });
     } else {
-      UpdateAssignProperty(data)
+    await  UpdateAssignProperty(data)
         .then(() => {
           reset();
           enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);

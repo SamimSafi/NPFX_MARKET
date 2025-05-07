@@ -63,17 +63,17 @@ export default observer(function BranchNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IPaymentType) => {
+  const onSubmit = async (data: IPaymentType) => {
     if (data.id! === undefined) {
       ///create
-      createPaymentType(data).then(() => {
+     await createPaymentType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.PaymentType.list);
       });
     } else {
       ///update
-      updatePaymentType(data).then(() => {
+     await updatePaymentType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.PaymentType.list);

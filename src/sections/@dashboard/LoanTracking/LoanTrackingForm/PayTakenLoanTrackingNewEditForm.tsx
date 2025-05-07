@@ -1,17 +1,13 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
 // form
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import { LoadingButton } from '@mui/lab';
 import { Alert, Box, Card, Grid, InputAdornment, Stack, TextField } from '@mui/material';
-
 // routes
-import { PATH_DASHBOARD } from '../../../../routes/paths';
-
 import useLocales from 'src/hooks/useLocales';
 // components
 import Iconify from '../../../../components/Iconify';
@@ -40,13 +36,11 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
   const { exchangeRate, onChangeExchangeRate } = useSettings();
   const {
     PayTakenLoan,
-    updateLoanTracking,
     editMode,
     selectedLoanTracking,
     setOpenCloseDialogPayTakenLoan,
   } = LoanTrackingStore;
   const { loadMainAssetDDL, MainAssetOption } = commonDropdown;
-  const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const NewLoanTrackingSchema = Yup.object().shape({
@@ -99,7 +93,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
     const afn = usdDollor! * rate;
     setValue('afn', roundOff(afn, 2));
   };
-  const onSubmit = (data: IPayTakenLoan) => {
+  const onSubmit = async (data: IPayTakenLoan) => {
     // this statements checks if row currency  is usd set usd and if it's afn then set afn value
     switch (Number(currencyTypeId)) {
       case currency.USD: // USD
@@ -120,7 +114,7 @@ export default observer(function PayTakenLoanTrackingNewEditForm({
 
     // if (data.loanTrackingId! === undefined) {
     ///create
-    PayTakenLoan(data)
+  await  PayTakenLoan(data)
       .then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);

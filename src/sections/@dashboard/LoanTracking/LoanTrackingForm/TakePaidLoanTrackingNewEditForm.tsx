@@ -38,7 +38,6 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
   const { exchangeRate, onChangeExchangeRate } = useSettings();
   const {
     TakePaidLoan,
-    updateLoanTracking,
     editMode,
     selectedLoanTracking,
     setOpenCloseDialogTakePaidLoan,
@@ -99,7 +98,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
     const afn = usdDollor! * rate;
     setValue('afn', roundOff(afn, 2));
   };
-  const onSubmit = (data: IRecieveGivenLoan) => {
+  const onSubmit = async (data: IRecieveGivenLoan) => {
     // this statements checks if row currency  is usd set usd and if it's afn then set afn value
     switch (Number(currencyTypeId)) {
       case currency.USD: // USD
@@ -119,7 +118,7 @@ export default observer(function TakePaidLoanTrackingNewEditForm({
 
     // if (data.loanTrackingId! === undefined) {
     ///create
-    TakePaidLoan(data)
+   await TakePaidLoan(data)
       .then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);

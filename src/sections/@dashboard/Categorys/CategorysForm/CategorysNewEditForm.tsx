@@ -58,17 +58,17 @@ export default observer(function CategorysNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: ICategorys) => {
+  const onSubmit = async (data: ICategorys) => {
     if (data.id! === undefined) {
       ///create
-      createCategorys(data).then(() => {
+     await createCategorys(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.Categorys.list);
       });
     } else {
       ///update
-      updateCategorys(data).then(() => {
+    await  updateCategorys(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.Categorys.list);

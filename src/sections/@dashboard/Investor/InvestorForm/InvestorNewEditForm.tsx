@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -69,17 +69,17 @@ export default observer(function InvestorNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IInvestor) => {
+  const onSubmit = async (data: IInvestor) => {
     if (data.id! === undefined) {
       ///create
-      createInvestor(data).then(() => {
+    await  createInvestor(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);
       });
     } else {
       ///update
-      updateInvestor(data).then(() => {
+     await updateInvestor(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.ContractType.list);
@@ -95,6 +95,7 @@ export default observer(function InvestorNewEditForm() {
     if (!editMode) {
       reset(defaultValues);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reset, editMode, defaultValues]);
 
   return (

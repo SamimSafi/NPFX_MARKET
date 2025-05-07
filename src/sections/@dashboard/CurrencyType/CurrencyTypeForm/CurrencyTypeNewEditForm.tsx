@@ -64,17 +64,17 @@ export default observer(function CurrencyTypeNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: ICurrencyType) => {
+  const onSubmit = async (data: ICurrencyType) => {
     if (data.id! === undefined) {
       ///create
-      createCurrencyType(data).then(() => {
+     await createCurrencyType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.CurrencyType.list);
       });
     } else {
       ///update
-      updateCurrencyType(data).then(() => {
+    await  updateCurrencyType(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.CurrencyType.list);

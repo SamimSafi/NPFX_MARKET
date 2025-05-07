@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { useEffect, useMemo } from 'react';
 import { useSnackbar } from 'notistack';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -63,17 +63,17 @@ export default observer(function JobPositionNewEditForm() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = (data: IJobPosition) => {
+  const onSubmit = async (data: IJobPosition) => {
     if (data.id! === undefined) {
       ///create
-      createJobPosition(data).then(() => {
+    await  createJobPosition(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.CreateSuccess')}`);
         navigate(PATH_DASHBOARD.JobPosition.list);
       });
     } else {
       ///update
-      updateJobPosition(data).then(() => {
+     await updateJobPosition(data).then(() => {
         reset();
         enqueueSnackbar(`${translate('Tostar.UpdateSuccess')}`);
         navigate(PATH_DASHBOARD.JobPosition.list);
